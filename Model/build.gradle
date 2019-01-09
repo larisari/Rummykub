@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group 'blenninger.de'
+group 'pineapple'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
