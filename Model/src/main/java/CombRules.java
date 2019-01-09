@@ -43,7 +43,7 @@ public class CombRules {
 
     if (haveSameColor(combination) && !haveSameNumber(combination)) {
       for (int i = 1; i < combination.size(); i++) {
-        if (!(combination.get(i).getNumber().equals(combination.get(i - 1).getNumber().next()))) {
+        if (!(combination.get(i).getNumber() == (combination.get(i - 1).getNumber() + 1))) {
           return false;
         }
       }
@@ -55,9 +55,9 @@ public class CombRules {
   }
 
   private static boolean haveSameNumber(List<Tile> combination) {
-    Number number = combination.get(1).getNumber();
+    int number = combination.get(1).getNumber();
 
-    return combination.stream().allMatch(tile -> tile.getNumber().equals(number));
+    return combination.stream().allMatch(tile -> tile.getNumber() == number);
   }
 
   private static boolean haveSameColor(List<Tile> combination) {

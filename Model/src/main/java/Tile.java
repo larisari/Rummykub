@@ -5,14 +5,14 @@ public class Tile {
   private final int MAX_NUM = 13;
   private final int JOKER = 0;
   private int number;
-  private Colors color;
+  private Color color;
 
   /**
    * @throws IllegalArgumentException if:
    * number not between 0 and 13
    * joker declaration fails
    * */
-  public Tile (int number, Colors color) {
+  public Tile (int number, Color color) {
     if (number >= MIN_NUM && number <= MAX_NUM || number == JOKER) {
       this.number = number;
       this.color = color;
@@ -26,20 +26,15 @@ public class Tile {
 
   private void checkForJoker() {
     if (this.number == JOKER) {
-      if (!this.color.equals(Colors.JOKER)) {
+      if (!this.color.equals(Color.JOKER)) {
         throw new IllegalArgumentException("Joker must have color JOKER.");
       }
     }
-    if (this.color.equals(Colors.JOKER)) {
+    if (this.color.equals(Color.JOKER)) {
       if (this.number != JOKER) {
         throw new IllegalArgumentException("Joker must have number JOKER.");
       }
     }
-  }
-
-  public enum Colors {
-    //important to keep JOKER as the last color of the list fot iterating
-    RED, BLACK, BLUE, YELLOW, JOKER
   }
 
   @Override public String toString() {
@@ -50,7 +45,7 @@ public class Tile {
     return this.number;
   }
 
-  public Colors getColor() {
+  public Color getColor() {
     return this.color;
   }
 

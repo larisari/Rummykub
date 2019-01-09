@@ -8,11 +8,11 @@ class ModelTest {
   @Test
   void testStreetOneToFive() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.ONE, Color.BLUE));
-    combination.add(new Tile(Number.TWO, Color.BLUE));
-    combination.add(new Tile(Number.THREE, Color.BLUE));
-    combination.add(new Tile(Number.FOUR, Color.BLUE));
-    combination.add(new Tile(Number.FIVE, Color.BLUE));
+    combination.add(new Tile(1, Color.BLUE));
+    combination.add(new Tile(2, Color.BLUE));
+    combination.add(new Tile(3, Color.BLUE));
+    combination.add(new Tile(4, Color.BLUE));
+    combination.add(new Tile(5, Color.BLUE));
 
     assert CombRules.isValid(combination);
   }
@@ -20,11 +20,11 @@ class ModelTest {
   @Test
   void testStreetTenToOne() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.TEN, Color.BLUE));
-    combination.add(new Tile(Number.ELEVEN, Color.BLUE));
-    combination.add(new Tile(Number.TWELVE, Color.BLUE));
-    combination.add(new Tile(Number.THIRTEEN, Color.BLUE));
-    combination.add(new Tile(Number.ONE, Color.BLUE));
+    combination.add(new Tile(10, Color.BLUE));
+    combination.add(new Tile(11, Color.BLUE));
+    combination.add(new Tile(12, Color.BLUE));
+    combination.add(new Tile(13, Color.BLUE));
+    combination.add(new Tile(14, Color.BLUE));
 
     assert CombRules.isValid(combination);
   }
@@ -32,10 +32,10 @@ class ModelTest {
   @Test
   void testGroup() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.TEN, Color.BLUE));
-    combination.add(new Tile(Number.TEN, Color.BLACK));
-    combination.add(new Tile(Number.TEN, Color.YELLOW));
-    combination.add(new Tile(Number.TEN, Color.RED));
+    combination.add(new Tile(10, Color.BLUE));
+    combination.add(new Tile(10, Color.BLACK));
+    combination.add(new Tile(10, Color.YELLOW));
+    combination.add(new Tile(10, Color.RED));
 
     assert CombRules.isValid(combination);
   }
@@ -43,9 +43,9 @@ class ModelTest {
   @Test
   void testValidFirstMoveWrongComb() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.TEN, Color.BLUE));
-    combination.add(new Tile(Number.TEN, Color.BLACK));
-    combination.add(new Tile(Number.ELEVEN, Color.YELLOW));
+    combination.add(new Tile(10, Color.BLUE));
+    combination.add(new Tile(10, Color.BLACK));
+    combination.add(new Tile(11, Color.YELLOW));
 
     assert !CombRules.isValidFirst(combination);
   }
@@ -53,9 +53,9 @@ class ModelTest {
   @Test
   void testValidFirstMove() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.TEN, Color.BLUE));
-    combination.add(new Tile(Number.TEN, Color.BLACK));
-    combination.add(new Tile(Number.TEN, Color.YELLOW));
+    combination.add(new Tile(10, Color.BLUE));
+    combination.add(new Tile(10, Color.BLACK));
+    combination.add(new Tile(10, Color.YELLOW));
 
     assert CombRules.isValidFirst(combination);
   }
@@ -63,9 +63,9 @@ class ModelTest {
   @Test
   void testValidFirstMoveNotEnoughPoints() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.NINE, Color.BLUE));
-    combination.add(new Tile(Number.NINE, Color.BLACK));
-    combination.add(new Tile(Number.NINE, Color.YELLOW));
+    combination.add(new Tile(9, Color.BLUE));
+    combination.add(new Tile(9, Color.BLACK));
+    combination.add(new Tile(9, Color.YELLOW));
 
     assert !CombRules.isValidFirst(combination);
   }
@@ -81,7 +81,7 @@ class ModelTest {
     Player player_3 = new PlayerImpl();
     System.out.println("ID_3 = " + player_3.getId());
 
-    player_1.putTile(new Tile(Number.ELEVEN, Color.YELLOW));
+    player_1.putTile(new Tile(11, Color.YELLOW));
 
     for (Tile tile : player_1.getTilesOnHand()) {
       System.out.println("TILE = " + tile.getNumber() + ", " + tile.getColor());
