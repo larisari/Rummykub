@@ -15,20 +15,12 @@ public class BoardImpl {
     return this.combos;
   }
 
-  /*
-  -----add combo to playedTiles
-  the combination is wished by the client, prepared by the server and
-  then passed to board
-  */
   public void addCombo(List<Tile> combo) {
     this.combos.add(combo);
   }
 
-  //rearrange combo
-
-  //check for valid combo -> SERVER -> <CLASS> CombRules
-  //e.g. method to check by sending request to server and parse answer?
-
-
+  public List<Tile> getCombo(int index) {
+    return this.combos.get(index);
+  }
 
 }
