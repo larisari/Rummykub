@@ -8,7 +8,7 @@ public class PointsCalculator {
     int points = 0;
 
     for (Tile tile : combination) {
-      points += tile.getNumber().getValue();
+      points += tile.getNumber().value();
     }
 
     return points;

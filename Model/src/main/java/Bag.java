@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +23,7 @@ public class Bag {
   }
 
   public void generateBag() {
-    List<Tile.Colors> colors = Arrays.asList(Tile.Colors.values());
+    List<Color> colors = Arrays.asList(Color.values());
     for (int i = 1; i < MAX_NUM+1; i++) {
       for(int j = 0; j < colors.size()-1; j++) {
         Tile tile = new Tile(i,colors.get(j));
@@ -32,8 +31,8 @@ public class Bag {
         this.tiles.add(tile);
       }
     }
-    this.tiles.add(new Tile(0, Tile.Colors.JOKER));
-    this.tiles.add(new Tile(0, Tile.Colors.JOKER));
+    this.tiles.add(new Tile(0, Color.JOKER));
+    this.tiles.add(new Tile(0, Color.JOKER));
   }
 
   public void remove(Tile tile) {

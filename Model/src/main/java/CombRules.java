@@ -43,7 +43,7 @@ public class CombRules {
 
     if (haveSameColor(combination) && !haveSameNumber(combination)) {
       for (int i = 1; i < combination.size(); i++) {
-        if (!(combination.get(i).getNumber().equals(combination.get(i - 1).getNumber().next()))) {
+        if (!(combination.get(i).getNumber() == (combination.get(i - 1).getNumber().next()))) {
           return false;
         }
       }
