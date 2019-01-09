@@ -6,8 +6,9 @@ public class GameFlow {
   private GameState state;
   private int counter;
 
+
   public GameFlow() {
-    this.players = new ArrayList<>(4);
+    this.players = new ArrayList<>();
     this.state = GameState.distributing;
   }
 
