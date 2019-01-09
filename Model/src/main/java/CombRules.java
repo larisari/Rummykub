@@ -28,7 +28,15 @@ public class CombRules {
 
     if (combinationLength <= 4 && haveSameNumber(combination)) {
       for (int i = 1; i < combinationLength; i++) {
-        if (combination.get(i).getColor().equals(combination.get(i - 1).getColor())) {
+
+        Tile previous = combination.get(i - 1);
+        Tile current = combination.get(i);
+
+        if (previous.getColor().equals(Color.JOKER) || current.getColor().equals(Color.JOKER)) {
+          break;
+        }
+
+        if (current.getColor().equals(previous.getColor())) {
           return false;
         }
       }
@@ -43,7 +51,15 @@ public class CombRules {
 
     if (haveSameColor(combination) && !haveSameNumber(combination)) {
       for (int i = 1; i < combination.size(); i++) {
-        if (!(combination.get(i).getNumber() == (combination.get(i - 1).getNumber().next()))) {
+
+        Tile previous = combination.get(i - 1);
+        Tile current = combination.get(i);
+
+        if (previous.getNumber().equals(Number.JOKER) || current.getNumber().equals(Number.JOKER)) {
+          break;
+        }
+
+        if (!(current.getNumber() == (previous.getNumber().next()))) {
           return false;
         }
       }
@@ -55,6 +71,9 @@ public class CombRules {
   }
 
   private static boolean haveSameNumber(List<Tile> combination) {
+
+    // 2 J 2 2
+
     Number number = combination.get(1).getNumber();
 
     return combination.stream().allMatch(tile -> tile.getNumber().equals(number));

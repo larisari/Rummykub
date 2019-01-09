@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Bag {
@@ -23,16 +22,21 @@ public class Bag {
   }
 
   public void generateBag() {
-    List<Color> colors = Arrays.asList(Color.values());
-    for (int i = 1; i < MAX_NUM+1; i++) {
-      for(int j = 0; j < colors.size()-1; j++) {
-        Tile tile = new Tile(i,colors.get(j));
-        this.tiles.add(tile);
-        this.tiles.add(tile);
+    Number num = Number.ONE;
+
+    for (int i = 0; i < MAX_NUM; i++) {
+      for (int number = 0; number < 2; number++) {
+        this.tiles.add(new Tile(num, Color.BLUE));
+        this.tiles.add(new Tile(num, Color.YELLOW));
+        this.tiles.add(new Tile(num, Color.RED));
+        this.tiles.add(new Tile(num, Color.BLACK));
       }
+
+      num = num.next();
     }
-    this.tiles.add(new Tile(0, Color.JOKER));
-    this.tiles.add(new Tile(0, Color.JOKER));
+
+    this.tiles.add(new Tile(Number.JOKER, Color.JOKER));
+    this.tiles.add(new Tile(Number.JOKER, Color.JOKER));
   }
 
   public void remove(Tile tile) {
