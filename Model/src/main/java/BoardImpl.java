@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class BoardImpl {
   public Bag bag;
   public List<List<Tile>> combos;
