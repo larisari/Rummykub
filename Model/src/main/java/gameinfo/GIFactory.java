@@ -8,5 +8,4 @@ public class GIFactory {
   public static GameInfo makeFor(int numberOfPlayers) {
     return new GameInfoImpl(numberOfPlayers);
   }
-
 }
