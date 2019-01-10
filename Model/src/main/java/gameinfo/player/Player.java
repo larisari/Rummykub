@@ -1,3 +1,6 @@
+package gameinfo.player;
+
+import tile.Tile;
 import java.util.List;
 
 public interface Player {

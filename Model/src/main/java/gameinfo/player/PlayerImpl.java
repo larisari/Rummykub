@@ -1,17 +1,21 @@
+package gameinfo.player;
+
+import tile.Tile;
+
 import java.util.List;
 import java.util.UUID;
 
-public class PlayerImpl implements Player {
+class PlayerImpl implements Player {
 
   private Hand hand;
   private String id;
 
-  public PlayerImpl() {
+  PlayerImpl() {
     hand = new Hand();
     id = UUID.randomUUID().toString();
   }
 
-  public PlayerImpl(String id) {
+  PlayerImpl(String id) {
     this.hand = new Hand();
     this.id = id;
   }

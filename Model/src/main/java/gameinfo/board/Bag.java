@@ -1,27 +1,23 @@
+package gameinfo.board;
+
+import tile.Tile;
+import tile.util.TileColor;
+import tile.util.TileNumber;
+
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bag {
+class Bag {
   private final int SUM_TILES = 106;
   private final int MAX_NUM = 13;
   public List<Tile> tiles;
 
-  public Bag() {
+  Bag() {
     this.tiles = new ArrayList<>(SUM_TILES);
     generateBag();
   }
 
-  public Tile getTile(int position) {
-    //position starting at 0
-    return this.tiles.get(position);
-  }
-
-  public boolean isInBag(Tile tile) {
-   //TODO isInBag
-    return false;
-  }
-
-  public void generateBag() {
+  private void generateBag() {
     TileNumber num = TileNumber.ONE;
 
     for (int i = 0; i < MAX_NUM; i++) {
@@ -38,6 +34,18 @@ public class Bag {
     this.tiles.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
     this.tiles.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
   }
+
+  public Tile getTile(int position) {
+    //position starting at 0
+    return this.tiles.get(position);
+  }
+
+  public boolean isInBag(Tile tile) {
+   //TODO isInBag
+    return false;
+  }
+
+
 
   public void remove(Tile tile) {
     this.tiles.remove(tile);

@@ -1,8 +1,12 @@
+package gameinfo.player;
+
+import tile.Tile;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Hand {
+class Hand {
 
   private List<Tile> tilesOnHand;
 
@@ -28,7 +32,7 @@ public class Hand {
   }
 
   // why exactly do we need this ???
-  public Optional<Tile> pickTile(int position) {
+  Optional<Tile> pickTile(int position) {
     Tile tileAtPosition = tilesOnHand.get(position);
 
     if (tileAtPosition != null) {

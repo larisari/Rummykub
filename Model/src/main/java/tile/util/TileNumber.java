@@ -1,3 +1,5 @@
+package tile.util;
+
 public enum TileNumber {
   ONE,
   TWO,
@@ -47,7 +49,7 @@ public enum TileNumber {
         // TODO !!!
         return JOKER;
       default:
-        throw new IllegalArgumentException("Not a valid TileNumber.");
+        throw new IllegalArgumentException("Not a valid tile.util.TileNumber.");
     }
   }
 
@@ -83,7 +85,7 @@ public enum TileNumber {
         // TODO !!!
         return JOKER;
       default:
-        throw new IllegalArgumentException("Not a valid TileNumber.");
+        throw new IllegalArgumentException("Not a valid tile.util.TileNumber.");
     }
   }
 
@@ -119,7 +121,7 @@ public enum TileNumber {
         // TODO !!!
         return 0;
       default:
-        throw new IllegalArgumentException("Not a valid TileNumber.");
+        throw new IllegalArgumentException("Not a valid tile.util.TileNumber.");
     }
   }
 }

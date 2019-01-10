@@ -1,3 +1,8 @@
+package tile;
+
+import tile.util.TileColor;
+import tile.util.TileNumber;
+
 public class Tile {
   private final int MIN_NUM = 1;
   private final int MAX_NUM = 13;
@@ -17,7 +22,7 @@ public class Tile {
       checkForJoker();
     }
     else {
-      throw new IllegalArgumentException("Invalid argument for Tile " +
+      throw new IllegalArgumentException("Invalid argument for tile.Tile " +
           "declaration.");
     }
   }
