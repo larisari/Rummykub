@@ -1,6 +1,9 @@
 package gameinfo.player;
 
-public class PlayerFactory {
+public class PFactory {
+
+  private PFactory() {
+  }
 
   public static Player make() {
     return new PlayerImpl();

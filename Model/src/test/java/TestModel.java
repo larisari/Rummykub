@@ -1,7 +1,7 @@
+import gameinfo.GIFactory;
 import gameinfo.GameInfo;
-import gameinfo.GameInfoFactory;
+import gameinfo.player.PFactory;
 import gameinfo.player.Player;
-import gameinfo.player.PlayerFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import tile.Tile;
@@ -17,7 +17,7 @@ class TestModel {
 
   @BeforeAll
   static void createCombRules() {
-    gameInfo = GameInfoFactory.makeFor(4);
+    gameInfo = GIFactory.makeFor(4);
   }
 
   @Test
@@ -162,13 +162,13 @@ class TestModel {
 
   @Test
   void playerTest() {
-    Player player_1 = PlayerFactory.make();
+    Player player_1 = PFactory.make();
     System.out.println("ID_1 = " + player_1.getId());
 
-    Player player_2 = PlayerFactory.make();
+    Player player_2 = PFactory.make();
     System.out.println("ID_2 = " + player_2.getId());
 
-    Player player_3 = PlayerFactory.make();
+    Player player_3 = PFactory.make();
     System.out.println("ID_3 = " + player_3.getId());
 
     player_1.putTile(new Tile(TileNumber.ELEVEN, TileColor.YELLOW));

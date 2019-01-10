@@ -1,11 +1,11 @@
 package gameinfo;
 
+import gameinfo.board.BFactory;
 import gameinfo.board.Board;
-import gameinfo.board.BoardFactory;
+import gameinfo.player.PFactory;
 import gameinfo.player.Player;
-import gameinfo.player.PlayerFactory;
+import gameinfo.rules.RFactory;
 import gameinfo.rules.Rules;
-import gameinfo.rules.RulesFactory;
 import tile.Tile;
 
 import java.util.ArrayList;
@@ -19,12 +19,12 @@ class GameInfoImpl implements GameInfo {
   private List<Player> players;
 
   GameInfoImpl(int numberOfPlayers) {
-    board = BoardFactory.make();
-    rules = RulesFactory.make();
+    board = BFactory.make();
+    rules = RFactory.make();
     players = new ArrayList<>();
 
     for (int i = 0; i < numberOfPlayers; i++) {
-      players.add(PlayerFactory.make());
+      players.add(PFactory.make());
     }
   }
 

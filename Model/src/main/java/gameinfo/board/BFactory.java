@@ -1,6 +1,9 @@
 package gameinfo.board;
 
-public class BoardFactory {
+public class BFactory {
+
+  private BFactory() {
+  }
 
   public static Board make() {
     return new BoardImpl();
