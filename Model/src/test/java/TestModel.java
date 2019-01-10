@@ -1,8 +1,7 @@
+import gameinfo.GameInfo;
+import gameinfo.GameInfoFactory;
 import gameinfo.player.Player;
 import gameinfo.player.PlayerFactory;
-import gameinfo.rules.PointsCalculator;
-import gameinfo.rules.Rules;
-import gameinfo.rules.RulesFactory;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import tile.Tile;
@@ -14,13 +13,11 @@ import java.util.List;
 
 class TestModel {
 
-  private static Rules rules;
-  private static PointsCalculator calculator;
+  private static GameInfo gameInfo;
 
   @BeforeAll
   static void createCombRules() {
-    calculator = new PointsCalculator();
-    rules = RulesFactory.make();
+    gameInfo = GameInfoFactory.makeFor(4);
   }
 
   @Test
@@ -32,7 +29,7 @@ class TestModel {
     combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
     combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
 
-    assert rules.isValid(combination);
+    assert gameInfo.isValidMove(combination);
   }
 
   @Test
@@ -44,7 +41,7 @@ class TestModel {
     combination.add(new Tile(TileNumber.THIRTEEN, TileColor.BLUE));
     combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
 
-    assert rules.isValid(combination);
+    assert gameInfo.isValidMove(combination);
   }
 
   @Test
@@ -55,7 +52,7 @@ class TestModel {
     combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
     combination.add(new Tile(TileNumber.TEN, TileColor.RED));
 
-    assert rules.isValid(combination);
+    assert gameInfo.isValidMove(combination);
   }
 
   @Test
@@ -65,7 +62,7 @@ class TestModel {
     combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
     combination.add(new Tile(TileNumber.ELEVEN, TileColor.YELLOW));
 
-    assert !rules.isValid(combination, 30);
+    assert !(gameInfo.isValidMove(combination) && gameInfo.getPointsForMove(combination) >= 30);
   }
 
   @Test
@@ -75,7 +72,7 @@ class TestModel {
     combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
     combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
 
-    assert rules.isValid(combination, 30);
+    assert (gameInfo.isValidMove(combination) && gameInfo.getPointsForMove(combination) >= 30);
   }
 
   @Test
@@ -85,7 +82,7 @@ class TestModel {
     combination.add(new Tile(TileNumber.NINE, TileColor.BLACK));
     combination.add(new Tile(TileNumber.NINE, TileColor.YELLOW));
 
-    assert !rules.isValid(combination, 30);
+    assert !(gameInfo.isValidMove(combination) && gameInfo.getPointsForMove(combination) >= 30);
   }
 
   @Test
@@ -96,7 +93,7 @@ class TestModel {
     combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
     combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
 
-    assert rules.isValid(combination);
+    assert (gameInfo.isValidMove(combination) && gameInfo.getPointsForMove(combination) >= 30);
   }
 
   @Test
@@ -107,8 +104,8 @@ class TestModel {
     combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
     combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
 
-    assert rules.isValid(combination);
-    assert calculator.getPointsForGroup(combination) == 40;
+    assert gameInfo.isValidMove(combination);
+    assert gameInfo.getPointsForMove(combination) == 40;
   }
 
   @Test
@@ -120,8 +117,8 @@ class TestModel {
     combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
     combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
 
-    assert rules.isValid(combination);
-    assert calculator.getPointsForStreet(combination) == 15;
+    assert gameInfo.isValidMove(combination);
+    assert gameInfo.getPointsForMove(combination) == 15;
   }
 
   @Test
@@ -133,8 +130,8 @@ class TestModel {
     combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
     combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
 
-    assert rules.isValid(combination);
-    assert calculator.getPointsForStreet(combination) == 15;
+    assert gameInfo.isValidMove(combination);
+    assert gameInfo.getPointsForMove(combination) == 15;
   }
 
   @Test
@@ -146,8 +143,8 @@ class TestModel {
     combination.add(new Tile(TileNumber.THIRTEEN, TileColor.BLUE));
     combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
 
-    assert rules.isValid(combination);
-    assert calculator.getPointsForStreet(combination) == 47;
+    assert gameInfo.isValidMove(combination);
+    assert gameInfo.getPointsForMove(combination) == 47;
   }
 
   @Test
@@ -159,8 +156,8 @@ class TestModel {
     combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
     combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
 
-    assert rules.isValid(combination);
-    assert calculator.getPointsForStreet(combination) == 47;
+    assert gameInfo.isValidMove(combination);
+    assert gameInfo.getPointsForMove(combination) == 47;
   }
 
   @Test
