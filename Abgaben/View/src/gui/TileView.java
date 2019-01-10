@@ -2,9 +2,11 @@ package gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
 
 
 public class TileView {
@@ -15,7 +17,7 @@ private static final int TILE_HEIGHT = 65;
   @FXML
   private HBox bottomHand;
 
-
+/**
   public Image getImage(Tile tile){
     String color;
     Color tileColor = tile.getColor();
@@ -42,7 +44,7 @@ private static final int TILE_HEIGHT = 65;
       }
     }
   }
-
+**/
   /**
    * Returns false if ImageView contains an image or if an error occured while loading.
    * @param imageV - ImageView to be checked.
@@ -75,8 +77,19 @@ private static final int TILE_HEIGHT = 65;
       }
 }
 
-
   }
+
+  public static void highlightTile(ImageView imageV){
+    DropShadow borderGlow = new DropShadow();
+    borderGlow.setOffsetX(0f);
+    borderGlow.setOffsetY(0f);
+    borderGlow.setColor(Color.WHITE);
+    borderGlow.setWidth(50);
+    borderGlow.setHeight(50);
+
+    imageV.setEffect(borderGlow);
+  }
+
 /**
   public ImageView createTileView(Tile tile){
     ImageView iView = new ImageView(getImage(tile));

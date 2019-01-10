@@ -15,13 +15,18 @@ public class ClientGui {
   @FXML private HBox topHand;
 
 
+  //3-4 Player.
+  //ab 3 Spieler: Spiel starten möglich.
+  //Aufgeben weg
+
   public ClientGui(){
   }
 
+
   /**
    * For displaying Tiles on Player hand.
-   * @param hand
    */
+  /*
   void setHand(Hand hand){
     for (int i = 0; i < hand.getTiles().size(); i++){ //kein foreach wegen equals
       Tile tile = hand.getTiles().get(i);
@@ -29,7 +34,7 @@ public class ClientGui {
     tView.createTile(tileImage);
     }
   }
-
+*/
   void placeTiles(){
 
   }
