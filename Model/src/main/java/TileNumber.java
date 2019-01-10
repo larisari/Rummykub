@@ -1,4 +1,4 @@
-public enum Number {
+public enum TileNumber {
   ONE,
   TWO,
   THREE,
@@ -15,7 +15,7 @@ public enum Number {
 
   JOKER;
 
-  public Number next() {
+  public TileNumber next() {
     switch (this) {
       case ONE:
         return TWO;
@@ -47,7 +47,43 @@ public enum Number {
         // TODO !!!
         return JOKER;
       default:
-        throw new IllegalArgumentException("Not a valid Number.");
+        throw new IllegalArgumentException("Not a valid TileNumber.");
+    }
+  }
+
+  public TileNumber previous() {
+    switch (this) {
+      case ONE:
+        return THIRTEEN;
+      case TWO:
+        return ONE;
+      case THREE:
+        return TWO;
+      case FOUR:
+        return THREE;
+      case FIVE:
+        return FOUR;
+      case SIX:
+        return FIVE;
+      case SEVEN:
+        return SIX;
+      case EIGHT:
+        return SEVEN;
+      case NINE:
+        return EIGHT;
+      case TEN:
+        return NINE;
+      case ELEVEN:
+        return TEN;
+      case TWELVE:
+        return ELEVEN;
+      case THIRTEEN:
+        return TWELVE;
+      case JOKER:
+        // TODO !!!
+        return JOKER;
+      default:
+        throw new IllegalArgumentException("Not a valid TileNumber.");
     }
   }
 
@@ -83,7 +119,7 @@ public enum Number {
         // TODO !!!
         return 0;
       default:
-        throw new IllegalArgumentException("Not a valid Number.");
+        throw new IllegalArgumentException("Not a valid TileNumber.");
     }
   }
 }

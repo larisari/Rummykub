@@ -22,7 +22,7 @@ public class CombRules {
     return isGroup(combination) || isStreet(combination);
   }
 
-  private static boolean isGroup(List<Tile> combination) {
+  static boolean isGroup(List<Tile> combination) {
 
     int combinationLength = combination.size();
 
@@ -32,7 +32,7 @@ public class CombRules {
         Tile previous = combination.get(i - 1);
         Tile current = combination.get(i);
 
-        if (previous.getColor().equals(Color.JOKER) || current.getColor().equals(Color.JOKER)) {
+        if (previous.getColor().equals(TileColor.JOKER) || current.getColor().equals(TileColor.JOKER)) {
           break;
         }
 
@@ -47,7 +47,7 @@ public class CombRules {
     return true;
   }
 
-  private static boolean isStreet(List<Tile> combination) {
+  static boolean isStreet(List<Tile> combination) {
 
     if (haveSameColor(combination) && !haveSameNumber(combination)) {
       for (int i = 1; i < combination.size(); i++) {
@@ -55,7 +55,7 @@ public class CombRules {
         Tile previous = combination.get(i - 1);
         Tile current = combination.get(i);
 
-        if (previous.getNumber().equals(Number.JOKER) || current.getNumber().equals(Number.JOKER)) {
+        if (previous.getNumber().equals(TileNumber.JOKER) || current.getNumber().equals(TileNumber.JOKER)) {
           break;
         }
 
@@ -71,42 +71,44 @@ public class CombRules {
   }
 
   private static boolean haveSameNumber(List<Tile> combination) {
-    Number tempNum = combination.get(1).getNumber();
+    TileNumber tempNum = combination.get(0).getNumber();
 
-    if (tempNum.equals(Number.JOKER)) {
+    if (tempNum.equals(TileNumber.JOKER)) {
       for (Tile tile : combination) {
-        Number num = tile.getNumber();
+        TileNumber num = tile.getNumber();
 
-        if (!num.equals(Number.JOKER)) {
+        if (!num.equals(TileNumber.JOKER)) {
           tempNum = num;
+          break;
         }
       }
     }
 
-    Number number = tempNum;
+    TileNumber number = tempNum;
 
     return combination
         .stream()
-        .allMatch(tile -> tile.getNumber().equals(number) || tile.getNumber().equals(Number.JOKER));
+        .allMatch(tile -> tile.getNumber().equals(number) || tile.getNumber().equals(TileNumber.JOKER));
   }
 
   private static boolean haveSameColor(List<Tile> combination) {
-    Color tempColor = combination.get(1).getColor();
+    TileColor tempColor = combination.get(0).getColor();
 
-    if (tempColor.equals(Color.JOKER)) {
+    if (tempColor.equals(TileColor.JOKER)) {
       for (Tile tile : combination) {
-        Color col = tile.getColor();
+        TileColor col = tile.getColor();
 
-        if (!col.equals(Color.JOKER)) {
+        if (!col.equals(TileColor.JOKER)) {
           tempColor = col;
+          break;
         }
       }
     }
 
-    Color color = tempColor;
+    TileColor color = tempColor;
 
     return combination
         .stream()
-        .allMatch(tile -> tile.getColor().equals(color) || tile.getColor().equals(Color.JOKER));
+        .allMatch(tile -> tile.getColor().equals(color) || tile.getColor().equals(TileColor.JOKER));
   }
 }

@@ -8,11 +8,11 @@ class TestModel {
   @Test
   void testStreetOneToFive() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.ONE, Color.BLUE));
-    combination.add(new Tile(Number.TWO, Color.BLUE));
-    combination.add(new Tile(Number.THREE, Color.BLUE));
-    combination.add(new Tile(Number.FOUR, Color.BLUE));
-    combination.add(new Tile(Number.FIVE, Color.BLUE));
+    combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.TWO, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.THREE, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
 
     assert CombRules.isValid(combination);
   }
@@ -20,11 +20,11 @@ class TestModel {
   @Test
   void testStreetTenToOne() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.TEN, Color.BLUE));
-    combination.add(new Tile(Number.ELEVEN, Color.BLUE));
-    combination.add(new Tile(Number.TWELVE, Color.BLUE));
-    combination.add(new Tile(Number.THIRTEEN, Color.BLUE));
-    combination.add(new Tile(Number.ONE, Color.BLUE));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.ELEVEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.TWELVE, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.THIRTEEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
 
     assert CombRules.isValid(combination);
   }
@@ -32,10 +32,10 @@ class TestModel {
   @Test
   void testGroup() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.TEN, Color.BLUE));
-    combination.add(new Tile(Number.TEN, Color.BLACK));
-    combination.add(new Tile(Number.TEN, Color.YELLOW));
-    combination.add(new Tile(Number.TEN, Color.RED));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
+    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
+    combination.add(new Tile(TileNumber.TEN, TileColor.RED));
 
     assert CombRules.isValid(combination);
   }
@@ -43,9 +43,9 @@ class TestModel {
   @Test
   void testValidFirstMoveWrongComb() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.TEN, Color.BLUE));
-    combination.add(new Tile(Number.TEN, Color.BLACK));
-    combination.add(new Tile(Number.ELEVEN, Color.YELLOW));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
+    combination.add(new Tile(TileNumber.ELEVEN, TileColor.YELLOW));
 
     assert !CombRules.isValidFirst(combination);
   }
@@ -53,9 +53,9 @@ class TestModel {
   @Test
   void testValidFirstMove() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.TEN, Color.BLUE));
-    combination.add(new Tile(Number.TEN, Color.BLACK));
-    combination.add(new Tile(Number.TEN, Color.YELLOW));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
+    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
 
     assert CombRules.isValidFirst(combination);
   }
@@ -63,9 +63,9 @@ class TestModel {
   @Test
   void testValidFirstMoveNotEnoughPoints() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.NINE, Color.BLUE));
-    combination.add(new Tile(Number.NINE, Color.BLACK));
-    combination.add(new Tile(Number.NINE, Color.YELLOW));
+    combination.add(new Tile(TileNumber.NINE, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.NINE, TileColor.BLACK));
+    combination.add(new Tile(TileNumber.NINE, TileColor.YELLOW));
 
     assert !CombRules.isValidFirst(combination);
   }
@@ -73,10 +73,10 @@ class TestModel {
   @Test
   void testGroupWithJoker() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.JOKER, Color.JOKER));
-    combination.add(new Tile(Number.TEN, Color.BLUE));
-    combination.add(new Tile(Number.TEN, Color.BLACK));
-    combination.add(new Tile(Number.TEN, Color.YELLOW));
+    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
+    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
 
     assert CombRules.isValid(combination);
   }
@@ -84,60 +84,65 @@ class TestModel {
   @Test
   void testGroupWithJokerNotFirst() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.TEN, Color.BLUE));
-    combination.add(new Tile(Number.JOKER, Color.JOKER));
-    combination.add(new Tile(Number.TEN, Color.BLACK));
-    combination.add(new Tile(Number.TEN, Color.YELLOW));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
+    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
 
     assert CombRules.isValid(combination);
+    assert PointsCalculator.getPointsOf(combination) == 40;
   }
 
   @Test
   void testStreetOneToFiveJOKER() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.JOKER, Color.JOKER));
-    combination.add(new Tile(Number.TWO, Color.BLUE));
-    combination.add(new Tile(Number.THREE, Color.BLUE));
-    combination.add(new Tile(Number.FOUR, Color.BLUE));
-    combination.add(new Tile(Number.FIVE, Color.BLUE));
+    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
+    combination.add(new Tile(TileNumber.TWO, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.THREE, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
 
     assert CombRules.isValid(combination);
+    assert PointsCalculator.getPointsOf(combination) == 15;
   }
 
   @Test
   void testStreetOneToFiveJOKERNotAtFirst() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.ONE, Color.BLUE));
-    combination.add(new Tile(Number.TWO, Color.BLUE));
-    combination.add(new Tile(Number.JOKER, Color.JOKER));
-    combination.add(new Tile(Number.FOUR, Color.BLUE));
-    combination.add(new Tile(Number.FIVE, Color.BLUE));
+    combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.TWO, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
+    combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
 
     assert CombRules.isValid(combination);
+    assert PointsCalculator.getPointsOf(combination) == 15;
   }
 
   @Test
   void testStreetTenToOneJOKER() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.JOKER, Color.JOKER));
-    combination.add(new Tile(Number.ELEVEN, Color.BLUE));
-    combination.add(new Tile(Number.TWELVE, Color.BLUE));
-    combination.add(new Tile(Number.THIRTEEN, Color.BLUE));
-    combination.add(new Tile(Number.ONE, Color.BLUE));
+    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
+    combination.add(new Tile(TileNumber.ELEVEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.TWELVE, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.THIRTEEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
 
     assert CombRules.isValid(combination);
+    assert PointsCalculator.getPointsOf(combination) == 47;
   }
 
   @Test
   void testStreetTenToOneJOKERNotAtFirst() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(Number.TEN, Color.BLUE));
-    combination.add(new Tile(Number.ELEVEN, Color.BLUE));
-    combination.add(new Tile(Number.TWELVE, Color.BLUE));
-    combination.add(new Tile(Number.JOKER, Color.JOKER));
-    combination.add(new Tile(Number.ONE, Color.BLUE));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.ELEVEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.TWELVE, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
+    combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
 
     assert CombRules.isValid(combination);
+    assert PointsCalculator.getPointsOf(combination) == 47;
   }
 
   @Test
@@ -151,7 +156,7 @@ class TestModel {
     Player player_3 = new PlayerImpl();
     System.out.println("ID_3 = " + player_3.getId());
 
-    player_1.putTile(new Tile(Number.ELEVEN, Color.YELLOW));
+    player_1.putTile(new Tile(TileNumber.ELEVEN, TileColor.YELLOW));
 
     for (Tile tile : player_1.getTilesOnHand()) {
       System.out.println("TILE = " + tile.getNumber() + ", " + tile.getColor());
