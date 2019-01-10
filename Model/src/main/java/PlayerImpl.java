@@ -11,6 +11,11 @@ public class PlayerImpl implements Player {
     id = UUID.randomUUID().toString();
   }
 
+  public PlayerImpl(String id) {
+    this.hand = new Hand();
+    this.id = id;
+  }
+
   public List<Tile> getTilesOnHand() {
     return hand.getTilesOnHand();
   }
