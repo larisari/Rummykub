@@ -71,17 +71,42 @@ public class CombRules {
   }
 
   private static boolean haveSameNumber(List<Tile> combination) {
+    Number tempNum = combination.get(1).getNumber();
 
-    // 2 J 2 2
+    if (tempNum.equals(Number.JOKER)) {
+      for (Tile tile : combination) {
+        Number num = tile.getNumber();
 
-    Number number = combination.get(1).getNumber();
+        if (!num.equals(Number.JOKER)) {
+          tempNum = num;
+        }
+      }
+    }
 
-    return combination.stream().allMatch(tile -> tile.getNumber().equals(number));
+    Number number = tempNum;
+
+    return combination
+        .stream()
+        .allMatch(tile -> tile.getNumber().equals(number) || tile.getNumber().equals(Number.JOKER));
   }
 
   private static boolean haveSameColor(List<Tile> combination) {
-    Color color = combination.get(1).getColor();
+    Color tempColor = combination.get(1).getColor();
 
-    return combination.stream().allMatch(tile -> tile.getColor().equals(color));
+    if (tempColor.equals(Color.JOKER)) {
+      for (Tile tile : combination) {
+        Color col = tile.getColor();
+
+        if (!col.equals(Color.JOKER)) {
+          tempColor = col;
+        }
+      }
+    }
+
+    Color color = tempColor;
+
+    return combination
+        .stream()
+        .allMatch(tile -> tile.getColor().equals(color) || tile.getColor().equals(Color.JOKER));
   }
 }

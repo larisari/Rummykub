@@ -71,6 +71,76 @@ class TestModel {
   }
 
   @Test
+  void testGroupWithJoker() {
+    List<Tile> combination = new ArrayList<>();
+    combination.add(new Tile(Number.JOKER, Color.JOKER));
+    combination.add(new Tile(Number.TEN, Color.BLUE));
+    combination.add(new Tile(Number.TEN, Color.BLACK));
+    combination.add(new Tile(Number.TEN, Color.YELLOW));
+
+    assert CombRules.isValid(combination);
+  }
+
+  @Test
+  void testGroupWithJokerNotFirst() {
+    List<Tile> combination = new ArrayList<>();
+    combination.add(new Tile(Number.TEN, Color.BLUE));
+    combination.add(new Tile(Number.JOKER, Color.JOKER));
+    combination.add(new Tile(Number.TEN, Color.BLACK));
+    combination.add(new Tile(Number.TEN, Color.YELLOW));
+
+    assert CombRules.isValid(combination);
+  }
+
+  @Test
+  void testStreetOneToFiveJOKER() {
+    List<Tile> combination = new ArrayList<>();
+    combination.add(new Tile(Number.JOKER, Color.JOKER));
+    combination.add(new Tile(Number.TWO, Color.BLUE));
+    combination.add(new Tile(Number.THREE, Color.BLUE));
+    combination.add(new Tile(Number.FOUR, Color.BLUE));
+    combination.add(new Tile(Number.FIVE, Color.BLUE));
+
+    assert CombRules.isValid(combination);
+  }
+
+  @Test
+  void testStreetOneToFiveJOKERNotAtFirst() {
+    List<Tile> combination = new ArrayList<>();
+    combination.add(new Tile(Number.ONE, Color.BLUE));
+    combination.add(new Tile(Number.TWO, Color.BLUE));
+    combination.add(new Tile(Number.JOKER, Color.JOKER));
+    combination.add(new Tile(Number.FOUR, Color.BLUE));
+    combination.add(new Tile(Number.FIVE, Color.BLUE));
+
+    assert CombRules.isValid(combination);
+  }
+
+  @Test
+  void testStreetTenToOneJOKER() {
+    List<Tile> combination = new ArrayList<>();
+    combination.add(new Tile(Number.JOKER, Color.JOKER));
+    combination.add(new Tile(Number.ELEVEN, Color.BLUE));
+    combination.add(new Tile(Number.TWELVE, Color.BLUE));
+    combination.add(new Tile(Number.THIRTEEN, Color.BLUE));
+    combination.add(new Tile(Number.ONE, Color.BLUE));
+
+    assert CombRules.isValid(combination);
+  }
+
+  @Test
+  void testStreetTenToOneJOKERNotAtFirst() {
+    List<Tile> combination = new ArrayList<>();
+    combination.add(new Tile(Number.TEN, Color.BLUE));
+    combination.add(new Tile(Number.ELEVEN, Color.BLUE));
+    combination.add(new Tile(Number.TWELVE, Color.BLUE));
+    combination.add(new Tile(Number.JOKER, Color.JOKER));
+    combination.add(new Tile(Number.ONE, Color.BLUE));
+
+    assert CombRules.isValid(combination);
+  }
+
+  @Test
   void playerTest() {
     Player player_1 = new PlayerImpl();
     System.out.println("ID_1 = " + player_1.getId());

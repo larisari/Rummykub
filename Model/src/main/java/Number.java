@@ -81,7 +81,7 @@ public enum Number {
         return 13;
       case JOKER:
         // TODO !!!
-        return 20;
+        return 0;
       default:
         throw new IllegalArgumentException("Not a valid Number.");
     }
