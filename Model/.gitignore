@@ -49,5 +49,5 @@ gen
 .DS_Store
 src/main/resources/
 src/test/resources/
-gradle/
+#gradle/
 notes.txt
