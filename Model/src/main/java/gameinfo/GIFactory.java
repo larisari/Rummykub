@@ -5,7 +5,7 @@ public class GIFactory {
   private GIFactory() {
   }
 
-  public static GameInfo makeFor() {
+  public static GIGameInfo makeFor() {
     return new GameInfoImpl();
   }
 }

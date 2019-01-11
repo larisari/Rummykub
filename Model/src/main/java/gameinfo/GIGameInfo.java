@@ -6,7 +6,7 @@ import tile.Tile;
 import java.util.List;
 import java.util.Optional;
 
-public interface GameInfo {
+public interface GIGameInfo {
 
   String getNextPlayerID();
 
@@ -20,7 +20,7 @@ public interface GameInfo {
 
   int getPointsForMove(List<Tile> combination);
 
-  void register(Player player);
+  void registerBy(String id);
 
-  void deregisterPlayerBy(String id);
+  void deregisterBy(String id);
 }

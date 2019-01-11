@@ -1,5 +1,5 @@
 import gameinfo.GIFactory;
-import gameinfo.GameInfo;
+import gameinfo.GIGameInfo;
 import gameinfo.player.PFactory;
 import gameinfo.player.Player;
 import org.junit.jupiter.api.BeforeAll;
@@ -13,7 +13,7 @@ import java.util.List;
 
 class TestModel {
 
-  private static GameInfo gameInfo;
+  private static GIGameInfo gameInfo;
 
   @BeforeAll
   static void createCombRules() {

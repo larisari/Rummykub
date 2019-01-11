@@ -2,6 +2,7 @@ package gameinfo;
 
 import gameinfo.board.BFactory;
 import gameinfo.board.Board;
+import gameinfo.player.PFactory;
 import gameinfo.player.Player;
 import gameinfo.rules.RFactory;
 import gameinfo.rules.Rules;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-class GameInfoImpl implements GameInfo {
+class GameInfoImpl implements GIGameInfo {
 
   private Board board;
   private Rules rules;
@@ -24,12 +25,12 @@ class GameInfoImpl implements GameInfo {
   }
 
   @Override
-  public void register(Player player) {
-    players.add(player);
+  public void registerBy(String id) {
+    players.add(PFactory.makeWith(id));
   }
 
   @Override
-  public void deregisterPlayerBy(String id) {
+  public void deregisterBy(String id) {
     for (Player player : players) {
       if (player.getId().equals(id)) {
         players.remove(player);
