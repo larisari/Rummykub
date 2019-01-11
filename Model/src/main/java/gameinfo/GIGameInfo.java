@@ -18,6 +18,9 @@ public interface GIGameInfo {
 
   Optional<Tile> getTileFor(String id);
 
+  // just for the test TODO: REMOVE
+  // for the real function one needs to pass the id.
+  // also a problem is on how to add functionality to combine tiles on board.
   boolean isValidMove(List<Tile> combination);
 
   int getPointsForMove(List<Tile> combination);
