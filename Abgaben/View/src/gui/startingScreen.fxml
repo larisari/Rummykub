@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #6BDCF3#6BDCF3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GuiController">
+<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #6BDCF3#6BDCF3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.StartingScreenController">
    <children>
       <Button fx:id="createGame" layoutX="348.0" layoutY="451.0" mnemonicParsing="false" onMouseClicked="#handleCreateGame" prefHeight="70.0" prefWidth="180.0" text="Create Game" textAlignment="CENTER" wrapText="true">
          <font>
