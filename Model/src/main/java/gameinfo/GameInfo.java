@@ -1,5 +1,6 @@
 package gameinfo;
 
+import gameinfo.player.Player;
 import tile.Tile;
 
 import java.util.List;
@@ -18,4 +19,8 @@ public interface GameInfo {
   boolean isValidMove(List<Tile> combination);
 
   int getPointsForMove(List<Tile> combination);
+
+  void register(Player player);
+
+  void deregisterPlayerBy(String id);
 }

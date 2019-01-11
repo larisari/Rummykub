@@ -2,7 +2,6 @@ package gameinfo;
 
 import gameinfo.board.BFactory;
 import gameinfo.board.Board;
-import gameinfo.player.PFactory;
 import gameinfo.player.Player;
 import gameinfo.rules.RFactory;
 import gameinfo.rules.Rules;
@@ -18,13 +17,23 @@ class GameInfoImpl implements GameInfo {
   private Rules rules;
   private List<Player> players;
 
-  GameInfoImpl(int numberOfPlayers) {
+  GameInfoImpl() {
     board = BFactory.make();
     rules = RFactory.make();
     players = new ArrayList<>();
+  }
 
-    for (int i = 0; i < numberOfPlayers; i++) {
-      players.add(PFactory.make());
+  @Override
+  public void register(Player player) {
+    players.add(player);
+  }
+
+  @Override
+  public void deregisterPlayerBy(String id) {
+    for (Player player : players) {
+      if (player.getId().equals(id)) {
+        players.remove(player);
+      }
     }
   }
 
