@@ -1,4 +1,4 @@
-package gameinfo.rules;
+package gameinfo;
 
 import java.util.ArrayList;
 import java.util.List;

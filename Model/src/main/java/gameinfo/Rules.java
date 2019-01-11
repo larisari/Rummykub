@@ -1,37 +1,33 @@
-package gameinfo.rules;
+package gameinfo;
 
 import tile.Tile;
 import java.util.List;
 
-class RulesImpl implements Rules {
+class Rules {
 
   private GameFlow gameFlow;
   private PointsCalculator pointsCalculator;
   private CombRules combRules;
 
-  RulesImpl() {
+  Rules() {
     gameFlow = new GameFlow();
     pointsCalculator = new PointsCalculator();
     combRules = new CombRules(pointsCalculator);
   }
 
-  @Override
-  public String getNextPlayerID() {
+  String getNextPlayerID() {
     return gameFlow.getNextPlayerID();
   }
 
-  @Override
-  public boolean isValid(List<Tile> combination) {
+  boolean isValid(List<Tile> combination) {
     return combRules.isValid(combination);
   }
 
-  @Override
-  public boolean isValid(List<Tile> combination, int minimumPoints) {
+  boolean isValid(List<Tile> combination, int minimumPoints) {
     return combRules.isValid(combination, minimumPoints);
   }
 
-  @Override
-  public int getPointsFor(List<Tile> combination) {
+  int getPointsFor(List<Tile> combination) {
     if (combRules.isGroup(combination)) {
       return pointsCalculator.getPointsForGroup(combination);
     } else if (combRules.isStreet(combination)) {

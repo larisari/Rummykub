@@ -1,38 +1,44 @@
-package gameinfo.player;
+package gameinfo;
 
 import tile.Tile;
 
 import java.util.List;
 import java.util.UUID;
 
-class PlayerImpl implements Player {
+class Player {
 
   private Hand hand;
   private String id;
 
-  PlayerImpl() {
+  Player() {
     hand = new Hand();
     id = UUID.randomUUID().toString();
   }
 
-  PlayerImpl(String id) {
+  Player(String id) {
     this.hand = new Hand();
     this.id = id;
   }
 
-  public List<Tile> getTilesOnHand() {
+  List<Tile> getTilesOnHand() {
     return hand.getTilesOnHand();
   }
 
-  public String getId() {
+  String getId() {
     return id;
   }
 
-  public void putTile(Tile tile) {
+  void put(Tile tile) {
     hand.putTile(tile);
   }
 
-  public boolean removeTile(Tile tile) {
+  void put(List<Tile> stack) {
+    for (Tile tile : stack) {
+      hand.putTile(tile);
+    }
+  }
+
+  boolean removeTile(Tile tile) {
     return hand.removeTile(tile);
   }
 }

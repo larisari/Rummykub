@@ -1,4 +1,4 @@
-package gameinfo.board;
+package gameinfo;
 
 import tile.Tile;
 import tile.util.TileColor;

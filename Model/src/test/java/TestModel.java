@@ -1,7 +1,5 @@
 import gameinfo.GIFactory;
 import gameinfo.GIGameInfo;
-import gameinfo.player.PFactory;
-import gameinfo.player.Player;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import tile.Tile;
@@ -10,6 +8,8 @@ import tile.util.TileNumber;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 class TestModel {
 
@@ -162,19 +162,38 @@ class TestModel {
 
   @Test
   void playerTest() {
-    Player player_1 = PFactory.make();
-    System.out.println("ID_1 = " + player_1.getId());
+    UUID id_1 = UUID.randomUUID();
+    gameInfo.registerBy(id_1.toString());
 
-    Player player_2 = PFactory.make();
-    System.out.println("ID_2 = " + player_2.getId());
+    UUID id_2 = UUID.randomUUID();
+    gameInfo.registerBy(id_2.toString());
 
-    Player player_3 = PFactory.make();
-    System.out.println("ID_3 = " + player_3.getId());
+    UUID id_3 = UUID.randomUUID();
+    gameInfo.registerBy(id_3.toString());
 
-    player_1.putTile(new Tile(TileNumber.ELEVEN, TileColor.YELLOW));
+    UUID id_4 = UUID.randomUUID();
+    gameInfo.registerBy(id_4.toString());
 
-    for (Tile tile : player_1.getTilesOnHand()) {
-      System.out.println("TILE = " + tile.getNumber() + ", " + tile.getColor());
+
+    List<String> ids = gameInfo.getAllPlayerIds();
+
+    for (String id : ids) {
+      System.out.println("ID = " + id);
+    }
+
+    System.out.println();
+    System.out.println(id_1);
+    System.out.println(id_2);
+    System.out.println(id_3);
+    System.out.println(id_4);
+    System.out.println();
+
+    gameInfo.deregisterBy(id_1.toString());
+
+    ids = gameInfo.getAllPlayerIds();
+
+    for (String id : ids) {
+      System.out.println("ID = " + id);
     }
   }
 }

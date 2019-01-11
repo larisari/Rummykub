@@ -1,6 +1,5 @@
 package gameinfo;
 
-import gameinfo.player.Player;
 import tile.Tile;
 
 import java.util.List;
@@ -8,13 +7,16 @@ import java.util.Optional;
 
 public interface GIGameInfo {
 
-  String getNextPlayerID();
+  String getNextPlayerId();
+
+  // just for test TODO: REMOVE
+  List<String> getAllPlayerIds();
 
   Optional<List<Tile>> getAllTilesBy(String id);
 
-  List<Tile> getStackFromBag();
+  Optional<List<Tile>> getStackFor(String id);
 
-  Tile getOneTileFromBag();
+  Optional<Tile> getTileFor(String id);
 
   boolean isValidMove(List<Tile> combination);
 

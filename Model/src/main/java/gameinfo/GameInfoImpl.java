@@ -1,11 +1,5 @@
 package gameinfo;
 
-import gameinfo.board.BFactory;
-import gameinfo.board.Board;
-import gameinfo.player.PFactory;
-import gameinfo.player.Player;
-import gameinfo.rules.RFactory;
-import gameinfo.rules.Rules;
 import tile.Tile;
 
 import java.util.ArrayList;
@@ -19,39 +13,45 @@ class GameInfoImpl implements GIGameInfo {
   private List<Player> players;
 
   GameInfoImpl() {
-    board = BFactory.make();
-    rules = RFactory.make();
+    board = new Board();
+    rules = new Rules();
     players = new ArrayList<>();
   }
 
   @Override
   public void registerBy(String id) {
-    players.add(PFactory.makeWith(id));
+    players.add(new Player(id));
   }
 
   @Override
   public void deregisterBy(String id) {
-    for (Player player : players) {
-      if (player.getId().equals(id)) {
-        players.remove(player);
-      }
+    Player player = getPlayerBy(id);
+
+    if (player != null) {
+      players.remove(player);
     }
   }
 
   @Override
-  public String getNextPlayerID() {
+  public String getNextPlayerId() {
     return rules.getNextPlayerID();
+  }
+
+  // TODO !!! REMOVE AFTER TESTS !!!
+  @Override
+  public List<String> getAllPlayerIds() {
+    List<String> ids = new ArrayList<>();
+
+    for (Player player : players) {
+      ids.add(player.getId());
+    }
+
+    return ids;
   }
 
   @Override
   public Optional<List<Tile>> getAllTilesBy(String id) {
-    Player player = null;
-
-    for (Player temPlayer : players) {
-      if (temPlayer.getId().equals(id)) {
-        player = temPlayer;
-      }
-    }
+    Player player = getPlayerBy(id);
 
     if (player != null) {
       return Optional.of(player.getTilesOnHand());
@@ -61,8 +61,29 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public List<Tile> getStackFromBag() {
-    return board.getStackFromBag();
+  public Optional<List<Tile>> getStackFor(String id) {
+    List<Tile> stack = board.getStackFromBag();
+    Player player = getPlayerBy(id);
+
+    if (player != null) {
+      player.put(stack);
+      return Optional.of(stack);
+    } else {
+      return Optional.empty();
+    }
+  }
+
+  @Override
+  public Optional<Tile> getTileFor(String id) {
+    Tile tile = board.getTileFromBag();
+    Player player = getPlayerBy(id);
+
+    if (player != null) {
+      player.put(tile);
+      return Optional.of(tile);
+    }
+
+    return Optional.empty();
   }
 
   @Override
@@ -72,12 +93,17 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public Tile getOneTileFromBag() {
-    return board.getTileFromBag();
-  }
-
-  @Override
   public int getPointsForMove(List<Tile> combination) {
     return rules.getPointsFor(combination);
+  }
+
+  private Player getPlayerBy(String id) {
+    for (Player player : players) {
+      if (player.getId().equals(id)) {
+        return player;
+      }
+    }
+
+    return null;
   }
 }

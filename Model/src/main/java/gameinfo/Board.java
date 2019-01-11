@@ -1,41 +1,36 @@
-package gameinfo.board;
+package gameinfo;
 
 import tile.Tile;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class BoardImpl implements Board{
+class Board {
   Bag bag;
   List<List<Tile>> combos;
 
-  BoardImpl() {
+  Board() {
     this.bag = new Bag(); //filled Bag
     this.combos = new ArrayList<>(); //empty List of Combos
   }
 
-  @Override
-  public List<List<Tile>> getActiveCombos() {
+  List<List<Tile>> getActiveCombos() {
     return this.combos;
   }
 
-  @Override
-  public void addCombo(List<Tile> combo) {
+  void addCombo(List<Tile> combo) {
     this.combos.add(combo);
   }
 
-  @Override
-  public List<Tile> getCombo(int index) {
+  List<Tile> getCombo(int index) {
     return this.combos.get(index);
   }
 
-  @Override
-  public Tile getTileFromBag() {
+  Tile getTileFromBag() {
     return null;
   }
 
-  @Override
-  public List<Tile> getStackFromBag() {
+  List<Tile> getStackFromBag() {
     return null;
   }
 }

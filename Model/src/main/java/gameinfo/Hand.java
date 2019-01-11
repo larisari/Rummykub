@@ -1,4 +1,4 @@
-package gameinfo.player;
+package gameinfo;
 
 import tile.Tile;
 

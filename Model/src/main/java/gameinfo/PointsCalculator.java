@@ -1,15 +1,16 @@
-package gameinfo.rules;
+package gameinfo;
 
 import tile.Tile;
 import tile.util.TileNumber;
 import java.util.List;
 
 // TODO !!! MAKE PACKAGE_PRIVATE !!!
-public class PointsCalculator {
+class PointsCalculator {
 
-  public PointsCalculator() {}
+  PointsCalculator() {
+  }
 
-  public int getPointsForStreet(List<Tile> street) {
+  int getPointsForStreet(List<Tile> street) {
     int points = 0;
 
     for (Tile tile : street) {
@@ -34,7 +35,7 @@ public class PointsCalculator {
     return points;
   }
 
-  public int getPointsForGroup(List<Tile> group) {
+  int getPointsForGroup(List<Tile> group) {
     int points = 0;
 
     for (Tile tile : group) {
