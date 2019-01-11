@@ -10,7 +10,7 @@ import java.util.List;
 class Bag {
   private final int SUM_TILES = 106;
   private final int MAX_NUM = 13;
-  public List<Tile> tiles;
+  private List<Tile> tiles;
 
   Bag() {
     this.tiles = new ArrayList<>(SUM_TILES);

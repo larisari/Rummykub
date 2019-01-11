@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Board {
-  Bag bag;
-  List<List<Tile>> combos;
+  private Bag bag;
+  private List<List<Tile>> combos;
 
   Board() {
     this.bag = new Bag(); //filled Bag
