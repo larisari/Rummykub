@@ -9,7 +9,6 @@ buildscript {
 
 plugins {
     id 'java'
-    id 'org.junit.platform.gradle.plugin'
 }
 
 group 'pineapple'
