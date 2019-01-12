@@ -9,15 +9,22 @@ class Player {
 
   private Hand hand;
   private String id;
+  private boolean isFirstMove;
 
   Player() {
     hand = new Hand();
     id = UUID.randomUUID().toString();
+    isFirstMove = true;
   }
 
   Player(String id) {
     this.hand = new Hand();
     this.id = id;
+    isFirstMove = true;
+  }
+
+  boolean isFirstMove() {
+    return isFirstMove;
   }
 
   List<Tile> getTilesOnHand() {
@@ -38,7 +45,11 @@ class Player {
     }
   }
 
-  boolean removeTile(Tile tile) {
-    return hand.removeTile(tile);
+  void remove(List<Tile> tiles) {
+    isFirstMove = false;
+
+    for (Tile tile : tiles) {
+      hand.removeTile(tile);
+    }
   }
 }

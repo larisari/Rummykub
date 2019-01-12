@@ -24,6 +24,10 @@ public interface GIGameInfo {
 
   Optional<Tile> getTileFor(String id);
 
+  boolean play(List<Tile> combination, String id);
+
+  boolean play(List<Tile> tilesFromHand, List<Tile> tilesFromBoard, List<List<Tile>> newCombinations, String id);
+
   // just for the test TODO: REMOVE
   // for the real function one needs to pass the id.
   // also a problem is on how to add functionality to combine tiles on board.
