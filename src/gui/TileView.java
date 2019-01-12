@@ -1,5 +1,7 @@
 package gui;
 
+import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
@@ -18,36 +20,34 @@ public class TileView {
   @FXML
   private HBox bottomHand;
 
-/**
-  public Image getImage(Tile tile) {
-    String color = null;
-    Color tileColor = tile.getColor();
-    switch (tileColor) {
-      case BLACK:
-        color = "black";
-        break;
-      case BLUE:
-        color = "blue";
-        break;
-      case RED:
-        color = "red";
-        break;
-      case YELLOW:
-        color = "yellow";
-        break;
-    }
-      if (tile.getColor().equals(Color.JOKER)) {
-        Image joker = new Image(
-            getClass().getResourceAsStream("images/tiles/" + color + "/joker" + ".png"));
-        return joker;
-      } else {
-        Image normTile = new Image(getClass()
-            .getResourceAsStream("images/tiles/" + color + "/" + tile.getNumber() + ".png"));
-        return normTile;
-      }
-    }
 
-**/
+  private List<Image> createImgs(String hand){
+    List <Image> tilesImg = new ArrayList<>();
+    String [] block = hand.split(":");
+    String [] tiles = block[1].split(",");
+    for (int i = 0; i < tiles.length; i++){
+      String [] attributeswS = tiles[i].split(".");
+      String [] attributes = attributeswS[1].split("/");
+      String color = attributes[0];
+      String number = attributes[1];
+
+      if (number.equals("joker")){
+        Image joker = new Image(
+            getClass().getResourceAsStream("images/tiles/joker/joker.png"));
+        tilesImg.add(joker);
+      } else {
+        Image tile = new Image(getClass()
+            .getResourceAsStream("images/tiles/" + color + "/" + number + ".png"));
+        tilesImg.add(tile);
+      }
+
+
+    }
+    return tilesImg;
+
+  }
+
+
   /**
    * Returns false if ImageView contains an image or if an error occured while loading.
    *
