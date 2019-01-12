@@ -16,7 +16,7 @@ class TestModel {
 
   @BeforeAll
   static void createCombRules() {
-    gameInfo = GIFactory.makeFor();
+    gameInfo = GIFactory.make();
   }
 
   @Test

@@ -29,12 +29,12 @@ class Player {
   }
 
   void put(Tile tile) {
-    hand.putTile(tile);
+    hand.put(tile);
   }
 
   void put(List<Tile> stack) {
     for (Tile tile : stack) {
-      hand.putTile(tile);
+      hand.put(tile);
     }
   }
 

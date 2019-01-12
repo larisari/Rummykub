@@ -4,7 +4,6 @@ import tile.Tile;
 import tile.util.TileNumber;
 import java.util.List;
 
-// TODO !!! MAKE PACKAGE_PRIVATE !!!
 class PointsCalculator {
 
   PointsCalculator() {
