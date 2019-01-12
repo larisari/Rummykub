@@ -2,6 +2,7 @@ package gameinfo;
 
 import tile.Tile;
 import java.util.List;
+import java.util.Optional;
 
 class Rules {
 
@@ -13,6 +14,26 @@ class Rules {
     gameFlow = new GameFlow();
     pointsCalculator = new PointsCalculator();
     combRules = new CombRules(pointsCalculator);
+  }
+
+  void registerBy(String id) {
+    gameFlow.registerPlayerBy(id);
+  }
+
+  void deregisterPlayerBy(String id) {
+    gameFlow.deregisterPlayerBy(id);
+  }
+
+  boolean isPlayerExistingBy(String id) {
+    return gameFlow.playerExists(id);
+  }
+
+  List<Player> getAllPlayers() {
+    return gameFlow.getPlayers();
+  }
+
+  Optional<Player> getPlayerBy(String id) {
+    return gameFlow.getPlayerBy(id);
   }
 
   String getNextPlayerID() {

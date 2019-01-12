@@ -12,26 +12,20 @@ class GameInfoImpl implements GIGameInfo {
 
   private Board board;
   private Rules rules;
-  private List<Player> players;
 
   GameInfoImpl() {
     board = new Board();
     rules = new Rules();
-    players = new ArrayList<>();
   }
 
   @Override
   public void registerBy(String id) {
-    players.add(new Player(id));
+    rules.registerBy(id);
   }
 
   @Override
   public void deregisterBy(String id) {
-    Player player = getPlayerBy(id);
-
-    if (player != null) {
-      players.remove(player);
-    }
+    rules.deregisterPlayerBy(id);
   }
 
   @Override
@@ -44,7 +38,7 @@ class GameInfoImpl implements GIGameInfo {
   public List<String> getAllPlayerIds() {
     List<String> ids = new ArrayList<>();
 
-    for (Player player : players) {
+    for (Player player : rules.getAllPlayers()) {
       ids.add(player.getId());
     }
 
@@ -53,9 +47,10 @@ class GameInfoImpl implements GIGameInfo {
 
   @Override
   public Optional<List<Tile>> getAllTilesBy(String id) {
-    Player player = getPlayerBy(id);
+    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
-    if (player != null) {
+    if (optionalPlayer.isPresent()) {
+      Player player = optionalPlayer.get();
       return Optional.of(player.getTilesOnHand());
     } else {
       return Optional.empty();
@@ -64,9 +59,10 @@ class GameInfoImpl implements GIGameInfo {
 
   @Override
   public Optional<List<Tile>> getStackFor(String id) {
-    Player player = getPlayerBy(id);
+    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
-    if (player != null) {
+    if (optionalPlayer.isPresent()) {
+      Player player = optionalPlayer.get();
       List<Tile> stack = board.getStackFromBag();
       player.put(stack);
       return Optional.of(stack);
@@ -77,10 +73,11 @@ class GameInfoImpl implements GIGameInfo {
 
   @Override
   public Optional<Tile> getTileFor(String id) {
-    Player player = getPlayerBy(id);
+    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
-    if (player != null) {
+    if (optionalPlayer.isPresent()) {
       Tile tile = board.getTileFromBag();
+      Player player = optionalPlayer.get();
       player.put(tile);
       return Optional.of(tile);
     }
@@ -90,9 +87,10 @@ class GameInfoImpl implements GIGameInfo {
 
   @Override
   public boolean play(List<Tile> combination, String id) {
-    Player player = getPlayerBy(id);
+    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
-    if (player != null) {
+    if (optionalPlayer.isPresent()) {
+      Player player = optionalPlayer.get();
       if (player.isFirstMove() && rules.isValid(combination, MINIMUM_POINTS_ON_FIRST_MOVE)) {
         putComboOnBoard(combination, player);
         return true;
@@ -116,10 +114,12 @@ class GameInfoImpl implements GIGameInfo {
           List<Tile> tilesFromBoard,
           List<List<Tile>> newCombinations,
           String id) {
-    Player player = getPlayerBy(id);
+    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
-    if (player != null) {
+    if (optionalPlayer.isPresent()) {
       boolean allValid = newCombinations.stream().allMatch(this::isValid);
+
+      Player player = optionalPlayer.get();
 
       if (allValid) {
         player.remove(tilesFromHand);
@@ -143,16 +143,6 @@ class GameInfoImpl implements GIGameInfo {
   private void putComboOnBoard(List<Tile> combination, Player player) {
     board.addCombo(combination);
     player.remove(combination);
-  }
-
-  private Player getPlayerBy(String id) {
-    for (Player player : players) {
-      if (player.getId().equals(id)) {
-        return player;
-      }
-    }
-
-    return null;
   }
 
   private boolean isValid(List<Tile> combination) {
