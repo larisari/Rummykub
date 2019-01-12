@@ -1,5 +1,6 @@
 package gameinfo;
 
+import com.sun.source.doctree.SummaryTree;
 import tile.Tile;
 import tile.util.TileColor;
 import tile.util.TileNumber;
@@ -40,12 +41,15 @@ class Bag {
     return this.tiles.get(position);
   }
 
-  public boolean isInBag(Tile tile) {
-   //TODO isInBag
-    return false;
+  public List<Tile> takeStack(int numberOfTiles) {
+    List<Tile> stack = new ArrayList<>();
+    for (int i = 0; i < numberOfTiles; i++) {
+      int index = (int) (Math.random()+1) * SUM_TILES;
+      stack.add(this.tiles.get(index));
+      this.tiles.remove(index);
+    }
+    return stack;
   }
-
-
 
   public void remove(Tile tile) {
     this.tiles.remove(tile);

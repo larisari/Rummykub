@@ -30,7 +30,8 @@ class Board {
     return null;
   }
 
-  List<Tile> getStackFromBag() {
+  List<Tile> getStackFromBag(int numberOfTiles) {
     return null;
   }
+
 }
