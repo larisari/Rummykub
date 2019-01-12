@@ -34,6 +34,7 @@ public class GuiController {
   @FXML
   private Button enter;
   private List<ImageView> selectedTiles = new ArrayList<>();
+  private iwas placedCombinations;
 
   List<ImageView> getSelectedTiles() {
     return this.selectedTiles;
@@ -63,6 +64,14 @@ public class GuiController {
     //reformat tiles from imageview to Tile
     // if (client.checkComb(selectedTiles) == true) {
     // placeTiles();
+  }
+
+  void placeTiles() {
+    //Unterschied ob an existierende Kombination anlegen oder neu legen
+
+
+
+
   }
 
 
@@ -118,11 +127,6 @@ public class GuiController {
       selectedTiles.clear();
 
     }
-
-/*public void updateHand(){
-  cgui.setHand(client.getHand());
-}
-*/
 
   }
 
