@@ -69,7 +69,11 @@ class APITest {
   }
 
   void stage_2_GetNextPlayerId() {
-    // TODO Implement !!!
+    System.out.println(player_1_id);
+    System.out.println(player_2_id);
+    System.out.println(player_3_id);
+    System.out.println(player_4_id);
+
     System.out.println(gameInfo.getNextPlayerId());
   }
 
