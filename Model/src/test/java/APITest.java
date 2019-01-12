@@ -34,6 +34,15 @@ class APITest {
     stage_10_DeregisterTest();
   }
 
+  static void setupGameInfo() {
+    gameInfo = GIFactory.make();
+
+    gameInfo.registerBy(player_1_id);
+    gameInfo.registerBy(player_2_id);
+    gameInfo.registerBy(player_3_id);
+    gameInfo.registerBy(player_4_id);
+  }
+
   void stage_1_RegisterTest() {
     List<String> ids = gameInfo.getAllPlayerIds();
 
@@ -43,15 +52,6 @@ class APITest {
               || id.equals(player_3_id)
               || id.equals(player_4_id);
     }
-  }
-
-  static void setupGameInfo() {
-    gameInfo = GIFactory.make();
-
-    gameInfo.registerBy(player_1_id);
-    gameInfo.registerBy(player_2_id);
-    gameInfo.registerBy(player_3_id);
-    gameInfo.registerBy(player_4_id);
   }
 
   void stage_3_PlayCombinationFirstMoveValid() {
