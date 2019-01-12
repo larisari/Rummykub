@@ -1,23 +1,19 @@
 package gui;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javax.swing.Action;
 
 public class StartingScreenController {
 
@@ -38,15 +34,14 @@ public class StartingScreenController {
     // Server server = new Server();
     // Client host = new Client("localhost");
     loadLoadingScreen();
-    //showAndWait() wartet auf buttonclick o.ä. bis was passiert.
-//wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
+// TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
   }
 
 
   @FXML
   protected void handleJoinGame(MouseEvent event) throws IOException {
 
-    //if (host.waitForConnection() == true) { //else Pop up Fenster "Error! Could not connect, try again later" oder "Error! Could not connect, game is full" oder "Error! No game found!"
+    // TODO if (host.waitForConnection() == true) { //else Pop up Fenster "Error! Could not connect, try again later" oder "Error! Could not connect, game is full" oder "Error! No game found!"
     String ipAdress;
     TextInputDialog dialogue = new TextInputDialog();
     dialogue.setTitle("Login");
@@ -70,7 +65,7 @@ public class StartingScreenController {
       joined.setStyle(
           "-fx-text-fill: 18b522; -fx-font-family: 'Franklin Gothic Medium'; -fx-font-size:19; ");
       joined.relocate(497, JoinedY);
-      loadingScreen.getChildren().add(joined); //selbes Problem wie bei StartButton disablen.
+      loadingScreen.getChildren().add(joined); // TODO selbes Problem wie bei StartButton disablen.
     }
   }
 

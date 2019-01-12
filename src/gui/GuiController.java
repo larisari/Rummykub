@@ -1,7 +1,6 @@
 package gui;
 
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
@@ -28,7 +26,7 @@ public class GuiController {
   //Client client;
   //Host host;
   //List<Tile> hand;
-  //TileView tView;
+  GuiParser parser;
   @FXML
   private Label playerTurn;
   @FXML
@@ -39,6 +37,7 @@ public class GuiController {
   private Button cancelSelection;
   @FXML
   private FlowPane board;
+  @FXML private ImageView bag;
   private List<ImageView> selectedTiles = new ArrayList<>();
   private List<HBox> placedCombinations = new ArrayList<>();
   private boolean isPlayersTurn;
@@ -52,6 +51,7 @@ public class GuiController {
     this.selectedTiles = selectedTiles;
   }
 
+
   @FXML
   protected void handleQuit(MouseEvent event) {
 
@@ -64,7 +64,7 @@ public class GuiController {
     if (result.isPresent() && result.get() == yes) {
       Platform.exit();
     }
-    //noch: Alert wenn auf x gedrückt wird.
+    //TODO Alert wenn auf x gedrückt wird.
   }
 
   /**
@@ -72,9 +72,10 @@ public class GuiController {
    */
   @FXML
   protected void handleEnterComb(MouseEvent event) {
-    //reformat tiles from imageview to Tile
+    System.out.println(GuiParser.parseToString(selectedTiles));
     // if (client.checkComb(selectedTiles) == true) {
     placeTiles();
+   // bag.setDisable(true);
   }
 
   /**
@@ -110,11 +111,10 @@ public class GuiController {
 
   /**
    *
-   * anfrage mehrere kombinationen.
+   * //TODO anfrage mehrere kombinationen.
    *
    *
-   * option to lay tiles in front or at the back of existing combination. For placing tiles to
-   * existing combinations on board. check if new tiles may be laid to existing combination. (4 or
+   * For placing tiles to existing combinations on board. check if new tiles may be laid to existing combination. (4 or
    * 13 max) check if new tiles fit existing combination.
    */
   void addToFront(MouseEvent event) {
@@ -159,16 +159,16 @@ public class GuiController {
 
   @FXML
   protected void handleDrawTile(MouseEvent event) {
-    //client.drawTile();
-    //Fallunterscheidung erster Zug - normaler Zug
+    // if (client.send("isValidPlayer").equals(true){
+    // client.send("draw");
     //updateHand();
+    // }
+    //
   }
 
    public void updateHand() {
-  //  hand = client.getHand();
-  // for (int i = 0; i < hand.size(); i++) {
-  // gui.Tile tile = hand.get(i);
-  // Image tileImage = tView.getImage(tile);
+  // String hand = client.receive("drawStack");
+     // Hand hand = tView.createImgs(hand);
   // tView.createTile(tileImage);
   // }
    }
@@ -176,7 +176,7 @@ public class GuiController {
   @FXML
   protected void handleEndTurn(MouseEvent event) {
     //client.endTurn();
-    // playerTurn.setText(client.getNextPlayerName());
+    // playerTurn.setText(client.send("getNextPlayerID"));
     disableControl();
   }
 
@@ -210,6 +210,9 @@ public class GuiController {
 
   }
 
+  /**
+   * Disables control for player.
+   */
   private void disableControl() {
     enter.setDisable(true);
     endTurn.setDisable(true);
@@ -219,6 +222,10 @@ public class GuiController {
     //   disableTileControl(tile);
   }
 
+  /**
+   * Disables tile control for player.
+   * @param tile
+   */
   private void disableTileControl(ImageView tile) {
     tile.setStyle("-fx-translate-y: 0");
     tile.setEffect(null);
@@ -229,10 +236,9 @@ public class GuiController {
 }
 
 
-//Anzeige für wenn ein Player aussteigt.
+// TODO Anzeige für wenn ein Player aussteigt.
 
-//Anzeige mit Gewinner (+ Punktestand der anderen Spieler)
+// TODO Anzeige mit Gewinner (+ Punktestand der anderen Spieler)
 
-//disable enter/endturn button wenn Spieler nicht am Zug ist.
 
 

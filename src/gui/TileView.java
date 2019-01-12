@@ -21,6 +21,11 @@ public class TileView {
   private HBox bottomHand;
 
 
+  /**
+   *
+   * @param hand
+   * @return
+   */
   private List<Image> createImgs(String hand){
     List <Image> tilesImg = new ArrayList<>();
     String [] block = hand.split(":");
@@ -92,15 +97,5 @@ public class TileView {
 
     imageV.setEffect(borderGlow);
   }
-
-/**
- public ImageView createTileView(gui.Tile tile){
- ImageView iView = new ImageView(getImage(tile));
- iView.setFitHeight(TILE_HEIGHT);
- iView.setFitWidth(TILE_WIDTH);
- return iView;
-
- }
- **/
 
 }
