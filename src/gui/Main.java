@@ -15,7 +15,7 @@ public Main(){
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root;
-        root = FXMLLoader.load(getClass().getResource("clientgui.fxml"));
+        root = FXMLLoader.load(getClass().getResource("startingScreen.fxml"));
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/gui/game.css");
         primaryStage.setResizable(false);
