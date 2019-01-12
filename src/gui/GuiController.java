@@ -14,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
@@ -31,6 +32,10 @@ public class GuiController {
   private Label playerTurn;
   @FXML
   private Button enter;
+  @FXML
+  private Button endTurn;
+  @FXML
+  private Button cancelSelection;
   @FXML
   private FlowPane board;
   private List<ImageView> selectedTiles = new ArrayList<>();
@@ -141,34 +146,39 @@ public class GuiController {
     //updateHand();
   }
 
-  /**
-   * public void updateHand() { hand = client.getHand(); for (int i = 0; i < hand.size(); i++) {
-   * //kein foreach wegen gui.Tile tile = hand.get(i); Image tileImage = tView.getImage(tile);
-   * tView.createTile(tileImage); } }
-   **/
+   public void updateHand() {
+  //  hand = client.getHand();
+  // for (int i = 0; i < hand.size(); i++) {
+  // gui.Tile tile = hand.get(i);
+  // Image tileImage = tView.getImage(tile);
+  // tView.createTile(tileImage);
+  // }
+   }
+
   @FXML
   protected void handleEndTurn(MouseEvent event) {
     //client.endTurn();
     // playerTurn.setText(client.getNextPlayerName());
+    disableControl();
   }
 
   @FXML
   protected void handleTileClick(
       MouseEvent event) { //wirft nullpointer wenn imageview ohne image geklickt wird.
     ImageView imageV = (ImageView) event.getSource();
-    if (!selectedTiles.contains(imageV) && (imageV.getImage() != null || !imageV.getImage()
-        .isError())) { //Problem mit contains (funkt nicht)
+    if (imageV.getImage() == null || imageV.getImage().isError()) {
+      return;
+    }
+    if (!selectedTiles.contains(imageV)) { //Problem mit contains (funkt nicht)
       imageV.setStyle("-fx-translate-y: -15;");
       TileView.highlightTile(imageV);
       selectedTiles.add(imageV);
-    } else if (selectedTiles.contains(imageV)) {
+    } else {
       imageV.setStyle("-fx-translate-y: 0;");
       imageV.setEffect(null);
       selectedTiles.remove(imageV);
-    } else {
-      return;
-    }
 
+    }
   }
 
   @FXML
@@ -182,7 +192,16 @@ public class GuiController {
 
   }
 
-  private void disableTileControl(ImageView tile){
+  private void disableControl() {
+    enter.setDisable(true);
+    endTurn.setDisable(true);
+    cancelSelection.setDisable(true);
+    //  for (int i = 0; i < hand.size(); i++) {
+    //  ImageView tile = hand.get(i);
+    //   disableTileControl(tile);
+  }
+
+  private void disableTileControl(ImageView tile) {
     tile.setStyle("-fx-translate-y: 0");
     tile.setEffect(null);
     tile.setDisable(true);
