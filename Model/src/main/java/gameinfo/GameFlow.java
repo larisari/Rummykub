@@ -7,10 +7,12 @@ import java.util.Optional;
 class GameFlow {
   private List<Player> players;
   private GameState state;
+  private int currentPlayerIndex;
 
   GameFlow() {
     this.players = new ArrayList<>();
     this.state = GameState.distributing;
+    this.currentPlayerIndex = 0;
   }
 
   void registerPlayerBy(String id) {
@@ -22,31 +24,52 @@ class GameFlow {
   }
 
   void deregisterPlayerBy(String id) {
-    if (getPlayerBy(id).isPresent()) {
-      players.remove(getPlayerBy(id).get());
-    }
-    else {
-      throw new IllegalArgumentException("No player with id\"" + id + "\" " +
-          "found.");
+    for (int i = 0; i < getPlayers().size(); i++) {
+      if (players.get(i).getId().equals(id)) {
+        this.players.remove(i);
+      }
     }
   }
+
+  void startGame() {
+    this.state = GameState.distributing;
+  }
+
+  boolean isValidPlayer(String id) {
+    return players.get(currentPlayerIndex).getId().equals(id);
+  }
+
 
   List<Player> getPlayers() {
     return this.players;
   }
 
   Optional<Player> getPlayerBy(String id) {
-    for (int i = 0; i < players.size(); i++) {
-      if (players.get(i).getId().equals(id)) {
-        return Optional.of(players.get(i));
+    for (Player player : this.players) {
+      if (player.getId().equals(id)) {
+        return Optional.of(player);
       }
     }
     return Optional.empty();
   }
 
   String getNextPlayerID() {
-    return null;
+    if (currentPlayerIndex == this.players.size()-1) {
+      return this.players.get(0).getId();
+    }
+    else {
+      return this.players.get(currentPlayerIndex + 1).getId();
+    }
   }
+
+  void nextPlayer() {
+    if (currentPlayerIndex == this.players.size() - 1) {
+      this.currentPlayerIndex = 0;
+    } else {
+      this.currentPlayerIndex++;
+    }
+  }
+
 
 
 }

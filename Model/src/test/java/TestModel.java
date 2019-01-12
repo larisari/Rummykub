@@ -36,6 +36,21 @@ class TestModel {
     for (String id : ids) {
       assert id.equals(player_1_id) || id.equals(player_2_id) || id.equals(player_3_id) || id.equals(player_4_id);
     }
+    System.out.println(ids);
+  }
+
+  @Test
+  void testDeregistration() {
+    List<String> ids = gameInfo.getAllPlayerIds();
+
+    for (String id : ids) {
+      assert id.equals(player_1_id) || id.equals(player_2_id) || id.equals(player_3_id) || id.equals(player_4_id);
+    }
+    System.out.println(ids);
+
+    gameInfo.deregisterBy(ids.get(0));
+
+    System.out.println(ids);
   }
 
   // done done
@@ -188,7 +203,7 @@ class TestModel {
   }
 
   @Test
-  void getStackinitialtest() {
+  void getStackInitialtest() {
     System.out.println(gameInfo.getStackFor(player_1_id));
     System.out.println(gameInfo.getStackFor(player_2_id));
     System.out.println(gameInfo.getStackFor(player_3_id));
