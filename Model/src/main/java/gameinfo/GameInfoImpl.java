@@ -111,10 +111,10 @@ class GameInfoImpl implements GIGameInfo {
   // question which combination has to have 30 points if its first move.
   @Override
   public boolean play(
-          List<Tile> tilesFromHand,
-          List<Tile> tilesFromBoard,
-          List<List<Tile>> newCombinations,
-          String id) {
+      List<Tile> tilesFromHand,
+      List<Tile> tilesFromBoard,
+      List<List<Tile>> newCombinations,
+      String id) {
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
