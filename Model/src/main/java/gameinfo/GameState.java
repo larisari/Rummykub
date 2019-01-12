@@ -1,7 +1,5 @@
 package gameinfo;
 
 enum GameState {
-  distributing, running, finish
-
-
+  initializing, start, distributing, running, finish
 }
