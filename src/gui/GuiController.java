@@ -1,11 +1,13 @@
 package gui;
 
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Point2D;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -61,13 +63,12 @@ public class GuiController {
 
   /**
    * checks if selected combination is valid.
-   * @param event
    */
   @FXML
   protected void handleEnterComb(MouseEvent event) {
     //reformat tiles from imageview to Tile
     // if (client.checkComb(selectedTiles) == true) {
-     placeTiles();
+    placeTiles();
   }
 
   /**
@@ -84,31 +85,50 @@ public class GuiController {
       placedCombinations.add(comb);
       comb.setOnMouseMoved(event -> {
         comb.setStyle("-fx-background-color: #22CD27;");
-    });
-      comb.setOnMouseClicked(event -> {
-        addToCombination(event);
       });
+
+      comb.setOnMouseClicked(
+          event -> {      //wenn erste Tile geklickt wird vorne anfügen, default: hinten anfügen.
+            Point2D point = new Point2D(event.getX(), event.getY());
+            if (comb.getChildren().get(0).contains(point)) {
+              addToFront(event);
+            } else {
+              addToBack(event);
+            }
+          });
     }
     board.getChildren().add(comb);
     selectedTiles.clear();
   }
 
   /**
-   * option to lay tiles in front or at the back of existing combination.
-   * For placing tiles to existing combinations on board.
-   * check if new tiles may be laid to existing combination. (4 or 13 max)
-   * check if new tiles fit existing combination.
+   * option to lay tiles in front or at the back of existing combination. For placing tiles to
+   * existing combinations on board. check if new tiles may be laid to existing combination. (4 or
+   * 13 max) check if new tiles fit existing combination.
    */
-  void addToCombination(MouseEvent event) {
-    if (isPlayersTurn) {
-      if (!selectedTiles.isEmpty()) {
-        HBox comb = (HBox) event.getSource();
-        if (comb.getChildren().size() <= MAX_TILES) {
-          for (int i = 0; i < selectedTiles.size(); i++) {
-            ImageView tile = selectedTiles.get(i);
-            comb.getChildren().add(tile);
-          }
+  void addToFront(MouseEvent event) {
+    // if (isPlayersTurn) {
+    if (!selectedTiles.isEmpty()) {
+      HBox comb = (HBox) event.getSource();
+      if (comb.getChildren().size() <= MAX_TILES) {
+        for (int i = 0; i < selectedTiles.size(); i++) {
+          ImageView tile = selectedTiles.get(i);
+          comb.getChildren().add(0, tile);
+          disableTileControl(tile);
+        }
 
+      }
+    }
+  }
+
+  void addToBack(MouseEvent event) {
+    if (!selectedTiles.isEmpty()) {
+      HBox comb = (HBox) event.getSource();
+      if (comb.getChildren().size() <= MAX_TILES) {
+        for (int i = 0; i < selectedTiles.size(); i++) {
+          ImageView tile = selectedTiles.get(i);
+          comb.getChildren().add(comb.getChildren().size(), tile);
+          disableTileControl(tile);
         }
       }
     }
@@ -160,6 +180,13 @@ public class GuiController {
     }
     selectedTiles.clear();
 
+  }
+
+  private void disableTileControl(ImageView tile){
+    tile.setStyle("-fx-translate-y: 0");
+    tile.setEffect(null);
+    tile.setDisable(true);
+    selectedTiles.remove(tile);
   }
 
 }

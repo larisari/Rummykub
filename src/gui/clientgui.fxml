@@ -96,11 +96,11 @@
                         </ImageView>
                 <ImageView fx:id="t5" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/tiles/blue/1.png" />
+                              <Image url="@images/tiles/blue/2.png" />
                            </image></ImageView>
                 <ImageView fx:id="t6" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/tiles/blue/1.png" />
+                              <Image url="@images/tiles/blue/3.png" />
                            </image></ImageView>
                 <ImageView fx:id="t7" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="t8" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
@@ -120,13 +120,13 @@
                         <ImageView fx:id="t18" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="t19" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/tiles/blue/1.png" />
+                              <Image url="@images/tiles/blue/4.png" />
                            </image></ImageView>
                         <ImageView fx:id="t20" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="t21" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="t22" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/tiles/blue/1.png" />
+                              <Image url="@images/tiles/blue/5.png" />
                            </image></ImageView>
                         <ImageView fx:id="t23" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="t24" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
@@ -175,17 +175,17 @@
               </Label>
             </children>
           </Pane>
-          <Button fx:id="enter" accessibleRole="PARENT" alignment="CENTER" layoutX="856.0" layoutY="620.0" mnemonicParsing="false" onMouseClicked="#handleEnterComb" prefHeight="108.0" prefWidth="85.0" styleClass="enterBtn" text="Enter" AnchorPane.bottomAnchor="0.0">
+          <Button fx:id="enter" accessibleRole="PARENT" alignment="CENTER" layoutX="856.0" layoutY="620.0" mnemonicParsing="false" onMouseClicked="#handleEnterComb" prefHeight="108.0" prefWidth="94.0" styleClass="enterBtn" text="Enter Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0">
             <font>
               <Font name="Franklin Gothic Medium" size="17.0" />
             </font>
           </Button>
-            <Button fx:id="endTurn" accessibleRole="PARENT" alignment="CENTER" layoutX="941.0" layoutY="674.0" mnemonicParsing="false" onMouseClicked="#handleEndTurn" prefHeight="54.0" prefWidth="115.0" styleClass="endTurnBtn" text="End Turn" AnchorPane.bottomAnchor="0.0">
+            <Button fx:id="endTurn" accessibleRole="PARENT" alignment="CENTER" layoutX="946.0" layoutY="674.0" mnemonicParsing="false" onMouseClicked="#handleEndTurn" prefHeight="54.0" prefWidth="110.0" styleClass="endTurnBtn" text="End Turn" AnchorPane.bottomAnchor="0.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="17.0" />
                </font>
             </Button>
-            <Button fx:id="cancelSelection" accessibleRole="PARENT" alignment="CENTER" layoutX="941.0" layoutY="688.0" mnemonicParsing="false" onMouseClicked="#handleCancelSel" prefHeight="54.0" prefWidth="115.0" styleClass="cancelBtn" text="Cancel Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="54.0">
+            <Button fx:id="cancelSelection" accessibleRole="PARENT" alignment="CENTER" layoutX="946.0" layoutY="688.0" mnemonicParsing="false" onMouseClicked="#handleCancelSel" prefHeight="54.0" prefWidth="110.0" styleClass="cancelBtn" text="Cancel Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="54.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="17.0" />
                </font>
