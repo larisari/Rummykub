@@ -138,5 +138,4 @@ public class APITest {
     assert gameInfo.getPointsForMove(combination) == 15;
   }
 
-  @Test
 }
