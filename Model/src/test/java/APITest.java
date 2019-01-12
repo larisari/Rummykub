@@ -1,4 +1,6 @@
-import gameinfo.*;
+import gameinfo.GIFactory;
+import gameinfo.GIGameInfo;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import tile.Tile;
@@ -6,10 +8,11 @@ import tile.util.TileColor;
 import tile.util.TileNumber;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-public class APITest {
+class APITest {
 
   private static GIGameInfo gameInfo;
 
@@ -18,7 +21,32 @@ public class APITest {
   private static String player_3_id = UUID.randomUUID().toString();
   private static String player_4_id = UUID.randomUUID().toString();
 
-  @BeforeAll
+  @Test
+  void runTestSuit() {
+    setupGameInfo();
+    stage_1_RegisterTest();
+    stage_2_GetNextPlayerId();
+    stage_3_PlayCombinationFirstMoveValid();
+    stage_4_PlayCombinationFirstMoveInvalid();
+    stage_5_PlayCombinationValid();
+    stage_6_PlayCombinationInvalid();
+    stage_7_PlayCombinationWithTilesFromBoardValid();
+    stage_8_PlayCombinationWithTilesFromBoardInvalid();
+    stage_9_GetAllTilesById();
+    stage_10_DeregisterTest();
+  }
+
+  void stage_1_RegisterTest() {
+    List<String> ids = gameInfo.getAllPlayerIds();
+
+    for (String id : ids) {
+      assert id.equals(player_1_id)
+              || id.equals(player_2_id)
+              || id.equals(player_3_id)
+              || id.equals(player_4_id);
+    }
+  }
+
   static void setupGameInfo() {
     gameInfo = GIFactory.make();
 
@@ -28,114 +56,89 @@ public class APITest {
     gameInfo.registerBy(player_4_id);
   }
 
-  @Test
-  void testRegistration() {
-    List<String> ids = gameInfo.getAllPlayerIds();
+  void stage_3_PlayCombinationFirstMoveValid() {
+    List<Tile> combination =
+            new ArrayList<>(
+                    Arrays.asList(
+                            new Tile(TileNumber.TEN, TileColor.YELLOW),
+                            new Tile(TileNumber.ELEVEN, TileColor.YELLOW),
+                            new Tile(TileNumber.TWELVE, TileColor.YELLOW),
+                            new Tile(TileNumber.THIRTEEN, TileColor.YELLOW),
+                            new Tile(TileNumber.ONE, TileColor.YELLOW)));
 
-    for (String id : ids) {
-      assert id.equals(player_1_id) || id.equals(player_2_id) || id.equals(player_3_id) || id.equals(player_4_id);
-    }
+    assert gameInfo.play(combination, player_1_id);
+    assert gameInfo.getPointsForMove(combination) == 47;
   }
 
-  @Test
-  void playFirstMoveWrongComb() {
-    List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.ELEVEN, TileColor.YELLOW));
+  void stage_2_GetNextPlayerId() {
+    // TODO Implement !!!
+    System.out.println(gameInfo.getNextPlayerId());
+  }
+
+  void stage_4_PlayCombinationFirstMoveInvalid() {
+    List<Tile> combination =
+            new ArrayList<>(
+                    Arrays.asList(
+                            new Tile(TileNumber.ONE, TileColor.YELLOW),
+                            new Tile(TileNumber.TWO, TileColor.YELLOW),
+                            new Tile(TileNumber.THREE, TileColor.YELLOW),
+                            new Tile(TileNumber.FOUR, TileColor.YELLOW),
+                            new Tile(TileNumber.FIVE, TileColor.YELLOW)));
+
+    assert !gameInfo.play(combination, player_2_id);
+    assert gameInfo.getPointsForMove(combination) == 15;
+  }
+
+  void stage_5_PlayCombinationValid() {
+    List<Tile> combination =
+            new ArrayList<>(
+                    Arrays.asList(
+                            new Tile(TileNumber.ONE, TileColor.YELLOW),
+                            new Tile(TileNumber.TWO, TileColor.YELLOW),
+                            new Tile(TileNumber.THREE, TileColor.YELLOW),
+                            new Tile(TileNumber.FOUR, TileColor.YELLOW),
+                            new Tile(TileNumber.FIVE, TileColor.YELLOW)));
+
+    assert gameInfo.play(combination, player_1_id);
+    assert gameInfo.getPointsForMove(combination) == 15;
+  }
+
+  void stage_6_PlayCombinationInvalid() {
+    List<Tile> combination =
+            new ArrayList<>(
+                    Arrays.asList(
+                            new Tile(TileNumber.ONE, TileColor.YELLOW),
+                            new Tile(TileNumber.TWO, TileColor.BLACK),
+                            new Tile(TileNumber.THREE, TileColor.YELLOW),
+                            new Tile(TileNumber.FOUR, TileColor.YELLOW)));
 
     assert !gameInfo.play(combination, player_1_id);
   }
 
-  @Test
-  void playFirstMoveValid() {
-    List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
-
-    assert gameInfo.play(combination, player_2_id);
+  void stage_7_PlayCombinationWithTilesFromBoardValid() {
+    // TODO
+    // gameInfo.play(List<Tile> tilesFromHand, List<Tile> tilesFromBoard, List<List<Tile>>
+    // newCombinations, String id);
   }
 
-  @Test
-  void playFirstMoveWithJoker() {
-    List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
-
-    assert gameInfo.play(combination, player_3_id);
+  void stage_8_PlayCombinationWithTilesFromBoardInvalid() {
+    // TODO
+    // gameInfo.play(List<Tile> tilesFromHand, List<Tile> tilesFromBoard, List<List<Tile>>
+    // newCombinations, String id);
   }
 
-  @Test
-  void playFirstMoveNotEnoughPoints() {
-    List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.NINE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.NINE, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.NINE, TileColor.YELLOW));
+  void stage_9_GetAllTilesById() {
+    List<Tile> hand = gameInfo.getAllTilesBy(player_1_id).get();
 
-    assert !gameInfo.play(combination, player_4_id);
+    hand.forEach(tile -> System.out.println(tile));
   }
 
-  @Test
-  void playStreetOneToFive() {
-    List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TWO, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.THREE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
+  static void stage_10_DeregisterTest() {
+    gameInfo.deregisterBy(player_1_id);
+    gameInfo.deregisterBy(player_2_id);
+    gameInfo.deregisterBy(player_3_id);
+    gameInfo.deregisterBy(player_4_id);
 
-    assert gameInfo.play(combination, player_2_id);
+    assert gameInfo.getAllPlayerIds().size() == 0;
   }
-
-  @Test
-  void playStreetTenToOne() {
-    List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.ELEVEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TWELVE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.THIRTEEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
-
-    assert gameInfo.play(combination, player_2_id);
-  }
-
-  @Test
-  void playGroupTens() {
-    List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
-    combination.add(new Tile(TileNumber.TEN, TileColor.RED));
-
-    assert gameInfo.play(combination, player_2_id);
-  }
-
-  @Test
-  void playGroupWithJokerNotFirst() {
-    List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
-
-    assert gameInfo.play(combination, player_2_id);
-    assert gameInfo.getPointsForMove(combination) == 40;
-  }
-
-  @Test
-  void playStreetOneToFiveJoker() {
-    List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
-    combination.add(new Tile(TileNumber.TWO, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.THREE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
-
-    assert gameInfo.play(combination, player_2_id);
-    assert gameInfo.getPointsForMove(combination) == 15;
-  }
-
 }

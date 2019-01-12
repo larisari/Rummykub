@@ -119,7 +119,7 @@ class GameInfoImpl implements GIGameInfo {
     Player player = getPlayerBy(id);
 
     if (player != null) {
-      boolean allValid = newCombinations.stream().allMatch(this::isValidMove);
+      boolean allValid = newCombinations.stream().allMatch(this::isValid);
 
       if (allValid) {
         player.remove(tilesFromHand);
@@ -133,19 +133,6 @@ class GameInfoImpl implements GIGameInfo {
       // TODO Handle better !
       return false;
     }
-  }
-
-  @Override
-  public boolean isValidMove(List<Tile> combination) {
-    // TODO !!! if its first move use other method of rules.CombRules with minimum Points !!!
-    return rules.isValid(combination);
-  }
-
-  @Override
-  public boolean isValidMove(
-          List<Tile> tilesFromHand, List<Tile> tilesFromBoard, List<List<Tile>> newCombination) {
-    // TODO Implement
-    return false;
   }
 
   @Override
@@ -166,5 +153,9 @@ class GameInfoImpl implements GIGameInfo {
     }
 
     return null;
+  }
+
+  private boolean isValid(List<Tile> combination) {
+    return rules.isValid(combination);
   }
 }

@@ -29,9 +29,63 @@ class TestModel {
     gameInfo.registerBy(player_4_id);
   }
 
-  // done
   @Test
-  void testStreetOneToFive() {
+  void testRegistration() {
+    List<String> ids = gameInfo.getAllPlayerIds();
+
+    for (String id : ids) {
+      assert id.equals(player_1_id) || id.equals(player_2_id) || id.equals(player_3_id) || id.equals(player_4_id);
+    }
+  }
+
+  // done done
+  @Test
+  void playFirstMoveWrongComb() {
+    List<Tile> combination = new ArrayList<>();
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
+    combination.add(new Tile(TileNumber.ELEVEN, TileColor.YELLOW));
+
+    assert !gameInfo.play(combination, player_1_id);
+  }
+
+  // done done
+  @Test
+  void playFirstMoveValid() {
+    List<Tile> combination = new ArrayList<>();
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
+    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
+
+    assert gameInfo.play(combination, player_2_id);
+  }
+
+  // done done
+  @Test
+  void playFirstMoveWithJoker() {
+    List<Tile> combination = new ArrayList<>();
+    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
+    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
+
+    assert gameInfo.play(combination, player_3_id);
+  }
+
+  // done done
+  @Test
+  void playFirstMoveNotEnoughPoints() {
+    List<Tile> combination = new ArrayList<>();
+    combination.add(new Tile(TileNumber.NINE, TileColor.BLUE));
+    combination.add(new Tile(TileNumber.NINE, TileColor.BLACK));
+    combination.add(new Tile(TileNumber.NINE, TileColor.YELLOW));
+
+    assert !gameInfo.play(combination, player_4_id);
+  }
+
+  // done done
+  @Test
+  void playStreetOneToFive() {
     List<Tile> combination = new ArrayList<>();
     combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
     combination.add(new Tile(TileNumber.TWO, TileColor.BLUE));
@@ -39,12 +93,12 @@ class TestModel {
     combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
     combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
 
-    assert gameInfo.isValidMove(combination);
+    assert gameInfo.play(combination, player_2_id);
   }
 
-  // done
+  // done done
   @Test
-  void testStreetTenToOne() {
+  void playStreetTenToOne() {
     List<Tile> combination = new ArrayList<>();
     combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
     combination.add(new Tile(TileNumber.ELEVEN, TileColor.BLUE));
@@ -52,82 +106,37 @@ class TestModel {
     combination.add(new Tile(TileNumber.THIRTEEN, TileColor.BLUE));
     combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
 
-    assert gameInfo.isValidMove(combination);
+    assert gameInfo.play(combination, player_2_id);
   }
 
-  // done
+  // done done
   @Test
-  void testGroup() {
+  void playGroupTens() {
     List<Tile> combination = new ArrayList<>();
     combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
     combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
     combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
     combination.add(new Tile(TileNumber.TEN, TileColor.RED));
 
-    assert gameInfo.isValidMove(combination);
+    assert gameInfo.play(combination, player_2_id);
   }
 
-  // done
+  // done done
   @Test
-  void testValidFirstMoveWrongComb() {
-    List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.ELEVEN, TileColor.YELLOW));
-
-    assert !(gameInfo.isValidMove(combination) && gameInfo.getPointsForMove(combination) >= 30);
-  }
-
-  // done
-  @Test
-  void testValidFirstMove() {
-    List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
-
-    assert (gameInfo.isValidMove(combination) && gameInfo.getPointsForMove(combination) >= 30);
-  }
-
-  // done
-  @Test
-  void testValidFirstMoveNotEnoughPoints() {
-    List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.NINE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.NINE, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.NINE, TileColor.YELLOW));
-
-    assert !(gameInfo.isValidMove(combination) && gameInfo.getPointsForMove(combination) >= 30);
-  }
-
-  // done
-  @Test
-  void testGroupWithJoker() {
-    List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
-
-    assert (gameInfo.isValidMove(combination) && gameInfo.getPointsForMove(combination) >= 30);
-  }
-
-  // done
-  @Test
-  void testGroupWithJokerNotFirst() {
+  void playGroupWithJokerNotFirst() {
     List<Tile> combination = new ArrayList<>();
     combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
     combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
     combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
     combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
 
-    assert gameInfo.isValidMove(combination);
+    assert gameInfo.play(combination, player_2_id);
     assert gameInfo.getPointsForMove(combination) == 40;
   }
 
-  // done
+  // done done
   @Test
-  void testStreetOneToFiveJOKER() {
+  void playStreetOneToFiveJoker() {
     List<Tile> combination = new ArrayList<>();
     combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
     combination.add(new Tile(TileNumber.TWO, TileColor.BLUE));
@@ -135,7 +144,7 @@ class TestModel {
     combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
     combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
 
-    assert gameInfo.isValidMove(combination);
+    assert gameInfo.play(combination, player_2_id);
     assert gameInfo.getPointsForMove(combination) == 15;
   }
 
@@ -148,7 +157,7 @@ class TestModel {
     combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
     combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
 
-    assert gameInfo.isValidMove(combination);
+    assert gameInfo.play(combination, player_2_id);
     assert gameInfo.getPointsForMove(combination) == 15;
   }
 
@@ -161,7 +170,7 @@ class TestModel {
     combination.add(new Tile(TileNumber.THIRTEEN, TileColor.BLUE));
     combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
 
-    assert gameInfo.isValidMove(combination);
+    assert gameInfo.play(combination, player_2_id);
     assert gameInfo.getPointsForMove(combination) == 47;
   }
 
@@ -174,44 +183,7 @@ class TestModel {
     combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
     combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
 
-    assert gameInfo.isValidMove(combination);
+    assert gameInfo.play(combination, player_2_id);
     assert gameInfo.getPointsForMove(combination) == 47;
-  }
-
-  @Test
-  void playerTest() {
-    UUID id_1 = UUID.randomUUID();
-    gameInfo.registerBy(id_1.toString());
-
-    UUID id_2 = UUID.randomUUID();
-    gameInfo.registerBy(id_2.toString());
-
-    UUID id_3 = UUID.randomUUID();
-    gameInfo.registerBy(id_3.toString());
-
-    UUID id_4 = UUID.randomUUID();
-    gameInfo.registerBy(id_4.toString());
-
-
-    List<String> ids = gameInfo.getAllPlayerIds();
-
-    for (String id : ids) {
-      System.out.println("ID = " + id);
-    }
-
-    System.out.println();
-    System.out.println(id_1);
-    System.out.println(id_2);
-    System.out.println(id_3);
-    System.out.println(id_4);
-    System.out.println();
-
-    gameInfo.deregisterBy(id_1.toString());
-
-    ids = gameInfo.getAllPlayerIds();
-
-    for (String id : ids) {
-      System.out.println("ID = " + id);
-    }
   }
 }
