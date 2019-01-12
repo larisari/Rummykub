@@ -29,9 +29,4 @@ class Hand {
     return tilesOnHand;
   }
 
-  @Override
-  public String toString() {
-    // TODO
-    return "";
-  }
 }

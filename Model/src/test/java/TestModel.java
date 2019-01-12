@@ -48,9 +48,9 @@ class TestModel {
     }
     System.out.println(ids);
 
-    gameInfo.deregisterBy(ids.get(0));
+    gameInfo.deregisterBy(player_1_id);
 
-    System.out.println(ids);
+    System.out.println(gameInfo.getAllPlayerIds());
   }
 
   // done done

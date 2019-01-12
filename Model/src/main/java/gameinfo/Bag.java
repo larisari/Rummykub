@@ -52,13 +52,5 @@ class Bag {
     return stack;
   }
 
-  @Override public String toString() {
-    StringBuilder builder = new StringBuilder();
-    for (Tile tile : this.tiles) {
-      builder.append(tile.toString()).append("\n");
-    }
-    return builder.toString();
-  }
-
 }
 
