@@ -2,9 +2,9 @@ import gameinfo.GIFactory;
 import gameinfo.GIGameInfo;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import tile.Tile;
-import tile.util.TileColor;
-import tile.util.TileNumber;
+import gameinfo.tile.Tile;
+import gameinfo.tile.util.Color;
+import gameinfo.tile.util.Number;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +42,9 @@ class TestModel {
   @Test
   void playFirstMoveWrongComb() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.ELEVEN, TileColor.YELLOW));
+    combination.add(new Tile(Number.TEN, Color.BLUE));
+    combination.add(new Tile(Number.TEN, Color.BLACK));
+    combination.add(new Tile(Number.ELEVEN, Color.YELLOW));
 
     assert !gameInfo.play(combination, player_1_id);
   }
@@ -53,9 +53,9 @@ class TestModel {
   @Test
   void playFirstMoveValid() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
+    combination.add(new Tile(Number.TEN, Color.BLUE));
+    combination.add(new Tile(Number.TEN, Color.BLACK));
+    combination.add(new Tile(Number.TEN, Color.YELLOW));
 
     assert gameInfo.play(combination, player_2_id);
   }
@@ -64,10 +64,10 @@ class TestModel {
   @Test
   void playFirstMoveWithJoker() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
+    combination.add(new Tile(Number.JOKER, Color.JOKER));
+    combination.add(new Tile(Number.TEN, Color.BLUE));
+    combination.add(new Tile(Number.TEN, Color.BLACK));
+    combination.add(new Tile(Number.TEN, Color.YELLOW));
 
     assert gameInfo.play(combination, player_3_id);
   }
@@ -76,9 +76,9 @@ class TestModel {
   @Test
   void playFirstMoveNotEnoughPoints() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.NINE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.NINE, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.NINE, TileColor.YELLOW));
+    combination.add(new Tile(Number.NINE, Color.BLUE));
+    combination.add(new Tile(Number.NINE, Color.BLACK));
+    combination.add(new Tile(Number.NINE, Color.YELLOW));
 
     assert !gameInfo.play(combination, player_4_id);
   }
@@ -87,11 +87,11 @@ class TestModel {
   @Test
   void playStreetOneToFive() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TWO, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.THREE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
+    combination.add(new Tile(Number.ONE, Color.BLUE));
+    combination.add(new Tile(Number.TWO, Color.BLUE));
+    combination.add(new Tile(Number.THREE, Color.BLUE));
+    combination.add(new Tile(Number.FOUR, Color.BLUE));
+    combination.add(new Tile(Number.FIVE, Color.BLUE));
 
     assert gameInfo.play(combination, player_2_id);
   }
@@ -100,11 +100,11 @@ class TestModel {
   @Test
   void playStreetTenToOne() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.ELEVEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TWELVE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.THIRTEEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
+    combination.add(new Tile(Number.TEN, Color.BLUE));
+    combination.add(new Tile(Number.ELEVEN, Color.BLUE));
+    combination.add(new Tile(Number.TWELVE, Color.BLUE));
+    combination.add(new Tile(Number.THIRTEEN, Color.BLUE));
+    combination.add(new Tile(Number.ONE, Color.BLUE));
 
     assert gameInfo.play(combination, player_2_id);
   }
@@ -113,10 +113,10 @@ class TestModel {
   @Test
   void playGroupTens() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
-    combination.add(new Tile(TileNumber.TEN, TileColor.RED));
+    combination.add(new Tile(Number.TEN, Color.BLUE));
+    combination.add(new Tile(Number.TEN, Color.BLACK));
+    combination.add(new Tile(Number.TEN, Color.YELLOW));
+    combination.add(new Tile(Number.TEN, Color.RED));
 
     assert gameInfo.play(combination, player_2_id);
   }
@@ -125,10 +125,10 @@ class TestModel {
   @Test
   void playGroupWithJokerNotFirst() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLACK));
-    combination.add(new Tile(TileNumber.TEN, TileColor.YELLOW));
+    combination.add(new Tile(Number.TEN, Color.BLUE));
+    combination.add(new Tile(Number.JOKER, Color.JOKER));
+    combination.add(new Tile(Number.TEN, Color.BLACK));
+    combination.add(new Tile(Number.TEN, Color.YELLOW));
 
     assert gameInfo.play(combination, player_2_id);
     assert gameInfo.getPointsForMove(combination) == 40;
@@ -138,11 +138,11 @@ class TestModel {
   @Test
   void playStreetOneToFiveJoker() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
-    combination.add(new Tile(TileNumber.TWO, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.THREE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
+    combination.add(new Tile(Number.JOKER, Color.JOKER));
+    combination.add(new Tile(Number.TWO, Color.BLUE));
+    combination.add(new Tile(Number.THREE, Color.BLUE));
+    combination.add(new Tile(Number.FOUR, Color.BLUE));
+    combination.add(new Tile(Number.FIVE, Color.BLUE));
 
     assert gameInfo.play(combination, player_2_id);
     assert gameInfo.getPointsForMove(combination) == 15;
@@ -151,11 +151,11 @@ class TestModel {
   @Test
   void testStreetOneToFiveJOKERNotAtFirst() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TWO, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
-    combination.add(new Tile(TileNumber.FOUR, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.FIVE, TileColor.BLUE));
+    combination.add(new Tile(Number.ONE, Color.BLUE));
+    combination.add(new Tile(Number.TWO, Color.BLUE));
+    combination.add(new Tile(Number.JOKER, Color.JOKER));
+    combination.add(new Tile(Number.FOUR, Color.BLUE));
+    combination.add(new Tile(Number.FIVE, Color.BLUE));
 
     assert gameInfo.play(combination, player_2_id);
     assert gameInfo.getPointsForMove(combination) == 15;
@@ -164,11 +164,11 @@ class TestModel {
   @Test
   void testStreetTenToOneJOKER() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
-    combination.add(new Tile(TileNumber.ELEVEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TWELVE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.THIRTEEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
+    combination.add(new Tile(Number.JOKER, Color.JOKER));
+    combination.add(new Tile(Number.ELEVEN, Color.BLUE));
+    combination.add(new Tile(Number.TWELVE, Color.BLUE));
+    combination.add(new Tile(Number.THIRTEEN, Color.BLUE));
+    combination.add(new Tile(Number.ONE, Color.BLUE));
 
     assert gameInfo.play(combination, player_2_id);
     assert gameInfo.getPointsForMove(combination) == 47;
@@ -177,11 +177,11 @@ class TestModel {
   @Test
   void testStreetTenToOneJOKERNotAtFirst() {
     List<Tile> combination = new ArrayList<>();
-    combination.add(new Tile(TileNumber.TEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.ELEVEN, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.TWELVE, TileColor.BLUE));
-    combination.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
-    combination.add(new Tile(TileNumber.ONE, TileColor.BLUE));
+    combination.add(new Tile(Number.TEN, Color.BLUE));
+    combination.add(new Tile(Number.ELEVEN, Color.BLUE));
+    combination.add(new Tile(Number.TWELVE, Color.BLUE));
+    combination.add(new Tile(Number.JOKER, Color.JOKER));
+    combination.add(new Tile(Number.ONE, Color.BLUE));
 
     assert gameInfo.play(combination, player_2_id);
     assert gameInfo.getPointsForMove(combination) == 47;

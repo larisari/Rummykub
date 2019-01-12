@@ -1,7 +1,8 @@
 package gameinfo;
 
-import tile.Tile;
-import tile.util.TileNumber;
+import gameinfo.tile.Tile;
+import gameinfo.tile.util.Number;
+
 import java.util.List;
 
 class PointsCalculator {
@@ -13,19 +14,19 @@ class PointsCalculator {
     int points = 0;
 
     for (Tile tile : street) {
-      TileNumber tilePoints = tile.getNumber();
+      Number tilePoints = tile.getNumber();
 
-      if (!tilePoints.equals(TileNumber.JOKER)) {
+      if (!tilePoints.equals(Number.JOKER)) {
         points += tilePoints.value();
       } else {
-        // tile is a Joker
+        // gameinfo.tile is a Joker
         int indexOfJoker = street.indexOf(tile);
 
         if (indexOfJoker > 0) {
-          TileNumber pointsOfPrevTile = street.get(indexOfJoker - 1).getNumber();
+          Number pointsOfPrevTile = street.get(indexOfJoker - 1).getNumber();
           points += pointsOfPrevTile.next().value();
         } else {
-          TileNumber pointsOfNextTile = street.get(indexOfJoker + 1).getNumber();
+          Number pointsOfNextTile = street.get(indexOfJoker + 1).getNumber();
           points += pointsOfNextTile.previous().value();
         }
       }
@@ -38,9 +39,9 @@ class PointsCalculator {
     int points = 0;
 
     for (Tile tile : group) {
-      TileNumber numberOfTile = tile.getNumber();
+      Number numberOfTile = tile.getNumber();
 
-      if (!numberOfTile.equals(TileNumber.JOKER)) {
+      if (!numberOfTile.equals(Number.JOKER)) {
         points = numberOfTile.value() * group.size();
         break;
       }

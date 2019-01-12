@@ -1,8 +1,8 @@
 package gameinfo;
 
-import tile.Tile;
-import tile.util.TileColor;
-import tile.util.TileNumber;
+import gameinfo.tile.Tile;
+import gameinfo.tile.util.Color;
+import gameinfo.tile.util.Number;
 
 import java.util.List;
 
@@ -45,8 +45,8 @@ class CombRules {
         Tile previous = combination.get(i - 1);
         Tile current = combination.get(i);
 
-        if (previous.getColor().equals(TileColor.JOKER)
-            || current.getColor().equals(TileColor.JOKER)) {
+        if (previous.getColor().equals(Color.JOKER)
+                || current.getColor().equals(Color.JOKER)) {
           break;
         }
 
@@ -69,8 +69,8 @@ class CombRules {
         Tile previous = combination.get(i - 1);
         Tile current = combination.get(i);
 
-        if (previous.getNumber().equals(TileNumber.JOKER)
-            || current.getNumber().equals(TileNumber.JOKER)) {
+        if (previous.getNumber().equals(Number.JOKER)
+                || current.getNumber().equals(Number.JOKER)) {
           break;
         }
 
@@ -86,45 +86,45 @@ class CombRules {
   }
 
   private boolean haveSameNumber(List<Tile> combination) {
-    TileNumber tempNum = combination.get(0).getNumber();
+    Number tempNum = combination.get(0).getNumber();
 
-    if (tempNum.equals(TileNumber.JOKER)) {
+    if (tempNum.equals(Number.JOKER)) {
       for (Tile tile : combination) {
-        TileNumber num = tile.getNumber();
+        Number num = tile.getNumber();
 
-        if (!num.equals(TileNumber.JOKER)) {
+        if (!num.equals(Number.JOKER)) {
           tempNum = num;
           break;
         }
       }
     }
 
-    TileNumber number = tempNum;
+    Number number = tempNum;
 
     return combination
         .stream()
         .allMatch(
-            tile -> tile.getNumber().equals(number) || tile.getNumber().equals(TileNumber.JOKER));
+                tile -> tile.getNumber().equals(number) || tile.getNumber().equals(Number.JOKER));
   }
 
   private boolean haveSameColor(List<Tile> combination) {
-    TileColor tempColor = combination.get(0).getColor();
+    Color tempColor = combination.get(0).getColor();
 
-    if (tempColor.equals(TileColor.JOKER)) {
+    if (tempColor.equals(Color.JOKER)) {
       for (Tile tile : combination) {
-        TileColor col = tile.getColor();
+        Color col = tile.getColor();
 
-        if (!col.equals(TileColor.JOKER)) {
+        if (!col.equals(Color.JOKER)) {
           tempColor = col;
           break;
         }
       }
     }
 
-    TileColor color = tempColor;
+    Color color = tempColor;
 
     return combination
         .stream()
-        .allMatch(tile -> tile.getColor().equals(color) || tile.getColor().equals(TileColor.JOKER));
+            .allMatch(tile -> tile.getColor().equals(color) || tile.getColor().equals(Color.JOKER));
   }
 }

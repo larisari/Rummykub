@@ -1,6 +1,6 @@
 package gameinfo;
 
-import tile.Tile;
+import gameinfo.tile.Tile;
 
 import java.util.List;
 import java.util.Optional;

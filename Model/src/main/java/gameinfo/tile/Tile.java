@@ -1,40 +1,40 @@
-package tile;
+package gameinfo.tile;
 
-import tile.util.TileColor;
-import tile.util.TileNumber;
+import gameinfo.tile.util.Color;
+import gameinfo.tile.util.Number;
 
 public class Tile {
   private final int MIN_NUM = 1;
   private final int MAX_NUM = 13;
   private final int JOKER = 0;
-  private TileNumber number;
-  private TileColor color;
+  private Number number;
+  private Color color;
 
   /**
    * @throws IllegalArgumentException if:
    * number not between 0 and 13
    * joker declaration fails
    * */
-  public Tile (TileNumber number, TileColor color) {
+  public Tile(Number number, Color color) {
     if (number.value() >= MIN_NUM && number.value() <= MAX_NUM || number.value() == JOKER) {
       this.number = number;
       this.color = color;
       checkForJoker();
     }
     else {
-      throw new IllegalArgumentException("Invalid argument for tile.Tile " +
+      throw new IllegalArgumentException("Invalid argument for gameinfo.tile.Tile " +
           "declaration.");
     }
   }
 
   private void checkForJoker() {
-    if (this.number == TileNumber.JOKER) {
-      if (!this.color.equals(TileColor.JOKER)) {
+    if (this.number == Number.JOKER) {
+      if (!this.color.equals(Color.JOKER)) {
         throw new IllegalArgumentException("Joker must have color JOKER.");
       }
     }
-    if (this.color.equals(TileColor.JOKER)) {
-      if (this.number != TileNumber.JOKER) {
+    if (this.color.equals(Color.JOKER)) {
+      if (this.number != Number.JOKER) {
         throw new IllegalArgumentException("Joker must have number JOKER.");
       }
     }
@@ -44,11 +44,11 @@ public class Tile {
     return "{" + this.number + "," + this.color + "}";
   }
 
-  public TileNumber getNumber() {
+  public Number getNumber() {
     return this.number;
   }
 
-  public TileColor getColor() {
+  public Color getColor() {
     return this.color;
   }
 

@@ -1,9 +1,9 @@
 import gameinfo.GIFactory;
 import gameinfo.GIGameInfo;
 import org.junit.jupiter.api.Test;
-import tile.Tile;
-import tile.util.TileColor;
-import tile.util.TileNumber;
+import gameinfo.tile.Tile;
+import gameinfo.tile.util.Color;
+import gameinfo.tile.util.Number;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,11 +58,11 @@ class APITest {
     List<Tile> combination =
             new ArrayList<>(
                     Arrays.asList(
-                            new Tile(TileNumber.TEN, TileColor.YELLOW),
-                            new Tile(TileNumber.ELEVEN, TileColor.YELLOW),
-                            new Tile(TileNumber.TWELVE, TileColor.YELLOW),
-                            new Tile(TileNumber.THIRTEEN, TileColor.YELLOW),
-                            new Tile(TileNumber.ONE, TileColor.YELLOW)));
+                            new Tile(Number.TEN, Color.YELLOW),
+                            new Tile(Number.ELEVEN, Color.YELLOW),
+                            new Tile(Number.TWELVE, Color.YELLOW),
+                            new Tile(Number.THIRTEEN, Color.YELLOW),
+                            new Tile(Number.ONE, Color.YELLOW)));
 
     assert gameInfo.play(combination, player_1_id);
     assert gameInfo.getPointsForMove(combination) == 47;
@@ -77,11 +77,11 @@ class APITest {
     List<Tile> combination =
             new ArrayList<>(
                     Arrays.asList(
-                            new Tile(TileNumber.ONE, TileColor.YELLOW),
-                            new Tile(TileNumber.TWO, TileColor.YELLOW),
-                            new Tile(TileNumber.THREE, TileColor.YELLOW),
-                            new Tile(TileNumber.FOUR, TileColor.YELLOW),
-                            new Tile(TileNumber.FIVE, TileColor.YELLOW)));
+                            new Tile(Number.ONE, Color.YELLOW),
+                            new Tile(Number.TWO, Color.YELLOW),
+                            new Tile(Number.THREE, Color.YELLOW),
+                            new Tile(Number.FOUR, Color.YELLOW),
+                            new Tile(Number.FIVE, Color.YELLOW)));
 
     assert !gameInfo.play(combination, player_2_id);
     assert gameInfo.getPointsForMove(combination) == 15;
@@ -91,11 +91,11 @@ class APITest {
     List<Tile> combination =
             new ArrayList<>(
                     Arrays.asList(
-                            new Tile(TileNumber.ONE, TileColor.YELLOW),
-                            new Tile(TileNumber.TWO, TileColor.YELLOW),
-                            new Tile(TileNumber.THREE, TileColor.YELLOW),
-                            new Tile(TileNumber.FOUR, TileColor.YELLOW),
-                            new Tile(TileNumber.FIVE, TileColor.YELLOW)));
+                            new Tile(Number.ONE, Color.YELLOW),
+                            new Tile(Number.TWO, Color.YELLOW),
+                            new Tile(Number.THREE, Color.YELLOW),
+                            new Tile(Number.FOUR, Color.YELLOW),
+                            new Tile(Number.FIVE, Color.YELLOW)));
 
     assert gameInfo.play(combination, player_1_id);
     assert gameInfo.getPointsForMove(combination) == 15;
@@ -105,10 +105,10 @@ class APITest {
     List<Tile> combination =
             new ArrayList<>(
                     Arrays.asList(
-                            new Tile(TileNumber.ONE, TileColor.YELLOW),
-                            new Tile(TileNumber.TWO, TileColor.BLACK),
-                            new Tile(TileNumber.THREE, TileColor.YELLOW),
-                            new Tile(TileNumber.FOUR, TileColor.YELLOW)));
+                            new Tile(Number.ONE, Color.YELLOW),
+                            new Tile(Number.TWO, Color.BLACK),
+                            new Tile(Number.THREE, Color.YELLOW),
+                            new Tile(Number.FOUR, Color.YELLOW)));
 
     assert !gameInfo.play(combination, player_1_id);
   }

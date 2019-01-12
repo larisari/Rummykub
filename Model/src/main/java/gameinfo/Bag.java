@@ -1,8 +1,8 @@
 package gameinfo;
 
-import tile.Tile;
-import tile.util.TileColor;
-import tile.util.TileNumber;
+import gameinfo.tile.Tile;
+import gameinfo.tile.util.Color;
+import gameinfo.tile.util.Number;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,21 +18,21 @@ class Bag {
   }
 
   private void generateBag() {
-    TileNumber num = TileNumber.ONE;
+    Number num = Number.ONE;
 
     for (int i = 0; i < MAX_NUM; i++) {
       for (int number = 0; number < 2; number++) {
-        this.tiles.add(new Tile(num, TileColor.BLUE));
-        this.tiles.add(new Tile(num, TileColor.YELLOW));
-        this.tiles.add(new Tile(num, TileColor.RED));
-        this.tiles.add(new Tile(num, TileColor.BLACK));
+        this.tiles.add(new Tile(num, Color.BLUE));
+        this.tiles.add(new Tile(num, Color.YELLOW));
+        this.tiles.add(new Tile(num, Color.RED));
+        this.tiles.add(new Tile(num, Color.BLACK));
       }
 
       num = num.next();
     }
 
-    this.tiles.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
-    this.tiles.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
+    this.tiles.add(new Tile(Number.JOKER, Color.JOKER));
+    this.tiles.add(new Tile(Number.JOKER, Color.JOKER));
   }
 
   public Tile takeTile() {

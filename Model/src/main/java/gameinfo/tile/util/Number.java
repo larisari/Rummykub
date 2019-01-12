@@ -1,6 +1,6 @@
-package tile.util;
+package gameinfo.tile.util;
 
-public enum TileNumber {
+public enum Number {
   ONE,
   TWO,
   THREE,
@@ -17,7 +17,7 @@ public enum TileNumber {
 
   JOKER;
 
-  public TileNumber next() {
+  public Number next() {
     switch (this) {
       case ONE:
         return TWO;
@@ -49,11 +49,11 @@ public enum TileNumber {
         // TODO !!!
         return JOKER;
       default:
-        throw new IllegalArgumentException("Not a valid tile.util.TileNumber.");
+        throw new IllegalArgumentException("Not a valid gameinfo.tile.util.Number.");
     }
   }
 
-  public TileNumber previous() {
+  public Number previous() {
     switch (this) {
       case ONE:
         return THIRTEEN;
@@ -85,7 +85,7 @@ public enum TileNumber {
         // TODO !!!
         return JOKER;
       default:
-        throw new IllegalArgumentException("Not a valid tile.util.TileNumber.");
+        throw new IllegalArgumentException("Not a valid gameinfo.tile.util.Number.");
     }
   }
 
@@ -121,7 +121,7 @@ public enum TileNumber {
         // TODO !!!
         return 0;
       default:
-        throw new IllegalArgumentException("Not a valid tile.util.TileNumber.");
+        throw new IllegalArgumentException("Not a valid gameinfo.tile.util.Number.");
     }
   }
 }
