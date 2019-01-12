@@ -31,7 +31,7 @@ class TestModel {
 
   @Test
   void testRegistration() {
-    List<String> ids = gameInfo.getAllPlayerIds();
+    List<String> ids = gameInfo.getAllPlayerIds().get();
 
     for (String id : ids) {
       assert id.equals(player_1_id) || id.equals(player_2_id) || id.equals(player_3_id) || id.equals(player_4_id);
@@ -41,7 +41,7 @@ class TestModel {
 
   @Test
   void testDeregistration() {
-    List<String> ids = gameInfo.getAllPlayerIds();
+    List<String> ids = gameInfo.getAllPlayerIds().get();
 
     for (String id : ids) {
       assert id.equals(player_1_id) || id.equals(player_2_id) || id.equals(player_3_id) || id.equals(player_4_id);
@@ -61,7 +61,7 @@ class TestModel {
     combination.add(new Tile(Number.TEN, Color.BLACK));
     combination.add(new Tile(Number.ELEVEN, Color.YELLOW));
 
-    assert !gameInfo.play(combination, player_1_id);
+    assert !gameInfo.play(combination, player_1_id).get();
   }
 
   // done done
@@ -72,7 +72,7 @@ class TestModel {
     combination.add(new Tile(Number.TEN, Color.BLACK));
     combination.add(new Tile(Number.TEN, Color.YELLOW));
 
-    assert gameInfo.play(combination, player_2_id);
+    assert gameInfo.play(combination, player_2_id).get();
   }
 
   // done done
@@ -84,7 +84,7 @@ class TestModel {
     combination.add(new Tile(Number.TEN, Color.BLACK));
     combination.add(new Tile(Number.TEN, Color.YELLOW));
 
-    assert gameInfo.play(combination, player_3_id);
+    assert gameInfo.play(combination, player_3_id).get();
   }
 
   // done done
@@ -95,7 +95,7 @@ class TestModel {
     combination.add(new Tile(Number.NINE, Color.BLACK));
     combination.add(new Tile(Number.NINE, Color.YELLOW));
 
-    assert !gameInfo.play(combination, player_4_id);
+    assert !gameInfo.play(combination, player_4_id).get();
   }
 
   // done done
@@ -108,7 +108,7 @@ class TestModel {
     combination.add(new Tile(Number.FOUR, Color.BLUE));
     combination.add(new Tile(Number.FIVE, Color.BLUE));
 
-    assert gameInfo.play(combination, player_2_id);
+    assert gameInfo.play(combination, player_2_id).get();
   }
 
   // done done
@@ -121,7 +121,7 @@ class TestModel {
     combination.add(new Tile(Number.THIRTEEN, Color.BLUE));
     combination.add(new Tile(Number.ONE, Color.BLUE));
 
-    assert gameInfo.play(combination, player_2_id);
+    assert gameInfo.play(combination, player_2_id).get();
   }
 
   // done done
@@ -133,7 +133,7 @@ class TestModel {
     combination.add(new Tile(Number.TEN, Color.YELLOW));
     combination.add(new Tile(Number.TEN, Color.RED));
 
-    assert gameInfo.play(combination, player_2_id);
+    assert gameInfo.play(combination, player_2_id).get();
   }
 
   // done done
@@ -145,8 +145,8 @@ class TestModel {
     combination.add(new Tile(Number.TEN, Color.BLACK));
     combination.add(new Tile(Number.TEN, Color.YELLOW));
 
-    assert gameInfo.play(combination, player_2_id);
-    assert gameInfo.getPointsForMove(combination) == 40;
+    assert gameInfo.play(combination, player_2_id).get();
+    assert gameInfo.getPointsForMove(combination).get() == 40;
   }
 
   // done done
@@ -159,8 +159,8 @@ class TestModel {
     combination.add(new Tile(Number.FOUR, Color.BLUE));
     combination.add(new Tile(Number.FIVE, Color.BLUE));
 
-    assert gameInfo.play(combination, player_2_id);
-    assert gameInfo.getPointsForMove(combination) == 15;
+    assert gameInfo.play(combination, player_2_id).get();
+    assert gameInfo.getPointsForMove(combination).get() == 15;
   }
 
   @Test
@@ -172,8 +172,8 @@ class TestModel {
     combination.add(new Tile(Number.FOUR, Color.BLUE));
     combination.add(new Tile(Number.FIVE, Color.BLUE));
 
-    assert gameInfo.play(combination, player_2_id);
-    assert gameInfo.getPointsForMove(combination) == 15;
+    assert gameInfo.play(combination, player_2_id).get();
+    assert gameInfo.getPointsForMove(combination).get() == 15;
   }
 
   @Test
@@ -185,8 +185,8 @@ class TestModel {
     combination.add(new Tile(Number.THIRTEEN, Color.BLUE));
     combination.add(new Tile(Number.ONE, Color.BLUE));
 
-    assert gameInfo.play(combination, player_2_id);
-    assert gameInfo.getPointsForMove(combination) == 47;
+    assert gameInfo.play(combination, player_2_id).get();
+    assert gameInfo.getPointsForMove(combination).get() == 47;
   }
 
   @Test
@@ -198,24 +198,24 @@ class TestModel {
     combination.add(new Tile(Number.JOKER, Color.JOKER));
     combination.add(new Tile(Number.ONE, Color.BLUE));
 
-    assert gameInfo.play(combination, player_2_id);
-    assert gameInfo.getPointsForMove(combination) == 47;
+    assert gameInfo.play(combination, player_2_id).get();
+    assert gameInfo.getPointsForMove(combination).get() == 47;
   }
 
   @Test
-  void getStackInitialtest() {
-    System.out.println(gameInfo.getStackFor(player_1_id));
-    System.out.println(gameInfo.getStackFor(player_2_id));
-    System.out.println(gameInfo.getStackFor(player_3_id));
-    System.out.println(gameInfo.getStackFor(player_4_id));
-  }
+  void getTileTest() {
+    gameInfo.start();
 
-  @Test
-  void getTileInitialTest() {
-    System.out.println(gameInfo.getTileFor(player_1_id));
-    System.out.println(gameInfo.getTileFor(player_2_id));
-    System.out.println(gameInfo.getTileFor(player_3_id));
-    System.out.println(gameInfo.getTileFor(player_4_id));
-  }
+    System.out.println(gameInfo.drawBy(player_1_id));
+    System.out.println(gameInfo.drawBy(player_2_id));
+    System.out.println(gameInfo.drawBy(player_3_id));
+    System.out.println(gameInfo.drawBy(player_4_id));
 
+    // now game state should be running.
+//    System.out.println(gameInfo.drawBy(player_1_id));
+//    System.out.println(gameInfo.drawBy(player_2_id));
+//    System.out.println(gameInfo.drawBy(player_3_id));
+//    System.out.println(gameInfo.drawBy(player_4_id));
+
+  }
 }

@@ -1,6 +1,7 @@
 package gameinfo;
 
 import gameinfo.tile.Tile;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +27,10 @@ class Rules {
 
   void startGame() {
     this.gameFlow.startGame();
+  }
+
+  boolean isDistributing() {
+    return gameFlow.isDistributing();
   }
 
   boolean isPlayerExistingBy(String id) {

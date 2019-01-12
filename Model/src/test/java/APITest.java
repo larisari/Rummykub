@@ -44,7 +44,7 @@ class APITest {
   }
 
   void stage_1_RegisterTest() {
-    List<String> ids = gameInfo.getAllPlayerIds();
+    List<String> ids = gameInfo.getAllPlayerIds().get();
 
     for (String id : ids) {
       assert id.equals(player_1_id)
@@ -64,8 +64,8 @@ class APITest {
                             new Tile(Number.THIRTEEN, Color.YELLOW),
                             new Tile(Number.ONE, Color.YELLOW)));
 
-    assert gameInfo.play(combination, player_1_id);
-    assert gameInfo.getPointsForMove(combination) == 47;
+    assert gameInfo.play(combination, player_1_id).get();
+    assert gameInfo.getPointsForMove(combination).get() == 47;
   }
 
   void stage_2_GetNextPlayerId() {
@@ -83,8 +83,8 @@ class APITest {
                             new Tile(Number.FOUR, Color.YELLOW),
                             new Tile(Number.FIVE, Color.YELLOW)));
 
-    assert !gameInfo.play(combination, player_2_id);
-    assert gameInfo.getPointsForMove(combination) == 15;
+    assert !gameInfo.play(combination, player_2_id).get();
+    assert gameInfo.getPointsForMove(combination).get() == 15;
   }
 
   void stage_5_PlayCombinationValid() {
@@ -97,8 +97,8 @@ class APITest {
                             new Tile(Number.FOUR, Color.YELLOW),
                             new Tile(Number.FIVE, Color.YELLOW)));
 
-    assert gameInfo.play(combination, player_1_id);
-    assert gameInfo.getPointsForMove(combination) == 15;
+    assert gameInfo.play(combination, player_1_id).get();
+    assert gameInfo.getPointsForMove(combination).get() == 15;
   }
 
   void stage_6_PlayCombinationInvalid() {
@@ -110,7 +110,7 @@ class APITest {
                             new Tile(Number.THREE, Color.YELLOW),
                             new Tile(Number.FOUR, Color.YELLOW)));
 
-    assert !gameInfo.play(combination, player_1_id);
+    assert !gameInfo.play(combination, player_1_id).get();
   }
 
   void stage_7_PlayCombinationWithTilesFromBoardValid() {
@@ -128,7 +128,7 @@ class APITest {
   void stage_9_GetAllTilesById() {
     List<Tile> hand = gameInfo.getAllTilesBy(player_1_id).get();
 
-    hand.forEach(tile -> System.out.println(tile));
+    hand.forEach(tile -> System.out.println("tile." + tile.getNumber() + "/" + tile.getColor()));
   }
 
   static void stage_10_DeregisterTest() {
@@ -137,6 +137,6 @@ class APITest {
     gameInfo.deregisterBy(player_3_id);
     gameInfo.deregisterBy(player_4_id);
 
-    assert gameInfo.getAllPlayerIds().size() == 0;
+    assert !gameInfo.getAllPlayerIds().isPresent();
   }
 }

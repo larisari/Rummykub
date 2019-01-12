@@ -70,6 +70,7 @@ class GameFlow {
     }
   }
 
-
-
+  boolean isDistributing() {
+    return state.equals(GameState.distributing);
+  }
 }

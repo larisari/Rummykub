@@ -40,10 +40,6 @@ public class Tile {
     }
   }
 
-  @Override public String toString() {
-    return "tile." + color + "/" + number;
-  }
-
   public Number getNumber() {
     return this.number;
   }
@@ -53,7 +49,3 @@ public class Tile {
   }
 
 }
-
-/*
-list{comb:tile.color/number,..;}{comb:tile.color/number,...;}...
- */

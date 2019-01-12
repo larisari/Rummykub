@@ -11,22 +11,22 @@ public interface GIGameInfo {
 
   void deregisterBy(String id);
 
-  // start()
+  void start();
 
-  String getNextPlayerId();
+  Optional<Boolean> isValidPlayerBy(String id);
+
+  Optional<String> getNextPlayerId();
 
   // just for test TODO: REMOVE
-  List<String> getAllPlayerIds();
+  Optional<List<String>> getAllPlayerIds();
 
-  boolean play(List<Tile> combination, String id);
+  Optional<Boolean> play(List<Tile> combination, String id);
 
-  boolean play(List<Tile> tilesFromHand, List<Tile> tilesFromBoard, List<List<Tile>> newCombinations, String id);
+  Optional<Boolean> play(List<Tile> tilesFromHand, List<Tile> tilesFromBoard, List<List<Tile>> newCombinations, String id);
+
+  Optional<List<Tile>> drawBy(String id);
 
   Optional<List<Tile>> getAllTilesBy(String id);
 
-  Optional<List<Tile>> getStackFor(String id);
-
-  Optional<Tile> getTileFor(String id);
-
-  int getPointsForMove(List<Tile> combination);
+  Optional<Integer> getPointsForMove(List<Tile> combination);
 }

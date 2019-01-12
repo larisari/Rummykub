@@ -29,14 +29,9 @@ class Hand {
     return tilesOnHand;
   }
 
-//  // why exactly do we need this ???
-//  Optional<Tile> pickTile(int position) {
-//    Tile tileAtPosition = tilesOnHand.get(position);
-//
-//    if (tileAtPosition != null) {
-//      return Optional.of(tileAtPosition);
-//    } else {
-//      return Optional.empty();
-//    }
-//  }
+  @Override
+  public String toString() {
+    // TODO
+    return "";
+  }
 }
