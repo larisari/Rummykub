@@ -35,23 +35,21 @@ class Bag {
     this.tiles.add(new Tile(TileNumber.JOKER, TileColor.JOKER));
   }
 
-  public Tile getTile(int position) {
-    //position starting at 0
-    return this.tiles.get(position);
+  public Tile takeTile() {
+    int position = (int)(Math.random()+1)*this.tiles.size()-1;
+    Tile tile = this.tiles.get(position);
+    this.tiles.remove(position);
+    return tile;
   }
 
   public List<Tile> takeStack(int numberOfTiles) {
     List<Tile> stack = new ArrayList<>();
     for (int i = 0; i < numberOfTiles; i++) {
-      int index = (int) (Math.random()+1) * SUM_TILES;
+      int index = (int) (Math.random()+1) * this.tiles.size();
       stack.add(this.tiles.get(index));
       this.tiles.remove(index);
     }
     return stack;
-  }
-
-  public void remove(Tile tile) {
-    this.tiles.remove(tile);
   }
 
   @Override public String toString() {
