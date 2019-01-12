@@ -41,7 +41,7 @@ public class Tile {
   }
 
   @Override public String toString() {
-    return "{" + this.number + "," + this.color + "}";
+    return "tile." + color + "/" + number;
   }
 
   public Number getNumber() {
@@ -53,3 +53,7 @@ public class Tile {
   }
 
 }
+
+/*
+list{comb:tile.color/number,..;}{comb:tile.color/number,...;}...
+ */
