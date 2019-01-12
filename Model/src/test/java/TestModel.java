@@ -218,4 +218,9 @@ class TestModel {
 //    System.out.println(gameInfo.drawBy(player_4_id));
 
   }
+
+  @Test
+  void validPlayerTest() {
+    assert gameInfo.isValidPlayerBy(player_1_id).get();
+  }
 }

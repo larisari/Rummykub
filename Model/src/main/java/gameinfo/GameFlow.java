@@ -54,7 +54,7 @@ class GameFlow {
   }
 
   String getNextPlayerID() {
-    if (currentPlayerIndex == this.players.size()-1) {
+    if (currentPlayerIndex == this.players.size() - 1) {
       return this.players.get(0).getId();
     }
     else {

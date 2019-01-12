@@ -37,6 +37,10 @@ class Rules {
     return gameFlow.playerExists(id);
   }
 
+  boolean isValidPlayer(String id) {
+    return this.gameFlow.isValidPlayer(id);
+  }
+
   List<Player> getAllPlayers() {
     return gameFlow.getPlayers();
   }
