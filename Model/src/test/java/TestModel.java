@@ -186,4 +186,21 @@ class TestModel {
     assert gameInfo.play(combination, player_2_id);
     assert gameInfo.getPointsForMove(combination) == 47;
   }
+
+  @Test
+  void getStackinitialtest() {
+    System.out.println(gameInfo.getStackFor(player_1_id));
+    System.out.println(gameInfo.getStackFor(player_2_id));
+    System.out.println(gameInfo.getStackFor(player_3_id));
+    System.out.println(gameInfo.getStackFor(player_4_id));
+  }
+
+  @Test
+  void getTileInitialTest() {
+    System.out.println(gameInfo.getTileFor(player_1_id));
+    System.out.println(gameInfo.getTileFor(player_2_id));
+    System.out.println(gameInfo.getTileFor(player_3_id));
+    System.out.println(gameInfo.getTileFor(player_4_id));
+  }
+
 }
