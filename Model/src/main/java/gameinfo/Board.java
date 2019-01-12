@@ -10,8 +10,8 @@ class Board {
   private List<List<Tile>> combos;
 
   Board() {
-    this.bag = new Bag(); //filled Bag
-    this.combos = new ArrayList<>(); //empty List of Combos
+    this.bag = new Bag();
+    this.combos = new ArrayList<>();
   }
 
   List<List<Tile>> getActiveCombos() {
@@ -27,11 +27,11 @@ class Board {
   }
 
   Tile getTileFromBag() {
-    return null;
+    return this.bag.takeTile();
   }
 
   List<Tile> getStackFromBag(int numberOfTiles) {
-    return null;
+    return this.bag.takeStack(numberOfTiles);
   }
 
 }
