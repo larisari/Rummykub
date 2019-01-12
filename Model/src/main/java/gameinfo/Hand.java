@@ -14,7 +14,7 @@ class Hand {
     tilesOnHand = new ArrayList<>();
   }
 
-  void putTile(Tile tile) {
+  void put(Tile tile) {
     tilesOnHand.add(tile);
   }
 

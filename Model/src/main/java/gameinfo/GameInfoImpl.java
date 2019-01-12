@@ -62,10 +62,10 @@ class GameInfoImpl implements GIGameInfo {
 
   @Override
   public Optional<List<Tile>> getStackFor(String id) {
-    List<Tile> stack = board.getStackFromBag();
     Player player = getPlayerBy(id);
 
     if (player != null) {
+      List<Tile> stack = board.getStackFromBag();
       player.put(stack);
       return Optional.of(stack);
     } else {
@@ -75,10 +75,10 @@ class GameInfoImpl implements GIGameInfo {
 
   @Override
   public Optional<Tile> getTileFor(String id) {
-    Tile tile = board.getTileFromBag();
     Player player = getPlayerBy(id);
 
     if (player != null) {
+      Tile tile = board.getTileFromBag();
       player.put(tile);
       return Optional.of(tile);
     }
@@ -90,6 +90,12 @@ class GameInfoImpl implements GIGameInfo {
   public boolean isValidMove(List<Tile> combination) {
     // TODO !!! if its first move use other method of rules.CombRules with minimum Points !!!
     return rules.isValid(combination);
+  }
+
+  @Override
+  public boolean isValidMove(List<Tile> tilesFromHand, List<Tile> tilesFromBoard, List<List<Tile>> newCombination) {
+    // TODO Implement
+    return false;
   }
 
   @Override
