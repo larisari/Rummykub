@@ -10,17 +10,18 @@ class GameInfoImpl implements GIGameInfo {
 
   private Board board;
   private Rules rules;
-  private List<Player> players;
+  private GameFlow gameFlow;
+  private final int STARTING_TILES = 14;
 
   GameInfoImpl() {
     board = new Board();
     rules = new Rules();
-    players = new ArrayList<>();
+    gameFlow = new GameFlow();
   }
 
   @Override
   public void registerBy(String id) {
-    players.add(new Player(id));
+    gameFlow.registerPlayerBy(id);
   }
 
   @Override
@@ -28,7 +29,7 @@ class GameInfoImpl implements GIGameInfo {
     Player player = getPlayerBy(id);
 
     if (player != null) {
-      players.remove(player);
+      gameFlow.deregisterPlayerBy(id);
     }
   }
 
@@ -42,7 +43,7 @@ class GameInfoImpl implements GIGameInfo {
   public List<String> getAllPlayerIds() {
     List<String> ids = new ArrayList<>();
 
-    for (Player player : players) {
+    for (Player player : gameFlow.getPlayers()) {
       ids.add(player.getId());
     }
 
@@ -62,7 +63,7 @@ class GameInfoImpl implements GIGameInfo {
 
   @Override
   public Optional<List<Tile>> getStackFor(String id) {
-    List<Tile> stack = board.getStackFromBag();
+    List<Tile> stack = board.getStackFromBag(STARTING_TILES);
     Player player = getPlayerBy(id);
 
     if (player != null) {
@@ -98,7 +99,7 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   private Player getPlayerBy(String id) {
-    for (Player player : players) {
+    for (Player player : gameFlow.getPlayers()) {
       if (player.getId().equals(id)) {
         return player;
       }
