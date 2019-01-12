@@ -24,6 +24,10 @@ class Rules {
     gameFlow.deregisterPlayerBy(id);
   }
 
+  void startGame() {
+    this.gameFlow.startGame();
+  }
+
   boolean isPlayerExistingBy(String id) {
     return gameFlow.playerExists(id);
   }
