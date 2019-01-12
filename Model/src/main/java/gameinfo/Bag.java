@@ -1,6 +1,5 @@
 package gameinfo;
 
-import com.sun.source.doctree.SummaryTree;
 import tile.Tile;
 import tile.util.TileColor;
 import tile.util.TileNumber;
