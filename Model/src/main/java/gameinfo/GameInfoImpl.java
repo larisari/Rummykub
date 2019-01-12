@@ -9,6 +9,7 @@ import java.util.Optional;
 class GameInfoImpl implements GIGameInfo {
 
   private static int MINIMUM_POINTS_ON_FIRST_MOVE = 30;
+  private static int NUMBER_OF_TILES_IN_STACK = 14;
 
   private Board board;
   private Rules rules;
@@ -63,7 +64,7 @@ class GameInfoImpl implements GIGameInfo {
 
     if (optionalPlayer.isPresent()) {
       Player player = optionalPlayer.get();
-      List<Tile> stack = board.getStackFromBag();
+      List<Tile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK);
       player.put(stack);
       return Optional.of(stack);
     } else {
