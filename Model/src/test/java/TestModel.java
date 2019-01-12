@@ -14,11 +14,22 @@ class TestModel {
 
   private static GIGameInfo gameInfo;
 
+  private static String player_1_id = UUID.randomUUID().toString();
+  private static String player_2_id = UUID.randomUUID().toString();
+  private static String player_3_id = UUID.randomUUID().toString();
+  private static String player_4_id = UUID.randomUUID().toString();
+
   @BeforeAll
-  static void createCombRules() {
+  static void setupGameInfo() {
     gameInfo = GIFactory.make();
+
+    gameInfo.registerBy(player_1_id);
+    gameInfo.registerBy(player_2_id);
+    gameInfo.registerBy(player_3_id);
+    gameInfo.registerBy(player_4_id);
   }
 
+  // done
   @Test
   void testStreetOneToFive() {
     List<Tile> combination = new ArrayList<>();
@@ -31,6 +42,7 @@ class TestModel {
     assert gameInfo.isValidMove(combination);
   }
 
+  // done
   @Test
   void testStreetTenToOne() {
     List<Tile> combination = new ArrayList<>();
@@ -43,6 +55,7 @@ class TestModel {
     assert gameInfo.isValidMove(combination);
   }
 
+  // done
   @Test
   void testGroup() {
     List<Tile> combination = new ArrayList<>();
@@ -54,6 +67,7 @@ class TestModel {
     assert gameInfo.isValidMove(combination);
   }
 
+  // done
   @Test
   void testValidFirstMoveWrongComb() {
     List<Tile> combination = new ArrayList<>();
@@ -64,6 +78,7 @@ class TestModel {
     assert !(gameInfo.isValidMove(combination) && gameInfo.getPointsForMove(combination) >= 30);
   }
 
+  // done
   @Test
   void testValidFirstMove() {
     List<Tile> combination = new ArrayList<>();
@@ -74,6 +89,7 @@ class TestModel {
     assert (gameInfo.isValidMove(combination) && gameInfo.getPointsForMove(combination) >= 30);
   }
 
+  // done
   @Test
   void testValidFirstMoveNotEnoughPoints() {
     List<Tile> combination = new ArrayList<>();
@@ -84,6 +100,7 @@ class TestModel {
     assert !(gameInfo.isValidMove(combination) && gameInfo.getPointsForMove(combination) >= 30);
   }
 
+  // done
   @Test
   void testGroupWithJoker() {
     List<Tile> combination = new ArrayList<>();
@@ -95,6 +112,7 @@ class TestModel {
     assert (gameInfo.isValidMove(combination) && gameInfo.getPointsForMove(combination) >= 30);
   }
 
+  // done
   @Test
   void testGroupWithJokerNotFirst() {
     List<Tile> combination = new ArrayList<>();
@@ -107,6 +125,7 @@ class TestModel {
     assert gameInfo.getPointsForMove(combination) == 40;
   }
 
+  // done
   @Test
   void testStreetOneToFiveJOKER() {
     List<Tile> combination = new ArrayList<>();
