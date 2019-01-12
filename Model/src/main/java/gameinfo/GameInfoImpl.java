@@ -52,7 +52,7 @@ class GameInfoImpl implements GIGameInfo {
 
   @Override
   public Optional<Boolean> isValidPlayerBy(String id) {
-    return Optional.empty();
+    return Optional.of(this.rules.isValidPlayer(id));
   }
 
   @Override
