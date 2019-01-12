@@ -36,7 +36,7 @@ class Bag {
   }
 
   Tile takeTile() {
-    int position = (int)((Math.random())*(this.tiles.size()-1));
+    int position = (int) ((Math.random()) * (this.tiles.size() - 1));
     Tile tile = this.tiles.get(position);
     this.tiles.remove(position);
     return tile;
@@ -45,7 +45,7 @@ class Bag {
   List<Tile> takeStack(int numberOfTiles) {
     List<Tile> stack = new ArrayList<>();
     for (int i = 0; i < numberOfTiles; i++) {
-      int index = (int) (Math.random() * (this.tiles.size()-1));
+      int index = (int) (Math.random() * (this.tiles.size() - 1));
       stack.add(this.tiles.get(index));
       this.tiles.remove(index);
     }
