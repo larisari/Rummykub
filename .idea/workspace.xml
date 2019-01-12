@@ -2,39 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="test">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/description.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/saritasridharan.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/test.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/test/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/PineappleView.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/PineappleView/META-INF/PineappleView.kotlin_module" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/ClientGui.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/GuiController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/Main.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/TileView.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/clientgui.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/images/bag.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/images/tiles/blue/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/loadingScreen.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/startingScreen.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/ClientGui.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/TileView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/clientgui.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/images/bag.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/images/tiles/blue/1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/loadingScreen.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/gui/startingScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/GuiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/GuiController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -230,6 +198,7 @@
       </list>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="SWAP_SIDES_IN_COMPARE_BRANCHES" value="true" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -312,7 +281,7 @@
     <property name="OverrideImplement.combined" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547297087485" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547297325036" />
     <property name="dynamic.classpath" value="false" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -442,7 +411,7 @@
       <workItem from="1547150937465" duration="1092000" />
       <workItem from="1547231873812" duration="238000" />
       <workItem from="1547232196939" duration="7547000" />
-      <workItem from="1547284699300" duration="7733000" />
+      <workItem from="1547284699300" duration="8074000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1547234686485</created>
@@ -458,11 +427,18 @@
       <option name="project" value="LOCAL" />
       <updated>1547295243495</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="test">
+      <created>1547297141781</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1547297141781</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="78805000" />
+    <option name="totallyTimeSpent" value="79146000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -495,8 +471,8 @@
       <window_info anchor="bottom" id="Problems" order="9" />
       <window_info anchor="bottom" id="Changes" order="10" />
       <window_info anchor="bottom" id="Profiler" order="11" />
-      <window_info anchor="bottom" id="Event Log" order="12" weight="0.3273743" />
-      <window_info anchor="bottom" id="Messages" order="13" visible="true" weight="0.033519555" />
+      <window_info anchor="bottom" id="Event Log" order="12" visible="true" weight="0.109497204" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.033519555" />
       <window_info anchor="bottom" id="Docker" order="14" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="15" />
       <window_info anchor="bottom" id="Terminal" order="16" weight="0.3273743" />
