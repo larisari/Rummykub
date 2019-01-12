@@ -21,6 +21,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 
 //test: mousepressed besser als mouseclicked?
+//Alle anfragen an Server.
 
 public class GuiController {
 
@@ -78,6 +79,7 @@ public class GuiController {
 
   /**
    * For placing new combinations on the board.
+   * validated in handleEnterComb
    */
   void placeTiles() {
     HBox comb = new HBox();
@@ -107,6 +109,10 @@ public class GuiController {
   }
 
   /**
+   *
+   * anfrage mehrere kombinationen.
+   *
+   *
    * option to lay tiles in front or at the back of existing combination. For placing tiles to
    * existing combinations on board. check if new tiles may be laid to existing combination. (4 or
    * 13 max) check if new tiles fit existing combination.
@@ -115,6 +121,12 @@ public class GuiController {
     // if (isPlayersTurn) {
     if (!selectedTiles.isEmpty()) {
       HBox comb = (HBox) event.getSource();
+      List <ImageView> combination = new ArrayList<>();   //erstellt liste mit gewünschter neuer kombination.
+      combination.addAll(selectedTiles);                  //selected tiles vorne
+     for (int i = 0; i < comb.getChildren().size(); i++){
+       combination.add((ImageView)comb.getChildren().get(i));
+     }
+      //if (client.checkComb(combination) == true){
       if (comb.getChildren().size() <= MAX_TILES) {
         for (int i = 0; i < selectedTiles.size(); i++) {
           ImageView tile = selectedTiles.get(i);
@@ -129,6 +141,12 @@ public class GuiController {
   void addToBack(MouseEvent event) {
     if (!selectedTiles.isEmpty()) {
       HBox comb = (HBox) event.getSource();
+      List <ImageView> combination = new ArrayList<>();   //erstellt liste mit gewünschter neuer kombination.
+      for (int i = 0; i < comb.getChildren().size(); i++){
+        combination.add((ImageView)comb.getChildren().get(i));
+        combination.addAll(selectedTiles);  //selected tiles hinten.
+      }
+      //if (client.checkComb(combination) == true){
       if (comb.getChildren().size() <= MAX_TILES) {
         for (int i = 0; i < selectedTiles.size(); i++) {
           ImageView tile = selectedTiles.get(i);
@@ -210,7 +228,6 @@ public class GuiController {
 
 }
 
-//multi threads für client views?
 
 //Anzeige für wenn ein Player aussteigt.
 

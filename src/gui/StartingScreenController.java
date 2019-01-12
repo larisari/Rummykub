@@ -52,7 +52,7 @@ public class StartingScreenController {
     dialogue.setTitle("Login");
     dialogue.setHeaderText("Please enter your IP Adress!");
     Button ok = (Button)dialogue.getDialogPane().lookupButton(ButtonType.OK);
-    ok.setDisable(true);
+   // ok.setDisable(true);
     Optional<String> result = dialogue.showAndWait();
     if (result.isPresent()) {
       ipAdress = result.get();

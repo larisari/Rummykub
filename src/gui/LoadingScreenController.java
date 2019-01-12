@@ -24,6 +24,7 @@ public class LoadingScreenController {
     Scene scene = new Scene(root);
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
+   // server.gameStart();
 
   }
 
