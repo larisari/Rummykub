@@ -36,7 +36,7 @@ class Bag {
   }
 
   Tile takeTile() {
-    int position = (int) ((Math.random()) * (this.tiles.size() - 1));
+    int position = (int) (Math.random() * (this.tiles.size() - 1));
     Tile tile = this.tiles.get(position);
     this.tiles.remove(position);
     return tile;
