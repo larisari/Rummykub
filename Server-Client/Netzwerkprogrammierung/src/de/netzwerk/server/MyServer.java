@@ -2,7 +2,9 @@ package de.netzwerk.server;
 
 import de.netzwerk.client.MyClient;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,9 +15,11 @@ public class MyServer implements Serializable {
   // Attribute
 
   int clientCounter;
+    Socket remoteClient;
   private ServerSocket serverSocket;
   private int port;
   private ArrayList<MyClient> clients;
+    private ArrayList<Socket> clientSockets;
   private Thread listening;
   //  private boolean secureMode;
   //  private boolean stopped;
@@ -25,36 +29,27 @@ public class MyServer implements Serializable {
 
   public MyServer(int port, boolean safeConnection) {
     this.clients = new ArrayList<MyClient>();
+      this.clientSockets = new ArrayList<>();
     this.port = port;
     this.safeConnection = safeConnection;
 
-    preStart();
+      hostGame();
   }
-
 
   public ArrayList<MyClient> getClients() {
     return clients;
   }
 
-  public void setClients(ArrayList<MyClient> clients) {
-    this.clients = clients;
-  }
-
-  // Methoden
-
-  /**
-   * all Server activities before server starts.
-   */
-  public void preStart() {
+    /**
+     * Hoster initialisiert Server und sich selbst als Client.
+     */
+    public void hostGame() {
     try {
       System.out.println("Server startet.... Verbindungsaufbau");
       serverSocket = new ServerSocket(48410);
-      if (clientCounter < 4) {
-        System.out.println("Verbinde mit Client");
+
+        System.out.println("Client registrieren:");
         registerClient();
-      } else {
-        System.out.println("Sorry, es sind bereits 4 Spieler connected... Spiel starten Server!");
-      }
 
     } catch (IOException e) {
       e.printStackTrace();
@@ -63,7 +58,8 @@ public class MyServer implements Serializable {
 
   public void registerClient() {
     if (clientCounter >= 4) {
-      System.out.println("Es sind bereits 4 Clients auf dem Server registriert, du kannst der Spielsitzung nicht mehr beitreten");
+        System.out.println(
+                "Es sind bereits 4 Clients auf dem Server registriert, du kannst der Spielsitzung nicht mehr beitreten");
       return;
     }
 
@@ -75,18 +71,16 @@ public class MyServer implements Serializable {
       System.out.println("Client wird erstellt....");
       MyClient client = new MyClient("localhost", 48410, clients.size() + 1);
       System.out.println("Client ID:" + client.getId());
-      System.out.println("Client loggt sich auf Socket ein.");
+        System.out.println("Client loggt baut Socketverbindung zum Server auf.");
       client.login();
       System.out.println("Server versucht Verbindung des Clients zu akzeptieren....");
-      Socket remoteClient = serverSocket.accept();
+        // remoteClient = serverSocket.accept();
+        clientSockets.add(serverSocket.accept());
       System.out.println("Check! Verbunden!");
-
-      //      if (client.getSocket().isConnected())
-
       clients.add(client);
       clientCounter++;
       System.out.println(
-              "Server hat Client Liste hinzugefügt, Socket: " + clients.get(0).getSocket());
+              "Server hat Client Liste hinzugefügt, Socket: " + clients.get(clients.size() - 1).getSocket());
       System.out.println("Client-Counter: " + clientCounter);
 
     } catch (IOException e) {
@@ -95,22 +89,37 @@ public class MyServer implements Serializable {
   }
 
   /** listening to all open Threads and react to inquiries. */
-  public void startListening() {
-
-  }
+  public void startListening() {}
 
   /**
    * @param socket
    * @param clientID
    */
-  public void sendReply(Socket socket, int clientID) {}
+  public void sendReply(Socket socket, int clientID) {
+  }
 
-  /**
-   * @param clientID
-   * @param DatapackageID
-   * @param datapackage
-   */
-  public void sendMessage(int clientID, String DatapackageID, Object datapackage) {
+    public void sendBroadcastMessage(String msg) {
+        for (MyClient client : clients) {
+            sendMessage(client.getId(), msg);
+        }
+    }
+
+
+    public void sendMessage(int clientID, String msg) {
+        Thread thread =
+                new Thread(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    DataOutputStream out = new DataOutputStream(clientSockets.get(clientID - 1).getOutputStream());
+                                    out.writeUTF(msg);
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+        thread.start();
   }
 
   //  private InetAddress address;

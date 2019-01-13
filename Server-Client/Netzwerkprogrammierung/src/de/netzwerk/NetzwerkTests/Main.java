@@ -15,10 +15,26 @@ public class Main {
                 "[Server] Client Connected? " + server.getClients().get(0).isConnected());
         System.out.println("[Client] Anfrage: ist Server erreichbar? " + server.getClients().get(0).isServerReachable());
 
+
+//        server.sendMessage(1, "Test");
+
         System.out.println("[Server] Test, Aufnahme von bis zu 4 Clients...");
 
-        for (int i = 0; i < 5; i++) {
-            server.registerClient();
-        }
+//        for (int i = 0; i < 3; i++) {
+//            server.registerClient();
+//
+//        }
+
+        //server.sendBroadcastMessage(" Hallo du! ");
+        //server.registerClient();
+        ///server.sendBroadcastMessage("Hallo ihr zwei");
+        //server.registerClient();
+        //server.sendBroadcastMessage("Hallo ihr drei");
+        //server.sendBroadcastMessage("Tschüsslidü");
+
+        server.registerClient();
+
+        server.sendMessage(1, "Hallo Nummer 1");
+        server.sendMessage(2, "Hallo Numemr 2");
     }
 }
