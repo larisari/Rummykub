@@ -227,11 +227,10 @@ class TestModel {
     System.out.println(gameInfo.drawBy(player_3_id));
     System.out.println(gameInfo.drawBy(player_4_id));
 
-    // now game state should be running.
-//    System.out.println(gameInfo.drawBy(player_1_id));
-//    System.out.println(gameInfo.drawBy(player_2_id));
-//    System.out.println(gameInfo.drawBy(player_3_id));
-//    System.out.println(gameInfo.drawBy(player_4_id));
+    System.out.println(gameInfo.drawBy(player_1_id));
+    System.out.println(gameInfo.drawBy(player_2_id));
+    System.out.println(gameInfo.drawBy(player_3_id));
+    System.out.println(gameInfo.drawBy(player_4_id));
 
   }
 

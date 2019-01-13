@@ -8,11 +8,13 @@ class GameFlow {
   private List<Player> players;
   private GameState state;
   private int currentPlayerIndex;
+  private int distributionCounter;
 
   GameFlow() {
     this.players = new ArrayList<>();
     this.state = GameState.distributing;
     this.currentPlayerIndex = 0;
+    this.distributionCounter = 0;
   }
 
   void registerPlayerBy(String id) {
@@ -81,6 +83,22 @@ class GameFlow {
       return 0;
     }
   }
+
+  void updateCounter() {
+    this.distributionCounter++;
+    if (getDistributionCounter() == getNumberOfPlayers()) {
+      running();
+    }
+  }
+
+  void running() {
+    this.state = GameState.running;
+  }
+
+  int getDistributionCounter() {
+    return this.distributionCounter;
+  }
+
 
 
 }

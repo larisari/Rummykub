@@ -171,6 +171,7 @@ class GameInfoImpl implements GIGameInfo {
 
     List<Tile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK);
     player.put(stack);
+    rules.updateCounter();
     return stack;
   }
 
@@ -201,5 +202,7 @@ class GameInfoImpl implements GIGameInfo {
   public void next() {
     this.rules.nextPlayer();
   }
+
+
 
 }
