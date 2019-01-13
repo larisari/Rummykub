@@ -71,4 +71,19 @@ class Rules {
       throw new IllegalStateException();
     }
   }
+
+  void nextPlayer() {
+    this.gameFlow.nextPlayer();
+  }
+
+  int getNumberOfPlayers() {
+    return this.gameFlow.getNumberOfPlayers();
+  }
+
+  void updateCounter() {
+    gameFlow.updateCounter();
+  }
+
+
+
 }

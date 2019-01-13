@@ -171,6 +171,7 @@ class GameInfoImpl implements GIGameInfo {
 
     List<Tile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK);
     player.put(stack);
+    rules.updateCounter();
     return stack;
   }
 
@@ -191,4 +192,17 @@ class GameInfoImpl implements GIGameInfo {
   private boolean isValid(List<Tile> combination) {
     return rules.isValid(combination);
   }
+
+  @Override
+  public int getNumberOfPlayers() {
+    return rules.getNumberOfPlayers();
+  }
+
+  @Override
+  public void next() {
+    this.rules.nextPlayer();
+  }
+
+
+
 }

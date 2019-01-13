@@ -27,6 +27,17 @@ class TestModel {
     gameInfo.registerBy(player_2_id);
     gameInfo.registerBy(player_3_id);
     gameInfo.registerBy(player_4_id);
+
+    //valid player
+    assert gameInfo.isValidPlayerBy(player_1_id).get();
+
+    //next player
+    assert gameInfo.getNextPlayerId().get().equals(player_2_id);
+
+    //next
+    gameInfo.next();
+
+    assert gameInfo.getNextPlayerId().get().equals(player_3_id);
   }
 
   @Test
@@ -37,6 +48,11 @@ class TestModel {
       assert id.equals(player_1_id) || id.equals(player_2_id) || id.equals(player_3_id) || id.equals(player_4_id);
     }
     System.out.println(ids);
+  }
+
+  @Test
+  void validPlayerTest() {
+    assert gameInfo.isValidPlayerBy(player_1_id).get();
   }
 
   @Test
@@ -211,16 +227,11 @@ class TestModel {
     System.out.println(gameInfo.drawBy(player_3_id));
     System.out.println(gameInfo.drawBy(player_4_id));
 
-    // now game state should be running.
-//    System.out.println(gameInfo.drawBy(player_1_id));
-//    System.out.println(gameInfo.drawBy(player_2_id));
-//    System.out.println(gameInfo.drawBy(player_3_id));
-//    System.out.println(gameInfo.drawBy(player_4_id));
+    System.out.println(gameInfo.drawBy(player_1_id));
+    System.out.println(gameInfo.drawBy(player_2_id));
+    System.out.println(gameInfo.drawBy(player_3_id));
+    System.out.println(gameInfo.drawBy(player_4_id));
 
   }
 
-  @Test
-  void validPlayerTest() {
-    assert gameInfo.isValidPlayerBy(player_1_id).get();
-  }
 }
