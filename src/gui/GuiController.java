@@ -157,6 +157,10 @@ public class GuiController {
 
   }
 
+  /**
+   * for adding to existing combinations.
+   * @param event
+   */
   @FXML
   protected void handleAddTo(MouseEvent event) {
     if (!selectedTiles.isEmpty()) {
@@ -172,16 +176,6 @@ public class GuiController {
         back.setOnMousePressed(event2 -> {
           addToBack(box);
         });
-        /**
-        back.setOnMouseReleased(event4 -> {
-          box.getChildren().remove(back);
-          box.getChildren().remove(front);
-
-        });
-        front.setOnMouseReleased(event3 -> {
-          deleteAddToButtons();
-        });
-         **/
         box.getChildren().add(0, front);
         box.getChildren().add(box.getChildren().size(), back);
       }
@@ -192,7 +186,7 @@ public class GuiController {
    * Interferiert mit comb.setOnMouseClicked
    * @param event
    */
-/**
+
  @FXML protected void handleManipulate(MouseEvent event) {
 
  for (int i = 0; i < board.getChildren().size(); i++) {
@@ -221,7 +215,7 @@ public class GuiController {
  }
  }
  }
- **/
+
   /**
    * For placing new combinations on the board. validated in handleEnterComb
    */
@@ -234,15 +228,6 @@ public class GuiController {
       tile.setDisable(true);
       comb.getChildren().add(tile);
       placedCombinations.add(comb);
-      //     comb.setOnMouseClicked(
-      //         event -> {      //wenn erste Tile geklickt wird vorne anfügen, default: hinten anfügen.
-      //           Point2D point = new Point2D(event.getX(), event.getY());
-      //           if (comb.getChildren().get(0).contains(point)) {
-      //             addToFront(event);
-      //           } else {
-      //             addToBack(event);
-      //           }
-      //         });
     }
     board.getChildren().add(comb);
     selectedTiles.clear();
