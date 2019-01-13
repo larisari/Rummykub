@@ -8,9 +8,11 @@ import java.util.List;
 class Hand {
 
   private List<Tile> tilesOnHand;
+  private PointsCalculator calculator;
 
-  Hand() {
+  Hand(PointsCalculator calculator) {
     tilesOnHand = new ArrayList<>();
+    this.calculator = calculator;
   }
 
   int size() {
@@ -30,12 +32,6 @@ class Hand {
   }
 
   int getPoints() {
-    int points = 0;
-
-    for (Tile tile : tilesOnHand) {
-      points += tile.getNumber().value();
-    }
-
-    return points;
+    return calculator.getPointsForHand(tilesOnHand);
   }
 }

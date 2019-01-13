@@ -12,8 +12,8 @@ class Rules {
   private CombRules combRules;
 
   Rules() {
-    gameFlow = new GameFlow();
     pointsCalculator = new PointsCalculator();
+    gameFlow = new GameFlow(pointsCalculator);
     combRules = new CombRules(pointsCalculator);
   }
 
@@ -61,16 +61,16 @@ class Rules {
     return combRules.isValid(combination, minimumPoints);
   }
 
-  int getPointsFor(List<Tile> combination) {
-    if (combRules.isGroup(combination)) {
-      return pointsCalculator.getPointsForGroup(combination);
-    } else if (combRules.isStreet(combination)) {
-      return pointsCalculator.getPointsForStreet(combination);
-    } else {
-      // TODO !!! handle better !!!
-      throw new IllegalStateException();
-    }
-  }
+//  int getPointsFor(List<Tile> combination) {
+//    if (combRules.isGroup(combination)) {
+//      return pointsCalculator.getPointsForGroup(combination);
+//    } else if (combRules.isStreet(combination)) {
+//      return pointsCalculator.getPointsForStreet(combination);
+//    } else {
+//      // TODO !!! handle better !!!
+//      throw new IllegalStateException();
+//    }
+//  }
 
   void nextPlayersTurn() {
     this.gameFlow.nextPlayersTurn();
