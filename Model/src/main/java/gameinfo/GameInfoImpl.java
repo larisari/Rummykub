@@ -191,4 +191,15 @@ class GameInfoImpl implements GIGameInfo {
   private boolean isValid(List<Tile> combination) {
     return rules.isValid(combination);
   }
+
+  @Override
+  public int getNumberOfPlayers() {
+    return rules.getNumberOfPlayers();
+  }
+
+  @Override
+  public void next() {
+    this.rules.nextPlayer();
+  }
+
 }

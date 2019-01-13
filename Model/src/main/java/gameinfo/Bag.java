@@ -17,7 +17,7 @@ class Bag {
     generateBag();
   }
 
-  private void generateBag() {
+  void generateBag() {
     Number num = Number.ONE;
 
     for (int i = 0; i < MAX_NUM; i++) {

@@ -39,7 +39,6 @@ class GameFlow {
     return players.get(currentPlayerIndex).getId().equals(id);
   }
 
-
   List<Player> getPlayers() {
     return this.players;
   }
@@ -73,4 +72,15 @@ class GameFlow {
   boolean isDistributing() {
     return state.equals(GameState.distributing);
   }
+
+  int getNumberOfPlayers() {
+    if (this.players != null) {
+      return this.players.size();
+    }
+    else {
+      return 0;
+    }
+  }
+
+
 }
