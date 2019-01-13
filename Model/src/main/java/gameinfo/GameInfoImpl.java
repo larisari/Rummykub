@@ -89,6 +89,7 @@ class GameInfoImpl implements GIGameInfo {
     }
 
     if (rules.isDistributing()) {
+      rules.firstDraw();
       return Optional.of(getStackFor(id));
     } else {
       Tile tile = getTileFor(id);
@@ -96,6 +97,7 @@ class GameInfoImpl implements GIGameInfo {
       tiles.add(tile);
       return Optional.of(tiles);
     }
+
   }
 
   @Override
@@ -171,7 +173,6 @@ class GameInfoImpl implements GIGameInfo {
 
     List<Tile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK);
     player.put(stack);
-    rules.updateCounter();
     return stack;
   }
 

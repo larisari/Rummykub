@@ -76,15 +76,10 @@ class GameFlow {
   }
 
   int getNumberOfPlayers() {
-    if (this.players != null) {
-      return this.players.size();
-    }
-    else {
-      return 0;
-    }
+    return this.players.size();
   }
 
-  void updateCounter() {
+  void firstDraw() {
     this.distributionCounter++;
     if (getDistributionCounter() == getNumberOfPlayers()) {
       running();
@@ -98,6 +93,7 @@ class GameFlow {
   int getDistributionCounter() {
     return this.distributionCounter;
   }
+
 
 
 
