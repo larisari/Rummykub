@@ -1,6 +1,6 @@
 --------------------
 PROTOTYP
-- der Prototyp für unser Projekt ist das IntelliJ Projekt PineappleProtoype.
+- der Prototyp für unser Projekt ist das IntelliJ Projekt PineappleProtoype im Abgaben Ordner.
 
 - der aktuelle Stand für das Model liegt auf dem branch 'development'. Steine ziehen, ablegen, Kombinationen auf richtigkeit prüfen,
     spielablauf etc. funktionieren. Tests für die einzelnene Funktionen wurden im Verlauf der Entwicklung geschrieben.
