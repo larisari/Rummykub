@@ -175,19 +175,19 @@
               </Label>
             </children>
           </Pane>
-          <Button fx:id="enter" accessibleRole="PARENT" alignment="CENTER" layoutX="856.0" layoutY="620.0" mnemonicParsing="false" onMouseClicked="#handleEnterComb" prefHeight="65.0" prefWidth="200.0" styleClass="enterBtn" text="Enter new Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0">
+          <Button fx:id="enter" accessibleRole="PARENT" alignment="CENTER" layoutX="857.0" layoutY="729.0" mnemonicParsing="false" onMouseClicked="#handleEnterComb" prefHeight="65.0" prefWidth="200.0" styleClass="enterBtn" text="Enter new Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="2.0">
             <font>
               <Font name="Franklin Gothic Medium" size="16.0" />
             </font>
           </Button>
-            <Button fx:id="endTurn" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="742.0" mnemonicParsing="false" onMouseClicked="#handleEndTurn" prefHeight="54.0" prefWidth="110.0" styleClass="endTurnBtn" text="End Turn" AnchorPane.bottomAnchor="0.0">
+            <Button fx:id="endTurn" accessibleRole="PARENT" alignment="CENTER" layoutX="1.0" layoutY="659.0" mnemonicParsing="false" onMouseClicked="#handleEndTurn" prefHeight="136.0" prefWidth="89.0" styleClass="endTurnBtn" text="End Turn" AnchorPane.bottomAnchor="1.0">
                <font>
-                  <Font name="Franklin Gothic Medium" size="17.0" />
+                  <Font name="Franklin Gothic Medium" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="cancelSelection" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="686.0" mnemonicParsing="false" onMouseClicked="#handleCancelSel" prefHeight="54.0" prefWidth="110.0" styleClass="cancelBtn" text="Cancel Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="56.0">
+            <Button fx:id="cancelSelection" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="660.0" mnemonicParsing="false" onMouseClicked="#handleCancelSel" prefHeight="67.0" prefWidth="110.0" styleClass="cancelBtn" text="Cancel Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="69.0">
                <font>
-                  <Font name="Franklin Gothic Medium" size="17.0" />
+                  <Font name="Franklin Gothic Medium" size="16.0" />
                </font>
             </Button>
             <ImageView fx:id="bag" fitHeight="170.0" fitWidth="184.0" layoutX="799.0" layoutY="36.0" onMouseClicked="#handleDrawTile" pickOnBounds="true" preserveRatio="true">
@@ -196,7 +196,12 @@
                </image>
             </ImageView>
             <FlowPane fx:id="board" hgap="30.0" layoutX="198.0" layoutY="137.0" prefHeight="471.0" prefWidth="612.0" vgap="30.0" AnchorPane.bottomAnchor="188.0" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="248.0" AnchorPane.topAnchor="137.0" />
-            <Button fx:id="addToExisting" accessibleRole="PARENT" alignment="CENTER" layoutX="856.0" layoutY="661.0" mnemonicParsing="false" onMouseClicked="#handleAddTo" prefHeight="68.0" prefWidth="200.0" styleClass="cancelBtn" text="Add to existing Combination" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="67.0">
+            <Button fx:id="addToExisting" accessibleRole="PARENT" alignment="CENTER" layoutX="857.0" layoutY="660.0" mnemonicParsing="false" onMouseClicked="#handleAddTo" prefHeight="66.0" prefWidth="200.0" styleClass="addTo" text="Add to existing Combination" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="70.0">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="manipulate" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="729.0" mnemonicParsing="false" onMouseClicked="#handleManipulate" prefHeight="65.0" prefWidth="110.0" styleClass="manipulate" text="Manipulate Tiles" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>

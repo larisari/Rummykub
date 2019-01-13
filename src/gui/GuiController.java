@@ -109,6 +109,7 @@ public class GuiController {
     // if (client.send("isValidPlayer").equals(true){
     // client.send("draw");
     //updateHand();
+    //EndTurn
     // }
     //
   }
@@ -231,6 +232,8 @@ public class GuiController {
     }
     board.getChildren().add(comb);
     selectedTiles.clear();
+    // if (client.send(hand).isEmpty(){
+    // TODO öffne Gewinnerfenster
   }
 
   /**
