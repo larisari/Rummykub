@@ -1,14 +1,16 @@
 --------------------
 PROTOTYP
-- der Prototyp für das Model liegt auf dem branch 'development'. Steine ziehen, ablegen, Kombinationen auf richtigkeit prüfen,
+- der Prototyp für unser Projekt ist das IntelliJ Projekt PineappleProtoype.
+
+- der aktuelle Stand für das Model liegt auf dem branch 'development'. Steine ziehen, ablegen, Kombinationen auf richtigkeit prüfen,
     spielablauf etc. funktionieren. Tests für die einzelnene Funktionen wurden im Verlauf der Entwicklung geschrieben.
     TODOs stehen bei dem Arbeitsplan dabei.
 
-- der Prototyp für das View liegt auf dem branch 'view'. Startbildschrim, Ladebildschrim und Spielbildschrim sind da.
+- der aktuelle Stand für das View liegt auf dem branch 'view'. Startbildschrim, Ladebildschrim und Spielbildschrim sind da.
     Man kann Steine auswählen und sie auf das Spielfeld legen, man kann sie auch zu existierenden Steinen hinzufügen.
     TODOs in Arbeitsplan.
     
-- der Prototyp für den Server liegt auf dem branch 'Server'. Server und Client aufsetzen, Spiel hosten sollte möglich sein.
+- der aktuelle Stand für den Server liegt auf dem branch 'Server'. Server und Client aufsetzen, Spiel hosten sollte möglich sein.
     Login funktion von Client zu Server. Verbindungsabfragen funktionieren.
     TODOs in Arbeitsplan.
 
