@@ -7,6 +7,7 @@ import java.util.Optional;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -38,10 +39,26 @@ public class GuiController {
   @FXML
   private FlowPane board;
   @FXML private ImageView bag;
+  @FXML private Group player2Hand;
+  @FXML private Group player3Hand;
+  @FXML private Group player4Hand;
   private List<ImageView> selectedTiles = new ArrayList<>();
   private List<HBox> placedCombinations = new ArrayList<>();
   private boolean isPlayersTurn;
   private static final int MAX_TILES = 13;
+
+  @FXML private void initialize(){
+    //int numberPlayers = client.send(getNumberOfPlayers);
+    // switch (numberPlayers){
+    //case 2:
+    //player3Hand.setVisible(false);
+    //player4Hand.setVisible(false);
+    //break;
+    //case 3:
+    //player4Hand.setVisible(false);
+    //break;
+    //}
+  }
 
   List<ImageView> getSelectedTiles() {
     return this.selectedTiles;
@@ -72,88 +89,11 @@ public class GuiController {
    */
   @FXML
   protected void handleEnterComb(MouseEvent event) {
-    System.out.println(GuiParser.parseToString(selectedTiles));
-    // if (client.checkComb(selectedTiles) == true) {
-    placeTiles();
-   // bag.setDisable(true);
-  }
-
-  /**
-   * For placing new combinations on the board.
-   * validated in handleEnterComb
-   */
-  void placeTiles() {
-    HBox comb = new HBox();
-    for (int i = 0; i < selectedTiles.size(); i++) {
-      ImageView tile = selectedTiles.get(i);
-      tile.setStyle("-fx-translate-y: 0");
-      tile.setEffect(null);
-      tile.setDisable(true);
-      comb.getChildren().add(tile);
-      placedCombinations.add(comb);
-      comb.setOnMouseMoved(event -> {
-        comb.setStyle("-fx-background-color: #22CD27;");
-      });
-
-      comb.setOnMouseClicked(
-          event -> {      //wenn erste Tile geklickt wird vorne anfügen, default: hinten anfügen.
-            Point2D point = new Point2D(event.getX(), event.getY());
-            if (comb.getChildren().get(0).contains(point)) {
-              addToFront(event);
-            } else {
-              addToBack(event);
-            }
-          });
-    }
-    board.getChildren().add(comb);
-    selectedTiles.clear();
-  }
-
-  /**
-   *
-   * //TODO anfrage mehrere kombinationen.
-   *
-   *
-   * For placing tiles to existing combinations on board. check if new tiles may be laid to existing combination. (4 or
-   * 13 max) check if new tiles fit existing combination.
-   */
-  void addToFront(MouseEvent event) {
-    // if (isPlayersTurn) {
     if (!selectedTiles.isEmpty()) {
-      HBox comb = (HBox) event.getSource();
-      List <ImageView> combination = new ArrayList<>();   //erstellt liste mit gewünschter neuer kombination.
-      combination.addAll(selectedTiles);                  //selected tiles vorne
-     for (int i = 0; i < comb.getChildren().size(); i++){
-       combination.add((ImageView)comb.getChildren().get(i));
-     }
-      //if (client.checkComb(combination) == true){
-      if (comb.getChildren().size() <= MAX_TILES) {
-        for (int i = 0; i < selectedTiles.size(); i++) {
-          ImageView tile = selectedTiles.get(i);
-          comb.getChildren().add(0, tile);
-          disableTileControl(tile);
-        }
-
-      }
-    }
-  }
-
-  void addToBack(MouseEvent event) {
-    if (!selectedTiles.isEmpty()) {
-      HBox comb = (HBox) event.getSource();
-      List <ImageView> combination = new ArrayList<>();   //erstellt liste mit gewünschter neuer kombination.
-      for (int i = 0; i < comb.getChildren().size(); i++){
-        combination.add((ImageView)comb.getChildren().get(i));
-        combination.addAll(selectedTiles);  //selected tiles hinten.
-      }
-      //if (client.checkComb(combination) == true){
-      if (comb.getChildren().size() <= MAX_TILES) {
-        for (int i = 0; i < selectedTiles.size(); i++) {
-          ImageView tile = selectedTiles.get(i);
-          comb.getChildren().add(comb.getChildren().size(), tile);
-          disableTileControl(tile);
-        }
-      }
+      System.out.println(GuiParser.parseToString(selectedTiles));
+      // if (client.checkComb(selectedTiles) == true) {
+      placeTiles();
+      bag.setDisable(true);
     }
   }
 
@@ -210,7 +150,91 @@ public class GuiController {
 
   }
 
+  @FXML protected void handleManipulate(MouseEvent event){
+    //enable tile control for all tiles on hand and on board.
+  }
   /**
+   * For placing new combinations on the board.
+   * validated in handleEnterComb
+   */
+  void placeTiles() {
+    HBox comb = new HBox();
+    for (int i = 0; i < selectedTiles.size(); i++) {
+      ImageView tile = selectedTiles.get(i);
+      tile.setStyle("-fx-translate-y: 0");
+      tile.setEffect(null);
+      tile.setDisable(true);
+      comb.getChildren().add(tile);
+      placedCombinations.add(comb);
+      comb.setOnMouseMoved(event -> {
+        comb.setStyle("-fx-background-color: #22CD27;");
+      });
+
+      comb.setOnMouseClicked(
+          event -> {      //wenn erste Tile geklickt wird vorne anfügen, default: hinten anfügen.
+            Point2D point = new Point2D(event.getX(), event.getY());
+            if (comb.getChildren().get(0).contains(point)) {
+              addToFront(event);
+            } else {
+              addToBack(event);
+            }
+          });
+    }
+    board.getChildren().add(comb);
+    selectedTiles.clear();
+  }
+
+  /**
+   *
+   * For placing tiles to existing combinations on board. check if new tiles may be laid to existing combination. (4 or
+   * 13 max) check if new tiles fit existing combination.
+   */
+  void addToFront(MouseEvent event) {
+    // if (client.send(isValidPlayerBy) == true) {
+    if (!selectedTiles.isEmpty()) {
+      HBox comb = (HBox) event.getSource();
+      List<ImageView> combination = new ArrayList<>();   //erstellt liste mit gewünschter neuer kombination.
+      //selected tiles vorne
+      for (int i = 0; i < comb.getChildren().size(); i++) {
+        combination.add((ImageView) comb.getChildren().get(i));
+      }
+      String selectedT = GuiParser.parseToString(selectedTiles);
+      String boardTiles = GuiParser.parseToString(combination);
+      combination.addAll(0, selectedTiles);
+      String combTiles = GuiParser.parseToString(combination);
+      //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
+      for (int i = 0; i < selectedTiles.size(); i++) {
+        ImageView tile = selectedTiles.get(i);
+        comb.getChildren().add(0, tile);
+        disableTileControl(tile);
+      }
+
+    }
+  }
+
+  void addToBack(MouseEvent event) {
+    // if (client.send(isValidPlayerBy) == true) {
+    if (!selectedTiles.isEmpty()) {
+      HBox comb = (HBox) event.getSource();
+      List <ImageView> combination = new ArrayList<>();   //erstellt liste mit gewünschter neuer kombination.
+      for (int i = 0; i < comb.getChildren().size(); i++){
+        combination.add((ImageView)comb.getChildren().get(i));
+      }
+      String boardTiles = GuiParser.parseToString(combination);
+      String selectedT = GuiParser.parseToString(selectedTiles);
+      combination.addAll(selectedTiles);  //selected tiles hinten.
+      String combTiles = GuiParser.parseToString(combination);
+      //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
+        for (int i = 0; i < selectedTiles.size(); i++) {
+          ImageView tile = selectedTiles.get(i);
+          comb.getChildren().add(comb.getChildren().size(), tile);
+          disableTileControl(tile);
+        }
+      }
+    }
+
+  /**
+   * //TODO buttons überlagern sich wenn disabled
    * Disables control for player.
    */
   private void disableControl() {
@@ -239,6 +263,8 @@ public class GuiController {
 // TODO Anzeige für wenn ein Player aussteigt.
 
 // TODO Anzeige mit Gewinner (+ Punktestand der anderen Spieler)
+
+//TODO hover funktion für bag
 
 
 

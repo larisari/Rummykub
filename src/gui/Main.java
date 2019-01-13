@@ -17,7 +17,7 @@ public Main(){
         Parent root;
         root = FXMLLoader.load(getClass().getResource("clientgui.fxml"));
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("/gui/game.css");
+        scene.getStylesheets().add("/gui/button.css");
         primaryStage.setResizable(false);
         primaryStage.setTitle("RUMMYKUB");
         primaryStage.setScene(scene);

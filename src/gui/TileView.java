@@ -87,7 +87,7 @@ public class TileView {
 
   }
 
-  public static void highlightTile(ImageView imageV) {
+  public static void highlightTile(Node node) {
     DropShadow borderGlow = new DropShadow();
     borderGlow.setOffsetX(0f);
     borderGlow.setOffsetY(0f);
@@ -95,7 +95,7 @@ public class TileView {
     borderGlow.setWidth(50);
     borderGlow.setHeight(50);
 
-    imageV.setEffect(borderGlow);
+    node.setEffect(borderGlow);
   }
 
 }

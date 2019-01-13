@@ -10,10 +10,10 @@ public class GuiParser {
 
   }
 
-  public static String parseToString(List<ImageView> selectedTiles){
+  public static String parseToString(List<ImageView> tiles){
     String selectedT = "comb:";
-    for (int i = 0; i < selectedTiles.size(); i++){
-      ImageView iView = selectedTiles.get(i);
+    for (int i = 0; i < tiles.size(); i++){
+      ImageView iView = tiles.get(i);
       Image tile = iView.getImage();
       String url = tile.getUrl();
       String [] urlArray = url.split("/");
@@ -21,7 +21,7 @@ public class GuiParser {
       String [] numberArray = urlArray[urlArray.length-1].split("[.]");
       String number = numberArray[0];
       selectedT += "tile." + color + "/" + number;
-      if (i != selectedTiles.size()-1){
+      if (i != tiles.size()-1){
         selectedT += ",";
       }
     }
