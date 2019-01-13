@@ -31,4 +31,6 @@ public interface GIGameInfo {
   Optional<Integer> getPointsBy(String id);
 
   Optional<Integer> getNumberOfPlayers();
+
+  Optional<Boolean> finishedTurnBy(String id);
 }

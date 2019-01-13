@@ -1,5 +1,6 @@
 package gameinfo;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import gameinfo.tile.Tile;
 
 import java.util.ArrayList;
@@ -193,6 +194,26 @@ class GameInfoImpl implements GIGameInfo {
     return Optional.of(optionalPlayer.get().getPointsOfHand());
   }
 
+  @Override
+  public Optional<Integer> getNumberOfPlayers() {
+    return Optional.of(rules.getNumberOfPlayers());
+  }
+
+  @Override
+  public Optional<Boolean> finishedTurnBy(String id) {
+    if (!rules.isPlayerExistingBy(id)) {
+      return Optional.empty();
+    }
+
+    if (rules.isValidPlayerBy(id)) {
+      rules.nextPlayersTurn();
+      return Optional.of(true);
+    } else {
+      // it is not the players turn.
+      return Optional.of(false);
+    }
+  }
+
   private List<Tile> getStackFor(String id) {
     Player player = rules.getPlayerBy(id).get();
 
@@ -217,10 +238,5 @@ class GameInfoImpl implements GIGameInfo {
 
   private boolean isValid(List<Tile> combination) {
     return rules.isValid(combination);
-  }
-
-  @Override
-  public Optional<Integer> getNumberOfPlayers() {
-    return Optional.of(rules.getNumberOfPlayers());
   }
 }
