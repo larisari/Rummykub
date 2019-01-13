@@ -79,7 +79,7 @@ class GameFlow {
     return this.players.size();
   }
 
-  void addDistribiution() {
+  void addDistribution() {
     this.distributionCounter++;
     if (getDistributionCounter() == getNumberOfPlayers()) {
       running();
@@ -93,7 +93,6 @@ class GameFlow {
   int getDistributionCounter() {
     return this.distributionCounter;
   }
-
 
 
 

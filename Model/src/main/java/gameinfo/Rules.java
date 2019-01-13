@@ -81,7 +81,7 @@ class Rules {
   }
 
   void addDistribution() {
-    gameFlow.addDistribiution();
+    gameFlow.addDistribution();
   }
 
 
