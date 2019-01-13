@@ -30,6 +30,12 @@ PROTOTYP
 
 -----Arbeitsplan-----
 
+Aufgabeneinteilung:
+Markus Franz, Philipp Greiner: Netzwerk
+Jonas Blenninger, Yousif Yacoub Yousif: Model 
+Sarita Sridharan: View/Controller
+
+
 TODO View:
 
 -	Spielanzeigen designen und implementieren (Schwierigkeit: leicht, Dauer 2h+)
