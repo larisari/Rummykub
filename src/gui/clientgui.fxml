@@ -175,7 +175,7 @@
               </Label>
             </children>
           </Pane>
-          <Button fx:id="enter" accessibleRole="PARENT" alignment="CENTER" layoutX="856.0" layoutY="620.0" mnemonicParsing="false" onMouseClicked="#handleEnterComb" prefHeight="108.0" prefWidth="94.0" styleClass="enterBtn" text="Enter Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0">
+          <Button fx:id="enter" accessibleRole="PARENT" alignment="CENTER" layoutX="856.0" layoutY="620.0" mnemonicParsing="false" onMouseClicked="#handleEnterComb" prefHeight="108.0" prefWidth="94.0" styleClass="enterBtn" text="Enter new Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0">
             <font>
               <Font name="Franklin Gothic Medium" size="17.0" />
             </font>
@@ -196,7 +196,7 @@
                </image>
             </ImageView>
             <FlowPane fx:id="board" hgap="30.0" layoutX="198.0" layoutY="137.0" prefHeight="471.0" prefWidth="612.0" vgap="30.0" AnchorPane.bottomAnchor="188.0" AnchorPane.leftAnchor="198.0" AnchorPane.rightAnchor="248.0" AnchorPane.topAnchor="137.0" />
-            <Button fx:id="manipulateTiles" accessibleRole="PARENT" alignment="CENTER" layoutX="92.0" layoutY="742.0" mnemonicParsing="false" onMouseClicked="#handleManipulate" prefHeight="54.0" prefWidth="110.0" styleClass="cancelBtn" text="Manipulate Tiles" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0">
+            <Button fx:id="addToExisting" accessibleRole="PARENT" alignment="CENTER" layoutX="79.0" layoutY="742.0" mnemonicParsing="false" onMouseClicked="#handleAddTo" prefHeight="108.0" prefWidth="123.0" styleClass="cancelBtn" text="Add to existing Combination" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="0.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="17.0" />
                </font>

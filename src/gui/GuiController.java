@@ -8,6 +8,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -43,7 +44,7 @@ public class GuiController {
   @FXML private Group player3Hand;
   @FXML private Group player4Hand;
   private List<ImageView> selectedTiles = new ArrayList<>();
-  private List<HBox> placedCombinations = new ArrayList<>();
+  private List<Group> placedCombinations = new ArrayList<>();
   private boolean isPlayersTurn;
   private static final int MAX_TILES = 13;
 
@@ -91,7 +92,7 @@ public class GuiController {
   protected void handleEnterComb(MouseEvent event) {
     if (!selectedTiles.isEmpty()) {
       System.out.println(GuiParser.parseToString(selectedTiles));
-      // if (client.checkComb(selectedTiles) == true) {
+      // if (client.send(GuiParser.parseToString(selectedTiles)) == true) {
       placeTiles();
       bag.setDisable(true);
     }
@@ -122,12 +123,12 @@ public class GuiController {
 
   @FXML
   protected void handleTileClick(
-      MouseEvent event) { //wirft nullpointer wenn imageview ohne image geklickt wird.
+      MouseEvent event) {
     ImageView imageV = (ImageView) event.getSource();
     if (imageV.getImage() == null || imageV.getImage().isError()) {
       return;
     }
-    if (!selectedTiles.contains(imageV)) { //Problem mit contains (funkt nicht)
+    if (!selectedTiles.contains(imageV)) {
       imageV.setStyle("-fx-translate-y: -15;");
       TileView.highlightTile(imageV);
       selectedTiles.add(imageV);
@@ -150,14 +151,65 @@ public class GuiController {
 
   }
 
-  @FXML protected void handleManipulate(MouseEvent event){
-    //enable tile control for all tiles on hand and on board.
+  @FXML protected void handleAddTo(MouseEvent event) {
+    if (!selectedTiles.isEmpty()) {
+      for (Node box : board.getChildren()) {
+        double hx = box.getLayoutX();
+        double hy = box.getLayoutY();
+        System.out.println(hx);
+        System.out.println(hy);
+        Button front = new Button("add here");
+        Button back = new Button("add here");
+        board.getChildren().add(front);
+        board.getChildren().add(back);
+        front.relocate(hx - 5, hy);
+        back.relocate(hx + 5, hy);
+      }
+    }
+
+    }
+
+  /**
+   * enables control on tiles on board
+   * Interferiert mit comb.setOnMouseClicked
+   * @param event
+   */
+/**
+  @FXML protected void handleManipulate(MouseEvent event) {
+
+    for (int i = 0; i < board.getChildren().size(); i++) {
+      HBox box = (HBox) board.getChildren().get(i);
+      for (int j = 0; j < box.getChildren().size(); j++) {
+        ImageView tile = (ImageView)box.getChildren().get(j);
+        tile.setDisable(false);
+        if (!selectedTiles.contains(tile)) {
+          tile.setOnMouseClicked(
+              e -> {
+                tile.setStyle("-fx-translate-y: -15;");
+                TileView.highlightTile(tile);
+                selectedTiles.add(tile);
+                System.out.println(tile.getImage().getUrl());
+              });
+        } else {
+          tile.setOnMouseClicked(
+              e -> {
+                tile.setStyle("-fx-translate-y: 0");
+                tile.setEffect(null);
+                selectedTiles.remove(tile);
+                System.out.println(tile.getImage().getUrl());
+              });
+        }
+
+      }
+    }
   }
+**/
   /**
    * For placing new combinations on the board.
    * validated in handleEnterComb
    */
   void placeTiles() {
+    Group grp = new Group();
     HBox comb = new HBox();
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView tile = selectedTiles.get(i);
@@ -165,6 +217,7 @@ public class GuiController {
       tile.setEffect(null);
       tile.setDisable(true);
       comb.getChildren().add(tile);
+      grp.getChildren().add(comb);
       placedCombinations.add(comb);
       comb.setOnMouseMoved(event -> {
         comb.setStyle("-fx-background-color: #22CD27;");
@@ -207,6 +260,7 @@ public class GuiController {
         ImageView tile = selectedTiles.get(i);
         comb.getChildren().add(0, tile);
         disableTileControl(tile);
+        updateBoard(comb);
       }
 
     }
@@ -229,9 +283,25 @@ public class GuiController {
           ImageView tile = selectedTiles.get(i);
           comb.getChildren().add(comb.getChildren().size(), tile);
           disableTileControl(tile);
+          updateBoard(comb);
         }
       }
     }
+
+  /**
+   * looks for Hbox in placedCombinations list, deletes old one and enters new one.
+   * funktioniert????
+   * @param comb
+   */
+  private void updateBoard(HBox comb){
+    for (int i = 0; i < placedCombinations.size(); i++){
+      if (placedCombinations.get(i)==comb){
+        placedCombinations.remove(i);
+        placedCombinations.add(comb);
+      }
+    }
+    }
+
 
   /**
    * //TODO buttons überlagern sich wenn disabled
