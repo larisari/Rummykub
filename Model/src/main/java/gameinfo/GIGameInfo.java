@@ -32,5 +32,4 @@ public interface GIGameInfo {
 
   int getNumberOfPlayers();
 
-  void next();
 }

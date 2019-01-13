@@ -14,6 +14,10 @@ class Board {
     this.combos = new ArrayList<>();
   }
 
+  void remove() {
+    //TODO implement
+  }
+
   List<List<Tile>> getActiveCombos() {
     return this.combos;
   }

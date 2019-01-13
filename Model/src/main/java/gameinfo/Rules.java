@@ -72,16 +72,16 @@ class Rules {
     }
   }
 
-  void nextPlayer() {
-    this.gameFlow.nextPlayer();
+  void nextPlayersTurn() {
+    this.gameFlow.nextPlayersTurn();
   }
 
   int getNumberOfPlayers() {
     return this.gameFlow.getNumberOfPlayers();
   }
 
-  void firstDraw() {
-    gameFlow.firstDraw();
+  void addDistribution() {
+    gameFlow.addDistribution();
   }
 
 

@@ -221,17 +221,16 @@ class TestModel {
   @Test
   void getTileTest() {
     gameInfo.start();
-
+    //everyone gets 14 tiles
     System.out.println(gameInfo.drawBy(player_1_id));
     System.out.println(gameInfo.drawBy(player_2_id));
     System.out.println(gameInfo.drawBy(player_3_id));
     System.out.println(gameInfo.drawBy(player_4_id));
-
+    //now everyone should get 1 tile at a time
     System.out.println(gameInfo.drawBy(player_1_id));
     System.out.println(gameInfo.drawBy(player_2_id));
     System.out.println(gameInfo.drawBy(player_3_id));
     System.out.println(gameInfo.drawBy(player_4_id));
-
   }
 
 }

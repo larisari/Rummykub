@@ -89,7 +89,7 @@ class GameInfoImpl implements GIGameInfo {
     }
 
     if (rules.isDistributing()) {
-      rules.firstDraw();
+      rules.addDistribution();
       return Optional.of(getStackFor(id));
     } else {
       Tile tile = getTileFor(id);
@@ -97,7 +97,6 @@ class GameInfoImpl implements GIGameInfo {
       tiles.add(tile);
       return Optional.of(tiles);
     }
-
   }
 
   @Override
@@ -199,9 +198,9 @@ class GameInfoImpl implements GIGameInfo {
     return rules.getNumberOfPlayers();
   }
 
-  @Override
-  public void next() {
-    this.rules.nextPlayer();
+
+  public void nextPlayersTurn() {
+    this.rules.nextPlayersTurn();
   }
 
 

@@ -63,7 +63,7 @@ class GameFlow {
     }
   }
 
-  void nextPlayer() {
+  void nextPlayersTurn() {
     if (currentPlayerIndex == this.players.size() - 1) {
       this.currentPlayerIndex = 0;
     } else {
@@ -79,22 +79,12 @@ class GameFlow {
     return this.players.size();
   }
 
-  void firstDraw() {
+  void addDistribution() {
     this.distributionCounter++;
-    if (getDistributionCounter() == getNumberOfPlayers()) {
-      running();
+    if (distributionCounter == getNumberOfPlayers()) {
+      this.state = GameState.running;
     }
   }
-
-  void running() {
-    this.state = GameState.running;
-  }
-
-  int getDistributionCounter() {
-    return this.distributionCounter;
-  }
-
-
 
 
 }
