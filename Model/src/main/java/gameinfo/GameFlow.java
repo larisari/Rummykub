@@ -10,15 +10,18 @@ class GameFlow {
   private int currentPlayerIndex;
   private int distributionCounter;
 
-  GameFlow() {
+  private PointsCalculator calculator;
+
+  GameFlow(PointsCalculator calculator) {
     this.players = new ArrayList<>();
     this.state = GameState.distributing;
     this.currentPlayerIndex = 0;
     this.distributionCounter = 0;
+    this.calculator = calculator;
   }
 
   void registerPlayerBy(String id) {
-    players.add(new Player(id));
+    players.add(new Player(id, calculator));
   }
 
   boolean playerExists(String id) {

@@ -10,8 +10,8 @@ class Player {
   private String id;
   private boolean isFirstMove;
 
-  Player(String id) {
-    this.hand = new Hand();
+  Player(String id, PointsCalculator calculator) {
+    this.hand = new Hand(calculator);
     this.id = id;
     isFirstMove = true;
   }

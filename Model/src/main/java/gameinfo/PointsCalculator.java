@@ -46,6 +46,22 @@ class PointsCalculator {
         break;
       }
     }
+    
+    return points;
+  }
+
+  int getPointsForHand(List<Tile> hand) {
+    int points = 0;
+
+    for (Tile tile : hand) {
+      Number numberOfTile = tile.getNumber();
+
+      if (numberOfTile.equals(Number.JOKER)) {
+        points += 20;
+      } else {
+        points += numberOfTile.value();
+      }
+    }
 
     return points;
   }
