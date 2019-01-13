@@ -81,17 +81,9 @@ class GameFlow {
 
   void addDistribution() {
     this.distributionCounter++;
-    if (getDistributionCounter() == getNumberOfPlayers()) {
-      running();
+    if (distributionCounter == getNumberOfPlayers()) {
+      this.state = GameState.running;
     }
-  }
-
-  void running() {
-    this.state = GameState.running;
-  }
-
-  int getDistributionCounter() {
-    return this.distributionCounter;
   }
 
 
