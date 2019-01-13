@@ -72,8 +72,8 @@ class Rules {
     }
   }
 
-  void nextPlayer() {
-    this.gameFlow.nextPlayer();
+  void nextPlayersTurn() {
+    this.gameFlow.nextPlayersTurn();
   }
 
   int getNumberOfPlayers() {

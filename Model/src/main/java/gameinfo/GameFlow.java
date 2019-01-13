@@ -63,7 +63,7 @@ class GameFlow {
     }
   }
 
-  void nextPlayer() {
+  void nextPlayersTurn() {
     if (currentPlayerIndex == this.players.size() - 1) {
       this.currentPlayerIndex = 0;
     } else {
@@ -85,7 +85,6 @@ class GameFlow {
       this.state = GameState.running;
     }
   }
-
 
 
 }
