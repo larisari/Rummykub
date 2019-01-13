@@ -65,7 +65,6 @@ class APITest {
                             new Tile(Number.ONE, Color.YELLOW)));
 
     assert gameInfo.play(combination, player_1_id).get();
-    assert gameInfo.getPointsForMove(combination).get() == 47;
   }
 
   void stage_2_GetNextPlayerId() {
@@ -88,7 +87,6 @@ class APITest {
                             new Tile(Number.FIVE, Color.YELLOW)));
 
     assert !gameInfo.play(combination, player_2_id).get();
-    assert gameInfo.getPointsForMove(combination).get() == 15;
   }
 
   void stage_5_PlayCombinationValid() {
@@ -102,7 +100,6 @@ class APITest {
                             new Tile(Number.FIVE, Color.YELLOW)));
 
     assert gameInfo.play(combination, player_1_id).get();
-    assert gameInfo.getPointsForMove(combination).get() == 15;
   }
 
   void stage_6_PlayCombinationInvalid() {
