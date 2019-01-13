@@ -80,8 +80,8 @@ class Rules {
     return this.gameFlow.getNumberOfPlayers();
   }
 
-  void updateCounter() {
-    gameFlow.updateCounter();
+  void firstDraw() {
+    gameFlow.firstDraw();
   }
 
 
