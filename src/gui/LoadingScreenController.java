@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -22,7 +23,7 @@ public class LoadingScreenController {
 
   @FXML
   private Button startGame;
-
+  private StartingScreenController sC = new StartingScreenController();
   @FXML
   private void initialize() {
     startGame.setDisable(true);
@@ -30,12 +31,13 @@ public class LoadingScreenController {
 
   @FXML
   protected void handleStartGamePressed(MouseEvent event) throws IOException {
+    Stage startingStage = sC.getStage();
     Parent root = FXMLLoader.load(getClass().getResource("clientgui.fxml"));
     Scene scene = new Scene(root);
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
+    startingStage.close();
     // server.gameStart();
-//close startingscreen
 
   }
 }

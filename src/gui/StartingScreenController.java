@@ -22,10 +22,16 @@ public class StartingScreenController {
   @FXML
   private Button joinGame;
   @FXML
+  private AnchorPane startingS;
+  @FXML
   private AnchorPane loadingScreen;
+
   private int numberOfPlayers;
   private int JoinedY = 160;
 
+  public StartingScreenController(){
+
+  }
   /**
    * Loads loadingScreen after clicking "Create Game".
    */
@@ -46,8 +52,8 @@ public class StartingScreenController {
     TextInputDialog dialogue = new TextInputDialog();
     dialogue.setTitle("Login");
     dialogue.setHeaderText("Please enter your IP Adress!");
-    Button ok = (Button)dialogue.getDialogPane().lookupButton(ButtonType.OK);
-   // ok.setDisable(true);
+    Button ok = (Button) dialogue.getDialogPane().lookupButton(ButtonType.OK);
+    // ok.setDisable(true);
     Optional<String> result = dialogue.showAndWait();
     if (result.isPresent()) {
       ipAdress = result.get();
@@ -65,11 +71,11 @@ public class StartingScreenController {
       joined.setStyle(
           "-fx-text-fill: 18b522; -fx-font-family: 'Franklin Gothic Medium'; -fx-font-size:19; ");
       joined.relocate(497, JoinedY);
-      loadingScreen.getChildren().add(joined); // TODO selbes Problem wie bei StartButton disablen.
+      loadingScreen.getChildren().add(joined); // TODO selbes Problem wie bei StartButton disablen. // loading screen existiert nur im loadingscreen controller
     }
   }
 
-  private void loadLoadingScreen() throws IOException{
+  private void loadLoadingScreen() throws IOException {
     Parent dialogue = FXMLLoader.load(getClass().getResource("loadingScreen.fxml"));
     Scene scene = new Scene(dialogue);
     Stage stage = new Stage();
@@ -79,6 +85,10 @@ public class StartingScreenController {
     stage.show();
   }
 
+  public Stage getStage() {
+    Stage startingScreen = (Stage) startingS.getScene().getWindow();
+    return startingScreen;
+  }
 }
 
 
