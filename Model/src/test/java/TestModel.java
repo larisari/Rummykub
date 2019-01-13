@@ -33,11 +33,6 @@ class TestModel {
 
     //next player
     assert gameInfo.getNextPlayerId().get().equals(player_2_id);
-
-    //next
-    gameInfo.next();
-
-    assert gameInfo.getNextPlayerId().get().equals(player_3_id);
   }
 
   @Test
@@ -157,7 +152,6 @@ class TestModel {
     combination.add(new Tile(Number.TEN, Color.YELLOW));
 
     assert gameInfo.play(combination, player_2_id).get();
-    assert gameInfo.getPointsForMove(combination).get() == 40;
   }
 
   // done done
@@ -171,7 +165,6 @@ class TestModel {
     combination.add(new Tile(Number.FIVE, Color.BLUE));
 
     assert gameInfo.play(combination, player_2_id).get();
-    assert gameInfo.getPointsForMove(combination).get() == 15;
   }
 
   @Test
@@ -184,7 +177,6 @@ class TestModel {
     combination.add(new Tile(Number.FIVE, Color.BLUE));
 
     assert gameInfo.play(combination, player_2_id).get();
-    assert gameInfo.getPointsForMove(combination).get() == 15;
   }
 
   @Test
@@ -197,7 +189,7 @@ class TestModel {
     combination.add(new Tile(Number.ONE, Color.BLUE));
 
     assert gameInfo.play(combination, player_2_id).get();
-    assert gameInfo.getPointsForMove(combination).get() == 47;
+
   }
 
   @Test
@@ -210,7 +202,6 @@ class TestModel {
     combination.add(new Tile(Number.ONE, Color.BLUE));
 
     assert gameInfo.play(combination, player_2_id).get();
-    assert gameInfo.getPointsForMove(combination).get() == 47;
   }
 
   @Test

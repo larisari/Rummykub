@@ -169,7 +169,7 @@ class GameInfoImpl implements GIGameInfo {
 
       if (allValid) {
         player.remove(tilesFromHand);
-        // board.remove(tilesFromBoard);
+        board.remove(tilesFromBoard);
         newCombinations.forEach(combination -> board.addCombo(combination));
         rules.nextPlayersTurn();
         return Optional.of(true);
