@@ -29,4 +29,13 @@ class Hand {
     return tilesOnHand;
   }
 
+  int getPoints() {
+    int points = 0;
+
+    for (Tile tile : tilesOnHand) {
+      points += tile.getNumber().value();
+    }
+
+    return points;
+  }
 }

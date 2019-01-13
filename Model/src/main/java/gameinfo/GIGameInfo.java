@@ -28,8 +28,7 @@ public interface GIGameInfo {
 
   Optional<List<Tile>> getAllTilesBy(String id);
 
-  Optional<Integer> getPointsForMove(List<Tile> combination);
+  Optional<Integer> getPointsBy(String id);
 
-  int getNumberOfPlayers();
-
+  Optional<Integer> getNumberOfPlayers();
 }

@@ -37,7 +37,7 @@ class Rules {
     return gameFlow.playerExists(id);
   }
 
-  boolean isValidPlayer(String id) {
+  boolean isValidPlayerBy(String id) {
     return this.gameFlow.isValidPlayer(id);
   }
 
@@ -83,7 +83,5 @@ class Rules {
   void addDistribution() {
     gameFlow.addDistribution();
   }
-
-
 
 }

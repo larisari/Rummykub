@@ -51,11 +51,6 @@ class TestModel {
   }
 
   @Test
-  void validPlayerTest() {
-    assert gameInfo.isValidPlayerBy(player_1_id).get();
-  }
-
-  @Test
   void testDeregistration() {
     List<String> ids = gameInfo.getAllPlayerIds().get();
 

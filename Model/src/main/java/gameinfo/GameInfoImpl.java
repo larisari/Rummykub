@@ -52,7 +52,7 @@ class GameInfoImpl implements GIGameInfo {
 
   @Override
   public Optional<Boolean> isValidPlayerBy(String id) {
-    return Optional.of(this.rules.isValidPlayer(id));
+    return Optional.of(this.rules.isValidPlayerBy(id));
   }
 
   @Override
@@ -88,13 +88,20 @@ class GameInfoImpl implements GIGameInfo {
       return Optional.empty();
     }
 
+    if (!rules.isValidPlayerBy(id)) {
+      // it is not the players turn.
+      return Optional.of(new ArrayList<>());
+    }
+
     if (rules.isDistributing()) {
       rules.addDistribution();
+      rules.nextPlayersTurn();
       return Optional.of(getStackFor(id));
     } else {
       Tile tile = getTileFor(id);
       List<Tile> tiles = new ArrayList<>();
       tiles.add(tile);
+      rules.nextPlayersTurn();
       return Optional.of(tiles);
     }
   }
@@ -117,18 +124,25 @@ class GameInfoImpl implements GIGameInfo {
 
     if (optionalPlayer.isPresent()) {
       Player player = optionalPlayer.get();
+
+      if (!rules.isValidPlayerBy(id)) {
+        // it is not the players turn.
+        return Optional.of(false);
+      }
+
       if (player.isFirstMove() && rules.isValid(combination, MINIMUM_POINTS_ON_FIRST_MOVE)) {
         putComboOnBoard(combination, player);
+        rules.nextPlayersTurn();
         return Optional.of(true);
       } else if (!player.isFirstMove() && rules.isValid(combination)) {
         putComboOnBoard(combination, player);
+        rules.nextPlayersTurn();
         return Optional.of(true);
       } else {
         // not a valid combination.
         return Optional.of(false);
       }
     } else {
-      // TODO Handle better !
       return Optional.empty();
     }
   }
@@ -143,6 +157,12 @@ class GameInfoImpl implements GIGameInfo {
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
+
+      if (!rules.isValidPlayerBy(id)) {
+        // it is not the players turn.
+        return Optional.of(false);
+      }
+
       boolean allValid = newCombinations.stream().allMatch(this::isValid);
 
       Player player = optionalPlayer.get();
@@ -151,20 +171,26 @@ class GameInfoImpl implements GIGameInfo {
         player.remove(tilesFromHand);
         // board.remove(tilesFromBoard);
         newCombinations.forEach(combination -> board.addCombo(combination));
+        rules.nextPlayersTurn();
         return Optional.of(true);
       } else {
         return Optional.of(false);
       }
     } else {
-      // TODO Handle better !
-      // if no valid plauyer with id id
       return Optional.empty();
     }
   }
 
   @Override
-  public Optional<Integer> getPointsForMove(List<Tile> combination) {
-    return Optional.of(rules.getPointsFor(combination));
+  public Optional<Integer> getPointsBy(String id) {
+
+    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
+
+    if (!optionalPlayer.isPresent()) {
+      return Optional.empty();
+    }
+
+    return Optional.of(optionalPlayer.get().getPointsOfHand());
   }
 
   private List<Tile> getStackFor(String id) {
@@ -194,15 +220,7 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public int getNumberOfPlayers() {
-    return rules.getNumberOfPlayers();
+  public Optional<Integer> getNumberOfPlayers() {
+    return Optional.of(rules.getNumberOfPlayers());
   }
-
-
-  public void nextPlayersTurn() {
-    this.rules.nextPlayersTurn();
-  }
-
-
-
 }

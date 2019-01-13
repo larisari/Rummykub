@@ -3,19 +3,12 @@ package gameinfo;
 import gameinfo.tile.Tile;
 
 import java.util.List;
-import java.util.UUID;
 
 class Player {
 
   private Hand hand;
   private String id;
   private boolean isFirstMove;
-
-  Player() {
-    hand = new Hand();
-    id = UUID.randomUUID().toString();
-    isFirstMove = true;
-  }
 
   Player(String id) {
     this.hand = new Hand();
@@ -51,5 +44,9 @@ class Player {
     for (Tile tile : tiles) {
       hand.removeTile(tile);
     }
+  }
+
+  int getPointsOfHand() {
+    return hand.getPoints();
   }
 }
