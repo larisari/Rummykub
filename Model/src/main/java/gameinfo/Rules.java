@@ -80,8 +80,8 @@ class Rules {
     return this.gameFlow.getNumberOfPlayers();
   }
 
-  void firstDraw() {
-    gameFlow.firstDraw();
+  void addDistribution() {
+    gameFlow.addDistribiution();
   }
 
 

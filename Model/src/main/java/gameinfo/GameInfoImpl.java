@@ -89,7 +89,7 @@ class GameInfoImpl implements GIGameInfo {
     }
 
     if (rules.isDistributing()) {
-      rules.firstDraw();
+      rules.addDistribution();
       return Optional.of(getStackFor(id));
     } else {
       Tile tile = getTileFor(id);
