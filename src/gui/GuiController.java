@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -44,7 +45,7 @@ public class GuiController {
   @FXML private Group player3Hand;
   @FXML private Group player4Hand;
   private List<ImageView> selectedTiles = new ArrayList<>();
-  private List<Group> placedCombinations = new ArrayList<>();
+  private List<HBox> placedCombinations = new ArrayList<>();
   private boolean isPlayersTurn;
   private static final int MAX_TILES = 13;
 
@@ -153,22 +154,32 @@ public class GuiController {
 
   @FXML protected void handleAddTo(MouseEvent event) {
     if (!selectedTiles.isEmpty()) {
-      for (Node box : board.getChildren()) {
+      for (int i = 0; i < board.getChildren().size(); i++) {
+        HBox box = (HBox)board.getChildren().get(i);
         double hx = box.getLayoutX();
         double hy = box.getLayoutY();
-        System.out.println(hx);
-        System.out.println(hy);
         Button front = new Button("add here");
-        Button back = new Button("add here");
-        board.getChildren().add(front);
-        board.getChildren().add(back);
-        front.relocate(hx - 5, hy);
-        back.relocate(hx + 5, hy);
+        front.setOnMousePressed(event1 -> {
+          addToFront(box);
+        });
+        Button back = new Button ("add here");
+        back.setOnMousePressed(event2 -> {
+          addToBack(box);
+        });
+        back.setOnMouseReleased(event4 -> {
+          box.getChildren().remove(front);
+          box.getChildren().remove(back);
+
+        });
+        front.setOnMouseReleased(event3 -> {
+          box.getChildren().remove(front);
+          box.getChildren().remove(back);
+        });
+        box.getChildren().add(0,front);
+        box.getChildren().add(box.getChildren().size(),back);
       }
     }
-
-    }
-
+  }
   /**
    * enables control on tiles on board
    * Interferiert mit comb.setOnMouseClicked
@@ -209,7 +220,6 @@ public class GuiController {
    * validated in handleEnterComb
    */
   void placeTiles() {
-    Group grp = new Group();
     HBox comb = new HBox();
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView tile = selectedTiles.get(i);
@@ -217,21 +227,16 @@ public class GuiController {
       tile.setEffect(null);
       tile.setDisable(true);
       comb.getChildren().add(tile);
-      grp.getChildren().add(comb);
       placedCombinations.add(comb);
-      comb.setOnMouseMoved(event -> {
-        comb.setStyle("-fx-background-color: #22CD27;");
-      });
-
-      comb.setOnMouseClicked(
-          event -> {      //wenn erste Tile geklickt wird vorne anfügen, default: hinten anfügen.
-            Point2D point = new Point2D(event.getX(), event.getY());
-            if (comb.getChildren().get(0).contains(point)) {
-              addToFront(event);
-            } else {
-              addToBack(event);
-            }
-          });
+ //     comb.setOnMouseClicked(
+ //         event -> {      //wenn erste Tile geklickt wird vorne anfügen, default: hinten anfügen.
+ //           Point2D point = new Point2D(event.getX(), event.getY());
+ //           if (comb.getChildren().get(0).contains(point)) {
+ //             addToFront(event);
+ //           } else {
+ //             addToBack(event);
+ //           }
+ //         });
     }
     board.getChildren().add(comb);
     selectedTiles.clear();
@@ -242,13 +247,9 @@ public class GuiController {
    * For placing tiles to existing combinations on board. check if new tiles may be laid to existing combination. (4 or
    * 13 max) check if new tiles fit existing combination.
    */
-  void addToFront(MouseEvent event) {
-    // if (client.send(isValidPlayerBy) == true) {
-    if (!selectedTiles.isEmpty()) {
-      HBox comb = (HBox) event.getSource();
+  void addToFront(HBox comb) {
       List<ImageView> combination = new ArrayList<>();   //erstellt liste mit gewünschter neuer kombination.
-      //selected tiles vorne
-      for (int i = 0; i < comb.getChildren().size(); i++) {
+      for (int i = 1; i < comb.getChildren().size()-1; i++) {
         combination.add((ImageView) comb.getChildren().get(i));
       }
       String selectedT = GuiParser.parseToString(selectedTiles);
@@ -264,14 +265,12 @@ public class GuiController {
       }
 
     }
-  }
 
-  void addToBack(MouseEvent event) {
+
+  void addToBack(HBox comb) {
     // if (client.send(isValidPlayerBy) == true) {
-    if (!selectedTiles.isEmpty()) {
-      HBox comb = (HBox) event.getSource();
       List <ImageView> combination = new ArrayList<>();   //erstellt liste mit gewünschter neuer kombination.
-      for (int i = 0; i < comb.getChildren().size(); i++){
+      for (int i = 1; i < comb.getChildren().size()-1; i++){
         combination.add((ImageView)comb.getChildren().get(i));
       }
       String boardTiles = GuiParser.parseToString(combination);
@@ -286,7 +285,7 @@ public class GuiController {
           updateBoard(comb);
         }
       }
-    }
+
 
   /**
    * looks for Hbox in placedCombinations list, deletes old one and enters new one.
