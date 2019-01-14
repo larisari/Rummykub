@@ -6,10 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
-import javafx.geometry.Point2D;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -51,16 +48,20 @@ public class GuiController {
   @FXML
   private ImageView bag;
   @FXML
-  private Group player2Hand;
+  private Group topBoard;
   @FXML
-  private Group player3Hand;
+  private Group rightBoard;
   @FXML
-  private Group player4Hand;
+  private Group leftBoard;
+  @FXML private Label playerTopName;
+  @FXML private Label playerRightName;
+  @FXML private Label playerLeftName;
   private List<ImageView> selectedTiles = new ArrayList<>();
   private List<HBox> placedCombinations = new ArrayList<>();
   private List<Image> hand = new ArrayList<>();
   private TileView tView = new TileView();
-  private int id = 1;
+  private int playerID;
+  private static final int HAND_SPACE = 13;
 
   /**
    * funktioniert.
@@ -70,13 +71,37 @@ public class GuiController {
     //int numberPlayers = client.send(getNumberOfPlayers);
     // switch (numberPlayers){
     //case 2:
-    //player3Hand.setVisible(false);
-    //player4Hand.setVisible(false);
+    //rightBoard.setVisible(false);
+    //leftBoard.setVisible(false);
     //break;
     //case 3:
-    //player4Hand.setVisible(false);
+    //leftBoard.setVisible(false);
     //break;
     //}
+    setPlayerNames();
+  }
+
+  private void setPlayerNames() {
+    // this.playerID = client.getID();
+    switch (playerID) {
+      case 1:
+        break; //bleibt auf default
+      case 2:
+        playerTopName.setText("Player 1");
+        playerRightName.setText("Player 4");
+        playerLeftName.setText("Player 3");
+        break;
+      case 3:
+        playerTopName.setText("Player 4");
+        playerRightName.setText("Player 2");
+        playerLeftName.setText("Player 1");
+        break;
+      case 4:
+        playerTopName.setText("Player 3");
+        playerRightName.setText("Player 1");
+        playerLeftName.setText("Player 2");
+        break;
+    }
   }
 
   List<ImageView> getSelectedTiles() {
@@ -128,12 +153,23 @@ public class GuiController {
     //
   }
 
-  public void updateHand() {
-    // String handTiles = client.receive("hand");
+  private void updateHand() {
+   refillImageViews(topHand);
+   refillImageViews(bottomHand);
+    // String handTiles = client.receive(getAllTilesBy);
     // hand = tView.createImgs(stack);
     // for (int i = 0; i < hand.size(); i++){
     // tView.createTile(hand.get(i));
     // }
+  }
+
+  private void refillImageViews(HBox hand){
+    while (hand.getChildren().size() < HAND_SPACE){
+      ImageView iView = new ImageView();
+      iView.setFitWidth(45);
+      iView.setFitHeight(65);
+      hand.getChildren().add(iView);
+    }
   }
 
   @FXML
@@ -237,8 +273,6 @@ public class GuiController {
    */
   void placeTiles() {
     HBox comb = new HBox();
-    id += 1;
-    comb.setId("" + id);
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView tile = selectedTiles.get(i);
       tile.setStyle("-fx-translate-y: 0");

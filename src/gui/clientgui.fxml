@@ -136,30 +136,30 @@
             </HBox>
           </children>
         </Group>
-        <Group fx:id="player2Hand" layoutX="387.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="386.0" AnchorPane.topAnchor="0.0">
+        <Group fx:id="topBoard" layoutX="387.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="386.0" AnchorPane.topAnchor="0.0">
           <children>
             <Rectangle accessibleRole="PARENT" arcHeight="10.0" arcWidth="10.0" height="84.0" stroke="WHITE" strokeType="INSIDE" width="285.0" />
-            <Label alignment="CENTER" layoutX="95.0" layoutY="27.0" text="PLAYER 2" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="playerTopName" alignment="CENTER" layoutX="95.0" layoutY="27.0" text="PLAYER 2" textAlignment="CENTER" textFill="WHITE">
               <font>
                 <Font name="Franklin Gothic Medium" size="22.0" />
               </font>
             </Label>
           </children>
         </Group>
-      <Group fx:id="player3Hand" layoutX="871.0" layoutY="322.0" rotate="270.0" AnchorPane.bottomAnchor="221.5" AnchorPane.rightAnchor="-100.0" AnchorPane.topAnchor="322.0">
+      <Group fx:id="rightBoard" layoutX="871.0" layoutY="322.0" rotate="270.0" AnchorPane.bottomAnchor="221.5" AnchorPane.rightAnchor="-100.0" AnchorPane.topAnchor="322.0">
         <children>
           <Rectangle accessibleRole="PARENT" arcHeight="10.0" arcWidth="10.0" height="84.0" stroke="WHITE" strokeType="INSIDE" width="285.0" />
-          <Label layoutX="94.0" layoutY="30.0" text="PLAYER 3" textFill="WHITE">
+          <Label fx:id="playerRightName" layoutX="94.0" layoutY="30.0" text="PLAYER 3" textFill="WHITE">
             <font>
               <Font name="Franklin Gothic Medium" size="22.0" />
             </font>
           </Label>
         </children>
       </Group>
-        <Group fx:id="player4Hand" layoutX="-93.0" layoutY="37.0" AnchorPane.bottomAnchor="221.5" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="221.5">
+        <Group fx:id="leftBoard" layoutX="-93.0" layoutY="37.0" AnchorPane.bottomAnchor="221.5" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="221.5">
           <children>
             <Rectangle accessibleRole="PARENT" arcHeight="10.0" arcWidth="10.0" height="84.0" layoutY="285.0" rotate="270.0" stroke="WHITE" strokeType="INSIDE" width="285.0" />
-            <Label layoutX="104.0" layoutY="310.0" rotate="90.0" text="PLAYER 4" textAlignment="CENTER" textFill="WHITE">
+            <Label fx:id="playerLeftName" layoutX="104.0" layoutY="310.0" rotate="90.0" text="PLAYER 4" textAlignment="CENTER" textFill="WHITE">
               <font>
                 <Font name="Franklin Gothic Medium" size="22.0" />
               </font>
