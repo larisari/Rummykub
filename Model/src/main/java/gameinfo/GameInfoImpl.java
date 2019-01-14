@@ -1,6 +1,5 @@
 package gameinfo;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import gameinfo.tile.Tile;
 
 import java.util.ArrayList;
