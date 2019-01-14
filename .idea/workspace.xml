@@ -1,28 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="added gameinfo pck">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="tile selection on board works / separated tile control for board and hand / minor changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/Bag.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/Board.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/CombRules.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/GIFactory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/GIGameInfo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/GameFlow.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/GameInfoImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/GameState.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/Hand.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/Player.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/PointsCalculator.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/Rules.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/tile/Tile.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/tile/util/Color.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gameinfo/tile/util/Number.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/GuiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/GuiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/LoadingScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/LoadingScreenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/TileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/TileView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/startingScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/startingScreen.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PineappleView/gui/GuiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/GuiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PineappleView/gui/TileView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/TileView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PineappleView/gui/startingScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/startingScreen.fxml" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -151,8 +134,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/GuiController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="211" column="44" lean-forward="true" selection-start-line="211" selection-start-column="44" selection-end-line="211" selection-end-column="44" />
+            <state relative-caret-position="165">
+              <caret line="202" column="38" selection-start-line="202" selection-start-column="38" selection-end-line="202" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -303,7 +286,7 @@
     <property name="OverrideImplement.combined" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547473625611" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547474158708" />
     <property name="dynamic.classpath" value="false" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -441,7 +424,7 @@
       <workItem from="1547419281626" duration="172000" />
       <workItem from="1547419561420" duration="1000" />
       <workItem from="1547419725707" duration="1789000" />
-      <workItem from="1547468666150" duration="3510000" />
+      <workItem from="1547468666150" duration="4078000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1547234686485</created>
@@ -576,11 +559,18 @@
       <option name="project" value="LOCAL" />
       <updated>1547419995532</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="tile selection on board works / separated tile control for board and hand / minor changes">
+      <created>1547473675386</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1547473675386</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="122843000" />
+    <option name="totallyTimeSpent" value="123411000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -593,7 +583,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="33" y="87" width="1887" height="1034" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.17831978" />
       <window_info id="Structure" order="1" weight="0.2498645" />
@@ -657,7 +646,9 @@
     <MESSAGE value="starting window should now close when game is opened" />
     <MESSAGE value="minor changes" />
     <MESSAGE value="added gameinfo pck" />
-    <option name="LAST_COMMIT_MESSAGE" value="added gameinfo pck" />
+    <MESSAGE value="tile selection on board works / separated tile control for board and hand" />
+    <MESSAGE value="tile selection on board works / separated tile control for board and hand / minor changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="tile selection on board works / separated tile control for board and hand / minor changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -863,8 +854,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/GuiController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="211" column="44" lean-forward="true" selection-start-line="211" selection-start-column="44" selection-end-line="211" selection-end-column="44" />
+        <state relative-caret-position="165">
+          <caret line="202" column="38" selection-start-line="202" selection-start-column="38" selection-end-line="202" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
