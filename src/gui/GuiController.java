@@ -60,6 +60,7 @@ public class GuiController {
   private List<HBox> placedCombinations = new ArrayList<>();
   private List<Image> hand = new ArrayList<>();
   private TileView tView = new TileView();
+  private int id = 1;
 
   /**
    * funktioniert.
@@ -236,13 +237,15 @@ public class GuiController {
    */
   void placeTiles() {
     HBox comb = new HBox();
+    id += 1;
+    comb.setId("" + id);
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView tile = selectedTiles.get(i);
       tile.setStyle("-fx-translate-y: 0");
       tile.setEffect(null);
       comb.getChildren().add(tile);
-      placedCombinations.add(comb);
     }
+    placedCombinations.add(comb);
     board.getChildren().add(comb);
     selectedTiles.clear();
     updateHand();
@@ -278,8 +281,8 @@ public class GuiController {
 
       disableTileControl(selectedTiles);
       selectedTiles.clear();
-      updateBoard(comb);
       updateHand();
+      updateBoard();
 
   }
 
@@ -307,18 +310,15 @@ public class GuiController {
         return;
       }
     }
-      for (int i = 0; i < selectedTiles.size();
-          i++) { //problem weil tile nach verschieben nicht mehr als selected gilt -> selectedtiles.size verringert sich
+      for (int i = 0; i < selectedTiles.size(); i++) { //problem weil tile nach verschieben nicht mehr als selected gilt -> selectedtiles.size verringert sich
         ImageView tile = selectedTiles.get(i);
-        System.out.println("selectedsize" + selectedTiles.size());
-        System.out.println("combsize" + comb.getChildren().size());
         comb.getChildren().add(comb.getChildren().size(), tile);
       }
 
       disableTileControl(selectedTiles);
       selectedTiles.clear();
-      updateBoard(comb);
       updateHand();
+      updateBoard();
     }
 
 
@@ -332,18 +332,31 @@ public class GuiController {
   }
 
   /**
-   * looks for Hbox in placedCombinations list, deletes old one and enters new one. funktioniert
-   * denk ich nicht.
+   * Deletes unused Hboxes
    */
-  private void updateBoard(HBox comb) {
-    for (int i = 0; i < placedCombinations.size(); i++) {
-      if (placedCombinations.get(i).equals(comb)) {
-        placedCombinations.remove(i);
-        placedCombinations.add(comb);
-        System.out.println(placedCombinations);
+  private void updateBoard() {
+    for (int i = 0; i < board.getChildren().size(); i++) {
+      HBox box = (HBox) board.getChildren().get(i);
+      if (box.getChildren().isEmpty()) {
+        board.getChildren().remove(box);
       }
     }
   }
+  /**
+   * don't need because Imageviews update themselves automatically in hbox!!!!
+   */
+  /**
+  private void updateBoard(HBox comb) {
+    for (int i = 0; i < placedCombinations.size(); i++) {
+      if (placedCombinations.get(i).idProperty().equals(comb.idProperty())) {
+        System.out.println(placedCombinations.get(i).getChildren());
+        placedCombinations.remove(i);
+        placedCombinations.add(comb);
+        System.out.println(placedCombinations.get(i).getChildren() + "after");
+      }
+    }
+  }
+**/
 
   /**
    *
