@@ -61,6 +61,7 @@ public class GuiController {
   private List<Image> hand = new ArrayList<>();
   private TileView tView = new TileView();
   private int playerID;
+  static int numberOfPlayers;
   private static final int HAND_SPACE = 13;
 
   /**
@@ -68,7 +69,7 @@ public class GuiController {
    */
   @FXML
   private void initialize() {
-    //int numberPlayers = client.send(getNumberOfPlayers);
+    //numberPlayers = client.send(getNumberOfPlayers);
     // switch (numberPlayers){
     //case 2:
     //rightBoard.setVisible(false);
@@ -157,10 +158,14 @@ public class GuiController {
    refillImageViews(topHand);
    refillImageViews(bottomHand);
     // String handTiles = client.receive(getAllTilesBy);
+    // if (handTiles.equals(""){
+    // endGame();
+    // } else {
     // hand = tView.createImgs(stack);
     // for (int i = 0; i < hand.size(); i++){
     // tView.createTile(hand.get(i));
     // }
+    //}
   }
 
   private void refillImageViews(HBox hand){
@@ -174,14 +179,14 @@ public class GuiController {
 
   @FXML
   protected void handleEndTurn(MouseEvent event) {
+    // if (client.send(boardcombinations)==true){
     //client.endTurn();
     // playerTurn.setText(client.send("getNextPlayerID"));
     disableControl();
   }
 
   /**
-   * funktioniert nur für Tiles die von der Hand kommen. //TODO Tiles auf Hand trennen von Tiles auf
-   * Board
+   * funktioniert nur für Tiles die von der Hand kommen.
    */
   @FXML
   protected void handleTileClick(
