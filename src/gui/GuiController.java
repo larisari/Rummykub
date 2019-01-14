@@ -110,6 +110,8 @@ public class GuiController {
       // if (client.send(GuiParser.parseToString(selectedTiles)) == true) {
       placeTiles();
       bag.setDisable(true);
+      disableTileControl(selectedTiles);
+      selectedTiles.clear();
       updateHand();
     }
   }
@@ -264,15 +266,28 @@ public class GuiController {
     String combTiles = GuiParser.parseToString(combination);
     //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
     deleteAddToButtons();
-    for (int i = selectedTiles.size() - 1; i >= 0;
-        i--) {    //soll ja in richtiger reihenfolge eingefügt werden, bei einer Tile ist index get(0)
-      ImageView tile = selectedTiles.get(i);
-      comb.getChildren().add(0, tile); //added tile vorne in hbox
+    for (int j = 0; j < selectedTiles.size(); j++){
+    if (comb.getChildren().contains(selectedTiles.get(j))) {
+      return;
     }
-    disableTileControl(selectedTiles);
-    selectedTiles.clear();
-    updateBoard(comb);
-    updateHand();
+    }
+      for (int i = selectedTiles.size() - 1; i >= 0; i--) {    //soll ja in richtiger reihenfolge eingefügt werden, bei einer Tile ist index get(0)
+        ImageView tile = selectedTiles.get(i);
+        comb.getChildren().add(0, tile); //added tile vorne in hbox
+      }
+
+      disableTileControl(selectedTiles);
+      selectedTiles.clear();
+      updateBoard(comb);
+      updateHand();
+
+  }
+
+  void shiftFromBackToFront(HBox comb){
+    for (int i = 0; i < selectedTiles.size(); i++){
+      comb.getChildren().remove(comb.getChildren().size()-1);
+    }
+    comb.getChildren().addAll(0,selectedTiles);
   }
 
   void addToBack(HBox comb) {
@@ -287,17 +302,25 @@ public class GuiController {
     String combTiles = GuiParser.parseToString(combination);
     //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
     deleteAddToButtons();
-    for (int i = 0; i < selectedTiles.size(); i++) { //problem weil tile nach verschieben nicht mehr als selected gilt -> selectedtiles.size verringert sich
-      ImageView tile = selectedTiles.get(i);
-      System.out.println("selectedsize" + selectedTiles.size());
-      System.out.println("combsize" + comb.getChildren().size());
-      comb.getChildren().add(comb.getChildren().size(), tile);
+    for (int j = 0; j < selectedTiles.size(); j++){
+      if (comb.getChildren().contains(selectedTiles.get(j))) {
+        return;
+      }
     }
-    disableTileControl(selectedTiles);
-    selectedTiles.clear();
-    updateBoard(comb);
-    updateHand();
-  }
+      for (int i = 0; i < selectedTiles.size();
+          i++) { //problem weil tile nach verschieben nicht mehr als selected gilt -> selectedtiles.size verringert sich
+        ImageView tile = selectedTiles.get(i);
+        System.out.println("selectedsize" + selectedTiles.size());
+        System.out.println("combsize" + comb.getChildren().size());
+        comb.getChildren().add(comb.getChildren().size(), tile);
+      }
+
+      disableTileControl(selectedTiles);
+      selectedTiles.clear();
+      updateBoard(comb);
+      updateHand();
+    }
+
 
   private void deleteAddToButtons() {
     for (int i = 0; i < board.getChildren().size(); i++) {
