@@ -20,23 +20,24 @@ public class TileView {
   @FXML
   private HBox bottomHand;
 
+  public TileView() {
+
+  }
 
   /**
    *
-   * @param hand
-   * @return
    */
-  private List<Image> createImgs(String hand){
-    List <Image> tilesImg = new ArrayList<>();
-    String [] block = hand.split(":");
-    String [] tiles = block[1].split(",");
-    for (int i = 0; i < tiles.length; i++){
-      String [] attributeswS = tiles[i].split(".");
-      String [] attributes = attributeswS[1].split("/");
+  List<Image> createImgs(String hand) {
+    List<Image> tilesImg = new ArrayList<>();
+    String[] block = hand.split(":");
+    String[] tiles = block[1].split(",");
+    for (int i = 0; i < tiles.length; i++) {
+      String[] attributeswS = tiles[i].split(".");
+      String[] attributes = attributeswS[1].split("/");
       String color = attributes[0];
       String number = attributes[1];
 
-      if (number.equals("joker")){
+      if (number.equals("joker")) {
         Image joker = new Image(
             getClass().getResourceAsStream("images/tiles/joker/joker.png"));
         tilesImg.add(joker);

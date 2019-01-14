@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
@@ -28,8 +29,11 @@ public class GuiController {
 
   //Client client;
   //Host host;
-  //List<Tile> hand;
   GuiParser parser;
+  @FXML
+  private HBox topHand;
+  @FXML
+  private HBox bottomHand;
   @FXML
   private Label playerTurn;
   @FXML
@@ -38,6 +42,10 @@ public class GuiController {
   private Button endTurn;
   @FXML
   private Button cancelSelection;
+  @FXML
+  private Button manipulate;
+  @FXML
+  private Button addToExisting;
   @FXML
   private FlowPane board;
   @FXML
@@ -50,9 +58,12 @@ public class GuiController {
   private Group player4Hand;
   private List<ImageView> selectedTiles = new ArrayList<>();
   private List<HBox> placedCombinations = new ArrayList<>();
-  private boolean isPlayersTurn;
-  private static final int MAX_TILES = 13;
+  private List<Image> hand = new ArrayList<>();
+  private TileView tView = new TileView();
 
+  /**
+   * funktioniert.
+   */
   @FXML
   private void initialize() {
     //int numberPlayers = client.send(getNumberOfPlayers);
@@ -88,7 +99,6 @@ public class GuiController {
     if (result.isPresent() && result.get() == yes) {
       Platform.exit();
     }
-    //TODO Alert wenn auf x gedrückt wird.
   }
 
   /**
@@ -97,10 +107,10 @@ public class GuiController {
   @FXML
   protected void handleEnterComb(MouseEvent event) {
     if (!selectedTiles.isEmpty()) {
-      System.out.println(GuiParser.parseToString(selectedTiles));
       // if (client.send(GuiParser.parseToString(selectedTiles)) == true) {
       placeTiles();
       bag.setDisable(true);
+      updateHand();
     }
   }
 
@@ -108,16 +118,18 @@ public class GuiController {
   protected void handleDrawTile(MouseEvent event) {
     // if (client.send("isValidPlayer").equals(true){
     // client.send("draw");
-    //updateHand();
-    //EndTurn
+    updateHand();
+    // playerTurn.setText(client.send("getNextPlayerID"));
+    disableControl();
     // }
     //
   }
 
   public void updateHand() {
-    // String hand = client.receive("drawStack");
-    // Hand hand = tView.createImgs(hand);
-    // tView.createTile(tileImage);
+    // String handTiles = client.receive("hand");
+    // hand = tView.createImgs(stack);
+    // for (int i = 0; i < hand.size(); i++){
+    // tView.createTile(hand.get(i));
     // }
   }
 
@@ -128,22 +140,29 @@ public class GuiController {
     disableControl();
   }
 
+  /**
+   * funktioniert nur für Tiles die von der Hand kommen. //TODO Tiles auf Hand trennen von Tiles auf
+   * Board
+   */
   @FXML
   protected void handleTileClick(
       MouseEvent event) {
     ImageView imageV = (ImageView) event.getSource();
-    if (imageV.getImage() == null || imageV.getImage().isError()) {
-      return;
-    }
-    if (!selectedTiles.contains(imageV)) {
-      imageV.setStyle("-fx-translate-y: -15;");
-      TileView.highlightTile(imageV);
-      selectedTiles.add(imageV);
-    } else {
-      imageV.setStyle("-fx-translate-y: 0;");
-      imageV.setEffect(null);
-      selectedTiles.remove(imageV);
+    if (topHand.getChildren().contains(imageV) || bottomHand.getChildren()
+        .contains(imageV)) { //gilt nur wenn Tile auf der Hand liegt.
+      if (imageV.getImage() == null || imageV.getImage().isError()) {
+        return;
+      }
+      if (!selectedTiles.contains(imageV)) {
+        imageV.setStyle("-fx-translate-y: -15;");
+        TileView.highlightTile(imageV);
+        selectedTiles.add(imageV);
+      } else {
+        imageV.setStyle("-fx-translate-y: 0;");
+        imageV.setEffect(null);
+        selectedTiles.remove(imageV);
 
+      }
     }
   }
 
@@ -160,15 +179,12 @@ public class GuiController {
 
   /**
    * for adding to existing combinations.
-   * @param event
    */
   @FXML
   protected void handleAddTo(MouseEvent event) {
     if (!selectedTiles.isEmpty()) {
       for (int i = 0; i < board.getChildren().size(); i++) {
         HBox box = (HBox) board.getChildren().get(i);
-        double hx = box.getLayoutX();
-        double hy = box.getLayoutY();
         Button front = new Button("add here");
         front.setOnMousePressed(event1 -> {
           addToFront(box);
@@ -182,40 +198,36 @@ public class GuiController {
       }
     }
   }
+
   /**
    * enables control on tiles on board
-   * Interferiert mit comb.setOnMouseClicked
-   * @param event
    */
 
- @FXML protected void handleManipulate(MouseEvent event) {
+  @FXML
+  protected void handleManipulate(MouseEvent event) {
 
- for (int i = 0; i < board.getChildren().size(); i++) {
- HBox box = (HBox) board.getChildren().get(i);
- for (int j = 0; j < box.getChildren().size(); j++) {
- ImageView tile = (ImageView)box.getChildren().get(j);
- tile.setDisable(false);
- if (!selectedTiles.contains(tile)) {
- tile.setOnMouseClicked(
- e -> {
- tile.setStyle("-fx-translate-y: -15;");
- TileView.highlightTile(tile);
- selectedTiles.add(tile);
- System.out.println(tile.getImage().getUrl());
- });
- } else {
- tile.setOnMouseClicked(
- e -> {
- tile.setStyle("-fx-translate-y: 0");
- tile.setEffect(null);
- selectedTiles.remove(tile);
- System.out.println(tile.getImage().getUrl());
- });
- }
+    for (int i = 0; i < board.getChildren().size(); i++) {
+      HBox box = (HBox) board.getChildren().get(i);
+      for (int j = 0; j < box.getChildren().size(); j++) {
+        ImageView tile = (ImageView) box.getChildren().get(j);
 
- }
- }
- }
+        tile.setOnMouseClicked(
+            e -> {
+              if (!selectedTiles.contains(tile)) {
+                tile.setStyle("-fx-translate-y: -15;");
+                TileView.highlightTile(tile);
+                selectedTiles.add(tile);
+              } else {
+                tile.setStyle("-fx-translate-y: 0");
+                tile.setEffect(null);
+                selectedTiles.remove(tile);
+              }
+            });
+      }
+
+    }
+  }
+
 
   /**
    * For placing new combinations on the board. validated in handleEnterComb
@@ -226,12 +238,12 @@ public class GuiController {
       ImageView tile = selectedTiles.get(i);
       tile.setStyle("-fx-translate-y: 0");
       tile.setEffect(null);
-      tile.setDisable(true);
       comb.getChildren().add(tile);
       placedCombinations.add(comb);
     }
     board.getChildren().add(comb);
     selectedTiles.clear();
+    updateHand();
     // if (client.send(hand).isEmpty(){
     // TODO öffne Gewinnerfenster
   }
@@ -255,12 +267,10 @@ public class GuiController {
       deleteAddToButtons();
       comb.getChildren().add(0, tile);
       disableTileControl(tile);
-
-      updateBoard(comb);
     }
-
+    updateBoard(comb);
+    updateHand();
   }
-
 
   void addToBack(HBox comb) {
     // if (client.send(isValidPlayerBy) == true) {
@@ -277,43 +287,46 @@ public class GuiController {
       ImageView tile = selectedTiles.get(i);
       deleteAddToButtons();
       comb.getChildren().add(comb.getChildren().size(), tile);
+      selectedTiles.remove(tile);
       disableTileControl(tile);
-
-      updateBoard(comb);
     }
+
+    updateBoard(comb);
+    updateHand();
   }
 
   private void deleteAddToButtons() {
     for (int i = 0; i < board.getChildren().size(); i++) {
       HBox box = (HBox) board.getChildren().get(i);
-      box.getChildren().remove(box.getChildren().get(box.getChildren().size()-1));
-        box.getChildren().remove(box.getChildren().get(0));
+      box.getChildren().remove(box.getChildren().get(box.getChildren().size() - 1));
+      box.getChildren().remove(box.getChildren().get(0));
 
-      }
     }
-
+  }
 
   /**
-   * looks for Hbox in placedCombinations list, deletes old one and enters new one.
-   * funktioniert????
+   * looks for Hbox in placedCombinations list, deletes old one and enters new one. funktioniert
+   * denk ich nicht.
    */
   private void updateBoard(HBox comb) {
     for (int i = 0; i < placedCombinations.size(); i++) {
-      if (placedCombinations.get(i) == comb) {
+      if (placedCombinations.get(i).equals(comb)) {
         placedCombinations.remove(i);
         placedCombinations.add(comb);
+        System.out.println(placedCombinations);
       }
     }
   }
 
-
   /**
-   * //TODO buttons überlagern sich wenn disabled Disables control for player.
+   *
    */
   private void disableControl() {
     enter.setDisable(true);
     endTurn.setDisable(true);
     cancelSelection.setDisable(true);
+    addToExisting.setDisable(true);
+    manipulate.setDisable(true);
     //  for (int i = 0; i < hand.size(); i++) {
     //  ImageView tile = hand.get(i);
     //   disableTileControl(tile);
@@ -325,7 +338,7 @@ public class GuiController {
   private void disableTileControl(ImageView tile) {
     tile.setStyle("-fx-translate-y: 0");
     tile.setEffect(null);
-    tile.setDisable(true);
+    //  tile.setDisable(true);
     selectedTiles.remove(tile);
   }
 

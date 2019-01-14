@@ -22,7 +22,7 @@ public Main(){
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root;
-        root = FXMLLoader.load(getClass().getResource("startingScreen.fxml"));
+        root = FXMLLoader.load(getClass().getResource("clientgui.fxml"));
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/gui/button.css");
         primaryStage.setResizable(false);
