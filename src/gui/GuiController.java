@@ -254,7 +254,8 @@ public class GuiController {
    */
   void addToFront(HBox comb) {
     List<ImageView> combination = new ArrayList<>();   //erstellt liste mit gewünschter neuer kombination.
-    for (int i = 1; i < comb.getChildren().size() - 1; i++) {
+    for (int i = 1; i < comb.getChildren().size() - 1;
+        i++) {   //1 und size-1 weil an diesen Stellen Buttons sind.
       combination.add((ImageView) comb.getChildren().get(i));
     }
     String selectedT = GuiParser.parseToString(selectedTiles);
@@ -262,12 +263,14 @@ public class GuiController {
     combination.addAll(0, selectedTiles);
     String combTiles = GuiParser.parseToString(combination);
     //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
-    for (int i = 0; i < selectedTiles.size(); i++) {
+    deleteAddToButtons();
+    for (int i = selectedTiles.size() - 1; i >= 0;
+        i--) {    //soll ja in richtiger reihenfolge eingefügt werden, bei einer Tile ist index get(0)
       ImageView tile = selectedTiles.get(i);
-      deleteAddToButtons();
-      comb.getChildren().add(0, tile);
-      disableTileControl(tile);
+      comb.getChildren().add(0, tile); //added tile vorne in hbox
     }
+    disableTileControl(selectedTiles);
+    selectedTiles.clear();
     updateBoard(comb);
     updateHand();
   }
@@ -283,14 +286,15 @@ public class GuiController {
     combination.addAll(selectedTiles);  //selected tiles hinten.
     String combTiles = GuiParser.parseToString(combination);
     //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
-    for (int i = 0; i < selectedTiles.size(); i++) {
+    deleteAddToButtons();
+    for (int i = 0; i < selectedTiles.size(); i++) { //problem weil tile nach verschieben nicht mehr als selected gilt -> selectedtiles.size verringert sich
       ImageView tile = selectedTiles.get(i);
-      deleteAddToButtons();
+      System.out.println("selectedsize" + selectedTiles.size());
+      System.out.println("combsize" + comb.getChildren().size());
       comb.getChildren().add(comb.getChildren().size(), tile);
-      selectedTiles.remove(tile);
-      disableTileControl(tile);
     }
-
+    disableTileControl(selectedTiles);
+    selectedTiles.clear();
     updateBoard(comb);
     updateHand();
   }
@@ -335,11 +339,14 @@ public class GuiController {
   /**
    * Disables tile control for player.
    */
-  private void disableTileControl(ImageView tile) {
-    tile.setStyle("-fx-translate-y: 0");
-    tile.setEffect(null);
-    //  tile.setDisable(true);
-    selectedTiles.remove(tile);
+  private void disableTileControl(List<ImageView> tiles) {
+    for (int i = 0; i < tiles.size(); i++) {
+      ImageView tile = tiles.get(i);
+      tile.setStyle("-fx-translate-y: 0");
+      tile.setEffect(null);
+      //  tile.setDisable(true);
+      selectedTiles.remove(tile);
+    }
   }
 
 }
