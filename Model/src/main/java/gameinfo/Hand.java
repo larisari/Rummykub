@@ -32,7 +32,7 @@ class Hand {
     return tilesOnHand;
   }
 
-  GIPoints getPoints() {
+  GIPoints calculatePoints() {
     Integer pointsAsInteger = calculator.calculatePointsForHand(tilesOnHand);
     GIPoints points = new GIPoints(pointsAsInteger);
 

@@ -177,7 +177,7 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public Optional<GITuple<Integer, GIPoints>> getPointsBy(Integer id) {
+  public Optional<GITuple<Integer, GIPoints>> calculatePointsBy(Integer id) {
 
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
@@ -186,7 +186,7 @@ class GameInfoImpl implements GIGameInfo {
     }
 
     GITuple<Integer, GIPoints> returnValue =
-        new GITuple<>(id, optionalPlayer.get().getPointsOfHand());
+        new GITuple<>(id, optionalPlayer.get().calculatePointsOfHand());
     return Optional.of(returnValue);
   }
 

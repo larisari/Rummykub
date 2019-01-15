@@ -47,7 +47,7 @@ class Player {
     }
   }
 
-  GIPoints getPointsOfHand() {
-    return hand.getPoints();
+  GIPoints calculatePointsOfHand() {
+    return hand.calculatePoints();
   }
 }
