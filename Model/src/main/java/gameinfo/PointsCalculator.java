@@ -7,10 +7,9 @@ import java.util.List;
 
 class PointsCalculator {
 
-  PointsCalculator() {
-  }
+  PointsCalculator() {}
 
-  int getPointsForStreet(List<GITile> street) {
+  int calculatePointsForStreet(List<GITile> street) {
     int points = 0;
 
     for (GITile tile : street) {
@@ -35,7 +34,7 @@ class PointsCalculator {
     return points;
   }
 
-  int getPointsForGroup(List<GITile> group) {
+  int calculatePointsForGroup(List<GITile> group) {
     int points = 0;
 
     for (GITile tile : group) {
@@ -46,11 +45,11 @@ class PointsCalculator {
         break;
       }
     }
-    
+
     return points;
   }
 
-  int getPointsForHand(List<GITile> hand) {
+  int calculatePointsForHand(List<GITile> hand) {
     int points = 0;
 
     for (GITile tile : hand) {

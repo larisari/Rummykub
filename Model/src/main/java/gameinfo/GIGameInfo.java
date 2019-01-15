@@ -17,7 +17,6 @@ public interface GIGameInfo {
 
   Optional<Integer> getNumberOfPlayers();
 
-  // just for test TODO: REMOVE
   List<Integer> getAllPlayerIds();
 
   Optional<Integer> getNextPlayerId();
@@ -26,7 +25,7 @@ public interface GIGameInfo {
 
   Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id);
 
-  Optional<GITuple<Integer, Boolean>> play(List<GITile> combination, Integer id);
+  Optional<GITuple<Integer, Boolean>> play(List<List<GITile>> combinations, Integer id);
 
   Optional<GITuple<Integer, Boolean>> play(
       List<GITile> tilesFromHand,

@@ -62,12 +62,12 @@ class Rules {
     return gameFlow.isValidPlayer(id);
   }
 
-  boolean isValid(List<GITile> combination) {
-    return combRules.isValid(combination);
+  boolean isValid(List<List<GITile>> combinations) {
+    return combRules.isValid(combinations);
   }
 
-  boolean isValid(List<GITile> combination, int minimumPoints) {
-    return combRules.isValid(combination, minimumPoints);
+  boolean isValid(List<List<GITile>> combinations, int minimumPoints) {
+    return combRules.isValid(combinations, minimumPoints);
   }
 
   boolean isDistributing() {

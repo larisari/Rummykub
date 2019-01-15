@@ -1,8 +1,8 @@
 package gameinfo;
 
+import gameinfo.util.GIColor;
 import gameinfo.util.GINumber;
 import gameinfo.util.GITile;
-import gameinfo.util.GIColor;
 
 import java.util.List;
 
@@ -14,28 +14,41 @@ class CombRules {
     this.calculator = calculator;
   }
 
-  boolean isValid(List<GITile> combination, int minimumPoints) {
-    if (isGroup(combination)) {
-      return calculator.getPointsForGroup(combination) >= minimumPoints;
-    } else if (isStreet(combination)) {
-      return calculator.getPointsForStreet(combination) >= minimumPoints;
-    } else {
+  boolean isValid(List<List<GITile>> combinations, int minimumPoints) {
+    boolean allValid = combinations.stream().allMatch(this::isValidInternal);
+
+    if (!allValid) {
       return false;
     }
+
+    int points = 0;
+
+    for (List<GITile> combination : combinations) {
+      if (isGroup(combination)) {
+        points += calculator.calculatePointsForGroup(combination);
+      } else {
+        // At this point I know that the combination has to be a street,
+        // because otherwise the guard from before would have returned false.
+        points += calculator.calculatePointsForStreet(combination);
+      }
+    }
+
+    return points >= minimumPoints;
   }
 
-  boolean isValid(List<GITile> combination) {
+  boolean isValid(List<List<GITile>> combinations) {
+    return combinations.stream().allMatch(this::isValidInternal);
+  }
 
+  private boolean isValidInternal(List<GITile> combination) {
     if (combination.size() < 3) {
-      // TODO !!! has to be handled better !!!
       return false;
     }
 
-    // TODO ?? explicit or ??? -> !!! if both is true something went wrong !!!
     return isGroup(combination) || isStreet(combination);
   }
 
-  boolean isGroup(List<GITile> combination) {
+  private boolean isGroup(List<GITile> combination) {
 
     int combinationLength = combination.size();
 
@@ -45,8 +58,7 @@ class CombRules {
         GITile previous = combination.get(i - 1);
         GITile current = combination.get(i);
 
-        if (previous.getColor().equals(GIColor.JOKER)
-                || current.getColor().equals(GIColor.JOKER)) {
+        if (previous.getColor().equals(GIColor.JOKER) || current.getColor().equals(GIColor.JOKER)) {
           break;
         }
 
@@ -61,7 +73,7 @@ class CombRules {
     return true;
   }
 
-  boolean isStreet(List<GITile> combination) {
+  private boolean isStreet(List<GITile> combination) {
 
     if (haveSameColor(combination) && !haveSameNumber(combination)) {
       for (int i = 1; i < combination.size(); i++) {
@@ -70,7 +82,7 @@ class CombRules {
         GITile current = combination.get(i);
 
         if (previous.getNumber().equals(GINumber.JOKER)
-                || current.getNumber().equals(GINumber.JOKER)) {
+            || current.getNumber().equals(GINumber.JOKER)) {
           break;
         }
 
@@ -101,10 +113,9 @@ class CombRules {
 
     GINumber number = tempNum;
 
-    return combination
-        .stream()
+    return combination.stream()
         .allMatch(
-                tile -> tile.getNumber().equals(number) || tile.getNumber().equals(GINumber.JOKER));
+            tile -> tile.getNumber().equals(number) || tile.getNumber().equals(GINumber.JOKER));
   }
 
   private boolean haveSameColor(List<GITile> combination) {
@@ -123,8 +134,7 @@ class CombRules {
 
     GIColor color = tempColor;
 
-    return combination
-        .stream()
-            .allMatch(tile -> tile.getColor().equals(color) || tile.getColor().equals(GIColor.JOKER));
+    return combination.stream()
+        .allMatch(tile -> tile.getColor().equals(color) || tile.getColor().equals(GIColor.JOKER));
   }
 }

@@ -115,7 +115,7 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public Optional<GITuple<Integer, Boolean>> play(List<GITile> combination, Integer id) {
+  public Optional<GITuple<Integer, Boolean>> play(List<List<GITile>> combinations, Integer id) {
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
@@ -126,12 +126,12 @@ class GameInfoImpl implements GIGameInfo {
         return Optional.of(new GITuple<>(id, false));
       }
 
-      if (player.isFirstMove() && rules.isValid(combination, MINIMUM_POINTS_ON_FIRST_MOVE)) {
-        putComboOnBoard(combination, player);
+      if (player.isFirstMove() && rules.isValid(combinations, MINIMUM_POINTS_ON_FIRST_MOVE)) {
+        putComboOnBoard(combinations, player);
         rules.nextPlayersTurn();
         return Optional.of(new GITuple<>(id, true));
-      } else if (!player.isFirstMove() && rules.isValid(combination)) {
-        putComboOnBoard(combination, player);
+      } else if (!player.isFirstMove() && rules.isValid(combinations)) {
+        putComboOnBoard(combinations, player);
         rules.nextPlayersTurn();
         return Optional.of(new GITuple<>(id, true));
       } else {
@@ -143,7 +143,6 @@ class GameInfoImpl implements GIGameInfo {
     }
   }
 
-  // question which combination has to have 30 points if its first move.
   @Override
   public Optional<GITuple<Integer, Boolean>> play(
       List<GITile> tilesFromHand,
@@ -154,14 +153,14 @@ class GameInfoImpl implements GIGameInfo {
 
     if (optionalPlayer.isPresent()) {
 
-      if (!rules.isValidPlayerBy(id)) {
-        // it is not the players turn.
+      Player player = optionalPlayer.get();
+
+      if (!rules.isValidPlayerBy(id) || player.isFirstMove()) {
+        // it is not the players turn or it is his first move.
         return Optional.of(new GITuple<>(id, false));
       }
 
-      boolean allValid = newCombinations.stream().allMatch(this::isValid);
-
-      Player player = optionalPlayer.get();
+      boolean allValid = rules.isValid(newCombinations);
 
       if (allValid) {
         player.remove(tilesFromHand);
@@ -230,12 +229,11 @@ class GameInfoImpl implements GIGameInfo {
     return tile;
   }
 
-  private void putComboOnBoard(List<GITile> combination, Player player) {
-    board.addCombo(combination);
-    player.remove(combination);
-  }
-
-  private boolean isValid(List<GITile> combination) {
-    return rules.isValid(combination);
+  private void putComboOnBoard(List<List<GITile>> combinations, Player player) {
+    combinations.forEach(
+        combination -> {
+          board.addCombo(combination);
+          player.remove(combination);
+        });
   }
 }

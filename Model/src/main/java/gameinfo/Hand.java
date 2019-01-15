@@ -2,7 +2,6 @@ package gameinfo;
 
 import gameinfo.util.GIPoints;
 import gameinfo.util.GITile;
-import gameinfo.util.GITuple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +33,7 @@ class Hand {
   }
 
   GIPoints getPoints() {
-    Integer pointsAsInteger = calculator.getPointsForHand(tilesOnHand);
+    Integer pointsAsInteger = calculator.calculatePointsForHand(tilesOnHand);
     GIPoints points = new GIPoints(pointsAsInteger);
 
     return points;
