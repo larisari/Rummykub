@@ -7,7 +7,7 @@ public class GIPoints {
     this.value = value;
   }
 
-  public Integer getValue() {
+  public Integer value() {
     return value;
   }
 }
