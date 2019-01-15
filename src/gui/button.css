@@ -50,3 +50,7 @@
 .addTo:hover {
   -fx-background-color: radial-gradient(radius 250%, #66E1FA, derive(#66E1FA, -30%), derive(#66E1FA, 30%));
 }
+
+.tooltip {
+  -fx-show-delay: 0s;
+}
