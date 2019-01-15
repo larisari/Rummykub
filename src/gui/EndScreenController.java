@@ -1,11 +1,11 @@
 package gui;
 
+import gameinfo.GIGameInfo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
 public class EndScreenController {
 
-  @FXML private Label player2LoserName;
   @FXML
   private Label player3LoserName;
   @FXML

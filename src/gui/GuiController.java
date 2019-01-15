@@ -1,12 +1,14 @@
 package gui;
 
-
+import gameinfo.GIFactory;
+import gameinfo.GIGameInfo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -26,7 +28,6 @@ public class GuiController {
 
   //Client client;
   //Host host;
-  GuiParser parser;
   @FXML
   private HBox topHand;
   @FXML
@@ -63,22 +64,26 @@ public class GuiController {
   private int playerID;
   static int numberOfPlayers;
   private static final int HAND_SPACE = 13;
+  private GIGameInfo gameInfo;
 
+  public GuiController(){
+    gameInfo = GIFactory.make();
+  }
   /**
    * funktioniert.
    */
   @FXML
   private void initialize() {
-    //numberPlayers = client.send(getNumberOfPlayers);
-    // switch (numberPlayers){
-    //case 2:
-    //rightBoard.setVisible(false);
-    //leftBoard.setVisible(false);
-    //break;
-    //case 3:
-    //leftBoard.setVisible(false);
-    //break;
-    //}
+    numberOfPlayers = gameInfo.getNumberOfPlayers().get();
+    switch (numberOfPlayers){
+    case 2:
+    rightBoard.setVisible(false);
+    leftBoard.setVisible(false);
+    break;
+    case 3:
+    leftBoard.setVisible(false);
+    break;
+    }
     setPlayerNames();
   }
 
@@ -145,6 +150,14 @@ public class GuiController {
 
   @FXML
   protected void handleDrawTile(MouseEvent event) {
+    gameInfo.registerBy("1");
+    String parsedTiles = GuiParser.parseTileToString(gameInfo.drawBy("1"));
+    System.out.println(parsedTiles);
+    hand = tView.createImgs(parsedTiles);
+    for (int i = 0; i < hand.size(); i++){
+      createTile(hand.get(i));
+    }
+
     // if (client.send("isValidPlayer").equals(true){
     // client.send("draw");
     updateHand();
@@ -152,6 +165,27 @@ public class GuiController {
     disableControl();
     // }
     //
+  }
+
+  /**
+   * If topHand is full insert in bottomHand.
+   */
+  void createTile(Image tile) {
+    for (int i = 0; i < topHand.getChildren().size(); i++) {
+      ImageView imageView = (ImageView)topHand.getChildren().get(i);
+      if (imageView.getImage() == null) {
+        imageView.setImage(tile);
+        return;
+      }
+    }
+    for (int i = 0; i < bottomHand.getChildren().size(); i++) {
+      ImageView iView = (ImageView)bottomHand.getChildren().get(i);
+      if (iView.getImage() == null) {
+        iView.setImage(tile);
+        return;
+      }
+    }
+
   }
 
   private void updateHand() {
@@ -406,9 +440,16 @@ public class GuiController {
     cancelSelection.setDisable(true);
     addToExisting.setDisable(true);
     manipulate.setDisable(true);
-    //  for (int i = 0; i < hand.size(); i++) {
-    //  ImageView tile = hand.get(i);
-    //   disableTileControl(tile);
+    List <ImageView> handTiles = new ArrayList<>();
+    for (int i = 0; i < topHand.getChildren().size(); i++){
+      ImageView iView = (ImageView)topHand.getChildren().get(i);
+      handTiles.add(iView);
+    }
+    for (int i = 0; i < bottomHand.getChildren().size(); i++){
+      ImageView iView = (ImageView)bottomHand.getChildren().get(i);
+      handTiles.add(iView);
+    }
+    disableTileControl(handTiles);
   }
 
   /**
@@ -419,7 +460,7 @@ public class GuiController {
       ImageView tile = tiles.get(i);
       tile.setStyle("-fx-translate-y: 0");
       tile.setEffect(null);
-      //  tile.setDisable(true);
+      tile.setDisable(true);
       selectedTiles.remove(tile);
     }
   }

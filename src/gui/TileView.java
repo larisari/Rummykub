@@ -20,9 +20,6 @@ public class TileView {
   @FXML
   private HBox bottomHand;
 
-  public TileView() {
-
-  }
 
   /**
    *
@@ -32,7 +29,7 @@ public class TileView {
     String[] block = hand.split(":");
     String[] tiles = block[1].split(",");
     for (int i = 0; i < tiles.length; i++) {
-      String[] attributeswS = tiles[i].split(".");
+      String[] attributeswS = tiles[i].split("[.]");
       String[] attributes = attributeswS[1].split("/");
       String color = attributes[0];
       String number = attributes[1];
@@ -50,8 +47,9 @@ public class TileView {
 
     }
     return tilesImg;
+    }
 
-  }
+
 
 
   /**
@@ -68,25 +66,6 @@ public class TileView {
     }
   }
 
-  /**
-   * If topHand is full insert in bottomHand.
-   */
-  public void createTile(Image tile) {
-    for (int i = 0; i < topHand.getChildren().size(); i++) {
-      Node node = topHand.getChildren().get(i);
-      if (isEmpty((ImageView) node)) {
-        ((ImageView) node).setImage(tile);
-        return;
-      }
-    }
-    for (int i = 0; i < bottomHand.getChildren().size(); i++) {
-      Node node = bottomHand.getChildren().get(i);
-      if (isEmpty((ImageView) node)) {
-        ((ImageView) node).setImage(tile);
-      }
-    }
-
-  }
 
   public static void highlightTile(Node node) {
     DropShadow borderGlow = new DropShadow();

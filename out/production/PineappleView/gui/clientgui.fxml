@@ -90,19 +90,9 @@
                 <ImageView fx:id="t1" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="t2" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="t3" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
-                <ImageView fx:id="t4" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/tiles/blue/1.png" />
-                           </image>
-                        </ImageView>
-                <ImageView fx:id="t5" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/tiles/blue/2.png" />
-                           </image></ImageView>
-                <ImageView fx:id="t6" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/tiles/blue/3.png" />
-                           </image></ImageView>
+                <ImageView fx:id="t4" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="t5" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
+                <ImageView fx:id="t6" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="t7" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="t8" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                 <ImageView fx:id="t9" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
@@ -119,16 +109,10 @@
                         <ImageView fx:id="t16" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="t17" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="t18" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="t19" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/tiles/blue/4.png" />
-                           </image></ImageView>
+                        <ImageView fx:id="t19" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="t20" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="t21" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
-                        <ImageView fx:id="t22" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/tiles/blue/5.png" />
-                           </image></ImageView>
+                        <ImageView fx:id="t22" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="t23" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="t24" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
                         <ImageView fx:id="t25" accessibleRole="PARENT" fitHeight="65.0" fitWidth="45.0" onMouseClicked="#handleTileClick" pickOnBounds="true" preserveRatio="true" />
