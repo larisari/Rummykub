@@ -35,6 +35,7 @@ public interface GIGameInfo {
 
   Optional<GITuple<Integer, List<GITile>>> getAllTilesBy(Integer id);
 
+  // TODO !!! SHOULD BE NEGATIVE !!!
   Optional<GITuple<Integer, GIPoints>> calculatePointsBy(Integer id);
 
   Optional<GITuple<Integer, Boolean>> finishedTurnBy(Integer id);
