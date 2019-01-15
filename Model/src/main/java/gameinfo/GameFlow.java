@@ -15,6 +15,7 @@ class GameFlow {
     this.distributionCounter = 0;
     this.calculator = calculator;
     this.playerSequence = new ArrayList<>();
+    this.currentPlayerIndex = 0;
   }
 
   void registerPlayerBy(Integer id) {
