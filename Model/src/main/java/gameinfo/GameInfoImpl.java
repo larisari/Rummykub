@@ -34,13 +34,10 @@ class GameInfoImpl implements GIGameInfo {
 
   @Override
   public void deregisterBy(String id) {
+    rules.deregisterPlayerBy(id);
 
-    if (canModifyRegisteredPlayers) {
-      rules.deregisterPlayerBy(id);
-
-      if (rules.getAllPlayers().isEmpty()) {
-        hasRegisteredPlayers = false;
-      }
+    if (rules.getAllPlayers().isEmpty()) {
+      hasRegisteredPlayers = false;
     }
   }
 
