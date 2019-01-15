@@ -18,7 +18,7 @@ class PointsCalculator {
       if (!tilePoints.equals(GINumber.JOKER)) {
         points += tilePoints.value();
       } else {
-        // gameinfo.util is a Joker
+        // tile is a Joker
         int indexOfJoker = street.indexOf(tile);
 
         if (indexOfJoker > 0) {
@@ -53,13 +53,14 @@ class PointsCalculator {
     int points = 0;
 
     for (GITile tile : hand) {
-      GINumber numberOfTile = tile.getNumber();
-
-      if (numberOfTile.equals(GINumber.JOKER)) {
-        points += 20;
-      } else {
-        points += numberOfTile.value();
-      }
+      points += tile.getNumber().value();
+//      GINumber numberOfTile = tile.getNumber();
+//
+//      if (numberOfTile.equals(GINumber.JOKER)) {
+//        points += 20;
+//      } else {
+//        points += numberOfTile.value();
+//      }
     }
 
     return points;

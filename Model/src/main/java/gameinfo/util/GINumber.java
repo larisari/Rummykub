@@ -118,8 +118,7 @@ public enum GINumber {
       case THIRTEEN:
         return 13;
       case JOKER:
-        // TODO !!!
-        return 0;
+        return 20;
       default:
         throw new IllegalArgumentException("Not a valid gameinfo.util.GINumber.");
     }
