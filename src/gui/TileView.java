@@ -1,11 +1,11 @@
 package gui;
 
+import gui.Image;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
@@ -35,12 +35,10 @@ public class TileView {
       String number = attributes[1];
 
       if (number.equals("joker")) {
-        Image joker = new Image(
-            getClass().getResourceAsStream("images/tiles/joker/joker.png"));
+        Image joker = new Image("gui/images/tiles/joker/joker.png");
         tilesImg.add(joker);
       } else {
-        Image tile = new Image(getClass()
-            .getResourceAsStream("images/tiles/" + color + "/" + number + ".png"));
+        Image tile = new Image("gui/images/tiles/" + color + "/" + number + ".png");
         tilesImg.add(tile);
       }
 
@@ -58,7 +56,7 @@ public class TileView {
    * @param imageV - ImageView to be checked.
    */
   private static boolean isEmpty(ImageView imageV) {
-    Image image = imageV.getImage();
+    Image image = (Image) imageV.getImage();
     if (image != null || image.isError()) {
       return false;
     } else {

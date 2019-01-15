@@ -1,5 +1,6 @@
 package gui;
 
+import gui.Image;
 import gameinfo.GIFactory;
 import gameinfo.GIGameInfo;
 import java.util.ArrayList;
@@ -8,14 +9,12 @@ import java.util.Optional;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
@@ -54,9 +53,12 @@ public class GuiController {
   private Group rightBoard;
   @FXML
   private Group leftBoard;
-  @FXML private Label playerTopName;
-  @FXML private Label playerRightName;
-  @FXML private Label playerLeftName;
+  @FXML
+  private Label playerTopName;
+  @FXML
+  private Label playerRightName;
+  @FXML
+  private Label playerLeftName;
   private List<ImageView> selectedTiles = new ArrayList<>();
   private List<HBox> placedCombinations = new ArrayList<>();
   private List<Image> hand = new ArrayList<>();
@@ -66,23 +68,24 @@ public class GuiController {
   private static final int HAND_SPACE = 13;
   private GIGameInfo gameInfo;
 
-  public GuiController(){
+  public GuiController() {
     gameInfo = GIFactory.make();
   }
+
   /**
    * funktioniert.
    */
   @FXML
   private void initialize() {
     numberOfPlayers = gameInfo.getNumberOfPlayers().get();
-    switch (numberOfPlayers){
-    case 2:
-    rightBoard.setVisible(false);
-    leftBoard.setVisible(false);
-    break;
-    case 3:
-    leftBoard.setVisible(false);
-    break;
+    switch (numberOfPlayers) {
+      case 2:
+        rightBoard.setVisible(false);
+        leftBoard.setVisible(false);
+        break;
+      case 3:
+        leftBoard.setVisible(false);
+        break;
     }
     setPlayerNames();
   }
@@ -139,12 +142,16 @@ public class GuiController {
   @FXML
   protected void handleEnterComb(MouseEvent event) {
     if (!selectedTiles.isEmpty()) {
-      // if (client.send(GuiParser.parseToString(selectedTiles)) == true) {
-      placeTiles();
-      bag.setDisable(true);
-      disableTileControl(selectedTiles);
-      selectedTiles.clear();
-      updateHand();
+      String selectedT = GuiParser.parseToString(selectedTiles);
+      Optional<Boolean> valid = gameInfo.play(GuiParser.parseStringToTile(selectedT), "1");
+      if (valid.get()) {
+        // if (client.send(GuiParser.parseToString(selectedTiles)) == true) {
+        placeTiles();
+        bag.setDisable(true);
+        disableTileControl(selectedTiles);
+        selectedTiles.clear();
+        updateHand();
+      }
     }
   }
 
@@ -152,9 +159,8 @@ public class GuiController {
   protected void handleDrawTile(MouseEvent event) {
     gameInfo.registerBy("1");
     String parsedTiles = GuiParser.parseTileToString(gameInfo.drawBy("1"));
-    System.out.println(parsedTiles);
     hand = tView.createImgs(parsedTiles);
-    for (int i = 0; i < hand.size(); i++){
+    for (int i = 0; i < hand.size(); i++) {
       createTile(hand.get(i));
     }
 
@@ -162,7 +168,7 @@ public class GuiController {
     // client.send("draw");
     updateHand();
     // playerTurn.setText(client.send("getNextPlayerID"));
-    disableControl();
+    //  disableControl();
     // }
     //
   }
@@ -172,14 +178,14 @@ public class GuiController {
    */
   void createTile(Image tile) {
     for (int i = 0; i < topHand.getChildren().size(); i++) {
-      ImageView imageView = (ImageView)topHand.getChildren().get(i);
+      ImageView imageView = (ImageView) topHand.getChildren().get(i);
       if (imageView.getImage() == null) {
         imageView.setImage(tile);
         return;
       }
     }
     for (int i = 0; i < bottomHand.getChildren().size(); i++) {
-      ImageView iView = (ImageView)bottomHand.getChildren().get(i);
+      ImageView iView = (ImageView) bottomHand.getChildren().get(i);
       if (iView.getImage() == null) {
         iView.setImage(tile);
         return;
@@ -189,8 +195,8 @@ public class GuiController {
   }
 
   private void updateHand() {
-   refillImageViews(topHand);
-   refillImageViews(bottomHand);
+    refillImageViews(topHand);
+    refillImageViews(bottomHand);
     // String handTiles = client.receive(getAllTilesBy);
     // if (handTiles.equals(""){
     // endGame();
@@ -202,8 +208,8 @@ public class GuiController {
     //}
   }
 
-  private void refillImageViews(HBox hand){
-    while (hand.getChildren().size() < HAND_SPACE){
+  private void refillImageViews(HBox hand) {
+    while (hand.getChildren().size() < HAND_SPACE) {
       ImageView iView = new ImageView();
       iView.setFitWidth(45);
       iView.setFitHeight(65);
@@ -312,18 +318,19 @@ public class GuiController {
    */
   void placeTiles() {
     HBox comb = new HBox();
-    for (int i = 0; i < selectedTiles.size(); i++) {
-      ImageView tile = selectedTiles.get(i);
-      tile.setStyle("-fx-translate-y: 0");
-      tile.setEffect(null);
-      comb.getChildren().add(tile);
-    }
-    placedCombinations.add(comb);
-    board.getChildren().add(comb);
-    selectedTiles.clear();
-    updateHand();
-    // if (client.send(hand).isEmpty(){
-    // TODO öffne Gewinnerfenster
+      for (int i = 0; i < selectedTiles.size(); i++) {
+        ImageView tile = selectedTiles.get(i);
+        tile.setStyle("-fx-translate-y: 0");
+        tile.setEffect(null);
+        comb.getChildren().add(tile);
+      }
+      placedCombinations.add(comb);
+      board.getChildren().add(comb);
+      selectedTiles.clear();
+      updateHand();
+      // if (client.send(hand).isEmpty(){
+      // TODO öffne Gewinnerfenster
+
   }
 
   /**
@@ -336,34 +343,35 @@ public class GuiController {
         i++) {   //1 und size-1 weil an diesen Stellen Buttons sind.
       combination.add((ImageView) comb.getChildren().get(i));
     }
-    String selectedT = GuiParser.parseToString(selectedTiles);
-    String boardTiles = GuiParser.parseToString(combination);
-    combination.addAll(0, selectedTiles);
-    String combTiles = GuiParser.parseToString(combination);
+    // String selectedT = GuiParser.parseToString(selectedTiles);
+    // String boardTiles = GuiParser.parseToString(combination);
+    // combination.addAll(0, selectedTiles);
+    // String combTiles = GuiParser.parseToString(combination);
     //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
     deleteAddToButtons();
-    for (int j = 0; j < selectedTiles.size(); j++){
-    if (comb.getChildren().contains(selectedTiles.get(j))) {
-      return;
-    }
-    }
-      for (int i = selectedTiles.size() - 1; i >= 0; i--) {    //soll ja in richtiger reihenfolge eingefügt werden, bei einer Tile ist index get(0)
-        ImageView tile = selectedTiles.get(i);
-        comb.getChildren().add(0, tile); //added tile vorne in hbox
+    for (int j = 0; j < selectedTiles.size(); j++) {
+      if (comb.getChildren().contains(selectedTiles.get(j))) {
+        return;
       }
+    }
+    for (int i = selectedTiles.size() - 1; i >= 0;
+        i--) {    //soll ja in richtiger reihenfolge eingefügt werden, bei einer Tile ist index get(0)
+      ImageView tile = selectedTiles.get(i);
+      comb.getChildren().add(0, tile); //added tile vorne in hbox
+    }
 
-      disableTileControl(selectedTiles);
-      selectedTiles.clear();
-      updateHand();
-      updateBoard();
+    disableTileControl(selectedTiles);
+    selectedTiles.clear();
+    updateHand();
+    updateBoard();
 
   }
 
-  void shiftFromBackToFront(HBox comb){
-    for (int i = 0; i < selectedTiles.size(); i++){
-      comb.getChildren().remove(comb.getChildren().size()-1);
+  void shiftFromBackToFront(HBox comb) {
+    for (int i = 0; i < selectedTiles.size(); i++) {
+      comb.getChildren().remove(comb.getChildren().size() - 1);
     }
-    comb.getChildren().addAll(0,selectedTiles);
+    comb.getChildren().addAll(0, selectedTiles);
   }
 
   void addToBack(HBox comb) {
@@ -378,21 +386,22 @@ public class GuiController {
     String combTiles = GuiParser.parseToString(combination);
     //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
     deleteAddToButtons();
-    for (int j = 0; j < selectedTiles.size(); j++){
+    for (int j = 0; j < selectedTiles.size(); j++) {
       if (comb.getChildren().contains(selectedTiles.get(j))) {
         return;
       }
     }
-      for (int i = 0; i < selectedTiles.size(); i++) { //problem weil tile nach verschieben nicht mehr als selected gilt -> selectedtiles.size verringert sich
-        ImageView tile = selectedTiles.get(i);
-        comb.getChildren().add(comb.getChildren().size(), tile);
-      }
-
-      disableTileControl(selectedTiles);
-      selectedTiles.clear();
-      updateHand();
-      updateBoard();
+    for (int i = 0; i < selectedTiles.size();
+        i++) { //problem weil tile nach verschieben nicht mehr als selected gilt -> selectedtiles.size verringert sich
+      ImageView tile = selectedTiles.get(i);
+      comb.getChildren().add(comb.getChildren().size(), tile);
     }
+
+    disableTileControl(selectedTiles);
+    selectedTiles.clear();
+    updateHand();
+    updateBoard();
+  }
 
 
   private void deleteAddToButtons() {
@@ -419,17 +428,17 @@ public class GuiController {
    * don't need because Imageviews update themselves automatically in hbox!!!!
    */
   /**
-  private void updateBoard(HBox comb) {
-    for (int i = 0; i < placedCombinations.size(); i++) {
-      if (placedCombinations.get(i).idProperty().equals(comb.idProperty())) {
-        System.out.println(placedCombinations.get(i).getChildren());
-        placedCombinations.remove(i);
-        placedCombinations.add(comb);
-        System.out.println(placedCombinations.get(i).getChildren() + "after");
-      }
-    }
-  }
-**/
+   private void updateBoard(HBox comb) {
+   for (int i = 0; i < placedCombinations.size(); i++) {
+   if (placedCombinations.get(i).idProperty().equals(comb.idProperty())) {
+   System.out.println(placedCombinations.get(i).getChildren());
+   placedCombinations.remove(i);
+   placedCombinations.add(comb);
+   System.out.println(placedCombinations.get(i).getChildren() + "after");
+   }
+   }
+   }
+   **/
 
   /**
    *
@@ -440,13 +449,13 @@ public class GuiController {
     cancelSelection.setDisable(true);
     addToExisting.setDisable(true);
     manipulate.setDisable(true);
-    List <ImageView> handTiles = new ArrayList<>();
-    for (int i = 0; i < topHand.getChildren().size(); i++){
-      ImageView iView = (ImageView)topHand.getChildren().get(i);
+    List<ImageView> handTiles = new ArrayList<>();
+    for (int i = 0; i < topHand.getChildren().size(); i++) {
+      ImageView iView = (ImageView) topHand.getChildren().get(i);
       handTiles.add(iView);
     }
-    for (int i = 0; i < bottomHand.getChildren().size(); i++){
-      ImageView iView = (ImageView)bottomHand.getChildren().get(i);
+    for (int i = 0; i < bottomHand.getChildren().size(); i++) {
+      ImageView iView = (ImageView) bottomHand.getChildren().get(i);
       handTiles.add(iView);
     }
     disableTileControl(handTiles);
