@@ -44,23 +44,22 @@ public class APITest_2 {
 
 
   void distribute() {
-    gameInfo.drawBy(player_1_id).get();
-    gameInfo.drawBy(player_2_id).get();
-    gameInfo.drawBy(player_3_id).get();
-    gameInfo.drawBy(player_4_id).get();
+    gameInfo.drawBy(player_1_id);
+    gameInfo.drawBy(player_2_id);
+    gameInfo.drawBy(player_3_id);
+    gameInfo.drawBy(player_4_id);
 
-    //player_1_tiles.addAll(gameInfo.drawBy(player_1_id).get());
   }
 
 
   void playerSignsOut() {
     gameInfo.deregisterBy(player_4_id);
-    //System.out.println(gameInfo.getAllPlayerIds().get());
-    System.out.println(gameInfo.getNumberOfPlayers().get());
+
+    assert gameInfo.getNumberOfPlayers().get() == 3;
+
   }
 
   //three players left
-
 
   void drawOneTile() {
     gameInfo.drawBy(player_1_id).get();
