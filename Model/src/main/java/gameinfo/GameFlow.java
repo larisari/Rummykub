@@ -29,11 +29,7 @@ class GameFlow {
   }
 
   void deregisterPlayerBy(String id) {
-    for (int i = 0; i < getPlayers().size(); i++) {
-      if (players.get(i).getId().equals(id)) {
-        this.players.remove(i);
-      }
-    }
+    players.removeIf(i -> i.getId().equals(id));
   }
 
   void startGame() {

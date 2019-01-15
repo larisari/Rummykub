@@ -28,10 +28,6 @@ class Board {
     this.combos.add(combo);
   }
 
-  List<Tile> getCombo(int index) {
-    return this.combos.get(index);
-  }
-
   Tile getTileFromBag() {
     return this.bag.takeTile();
   }
