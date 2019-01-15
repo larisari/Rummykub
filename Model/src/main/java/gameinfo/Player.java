@@ -7,10 +7,10 @@ import java.util.List;
 class Player {
 
   private Hand hand;
-  private String id;
+  private Integer id;
   private boolean isFirstMove;
 
-  Player(String id, PointsCalculator calculator) {
+  Player(Integer id, PointsCalculator calculator) {
     this.hand = new Hand(calculator);
     this.id = id;
     isFirstMove = true;
@@ -24,7 +24,7 @@ class Player {
     return hand.getTilesOnHand();
   }
 
-  String getId() {
+  Integer getId() {
     return id;
   }
 

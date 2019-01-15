@@ -15,25 +15,21 @@ class GameInfoImpl implements GIGameInfo {
   private Rules rules;
 
   private boolean hasRegisteredPlayers;
-  private boolean canModifyRegisteredPlayers;
 
   GameInfoImpl() {
     board = new Board();
     rules = new Rules();
     hasRegisteredPlayers = false;
-    canModifyRegisteredPlayers = true;
   }
 
   @Override
-  public void registerBy(String id) {
-    if (canModifyRegisteredPlayers) {
-      rules.registerBy(id);
-      hasRegisteredPlayers = true;
-    }
+  public void registerBy(Integer id) {
+    rules.registerBy(id);
+    hasRegisteredPlayers = true;
   }
 
   @Override
-  public void deregisterBy(String id) {
+  public void deregisterBy(Integer id) {
     rules.deregisterPlayerBy(id);
 
     if (rules.getAllPlayers().isEmpty()) {
@@ -44,16 +40,15 @@ class GameInfoImpl implements GIGameInfo {
   @Override
   public void start() {
     rules.startGame();
-    canModifyRegisteredPlayers = false;
   }
 
   @Override
-  public Optional<Boolean> isValidPlayerBy(String id) {
+  public Optional<Boolean> isValidPlayerBy(Integer id) {
     return Optional.of(this.rules.isValidPlayerBy(id));
   }
 
   @Override
-  public Optional<String> getNextPlayerId() {
+  public Optional<Integer> getNextPlayerId() {
     if (hasRegisteredPlayers) {
       return Optional.of(rules.getNextPlayerID());
     } else {
@@ -63,22 +58,12 @@ class GameInfoImpl implements GIGameInfo {
 
   // TODO !!! REMOVE AFTER TESTS !!!
   @Override
-  public Optional<List<String>> getAllPlayerIds() {
-    List<String> ids = new ArrayList<>();
-
-    for (Player player : rules.getAllPlayers()) {
-      ids.add(player.getId());
-    }
-
-    if (ids.isEmpty()) {
-      return Optional.empty();
-    } else {
-      return Optional.of(ids);
-    }
+  public List<Integer> getAllPlayerIds() {
+    return new ArrayList<>(rules.getAllPlayers().keySet());
   }
 
   @Override
-  public Optional<List<Tile>> drawBy(String id) {
+  public Optional<List<Tile>> drawBy(Integer id) {
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
     if (!optionalPlayer.isPresent()) {
@@ -104,7 +89,7 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public Optional<List<Tile>> getAllTilesBy(String id) {
+  public Optional<List<Tile>> getAllTilesBy(Integer id) {
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
@@ -116,7 +101,7 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public Optional<Boolean> play(List<Tile> combination, String id) {
+  public Optional<Boolean> play(List<Tile> combination, Integer id) {
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
@@ -150,7 +135,7 @@ class GameInfoImpl implements GIGameInfo {
       List<Tile> tilesFromHand,
       List<Tile> tilesFromBoard,
       List<List<Tile>> newCombinations,
-      String id) {
+      Integer id) {
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
@@ -179,7 +164,7 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public Optional<Integer> getPointsBy(String id) {
+  public Optional<Integer> getPointsBy(Integer id) {
 
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
@@ -196,7 +181,7 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public Optional<Boolean> finishedTurnBy(String id) {
+  public Optional<Boolean> finishedTurnBy(Integer id) {
     if (!rules.isPlayerExistingBy(id)) {
       return Optional.empty();
     }
@@ -210,7 +195,7 @@ class GameInfoImpl implements GIGameInfo {
     }
   }
 
-  private List<Tile> getStackFor(String id) {
+  private List<Tile> getStackFor(Integer id) {
     Player player = rules.getPlayerBy(id).get();
 
     List<Tile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK);
@@ -218,7 +203,7 @@ class GameInfoImpl implements GIGameInfo {
     return stack;
   }
 
-  private Tile getTileFor(String id) {
+  private Tile getTileFor(Integer id) {
     Player player = rules.getPlayerBy(id).get();
 
     Tile tile = board.getTileFromBag();

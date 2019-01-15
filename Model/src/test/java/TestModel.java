@@ -35,6 +35,7 @@ class TestModel {
     assert gameInfo.getNextPlayerId().get().equals(player_2_id);
   }
 
+
   @Test
   void testRegistration() {
     List<String> ids = gameInfo.getAllPlayerIds().get();
@@ -52,11 +53,14 @@ class TestModel {
     for (String id : ids) {
       assert id.equals(player_1_id) || id.equals(player_2_id) || id.equals(player_3_id) || id.equals(player_4_id);
     }
+
     System.out.println(ids);
 
     gameInfo.deregisterBy(player_1_id);
 
-    System.out.println(gameInfo.getAllPlayerIds());
+    System.out.println(gameInfo.getAllPlayerIds().get());
+
+    System.out.println(gameInfo.getNumberOfPlayers().get());
   }
 
   // done done

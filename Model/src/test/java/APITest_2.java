@@ -1,14 +1,10 @@
 import gameinfo.GIGameInfo;
 import gameinfo.GIFactory;
-import gameinfo.tile.Tile;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
-public class APITest_2 {
+class APITest_2 {
   private static GIGameInfo gameInfo;
 
   private static String player_1_id = "1";
@@ -31,10 +27,10 @@ public class APITest_2 {
   @Test
   void sortedTestRun() {
     start();
-    distribute();
+    //distribute();
     playerSignsOut();
-/*  drawOneTile();
-    putCombo();*/
+//    drawOneTile();
+//    putCombo();
   }
 
 
@@ -53,10 +49,14 @@ public class APITest_2 {
 
 
   void playerSignsOut() {
+
     gameInfo.deregisterBy(player_4_id);
 
-    assert gameInfo.getNumberOfPlayers().get() == 3;
+    System.out.println(gameInfo.getAllPlayerIds().get());
 
+    System.out.println(gameInfo.getNumberOfPlayers().get());
+
+    //assert gameInfo.getNumberOfPlayers().get() == 3;
   }
 
   //three players left

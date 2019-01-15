@@ -1,73 +1,65 @@
 package gameinfo;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 class GameFlow {
-  private List<Player> players;
+  private Map<Integer, Player> players;
   private GameState state;
-  private int currentPlayerIndex;
   private int distributionCounter;
 
   private PointsCalculator calculator;
 
   GameFlow(PointsCalculator calculator) {
-    this.players = new ArrayList<>();
+    this.players = new HashMap<>();
     this.state = GameState.distributing;
-    this.currentPlayerIndex = 0;
     this.distributionCounter = 0;
     this.calculator = calculator;
   }
 
-  void registerPlayerBy(String id) {
-    players.add(new Player(id, calculator));
+  void registerPlayerBy(Integer id) {
+    players.put(id, new Player(id, calculator));
   }
 
-  boolean playerExists(String id) {
+  boolean playerExists(Integer id) {
     return getPlayerBy(id).isPresent();
   }
 
-  void deregisterPlayerBy(String id) {
-    players.removeIf(i -> i.getId().equals(id));
+  void deregisterPlayerBy(Integer id) {
+    players.remove(id);
   }
 
   void startGame() {
     this.state = GameState.distributing;
   }
 
-  boolean isValidPlayer(String id) {
-    return players.get(currentPlayerIndex).getId().equals(id);
+  boolean isValidPlayer(Integer id) {
+    return players.get(id).getId().equals(id);
   }
 
-  List<Player> getPlayers() {
+  Map<Integer, Player> getPlayers() {
     return this.players;
   }
 
-  Optional<Player> getPlayerBy(String id) {
-    for (Player player : this.players) {
-      if (player.getId().equals(id)) {
-        return Optional.of(player);
-      }
-    }
-    return Optional.empty();
-  }
-
-  String getNextPlayerID() {
-    if (currentPlayerIndex == this.players.size() - 1) {
-      return this.players.get(0).getId();
+  Optional<Player> getPlayerBy(Integer id) {
+    if (players.containsKey(id)) {
+      return Optional.of(players.get(id));
     }
     else {
-      return this.players.get(currentPlayerIndex + 1).getId();
+      return Optional.empty();
     }
+  }
+
+  Integer getNextPlayerID() {
+    //TODO implement
+    return null;
   }
 
   void nextPlayersTurn() {
-    if (currentPlayerIndex == this.players.size() - 1) {
-      this.currentPlayerIndex = 0;
-    } else {
-      this.currentPlayerIndex++;
-    }
+//    if (currentPlayerIndex == this.players.size() - 1) {
+//      this.currentPlayerIndex = 0;
+//    } else {
+//      this.currentPlayerIndex++;
+//    }
+    //TODO implement
   }
 
   boolean isDistributing() {

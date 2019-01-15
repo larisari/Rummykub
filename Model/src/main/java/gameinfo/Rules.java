@@ -3,6 +3,7 @@ package gameinfo;
 import gameinfo.tile.Tile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 class Rules {
@@ -17,11 +18,11 @@ class Rules {
     combRules = new CombRules(pointsCalculator);
   }
 
-  void registerBy(String id) {
+  void registerBy(Integer id) {
     gameFlow.registerPlayerBy(id);
   }
 
-  void deregisterPlayerBy(String id) {
+  void deregisterPlayerBy(Integer id) {
     gameFlow.deregisterPlayerBy(id);
   }
 
@@ -33,23 +34,23 @@ class Rules {
     return gameFlow.isDistributing();
   }
 
-  boolean isPlayerExistingBy(String id) {
+  boolean isPlayerExistingBy(Integer id) {
     return gameFlow.playerExists(id);
   }
 
-  boolean isValidPlayerBy(String id) {
+  boolean isValidPlayerBy(Integer id) {
     return this.gameFlow.isValidPlayer(id);
   }
 
-  List<Player> getAllPlayers() {
+  Map<Integer, Player> getAllPlayers() {
     return gameFlow.getPlayers();
   }
 
-  Optional<Player> getPlayerBy(String id) {
+  Optional<Player> getPlayerBy(Integer id) {
     return gameFlow.getPlayerBy(id);
   }
 
-  String getNextPlayerID() {
+  Integer getNextPlayerID() {
     return gameFlow.getNextPlayerID();
   }
 
