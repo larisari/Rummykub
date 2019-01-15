@@ -1,7 +1,7 @@
 package gameinfo;
 
-import gameinfo.tile.Tile;
-import gameinfo.tile.util.Number;
+import gameinfo.util.GINumber;
+import gameinfo.util.GITile;
 
 import java.util.List;
 
@@ -10,23 +10,23 @@ class PointsCalculator {
   PointsCalculator() {
   }
 
-  int getPointsForStreet(List<Tile> street) {
+  int getPointsForStreet(List<GITile> street) {
     int points = 0;
 
-    for (Tile tile : street) {
-      Number tilePoints = tile.getNumber();
+    for (GITile tile : street) {
+      GINumber tilePoints = tile.getNumber();
 
-      if (!tilePoints.equals(Number.JOKER)) {
+      if (!tilePoints.equals(GINumber.JOKER)) {
         points += tilePoints.value();
       } else {
-        // gameinfo.tile is a Joker
+        // gameinfo.util is a Joker
         int indexOfJoker = street.indexOf(tile);
 
         if (indexOfJoker > 0) {
-          Number pointsOfPrevTile = street.get(indexOfJoker - 1).getNumber();
+          GINumber pointsOfPrevTile = street.get(indexOfJoker - 1).getNumber();
           points += pointsOfPrevTile.next().value();
         } else {
-          Number pointsOfNextTile = street.get(indexOfJoker + 1).getNumber();
+          GINumber pointsOfNextTile = street.get(indexOfJoker + 1).getNumber();
           points += pointsOfNextTile.previous().value();
         }
       }
@@ -35,13 +35,13 @@ class PointsCalculator {
     return points;
   }
 
-  int getPointsForGroup(List<Tile> group) {
+  int getPointsForGroup(List<GITile> group) {
     int points = 0;
 
-    for (Tile tile : group) {
-      Number numberOfTile = tile.getNumber();
+    for (GITile tile : group) {
+      GINumber numberOfTile = tile.getNumber();
 
-      if (!numberOfTile.equals(Number.JOKER)) {
+      if (!numberOfTile.equals(GINumber.JOKER)) {
         points = numberOfTile.value() * group.size();
         break;
       }
@@ -50,13 +50,13 @@ class PointsCalculator {
     return points;
   }
 
-  int getPointsForHand(List<Tile> hand) {
+  int getPointsForHand(List<GITile> hand) {
     int points = 0;
 
-    for (Tile tile : hand) {
-      Number numberOfTile = tile.getNumber();
+    for (GITile tile : hand) {
+      GINumber numberOfTile = tile.getNumber();
 
-      if (numberOfTile.equals(Number.JOKER)) {
+      if (numberOfTile.equals(GINumber.JOKER)) {
         points += 20;
       } else {
         points += numberOfTile.value();

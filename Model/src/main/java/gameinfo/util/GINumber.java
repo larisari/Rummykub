@@ -1,6 +1,6 @@
-package gameinfo.tile.util;
+package gameinfo.util;
 
-public enum Number {
+public enum GINumber {
   ONE,
   TWO,
   THREE,
@@ -17,7 +17,7 @@ public enum Number {
 
   JOKER;
 
-  public Number next() {
+  public GINumber next() {
     switch (this) {
       case ONE:
         return TWO;
@@ -49,11 +49,11 @@ public enum Number {
         // TODO !!!
         return JOKER;
       default:
-        throw new IllegalArgumentException("Not a valid gameinfo.tile.util.Number.");
+        throw new IllegalArgumentException("Not a valid gameinfo.util.GINumber.");
     }
   }
 
-  public Number previous() {
+  public GINumber previous() {
     switch (this) {
       case ONE:
         return THIRTEEN;
@@ -85,7 +85,7 @@ public enum Number {
         // TODO !!!
         return JOKER;
       default:
-        throw new IllegalArgumentException("Not a valid gameinfo.tile.util.Number.");
+        throw new IllegalArgumentException("Not a valid gameinfo.util.GINumber.");
     }
   }
 
@@ -121,7 +121,7 @@ public enum Number {
         // TODO !!!
         return 0;
       default:
-        throw new IllegalArgumentException("Not a valid gameinfo.tile.util.Number.");
+        throw new IllegalArgumentException("Not a valid gameinfo.util.GINumber.");
     }
   }
 }

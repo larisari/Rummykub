@@ -1,6 +1,8 @@
 package gameinfo;
 
-import gameinfo.tile.Tile;
+import gameinfo.util.GIPoints;
+import gameinfo.util.GITile;
+import gameinfo.util.GITuple;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,25 +15,28 @@ public interface GIGameInfo {
 
   void start();
 
-  Optional<Boolean> isValidPlayerBy(Integer id);
-
-  Optional<Integer> getNextPlayerId();
+  Optional<Integer> getNumberOfPlayers();
 
   // just for test TODO: REMOVE
   List<Integer> getAllPlayerIds();
 
-  Optional<Boolean> play(List<Tile> combination, Integer id);
+  Optional<Integer> getNextPlayerId();
 
-  Optional<Boolean> play(List<Tile> tilesFromHand, List<Tile> tilesFromBoard,
-                         List<List<Tile>> newCombinations, Integer id);
+  Optional<GITuple<Integer, Boolean>> isValidPlayerBy(Integer id);
 
-  Optional<List<Tile>> drawBy(Integer id);
+  Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id);
 
-  Optional<List<Tile>> getAllTilesBy(Integer id);
+  Optional<GITuple<Integer, Boolean>> play(List<GITile> combination, Integer id);
 
-  Optional<Integer> getPointsBy(Integer id);
+  Optional<GITuple<Integer, Boolean>> play(
+      List<GITile> tilesFromHand,
+      List<GITile> tilesFromBoard,
+      List<List<GITile>> newCombinations,
+      Integer id);
 
-  Optional<Integer> getNumberOfPlayers();
+  Optional<GITuple<Integer, List<GITile>>> getAllTilesBy(Integer id);
 
-  Optional<Boolean> finishedTurnBy(Integer id);
+  Optional<GITuple<Integer, GIPoints>> getPointsBy(Integer id);
+
+  Optional<GITuple<Integer, Boolean>> finishedTurnBy(Integer id);
 }

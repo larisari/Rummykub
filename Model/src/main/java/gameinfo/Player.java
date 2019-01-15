@@ -1,6 +1,7 @@
 package gameinfo;
 
-import gameinfo.tile.Tile;
+import gameinfo.util.GIPoints;
+import gameinfo.util.GITile;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ class Player {
     return isFirstMove;
   }
 
-  List<Tile> getTilesOnHand() {
+  List<GITile> getTilesOnHand() {
     return hand.getTilesOnHand();
   }
 
@@ -28,25 +29,25 @@ class Player {
     return id;
   }
 
-  void put(Tile tile) {
+  void put(GITile tile) {
     hand.put(tile);
   }
 
-  void put(List<Tile> stack) {
-    for (Tile tile : stack) {
+  void put(List<GITile> stack) {
+    for (GITile tile : stack) {
       hand.put(tile);
     }
   }
 
-  void remove(List<Tile> tiles) {
+  void remove(List<GITile> tiles) {
     isFirstMove = false;
 
-    for (Tile tile : tiles) {
+    for (GITile tile : tiles) {
       hand.removeTile(tile);
     }
   }
 
-  int getPointsOfHand() {
+  GIPoints getPointsOfHand() {
     return hand.getPoints();
   }
 }

@@ -1,38 +1,38 @@
 package gameinfo;
 
-import gameinfo.tile.Tile;
+import gameinfo.util.GITile;
 
 import java.util.ArrayList;
 import java.util.List;
 
 class Board {
   private Bag bag;
-  private List<List<Tile>> combos;
+  private List<List<GITile>> combos;
 
   Board() {
     this.bag = new Bag();
     this.combos = new ArrayList<>();
   }
 
-  void remove(List<Tile> combo) {
+  void remove(List<GITile> combo) {
     if (combos.contains(combo)) {
       this.combos.remove(combo);
     }
   }
 
-  List<List<Tile>> getActiveCombos() {
+  List<List<GITile>> getActiveCombos() {
     return this.combos;
   }
 
-  void addCombo(List<Tile> combo) {
+  void addCombo(List<GITile> combo) {
     this.combos.add(combo);
   }
 
-  Tile getTileFromBag() {
+  GITile getTileFromBag() {
     return this.bag.takeTile();
   }
 
-  List<Tile> getStackFromBag(int numberOfTiles) {
+  List<GITile> getStackFromBag(int numberOfTiles) {
     return this.bag.takeStack(numberOfTiles);
   }
 

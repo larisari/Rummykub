@@ -1,6 +1,6 @@
 package gameinfo;
 
-import gameinfo.tile.Tile;
+import gameinfo.util.GITile;
 
 import java.util.List;
 import java.util.Map;
@@ -39,7 +39,7 @@ class Rules {
   }
 
   boolean isValidPlayerBy(Integer id) {
-    return this.gameFlow.isValidPlayer(id);
+    return gameFlow.isValidPlayer(id);
   }
 
   Map<Integer, Player> getAllPlayers() {
@@ -54,35 +54,23 @@ class Rules {
     return gameFlow.getNextPlayerID();
   }
 
-  boolean isValid(List<Tile> combination) {
+  boolean isValid(List<GITile> combination) {
     return combRules.isValid(combination);
   }
 
-  boolean isValid(List<Tile> combination, int minimumPoints) {
+  boolean isValid(List<GITile> combination, int minimumPoints) {
     return combRules.isValid(combination, minimumPoints);
   }
 
-//  int getPointsFor(List<Tile> combination) {
-//    if (combRules.isGroup(combination)) {
-//      return pointsCalculator.getPointsForGroup(combination);
-//    } else if (combRules.isStreet(combination)) {
-//      return pointsCalculator.getPointsForStreet(combination);
-//    } else {
-//      // TODO !!! handle better !!!
-//      throw new IllegalStateException();
-//    }
-//  }
-
   void nextPlayersTurn() {
-    this.gameFlow.nextPlayersTurn();
+    gameFlow.nextPlayersTurn();
   }
 
   int getNumberOfPlayers() {
-    return this.gameFlow.getNumberOfPlayers();
+    return gameFlow.getNumberOfPlayers();
   }
 
   void addDistribution() {
     gameFlow.addDistribution();
   }
-
 }

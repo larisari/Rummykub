@@ -1,6 +1,8 @@
 package gameinfo;
 
-import gameinfo.tile.Tile;
+import gameinfo.util.GIPoints;
+import gameinfo.util.GITile;
+import gameinfo.util.GITuple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,17 +17,21 @@ class GameInfoImpl implements GIGameInfo {
   private Rules rules;
 
   private boolean hasRegisteredPlayers;
+  private boolean canModifyRegisteredPlayers;
 
   GameInfoImpl() {
     board = new Board();
     rules = new Rules();
     hasRegisteredPlayers = false;
+    canModifyRegisteredPlayers = true;
   }
 
   @Override
   public void registerBy(Integer id) {
-    rules.registerBy(id);
-    hasRegisteredPlayers = true;
+    if (canModifyRegisteredPlayers) {
+      rules.registerBy(id);
+      hasRegisteredPlayers = true;
+    }
   }
 
   @Override
@@ -40,11 +46,14 @@ class GameInfoImpl implements GIGameInfo {
   @Override
   public void start() {
     rules.startGame();
+    canModifyRegisteredPlayers = false;
   }
 
   @Override
-  public Optional<Boolean> isValidPlayerBy(Integer id) {
-    return Optional.of(this.rules.isValidPlayerBy(id));
+  public Optional<GITuple<Integer, Boolean>> isValidPlayerBy(Integer id) {
+    Boolean isValidPlayer = rules.isValidPlayerBy(id);
+    GITuple<Integer, Boolean> returnValue = new GITuple<>(id, isValidPlayer);
+    return Optional.of(returnValue);
   }
 
   @Override
@@ -63,7 +72,7 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public Optional<List<Tile>> drawBy(Integer id) {
+  public Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id) {
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
     if (!optionalPlayer.isPresent()) {
@@ -72,36 +81,41 @@ class GameInfoImpl implements GIGameInfo {
 
     if (!rules.isValidPlayerBy(id)) {
       // it is not the players turn.
-      return Optional.of(new ArrayList<>());
+      return Optional.of(new GITuple<>(id, new ArrayList<>()));
     }
+
+    GITuple<Integer, List<GITile>> returnValue;
 
     if (rules.isDistributing()) {
       rules.addDistribution();
       rules.nextPlayersTurn();
-      return Optional.of(getStackFor(id));
+      returnValue = new GITuple<>(id, getStackFor(id));
+      return Optional.of(returnValue);
     } else {
-      Tile tile = getTileFor(id);
-      List<Tile> tiles = new ArrayList<>();
+      GITile tile = getTileFor(id);
+      List<GITile> tiles = new ArrayList<>();
       tiles.add(tile);
       rules.nextPlayersTurn();
-      return Optional.of(tiles);
+      returnValue = new GITuple<>(id, tiles);
+      return Optional.of(returnValue);
     }
   }
 
   @Override
-  public Optional<List<Tile>> getAllTilesBy(Integer id) {
+  public Optional<GITuple<Integer, List<GITile>>> getAllTilesBy(Integer id) {
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
       Player player = optionalPlayer.get();
-      return Optional.of(player.getTilesOnHand());
+      GITuple<Integer, List<GITile>> returnValue = new GITuple<>(id, player.getTilesOnHand());
+      return Optional.of(returnValue);
     } else {
       return Optional.empty();
     }
   }
 
   @Override
-  public Optional<Boolean> play(List<Tile> combination, Integer id) {
+  public Optional<GITuple<Integer, Boolean>> play(List<GITile> combination, Integer id) {
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
@@ -109,20 +123,20 @@ class GameInfoImpl implements GIGameInfo {
 
       if (!rules.isValidPlayerBy(id)) {
         // it is not the players turn.
-        return Optional.of(false);
+        return Optional.of(new GITuple<>(id, false));
       }
 
       if (player.isFirstMove() && rules.isValid(combination, MINIMUM_POINTS_ON_FIRST_MOVE)) {
         putComboOnBoard(combination, player);
         rules.nextPlayersTurn();
-        return Optional.of(true);
+        return Optional.of(new GITuple<>(id, true));
       } else if (!player.isFirstMove() && rules.isValid(combination)) {
         putComboOnBoard(combination, player);
         rules.nextPlayersTurn();
-        return Optional.of(true);
+        return Optional.of(new GITuple<>(id, true));
       } else {
         // not a valid combination.
-        return Optional.of(false);
+        return Optional.of(new GITuple<>(id, false));
       }
     } else {
       return Optional.empty();
@@ -131,10 +145,10 @@ class GameInfoImpl implements GIGameInfo {
 
   // question which combination has to have 30 points if its first move.
   @Override
-  public Optional<Boolean> play(
-      List<Tile> tilesFromHand,
-      List<Tile> tilesFromBoard,
-      List<List<Tile>> newCombinations,
+  public Optional<GITuple<Integer, Boolean>> play(
+      List<GITile> tilesFromHand,
+      List<GITile> tilesFromBoard,
+      List<List<GITile>> newCombinations,
       Integer id) {
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
@@ -142,7 +156,7 @@ class GameInfoImpl implements GIGameInfo {
 
       if (!rules.isValidPlayerBy(id)) {
         // it is not the players turn.
-        return Optional.of(false);
+        return Optional.of(new GITuple<>(id, false));
       }
 
       boolean allValid = newCombinations.stream().allMatch(this::isValid);
@@ -154,9 +168,9 @@ class GameInfoImpl implements GIGameInfo {
         board.remove(tilesFromBoard);
         newCombinations.forEach(combination -> board.addCombo(combination));
         rules.nextPlayersTurn();
-        return Optional.of(true);
+        return Optional.of(new GITuple<>(id, true));
       } else {
-        return Optional.of(false);
+        return Optional.of(new GITuple<>(id, false));
       }
     } else {
       return Optional.empty();
@@ -164,7 +178,7 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public Optional<Integer> getPointsBy(Integer id) {
+  public Optional<GITuple<Integer, GIPoints>> getPointsBy(Integer id) {
 
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
@@ -172,7 +186,9 @@ class GameInfoImpl implements GIGameInfo {
       return Optional.empty();
     }
 
-    return Optional.of(optionalPlayer.get().getPointsOfHand());
+    GITuple<Integer, GIPoints> returnValue =
+        new GITuple<>(id, optionalPlayer.get().getPointsOfHand());
+    return Optional.of(returnValue);
   }
 
   @Override
@@ -181,43 +197,45 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public Optional<Boolean> finishedTurnBy(Integer id) {
+  public Optional<GITuple<Integer, Boolean>> finishedTurnBy(Integer id) {
     if (!rules.isPlayerExistingBy(id)) {
       return Optional.empty();
     }
 
     if (rules.isValidPlayerBy(id)) {
       rules.nextPlayersTurn();
-      return Optional.of(true);
+      return Optional.of(new GITuple<>(id, true));
     } else {
       // it is not the players turn.
-      return Optional.of(false);
+      return Optional.of(new GITuple<>(id, false));
     }
   }
 
-  private List<Tile> getStackFor(Integer id) {
+  private List<GITile> getStackFor(Integer id) {
+    // .get() is allowed here because it is always called after isPresent check !!!
     Player player = rules.getPlayerBy(id).get();
 
-    List<Tile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK);
+    List<GITile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK);
     player.put(stack);
     return stack;
   }
 
-  private Tile getTileFor(Integer id) {
+  private GITile getTileFor(Integer id) {
+    // .get() is allowed here because it is always called after isPresent check !!!
     Player player = rules.getPlayerBy(id).get();
 
-    Tile tile = board.getTileFromBag();
+    GITile tile = board.getTileFromBag();
     player.put(tile);
 
     return tile;
   }
 
-  private void putComboOnBoard(List<Tile> combination, Player player) {
+  private void putComboOnBoard(List<GITile> combination, Player player) {
     board.addCombo(combination);
     player.remove(combination);
   }
 
-  private boolean isValid(List<Tile> combination) {
+  private boolean isValid(List<GITile> combination) {
     return rules.isValid(combination);
   }
 }
