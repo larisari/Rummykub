@@ -5,7 +5,8 @@ class GameFlow {
   private Map<Integer, Player> players;
   private GameState state;
   private int distributionCounter;
-
+  private List<Integer> playerSequence;
+  private Integer currentPlayerIndex;
   private PointsCalculator calculator;
 
   GameFlow(PointsCalculator calculator) {
@@ -13,6 +14,7 @@ class GameFlow {
     this.state = GameState.distributing;
     this.distributionCounter = 0;
     this.calculator = calculator;
+    this.playerSequence = new ArrayList<>();
   }
 
   void registerPlayerBy(Integer id) {
@@ -48,18 +50,32 @@ class GameFlow {
     }
   }
 
+  void removePlayerFromSequence(Integer id) {
+    playerSequence.removeIf(i -> i.equals(id));
+  }
+
+  void addPlayerToSequence(Integer id) {
+    if (players.containsKey(id)) {
+      playerSequence.add(id);
+    }
+  }
+
   Integer getNextPlayerID() {
-    //TODO implement
-    return null;
+    if (currentPlayerIndex < playerSequence.size() - 1) {
+      return playerSequence.get(currentPlayerIndex + 1);
+    }
+    else {
+      return playerSequence.get(0);
+    }
   }
 
   void nextPlayersTurn() {
-//    if (currentPlayerIndex == this.players.size() - 1) {
-//      this.currentPlayerIndex = 0;
-//    } else {
-//      this.currentPlayerIndex++;
-//    }
-    //TODO implement
+    if (currentPlayerIndex < playerSequence.size() - 1) {
+      currentPlayerIndex++;
+    }
+    else {
+      currentPlayerIndex = 0;
+    }
   }
 
   boolean isDistributing() {
