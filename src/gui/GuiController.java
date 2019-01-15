@@ -1,5 +1,6 @@
 package gui;
 
+import gameinfo.tile.Tile;
 import gui.Image;
 import gameinfo.GIFactory;
 import gameinfo.GIGameInfo;
@@ -70,6 +71,7 @@ public class GuiController {
 
   public GuiController() {
     gameInfo = GIFactory.make();
+    // playerID = client.getID();
   }
 
   /**
@@ -88,10 +90,10 @@ public class GuiController {
         break;
     }
     setPlayerNames();
+//while is first turn: manipulate.setDisable(true);
   }
 
   private void setPlayerNames() {
-    // this.playerID = client.getID();
     switch (playerID) {
       case 1:
         break; //bleibt auf default
@@ -111,14 +113,6 @@ public class GuiController {
         playerLeftName.setText("Player 2");
         break;
     }
-  }
-
-  List<ImageView> getSelectedTiles() {
-    return this.selectedTiles;
-  }
-
-  public void setSelectedTiles(List<ImageView> selectedTiles) {
-    this.selectedTiles = selectedTiles;
   }
 
 
@@ -158,19 +152,21 @@ public class GuiController {
   @FXML
   protected void handleDrawTile(MouseEvent event) {
     gameInfo.registerBy("1");
-    String parsedTiles = GuiParser.parseTileToString(gameInfo.drawBy("1"));
-    hand = tView.createImgs(parsedTiles);
-    for (int i = 0; i < hand.size(); i++) {
-      createTile(hand.get(i));
-    }
+    if (gameInfo.isValidPlayerBy("1").get()) {
+      String parsedTiles = GuiParser.parseTileToString(gameInfo.drawBy("1"));
+      hand = tView.createImgs(parsedTiles);
+      for (int i = 0; i < hand.size(); i++) {
+        createTile(hand.get(i));
+      }
 
-    // if (client.send("isValidPlayer").equals(true){
-    // client.send("draw");
-    updateHand();
-    // playerTurn.setText(client.send("getNextPlayerID"));
-    //  disableControl();
-    // }
-    //
+      // if (client.send("isValidPlayer").equals(true){
+      // client.send("draw");
+      updateHand();
+      // playerTurn.setText(client.send("getNextPlayerID"));
+      //  disableControl();
+      // }
+      //
+    }
   }
 
   /**
@@ -219,11 +215,32 @@ public class GuiController {
 
   @FXML
   protected void handleEndTurn(MouseEvent event) {
-    // if (client.send(boardcombinations)==true){
-    //client.endTurn();
-    // playerTurn.setText(client.send("getNextPlayerID"));
-    disableControl();
-  }
+    List<List<Tile>> allCombinations = new ArrayList<>();
+    List<ImageView> comb = new ArrayList<>();
+    for (int i = 0; i < placedCombinations.size(); i++) {
+      HBox box = placedCombinations.get(i);
+      for (int j = 0; j < box.getChildren().size(); j++) {
+        comb = new ArrayList<>();
+        ImageView iView = (ImageView) box.getChildren().get(j);
+        comb.add(iView);
+      }
+      allCombinations.add(GuiParser.parseStringToTile(GuiParser.parseToString(comb)));
+    }
+ //   if (gameInfo.play(allCombinations, "1").get()) { //TODO enable wenn play List<List<Tile>> format hat. (else auch)
+            // if (client.send(boardcombinations)==true){
+            //client.endTurn();
+            // playerTurn.setText(client.send("getNextPlayerID"));
+      disableControl();
+  //  } else {
+      Alert alert = new Alert(AlertType.CONFIRMATION, "Error! Unable to end turn. Rearrange "
+          + "the combinations on the board to valid combinations", ButtonType.OK);
+      alert.showAndWait();
+
+      if (alert.getResult() == ButtonType.YES) {
+        //do stuff
+      }
+    }
+
 
   /**
    * funktioniert nur für Tiles die von der Hand kommen.
@@ -289,7 +306,7 @@ public class GuiController {
 
   @FXML
   protected void handleManipulate(MouseEvent event) {
-
+//if first turn do not allow
     for (int i = 0; i < board.getChildren().size(); i++) {
       HBox box = (HBox) board.getChildren().get(i);
       for (int j = 0; j < box.getChildren().size(); j++) {
@@ -318,18 +335,18 @@ public class GuiController {
    */
   void placeTiles() {
     HBox comb = new HBox();
-      for (int i = 0; i < selectedTiles.size(); i++) {
-        ImageView tile = selectedTiles.get(i);
-        tile.setStyle("-fx-translate-y: 0");
-        tile.setEffect(null);
-        comb.getChildren().add(tile);
-      }
-      placedCombinations.add(comb);
-      board.getChildren().add(comb);
-      selectedTiles.clear();
-      updateHand();
-      // if (client.send(hand).isEmpty(){
-      // TODO öffne Gewinnerfenster
+    for (int i = 0; i < selectedTiles.size(); i++) {
+      ImageView tile = selectedTiles.get(i);
+      tile.setStyle("-fx-translate-y: 0");
+      tile.setEffect(null);
+      comb.getChildren().add(tile);
+    }
+    placedCombinations.add(comb);
+    board.getChildren().add(comb);
+    selectedTiles.clear();
+    updateHand();
+    // if (client.send(hand).isEmpty(){
+    // TODO öffne Gewinnerfenster
 
   }
 
@@ -343,36 +360,37 @@ public class GuiController {
         i++) {   //1 und size-1 weil an diesen Stellen Buttons sind.
       combination.add((ImageView) comb.getChildren().get(i));
     }
-    // String selectedT = GuiParser.parseToString(selectedTiles);
-    // String boardTiles = GuiParser.parseToString(combination);
-    // combination.addAll(0, selectedTiles);
-    // String combTiles = GuiParser.parseToString(combination);
-    //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
-    deleteAddToButtons();
-    for (int j = 0; j < selectedTiles.size(); j++) {
-      if (comb.getChildren().contains(selectedTiles.get(j))) {
-        return;
+    String selectedT = GuiParser.parseToString(selectedTiles);
+    String boardTiles = GuiParser.parseToString(combination);
+    combination.addAll(0, selectedTiles);
+    String combTiles = GuiParser.parseToString(combination);
+    List<Tile> selectedTls = GuiParser.parseStringToTile(selectedT);
+    List<Tile> combinationTiles = GuiParser.parseStringToTile(combTiles);
+    List<Tile> boardT = GuiParser.parseStringToTile(boardTiles);
+    List<List<Tile>> newCombs = new ArrayList<>();
+    newCombs.add(combinationTiles);
+    if (gameInfo.play(selectedTls, boardT, newCombs, "1").get()) {
+
+      //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
+      deleteAddToButtons();
+      for (int j = 0; j < selectedTiles.size(); j++) {
+        if (comb.getChildren().contains(selectedTiles.get(j))) {
+          return;
+        }
       }
-    }
-    for (int i = selectedTiles.size() - 1; i >= 0;
-        i--) {    //soll ja in richtiger reihenfolge eingefügt werden, bei einer Tile ist index get(0)
-      ImageView tile = selectedTiles.get(i);
-      comb.getChildren().add(0, tile); //added tile vorne in hbox
-    }
+      for (int i = selectedTiles.size() - 1; i >= 0;
+          i--) {    //soll ja in richtiger reihenfolge eingefügt werden, bei einer Tile ist index get(0)
+        ImageView tile = selectedTiles.get(i);
+        comb.getChildren().add(0, tile); //added tile vorne in hbox
+      }
 
-    disableTileControl(selectedTiles);
-    selectedTiles.clear();
-    updateHand();
-    updateBoard();
-
+      disableTileControl(selectedTiles);
+      selectedTiles.clear();
+      updateHand();
+      updateBoard();
+    }
   }
 
-  void shiftFromBackToFront(HBox comb) {
-    for (int i = 0; i < selectedTiles.size(); i++) {
-      comb.getChildren().remove(comb.getChildren().size() - 1);
-    }
-    comb.getChildren().addAll(0, selectedTiles);
-  }
 
   void addToBack(HBox comb) {
     // if (client.send(isValidPlayerBy) == true) {
@@ -384,23 +402,30 @@ public class GuiController {
     String selectedT = GuiParser.parseToString(selectedTiles);
     combination.addAll(selectedTiles);  //selected tiles hinten.
     String combTiles = GuiParser.parseToString(combination);
-    //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
-    deleteAddToButtons();
-    for (int j = 0; j < selectedTiles.size(); j++) {
-      if (comb.getChildren().contains(selectedTiles.get(j))) {
-        return;
+    List<Tile> selectedTls = GuiParser.parseStringToTile(selectedT);
+    List<Tile> combinationTiles = GuiParser.parseStringToTile(combTiles);
+    List<Tile> boardT = GuiParser.parseStringToTile(boardTiles);
+    List<List<Tile>> newCombs = new ArrayList<>();
+    newCombs.add(combinationTiles);
+    if (gameInfo.play(selectedTls, boardT, newCombs, "1").get()) {
+      //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
+      deleteAddToButtons();
+      for (int j = 0; j < selectedTiles.size(); j++) {
+        if (comb.getChildren().contains(selectedTiles.get(j))) {
+          return;
+        }
       }
-    }
-    for (int i = 0; i < selectedTiles.size();
-        i++) { //problem weil tile nach verschieben nicht mehr als selected gilt -> selectedtiles.size verringert sich
-      ImageView tile = selectedTiles.get(i);
-      comb.getChildren().add(comb.getChildren().size(), tile);
-    }
+      for (int i = 0; i < selectedTiles.size();
+          i++) { //problem weil tile nach verschieben nicht mehr als selected gilt -> selectedtiles.size verringert sich
+        ImageView tile = selectedTiles.get(i);
+        comb.getChildren().add(comb.getChildren().size(), tile);
+      }
 
-    disableTileControl(selectedTiles);
-    selectedTiles.clear();
-    updateHand();
-    updateBoard();
+      disableTileControl(selectedTiles);
+      selectedTiles.clear();
+      updateHand();
+      updateBoard();
+    }
   }
 
 

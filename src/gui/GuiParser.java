@@ -21,7 +21,6 @@ public class GuiParser {
       ImageView iView = tiles.get(i);
       Image tile = (Image) iView.getImage();
       String url = tile.getURL();
-      System.out.println(tile.getURL());
       String [] urlArray = url.split("/");
       String color = urlArray[urlArray.length-2];
       String [] numberArray = urlArray[urlArray.length-1].split("[.]");
