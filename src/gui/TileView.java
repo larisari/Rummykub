@@ -1,6 +1,6 @@
 package gui;
 
-import gui.Image;
+import gui.util.Image;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.fxml.FXML;

@@ -1,7 +1,7 @@
 package gui;
 
 import gameinfo.tile.Tile;
-import gui.Image;
+import gui.util.Image;
 import gameinfo.GIFactory;
 import gameinfo.GIGameInfo;
 import java.util.ArrayList;
@@ -388,6 +388,8 @@ public class GuiController {
       selectedTiles.clear();
       updateHand();
       updateBoard();
+    } else {
+      deleteAddToButtons();
     }
   }
 
@@ -425,6 +427,8 @@ public class GuiController {
       selectedTiles.clear();
       updateHand();
       updateBoard();
+    } else {
+      deleteAddToButtons();
     }
   }
 

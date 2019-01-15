@@ -214,7 +214,7 @@
                   </Tooltip>
                </tooltip>
             </Button>
-            <Button fx:id="manipulate" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="729.0" mnemonicParsing="false" onMouseClicked="#handleManipulate" prefHeight="65.0" prefWidth="110.0" styleClass="manipulate" text="Manipulate Tiles" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="manipulate" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="729.0" mnemonicParsing="false" onMouseClicked="#handleManipulate" prefHeight="65.0" prefWidth="110.0" styleClass="manipulate" text="Manipulate Tiles" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="2.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>

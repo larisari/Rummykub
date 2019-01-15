@@ -1,6 +1,6 @@
 package gui;
 
-import gui.Image;
+import gui.util.Image;
 import gameinfo.tile.util.Number;
 import gameinfo.tile.util.Color;
 import gameinfo.tile.Tile;
