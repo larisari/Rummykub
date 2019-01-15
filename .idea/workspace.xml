@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="started with end game screen">
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="added tooltips to buttons">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/button.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/button.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/clientgui.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/clientgui.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PineappleView/gui/GuiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/GuiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PineappleView/gui/clientgui.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/clientgui.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/EndScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/EndScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/loserScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/loserScreen.fxml" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -116,10 +118,10 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/button.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="810">
+            <state relative-caret-position="573">
               <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
             </state>
           </provider>
@@ -159,11 +161,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/EndScreenController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="33" column="40" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="40" />
+            <state relative-caret-position="603">
+              <caret line="44" column="5" lean-forward="true" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -227,8 +229,8 @@
         <option value="$PROJECT_DIR$/src/gui/loserScreen.fxml" />
         <option value="$PROJECT_DIR$/src/gui/winnerScreen.fxml" />
         <option value="$PROJECT_DIR$/src/gui/GuiController.java" />
-        <option value="$PROJECT_DIR$/src/gui/EndScreenController.java" />
         <option value="$PROJECT_DIR$/src/gui/button.css" />
+        <option value="$PROJECT_DIR$/src/gui/EndScreenController.java" />
       </list>
     </option>
   </component>
@@ -285,7 +287,7 @@
     <property name="OverrideImplement.combined" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547548794254" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547551231308" />
     <property name="dynamic.classpath" value="false" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="project.structure.last.edited" value="Libraries" />
@@ -424,7 +426,7 @@
       <workItem from="1547419561420" duration="1000" />
       <workItem from="1547419725707" duration="1789000" />
       <workItem from="1547468666150" duration="17335000" />
-      <workItem from="1547547474663" duration="804000" />
+      <workItem from="1547547474663" duration="3225000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1547234686485</created>
@@ -608,11 +610,18 @@
       <option name="project" value="LOCAL" />
       <updated>1547488517234</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="added tooltips to buttons">
+      <created>1547548849757</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1547548849757</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="137472000" />
+    <option name="totallyTimeSpent" value="139893000" />
   </component>
   <component name="TodoView" selected-index="2">
     <todo-panel id="selected-file">
@@ -627,7 +636,7 @@
     <frame x="33" y="46" width="1887" height="1034" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.1799458" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.1799458" />
       <window_info id="Structure" order="1" weight="0.2498645" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
@@ -636,7 +645,7 @@
       <window_info id="UI Designer" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32908705" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.22717622" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.22717622" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39915073" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -696,7 +705,8 @@
     <MESSAGE value="unused hboxes get deleted" />
     <MESSAGE value="refills hand with new imageViews after placing tiles on board" />
     <MESSAGE value="started with end game screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="started with end game screen" />
+    <MESSAGE value="added tooltips to buttons" />
+    <option name="LAST_COMMIT_MESSAGE" value="added tooltips to buttons" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -895,11 +905,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/winnerScreen.fxml">
+    <entry file="file://$PROJECT_DIR$/src/gui/clientgui.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="210" selection-start-line="8" selection-start-column="210" selection-end-line="8" selection-end-column="210" />
+        <state relative-caret-position="-2">
+          <caret line="149" column="54" selection-start-line="149" selection-start-column="54" selection-end-line="149" selection-end-column="54" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/button.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="573">
+          <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
         </state>
       </provider>
     </entry>
@@ -911,28 +928,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/winnerScreen.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="210" selection-start-line="8" selection-start-column="210" selection-end-line="8" selection-end-column="210" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/EndScreenController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="33" column="40" selection-start-line="33" selection-start-column="40" selection-end-line="33" selection-end-column="40" />
+        <state relative-caret-position="603">
+          <caret line="44" column="5" lean-forward="true" selection-start-line="44" selection-start-column="5" selection-end-line="44" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/clientgui.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2">
-          <caret line="149" column="54" selection-start-line="149" selection-start-column="54" selection-end-line="149" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/button.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="810">
-          <caret line="54" column="21" selection-start-line="54" selection-start-column="21" selection-end-line="54" selection-end-column="21" />
         </state>
       </provider>
     </entry>

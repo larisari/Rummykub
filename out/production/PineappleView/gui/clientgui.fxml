@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -179,16 +180,37 @@
             <font>
               <Font name="Franklin Gothic Medium" size="16.0" />
             </font>
+               <tooltip>
+                  <Tooltip prefHeight="100.0" prefWidth="100.0" text="Click here to place a new combination on the board." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
           </Button>
             <Button fx:id="endTurn" accessibleRole="PARENT" alignment="CENTER" layoutX="1.0" layoutY="659.0" mnemonicParsing="false" onMouseClicked="#handleEndTurn" prefHeight="136.0" prefWidth="89.0" styleClass="endTurnBtn" text="End Turn" AnchorPane.bottomAnchor="1.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>
+               <tooltip>
+                  <Tooltip prefHeight="70.0" prefWidth="100.0" text="Click here to end your turn." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
             </Button>
             <Button fx:id="cancelSelection" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="660.0" mnemonicParsing="false" onMouseClicked="#handleCancelSel" prefHeight="67.0" prefWidth="110.0" styleClass="cancelBtn" text="Cancel Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="69.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>
+               <tooltip>
+                  <Tooltip prefHeight="70.0" prefWidth="100.0" text="Click here to cancel your selected tiles." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
             </Button>
             <ImageView fx:id="bag" fitHeight="170.0" fitWidth="184.0" layoutX="799.0" layoutY="36.0" onMouseClicked="#handleDrawTile" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -200,11 +222,25 @@
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>
+               <tooltip>
+                  <Tooltip prefHeight="100.0" prefWidth="130.0" text="Click here to add selected tiles to an existing combination on the board." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
             </Button>
             <Button fx:id="manipulate" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="729.0" mnemonicParsing="false" onMouseClicked="#handleManipulate" prefHeight="65.0" prefWidth="110.0" styleClass="manipulate" text="Manipulate Tiles" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>
+               <tooltip>
+                  <Tooltip prefHeight="120.0" prefWidth="130.0" text="Click here to manipulate tiles on the board after you finished placing tiles from your hand." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
             </Button>
          </children>
          <GridPane.margin>

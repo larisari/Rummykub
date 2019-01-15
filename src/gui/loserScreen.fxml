@@ -16,17 +16,17 @@
             <Font name="Franklin Gothic Medium" size="39.0" />
          </font>
       </Label>
-      <Label layoutX="286.0" layoutY="390.0" prefHeight="26.0" prefWidth="88.0" text="Player 2" AnchorPane.rightAnchor="864.0">
+      <Label fx:id="player2LoserName" layoutX="286.0" layoutY="390.0" prefHeight="26.0" prefWidth="88.0" text="Player 2" AnchorPane.rightAnchor="864.0">
          <font>
             <Font name="Franklin Gothic Medium" size="23.0" />
          </font>
       </Label>
-      <Label layoutX="286.0" layoutY="470.0" text="Player 3">
+      <Label fx:id="player3LoserName" layoutX="286.0" layoutY="470.0" text="Player 3">
          <font>
             <Font name="Franklin Gothic Medium" size="23.0" />
          </font>
       </Label>
-      <Label layoutX="286.0" layoutY="550.0" text="Player 4">
+      <Label fx:id="player4LoserName" layoutX="286.0" layoutY="550.0" text="Player 4">
          <font>
             <Font name="Franklin Gothic Medium" size="23.0" />
          </font>
