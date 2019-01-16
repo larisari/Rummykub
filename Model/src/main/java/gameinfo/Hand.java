@@ -32,10 +32,10 @@ class Hand {
     return tilesOnHand;
   }
 
+  // Now returns the Points as negative.
   GIPoints calculatePoints() {
     Integer pointsAsInteger = calculator.calculatePointsForHand(tilesOnHand);
-    GIPoints points = new GIPoints(pointsAsInteger);
-
-    return points;
+    Integer pointsAsNegative = 0 - pointsAsInteger;
+    return new GIPoints(pointsAsNegative);
   }
 }
