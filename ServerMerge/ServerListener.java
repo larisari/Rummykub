@@ -7,7 +7,7 @@ import java.util.List;
 public class ServerListener extends Thread {
 
     static List<ServerClientCommunication> clients;
-    int clientID = 0;
+    private int clientID = 0;
     boolean isRunning = true;
 
     public ServerListener(List<ServerClientCommunication> listOfClients){
@@ -20,22 +20,24 @@ public class ServerListener extends Thread {
       // server is listening on port 48410
       try {
         ServerSocket ss = new ServerSocket(48410);
+        System.out.println("[Server] wird initialisiert...");
         // running infinite loop for getting
         // client request
 
         while (isRunning) {
-          Socket s = null;
+
 
           try {
             if (clientID < 4) {
-              s = ss.accept();
+              System.out.println("[Server] Warte auf eingehende Verbindung....");
+              Socket s = ss.accept();
 
-              System.out.println("A new client is connected : " + s);
+              System.out.println("[Server] neuer Client wurde aufgenommen " + s);
 
               DataInputStream in = new DataInputStream(s.getInputStream());
               DataOutputStream out = new DataOutputStream(s.getOutputStream());
 
-              System.out.println("Assigning new thread for this client");
+              System.out.println("[Server] erstelle eigenen Thread für Client " + clientID);
               // create a new thread object
               ServerClientCommunication t = new ServerClientCommunication(s, in, out, clientID);
               // Invoking the start() method
@@ -46,7 +48,8 @@ public class ServerListener extends Thread {
             } else isRunning = false;
           }
           catch (Exception e){
-            s.close();
+            //s.close();
+            System.out.println("[Server] Verbindung getrennt.");
             e.printStackTrace();
           }
         }
