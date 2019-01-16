@@ -14,6 +14,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import server.Client;
+import server.Server;
 
 public class StartingScreenController {
 
@@ -24,7 +26,7 @@ public class StartingScreenController {
   @FXML
   private AnchorPane startingS;
   @FXML
-  private AnchorPane loadingScreen;
+  private AnchorPane loadingScreen; //in loadingscreen
 
   private int numberOfPlayers;
   private int JoinedY = 160;
@@ -37,8 +39,8 @@ public class StartingScreenController {
    */
   @FXML
   protected void handleCreateGame(MouseEvent event) throws IOException {
-    // Server server = new Server();
-    // Client host = new Client("localhost");
+    Server server = new Server();
+    Client host = new Client("localhost");
     loadLoadingScreen();
 // TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
   }
@@ -58,12 +60,12 @@ public class StartingScreenController {
     if (result.isPresent()) {
       ipAdress = result.get();
       try {
-        //   Client c = new Client(ipAdress);
+        // Client c = new Client(ipAdress);
       } catch (Exception e) {
 
       }
       ok.setDisable(false);
-
+//kein loadingscreen wenn kein game existiert.
       loadLoadingScreen();
       numberOfPlayers++;
       JoinedY += 50;

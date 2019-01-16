@@ -17,7 +17,10 @@ public class LoadingScreenController {
   private StartingScreenController sC = new StartingScreenController();
   @FXML
   private void initialize() {
+
     startGame.setDisable(true);
+
+
   }
 
   @FXML
