@@ -176,7 +176,6 @@ public class GuiController {
         bag.setDisable(true);
         disableTileControl(selectedTiles);
         selectedTiles.clear();
-        updateHand();
       } else {
         cancelSelection();
       }
@@ -202,6 +201,10 @@ public class GuiController {
       board.getChildren().add(comb);
     }
     selectedCombinations.clear();
+    int size = selectionBoard.getChildren().size();
+    for (int i = 0; i < size; i++){
+      selectionBoard.getChildren().remove(selectionBoard.getChildren().get(i));
+    }
     selectedTiles.clear();
     updateHand();
     // if (client.send(hand).isEmpty(){
@@ -218,7 +221,7 @@ public class GuiController {
       for (int i = 0; i < hand.size(); i++) {
         createTile(hand.get(i));
       }
-//bag.setDisable(true); //TODO ist noch enabled zum testen.
+      bag.setDisable(true);
       // if (client.send("isValidPlayer").equals(true){
       // client.send("draw");
       // playerTurn.setText(client.send("getNextPlayerID"));
@@ -253,7 +256,7 @@ public class GuiController {
   private void updateHand() {
     refillImageViews(topHand);
     refillImageViews(bottomHand);
-    //TODO refillImageViews(selectionBoard)
+
     // String handTiles = client.receive(getAllTilesBy);
     // if (handTiles.equals(""){
     // endGame();
@@ -308,6 +311,7 @@ public class GuiController {
 
   /**
    * funktioniert nur für Tiles die von der Hand kommen.
+   * ne sollte eigentlich für alle funktionieren.
    */
   @FXML
   protected void handleTileClick(
@@ -331,20 +335,22 @@ public class GuiController {
     }
   }
 
+
+  //TODO passt noch nicht. mittlere Tiles von selection werden nicht gecancelled
   @FXML
   protected void handleCancelSel(MouseEvent event) {
     if (!selectionBoard.getChildren().isEmpty()) {
+      System.out.println(selectionBoard.getChildren().size() + " selectionboardsize");
       for (int i = 0; i < selectionBoard.getChildren().size(); i++) {
         HBox comb = (HBox) selectionBoard.getChildren().get(i);
+
         for (int j = 0; j < comb.getChildren().size(); j++) {
-          if (topHand.getChildren().size() <= HAND_SPACE) {
-            topHand.getChildren().add(comb.getChildren().get(j));
-          }
-          if (topHand.getChildren().size() == HAND_SPACE
-              && bottomHand.getChildren().size() <= HAND_SPACE) {
-            bottomHand.getChildren().add(comb.getChildren().get(j));
-          }
+          ImageView tile = (ImageView)comb.getChildren().get(j);
+
+            bottomHand.getChildren().add(tile);
+
         }
+
       }
 
     }
@@ -396,16 +402,18 @@ public class GuiController {
    */
   @FXML
   protected void handleAddTo(MouseEvent event) {
-    addToExisting.setDisable(true);
+
     if (!selectedTiles.isEmpty()) {
       for (int i = 0; i < board.getChildren().size(); i++) {
         HBox box = (HBox) board.getChildren().get(i);
         Button front = new Button("add here");
         front.setOnMousePressed(event1 -> {
+          addToExisting.setDisable(true);
           addToFront(box);
         });
         Button back = new Button("add here");
         back.setOnMousePressed(event2 -> {
+          addToExisting.setDisable(true);
           addToBack(box);
         });
         box.getChildren().add(0, front);

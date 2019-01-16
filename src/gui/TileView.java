@@ -34,7 +34,7 @@ public class TileView {
       String color = attributes[0];
       String number = attributes[1];
 
-      if (number.equals("joker")) {
+      if (color.equals("joker")) {
         Image joker = new Image("gui/images/tiles/joker/joker.png");
         tilesImg.add(joker);
       } else {

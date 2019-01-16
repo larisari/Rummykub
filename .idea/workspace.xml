@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="reworked GuiParser induced errors, some already fixed">
-      <change afterPath="$PROJECT_DIR$/src/server/Client.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/ClientParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/GameInfoImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/Server.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/ServerClientCommunication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/ServerListener.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/server/ServerParser.java" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="view without model">
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/Bag.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/Board.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/CombRules.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/GIFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/GIGameInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/GameFlow.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/GameInfoImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/GameState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/Hand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/Player.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/PointsCalculator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/Rules.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/util/GIColor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/util/GINumber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/util/GIPoints.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/util/GITile.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/gameinfo/util/GITuple.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/PineappleView/gui/GuiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/GuiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/PineappleView/gui/TileView.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/PineappleView/gui/TileView.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/GuiController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/GuiController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gui/LoadingScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/LoadingScreenController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/gui/StartingScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/StartingScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/gui/TileView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/gui/TileView.java" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -72,10 +83,22 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/gui/TileView.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="490">
+              <caret line="49" selection-start-line="49" selection-end-line="49" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="562">
-              <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
+            <state relative-caret-position="690">
+              <caret line="46" selection-start-line="46" selection-end-line="46" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -86,8 +109,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/StartingScreenController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="43" column="24" lean-forward="true" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+            <state relative-caret-position="570">
+              <caret line="38" column="72" selection-start-line="38" selection-start-column="72" selection-end-line="38" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -99,7 +122,7 @@
         <entry file="file://$PROJECT_DIR$/src/gui/LoadingScreenController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="150">
-              <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+              <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -110,8 +133,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/GuiParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="461">
-              <caret line="53" column="21" lean-forward="true" selection-start-line="53" selection-start-column="21" selection-end-line="53" selection-end-column="21" />
+            <state relative-caret-position="15">
+              <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -122,8 +145,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/gui/GuiController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="416">
-              <caret line="180" column="26" lean-forward="true" selection-start-line="180" selection-start-column="26" selection-end-line="180" selection-end-column="26" />
+            <state relative-caret-position="180">
+              <caret line="319" column="74" lean-forward="true" selection-start-line="319" selection-start-column="74" selection-end-line="319" selection-end-column="74" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -138,8 +161,8 @@
       <list>
         <option value="Interface" />
         <option value="CSS File" />
-        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="FxmlFile" />
       </list>
     </option>
   </component>
@@ -196,11 +219,12 @@
         <option value="$PROJECT_DIR$/src/gui/button.css" />
         <option value="$PROJECT_DIR$/src/gui/GuiParser.java" />
         <option value="$PROJECT_DIR$/src/gui/clientgui.fxml" />
-        <option value="$PROJECT_DIR$/src/gui/TileView.java" />
-        <option value="$PROJECT_DIR$/src/gui/GuiController.java" />
-        <option value="$PROJECT_DIR$/src/gui/StartingScreenController.java" />
         <option value="$PROJECT_DIR$/src/gui/LoadingScreenController.java" />
         <option value="$PROJECT_DIR$/src/gui/Main.java" />
+        <option value="$PROJECT_DIR$/src/gui/StartingScreenController.java" />
+        <option value="$PROJECT_DIR$/src/gui/TileView.java" />
+        <option value="$PROJECT_DIR$/src/bla.fxml" />
+        <option value="$PROJECT_DIR$/src/gui/GuiController.java" />
       </list>
     </option>
   </component>
@@ -237,12 +261,6 @@
               <item name="PineappleView" type="b2602c69:ProjectViewProjectNode" />
               <item name="PineappleView" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="gameinfo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="PineappleView" type="b2602c69:ProjectViewProjectNode" />
-              <item name="PineappleView" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="gui" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -264,7 +282,10 @@
               <item name="PineappleView" type="b2602c69:ProjectViewProjectNode" />
               <item name="PineappleView" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="server" type="462c0819:PsiDirectoryNode" />
+              <item name="gui" type="462c0819:PsiDirectoryNode" />
+              <item name="images" type="462c0819:PsiDirectoryNode" />
+              <item name="tiles" type="462c0819:PsiDirectoryNode" />
+              <item name="joker" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -284,19 +305,19 @@
     <property name="OverrideImplement.combined" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547668334856" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1547675364937" />
     <property name="dynamic.classpath" value="false" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="project.structure.last.edited" value="Libraries" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
     <property name="recentsLimit" value="5" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="preferences.pathVariables" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/server" />
       <recent name="$PROJECT_DIR$/src" />
+      <recent name="$PROJECT_DIR$/src/server" />
       <recent name="$PROJECT_DIR$/src/gui/images" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
@@ -426,7 +447,7 @@
       <workItem from="1547419725707" duration="1789000" />
       <workItem from="1547468666150" duration="17335000" />
       <workItem from="1547547474663" duration="20442000" />
-      <workItem from="1547646405951" duration="19872000" />
+      <workItem from="1547646405951" duration="26232000" />
     </task>
     <task id="LOCAL-00001" summary="test">
       <created>1547234686485</created>
@@ -666,11 +687,18 @@
       <option name="project" value="LOCAL" />
       <updated>1547663508510</updated>
     </task>
-    <option name="localTasksCounter" value="35" />
+    <task id="LOCAL-00035" summary="view without model">
+      <created>1547668362079</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1547668362079</updated>
+    </task>
+    <option name="localTasksCounter" value="36" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="176982000" />
+    <option name="totallyTimeSpent" value="183342000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -683,8 +711,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="52" y="23" width="1670" height="1025" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.21007371" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.21007371" />
       <window_info id="Structure" order="1" weight="0.2498645" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
@@ -693,8 +722,8 @@
       <window_info id="UI Designer" order="6" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3290461" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.19935691" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.39915073" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.19935691" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39871383" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3290461" />
@@ -730,7 +759,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
-    <MESSAGE value="added parser" />
     <MESSAGE value="tile onmouseclick and hbox onmouseclick interferring" />
     <MESSAGE value="added &quot;add here&quot; buttons for front and back of existing combination" />
     <MESSAGE value="reworked &quot;add here&quot; buttons" />
@@ -755,7 +783,8 @@
     <MESSAGE value="minor changes" />
     <MESSAGE value="major changes, some stuff works some doesnt" />
     <MESSAGE value="reworked GuiParser induced errors, some already fixed" />
-    <option name="LAST_COMMIT_MESSAGE" value="reworked GuiParser induced errors, some already fixed" />
+    <MESSAGE value="view without model" />
+    <option name="LAST_COMMIT_MESSAGE" value="view without model" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -774,14 +803,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PATH_TO_FX$/javafx.graphics.jar!/javafx/application/Application.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="161">
-          <caret line="70" column="23" selection-start-line="70" selection-start-column="23" selection-end-line="70" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/sample/ClientGui.java" />
     <entry file="file://$PROJECT_DIR$/src/gui/images/tiles/blue/1.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -1021,16 +1042,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/TileView.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="40" column="62" selection-start-line="40" selection-start-column="62" selection-end-line="40" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/clientgui.fxml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2307">
@@ -1073,7 +1084,7 @@
     <entry file="file://$PROJECT_DIR$/src/gui/LoadingScreenController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="150">
-          <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+          <caret line="10" column="26" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1082,18 +1093,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="562">
-          <caret line="46" lean-forward="true" selection-start-line="46" selection-end-line="46" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/gui/GuiParser.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="461">
-          <caret line="53" column="21" lean-forward="true" selection-start-line="53" selection-start-column="21" selection-end-line="53" selection-end-column="21" />
+        <state relative-caret-position="690">
+          <caret line="46" selection-start-line="46" selection-end-line="46" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1102,18 +1103,49 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/StartingScreenController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="43" column="24" lean-forward="true" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+        <state relative-caret-position="570">
+          <caret line="38" column="72" selection-start-line="38" selection-start-column="72" selection-end-line="38" selection-end-column="72" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/images/tiles/joker/joker.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/GuiParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/gui/TileView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="490">
+          <caret line="49" selection-start-line="49" selection-end-line="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/bla.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="20" selection-start-line="10" selection-start-column="17" selection-end-line="10" selection-end-column="20" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/GuiController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="416">
-          <caret line="180" column="26" lean-forward="true" selection-start-line="180" selection-start-column="26" selection-end-line="180" selection-end-column="26" />
+        <state relative-caret-position="180">
+          <caret line="319" column="74" lean-forward="true" selection-start-line="319" selection-start-column="74" selection-end-line="319" selection-end-column="74" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

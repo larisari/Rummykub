@@ -14,8 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import server.Client;
-import server.Server;
 
 public class StartingScreenController {
 
@@ -39,8 +37,8 @@ public class StartingScreenController {
    */
   @FXML
   protected void handleCreateGame(MouseEvent event) throws IOException {
-    Server server = new Server();
-    Client host = new Client("localhost");
+ //   Server server = new Server();
+ //   Client host = new Client("localhost");
     loadLoadingScreen();
 // TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
   }
