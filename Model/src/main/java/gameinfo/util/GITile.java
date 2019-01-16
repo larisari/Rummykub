@@ -15,8 +15,10 @@ public class GITile {
   }
 
   private void checkForJoker() throws IllegalArgumentException {
-    if (!(number.equals(GINumber.JOKER) && color.equals(GIColor.JOKER))) {
-      throw new IllegalArgumentException("Joker must have GIColor JOKER and GINumber JOKER");
+    if (number.equals(GINumber.JOKER) && !color.equals(GIColor.JOKER)) {
+      throw new IllegalArgumentException("Joker must have GIColor JOKER.");
+    } else if (!number.equals(GINumber.JOKER) && color.equals(GIColor.JOKER)) {
+      throw new IllegalArgumentException("Joker must have GINumber JOKER.");
     }
   }
 
