@@ -1,37 +1,42 @@
 package gameinfo;
 
-import gameinfo.tile.Tile;
+import gameinfo.util.GIPoints;
+import gameinfo.util.GITile;
+import gameinfo.util.GITuple;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface GIGameInfo {
 
-  void registerBy(String id);
+  void registerBy(Integer id);
 
-  void deregisterBy(String id);
+  void deregisterBy(Integer id);
 
   void start();
 
-  Optional<Boolean> isValidPlayerBy(String id);
-
-  Optional<String> getNextPlayerId();
-
-  // just for test TODO: REMOVE
-  Optional<List<String>> getAllPlayerIds();
-
-  Optional<Boolean> play(List<Tile> combination, String id);
-
-  Optional<Boolean> play(List<Tile> tilesFromHand, List<Tile> tilesFromBoard,
-      List<List<Tile>> newCombinations, String id);
-
-  Optional<List<Tile>> drawBy(String id);
-
-  Optional<List<Tile>> getAllTilesBy(String id);
-
-  Optional<Integer> getPointsBy(String id);
-
   Optional<Integer> getNumberOfPlayers();
 
-  Optional<Boolean> finishedTurnBy(String id);
+  List<Integer> getAllPlayerIds();
+
+  Optional<Integer> getNextPlayerId();
+
+  Optional<GITuple<Integer, Boolean>> isValidPlayerBy(Integer id);
+
+  Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id);
+
+  Optional<GITuple<Integer, Boolean>> play(List<List<GITile>> combinations, Integer id);
+
+  Optional<GITuple<Integer, Boolean>> play(
+      List<GITile> tilesFromHand,
+      List<GITile> tilesFromBoard,
+      List<List<GITile>> newCombinations,
+      Integer id);
+
+  Optional<GITuple<Integer, List<GITile>>> getAllTilesBy(Integer id);
+
+  // TODO !!! SHOULD BE NEGATIVE !!!
+  Optional<GITuple<Integer, GIPoints>> calculatePointsBy(Integer id);
+
+  Optional<GITuple<Integer, Boolean>> finishedTurnBy(Integer id);
 }

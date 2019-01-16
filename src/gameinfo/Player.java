@@ -1,16 +1,17 @@
 package gameinfo;
 
-import gameinfo.tile.Tile;
+import gameinfo.util.GIPoints;
+import gameinfo.util.GITile;
 
 import java.util.List;
 
 class Player {
 
   private Hand hand;
-  private String id;
+  private Integer id;
   private boolean isFirstMove;
 
-  Player(String id, PointsCalculator calculator) {
+  Player(Integer id, PointsCalculator calculator) {
     this.hand = new Hand(calculator);
     this.id = id;
     isFirstMove = true;
@@ -20,33 +21,33 @@ class Player {
     return isFirstMove;
   }
 
-  List<Tile> getTilesOnHand() {
+  List<GITile> getTilesOnHand() {
     return hand.getTilesOnHand();
   }
 
-  String getId() {
+  Integer getId() {
     return id;
   }
 
-  void put(Tile tile) {
+  void put(GITile tile) {
     hand.put(tile);
   }
 
-  void put(List<Tile> stack) {
-    for (Tile tile : stack) {
+  void put(List<GITile> stack) {
+    for (GITile tile : stack) {
       hand.put(tile);
     }
   }
 
-  void remove(List<Tile> tiles) {
+  void remove(List<GITile> tiles) {
     isFirstMove = false;
 
-    for (Tile tile : tiles) {
+    for (GITile tile : tiles) {
       hand.removeTile(tile);
     }
   }
 
-  int getPointsOfHand() {
-    return hand.getPoints();
+  GIPoints calculatePointsOfHand() {
+    return hand.calculatePoints();
   }
 }

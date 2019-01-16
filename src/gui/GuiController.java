@@ -1,6 +1,7 @@
 package gui;
 
-import gameinfo.tile.Tile;
+import gameinfo.util.GITile;
+import gameinfo.util.GITuple;
 import gui.util.Image;
 import gameinfo.GIFactory;
 import gameinfo.GIGameInfo;
@@ -60,7 +61,11 @@ public class GuiController {
   private Label playerRightName;
   @FXML
   private Label playerLeftName;
+  @FXML private HBox selectionBoard;
+  @FXML private Button placeOnBoard;
+
   private List<ImageView> selectedTiles = new ArrayList<>();
+  private List<List<ImageView>> selectedCombinations = new ArrayList<>();
   private List<HBox> placedCombinations = new ArrayList<>();
   private List<Image> hand = new ArrayList<>();
   private TileView tView = new TileView();
@@ -68,6 +73,9 @@ public class GuiController {
   static int numberOfPlayers;
   private static final int HAND_SPACE = 13;
   private GIGameInfo gameInfo;
+  private int turn = 0;
+  private final static int MAX_BOXHEIGHT = 68;
+  private final static int MAX_BOXWIDTH = 45;
 
   public GuiController() {
     gameInfo = GIFactory.make();
@@ -130,15 +138,39 @@ public class GuiController {
     }
   }
 
-  /**
-   * checks if selected combination is valid.
-   */
+
   @FXML
   protected void handleEnterComb(MouseEvent event) {
     if (!selectedTiles.isEmpty()) {
-      String selectedT = GuiParser.parseToString(selectedTiles);
-      Optional<Boolean> valid = gameInfo.play(GuiParser.parseStringToTile(selectedT), "1");
-      if (valid.get()) {
+      List<ImageView> sTiles = new ArrayList<>();
+        HBox comb = new HBox();
+        comb.prefHeight(MAX_BOXHEIGHT);
+        comb.prefWidth(selectedTiles.size()*MAX_BOXWIDTH);
+        for (int i = 0; i < selectedTiles.size(); i++) {
+          sTiles.add(selectedTiles.get(i));
+          comb.getChildren().add(sTiles.get(i));
+        }
+        selectionBoard.getChildren().add(comb);
+        selectedCombinations.add(sTiles);
+        cancelSelection();
+
+      }
+    }
+
+
+  /**
+   * checks if selected combination is valid.
+   */
+  @FXML protected void handleplaceOnBoard(MouseEvent event) {
+    System.out.println(selectionBoard.getChildren().size());
+    if (!selectionBoard.getChildren().isEmpty()) {
+      List<List<GITile>> allCombinations = new ArrayList<>();
+      for (int i = 0; i < selectedCombinations.size(); i++) {
+        String selectedT = GuiParser.parseToString(selectedCombinations.get(i));
+        allCombinations.add(GuiParser.parseStringToTile(selectedT));
+      }
+      Optional<GITuple<Integer, Boolean>> valid = gameInfo.play(allCombinations, 1);
+      if (valid.get().getSecond()) {
         // if (client.send(GuiParser.parseToString(selectedTiles)) == true) {
         placeTiles();
         bag.setDisable(true);
@@ -146,24 +178,51 @@ public class GuiController {
         selectedTiles.clear();
         updateHand();
       }
+    } else {
+      return;
     }
   }
 
+
+  /**
+   * For placing new combinations on the board. validated in handleEnterComb
+   */
+  void placeTiles() {
+    System.out.println(selectionBoard.getChildren().size());
+    for (int i = 0; i < selectedCombinations.size(); i++) {
+      HBox comb = new HBox();
+      List<ImageView> combination = selectedCombinations.get(i);
+      for (int j = 0; j < combination.size(); j++) {
+        ImageView tile = combination.get(j);
+        tile.setStyle("-fx-translate-y: 0");
+        tile.setEffect(null);
+        comb.getChildren().add(tile);
+      }
+      placedCombinations.add(comb);
+      board.getChildren().add(comb);
+    }
+    selectedCombinations.clear();
+    selectedTiles.clear();
+    updateHand();
+    // if (client.send(hand).isEmpty(){
+    // TODO öffne Gewinnerfenster
+
+  }
   @FXML
   protected void handleDrawTile(MouseEvent event) {
-    gameInfo.registerBy("1");
-    if (gameInfo.isValidPlayerBy("1").get()) {
-      String parsedTiles = GuiParser.parseTileToString(gameInfo.drawBy("1"));
+    gameInfo.registerBy(1);
+    if (gameInfo.isValidPlayerBy(1).get().getSecond()) {
+      String parsedTiles = GuiParser.parseTileToString(gameInfo.drawBy(1));
       hand = tView.createImgs(parsedTiles);
       for (int i = 0; i < hand.size(); i++) {
         createTile(hand.get(i));
       }
-
+//bag.setDisable(true); //TODO ist noch enabled zum testen.
       // if (client.send("isValidPlayer").equals(true){
       // client.send("draw");
-      updateHand();
       // playerTurn.setText(client.send("getNextPlayerID"));
       //  disableControl();
+      // turn ++;
       // }
       //
     }
@@ -193,6 +252,7 @@ public class GuiController {
   private void updateHand() {
     refillImageViews(topHand);
     refillImageViews(bottomHand);
+    //TODO refillImageViews(selectionBoard)
     // String handTiles = client.receive(getAllTilesBy);
     // if (handTiles.equals(""){
     // endGame();
@@ -215,23 +275,25 @@ public class GuiController {
 
   @FXML
   protected void handleEndTurn(MouseEvent event) {
-    List<List<Tile>> allCombinations = new ArrayList<>();
-    List<ImageView> comb = new ArrayList<>();
+
+    List<List<GITile>> allCombinations =  new ArrayList<>();
     for (int i = 0; i < placedCombinations.size(); i++) {
       HBox box = placedCombinations.get(i);
+      List<ImageView> comb = new ArrayList<>();
       for (int j = 0; j < box.getChildren().size(); j++) {
-        comb = new ArrayList<>();
         ImageView iView = (ImageView) box.getChildren().get(j);
         comb.add(iView);
       }
       allCombinations.add(GuiParser.parseStringToTile(GuiParser.parseToString(comb)));
     }
- //   if (gameInfo.play(allCombinations, "1").get()) { //TODO enable wenn play List<List<Tile>> format hat. (else auch)
-            // if (client.send(boardcombinations)==true){
-            //client.endTurn();
-            // playerTurn.setText(client.send("getNextPlayerID"));
+
+    if (gameInfo.play(allCombinations, 1).get().getSecond()) {
+      // if (client.send(boardcombinations)==true){
+      //client.endTurn();
+      // playerTurn.setText(client.send("getNextPlayerID"));
       disableControl();
-  //  } else {
+      turn ++;
+    } else {
       Alert alert = new Alert(AlertType.CONFIRMATION, "Error! Unable to end turn. Rearrange "
           + "the combinations on the board to valid combinations", ButtonType.OK);
       alert.showAndWait();
@@ -240,7 +302,7 @@ public class GuiController {
         //do stuff
       }
     }
-
+  }
 
   /**
    * funktioniert nur für Tiles die von der Hand kommen.
@@ -269,13 +331,32 @@ public class GuiController {
 
   @FXML
   protected void handleCancelSel(MouseEvent event) {
+    if (!selectionBoard.getChildren().isEmpty()) {
+      for (int i = 0; i < selectionBoard.getChildren().size(); i++) {
+        HBox comb = (HBox) selectionBoard.getChildren().get(i);
+        for (int j = 0; j < comb.getChildren().size(); j++) {
+          if (topHand.getChildren().size() <= HAND_SPACE){
+            topHand.getChildren().add(comb.getChildren().get(j));
+          }
+          if (topHand.getChildren().size() == HAND_SPACE && bottomHand.getChildren().size() <= HAND_SPACE){
+            bottomHand.getChildren().add(comb.getChildren().get(j));
+          }
+        }
+      }
+
+
+      cancelSelection();
+
+    }
+  }
+
+  private void cancelSelection(){
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView imageV = selectedTiles.get(i);
       imageV.setStyle("-fx-translate-y: 0");
       imageV.setEffect(null);
     }
     selectedTiles.clear();
-
   }
 
   /**
@@ -289,10 +370,12 @@ public class GuiController {
         Button front = new Button("add here");
         front.setOnMousePressed(event1 -> {
           addToFront(box);
+          deleteAddToButtons();
         });
         Button back = new Button("add here");
         back.setOnMousePressed(event2 -> {
           addToBack(box);
+          deleteAddToButtons();
         });
         box.getChildren().add(0, front);
         box.getChildren().add(box.getChildren().size(), back);
@@ -330,25 +413,6 @@ public class GuiController {
   }
 
 
-  /**
-   * For placing new combinations on the board. validated in handleEnterComb
-   */
-  void placeTiles() {
-    HBox comb = new HBox();
-    for (int i = 0; i < selectedTiles.size(); i++) {
-      ImageView tile = selectedTiles.get(i);
-      tile.setStyle("-fx-translate-y: 0");
-      tile.setEffect(null);
-      comb.getChildren().add(tile);
-    }
-    placedCombinations.add(comb);
-    board.getChildren().add(comb);
-    selectedTiles.clear();
-    updateHand();
-    // if (client.send(hand).isEmpty(){
-    // TODO öffne Gewinnerfenster
-
-  }
 
   /**
    * For placing tiles to existing combinations on board. check if new tiles may be laid to existing
@@ -364,12 +428,12 @@ public class GuiController {
     String boardTiles = GuiParser.parseToString(combination);
     combination.addAll(0, selectedTiles);
     String combTiles = GuiParser.parseToString(combination);
-    List<Tile> selectedTls = GuiParser.parseStringToTile(selectedT);
-    List<Tile> combinationTiles = GuiParser.parseStringToTile(combTiles);
-    List<Tile> boardT = GuiParser.parseStringToTile(boardTiles);
-    List<List<Tile>> newCombs = new ArrayList<>();
+    List<GITile> selectedTls = GuiParser.parseStringToTile(selectedT);
+    List<GITile> combinationTiles = GuiParser.parseStringToTile(combTiles);
+    List<GITile> boardT = GuiParser.parseStringToTile(boardTiles);
+    List<List<GITile>> newCombs = new ArrayList<>();
     newCombs.add(combinationTiles);
-    if (gameInfo.play(selectedTls, boardT, newCombs, "1").get()) {
+    if (gameInfo.play(selectedTls, boardT, newCombs, 1).get().getSecond()) {
 
       //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
       deleteAddToButtons();
@@ -391,6 +455,7 @@ public class GuiController {
     } else {
       deleteAddToButtons();
     }
+    deleteAddToButtons();
   }
 
 
@@ -404,12 +469,12 @@ public class GuiController {
     String selectedT = GuiParser.parseToString(selectedTiles);
     combination.addAll(selectedTiles);  //selected tiles hinten.
     String combTiles = GuiParser.parseToString(combination);
-    List<Tile> selectedTls = GuiParser.parseStringToTile(selectedT);
-    List<Tile> combinationTiles = GuiParser.parseStringToTile(combTiles);
-    List<Tile> boardT = GuiParser.parseStringToTile(boardTiles);
-    List<List<Tile>> newCombs = new ArrayList<>();
+    List<GITile> selectedTls = GuiParser.parseStringToTile(selectedT);
+    List<GITile> combinationTiles = GuiParser.parseStringToTile(combTiles);
+    List<GITile> boardT = GuiParser.parseStringToTile(boardTiles);
+    List<List<GITile>> newCombs = new ArrayList<>();
     newCombs.add(combinationTiles);
-    if (gameInfo.play(selectedTls, boardT, newCombs, "1").get()) {
+    if (gameInfo.play(selectedTls, boardT, newCombs, 1).get().getSecond()) {
       //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
       deleteAddToButtons();
       for (int j = 0; j < selectedTiles.size(); j++) {
@@ -430,6 +495,7 @@ public class GuiController {
     } else {
       deleteAddToButtons();
     }
+    deleteAddToButtons();
   }
 
 
@@ -453,21 +519,6 @@ public class GuiController {
       }
     }
   }
-  /**
-   * don't need because Imageviews update themselves automatically in hbox!!!!
-   */
-  /**
-   private void updateBoard(HBox comb) {
-   for (int i = 0; i < placedCombinations.size(); i++) {
-   if (placedCombinations.get(i).idProperty().equals(comb.idProperty())) {
-   System.out.println(placedCombinations.get(i).getChildren());
-   placedCombinations.remove(i);
-   placedCombinations.add(comb);
-   System.out.println(placedCombinations.get(i).getChildren() + "after");
-   }
-   }
-   }
-   **/
 
   /**
    *
@@ -478,6 +529,7 @@ public class GuiController {
     cancelSelection.setDisable(true);
     addToExisting.setDisable(true);
     manipulate.setDisable(true);
+    placeOnBoard.setDisable(true);
     List<ImageView> handTiles = new ArrayList<>();
     for (int i = 0; i < topHand.getChildren().size(); i++) {
       ImageView iView = (ImageView) topHand.getChildren().get(i);
@@ -506,8 +558,6 @@ public class GuiController {
 }
 
 // TODO Anzeige für wenn ein Player aussteigt.
-
-// TODO Anzeige mit Gewinner (+ Punktestand der anderen Spieler)
 
 //TODO hover funktion für bag
 

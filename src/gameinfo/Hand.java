@@ -1,13 +1,14 @@
 package gameinfo;
 
-import gameinfo.tile.Tile;
+import gameinfo.util.GIPoints;
+import gameinfo.util.GITile;
 
 import java.util.ArrayList;
 import java.util.List;
 
 class Hand {
 
-  private List<Tile> tilesOnHand;
+  private List<GITile> tilesOnHand;
   private PointsCalculator calculator;
 
   Hand(PointsCalculator calculator) {
@@ -19,19 +20,22 @@ class Hand {
     return tilesOnHand.size();
   }
 
-  void put(Tile tile) {
+  void put(GITile tile) {
     tilesOnHand.add(tile);
   }
 
-  void removeTile(Tile tile) {
+  void removeTile(GITile tile) {
     tilesOnHand.remove(tile);
   }
 
-  List<Tile> getTilesOnHand() {
+  List<GITile> getTilesOnHand() {
     return tilesOnHand;
   }
 
-  int getPoints() {
-    return calculator.getPointsForHand(tilesOnHand);
+  GIPoints calculatePoints() {
+    Integer pointsAsInteger = calculator.calculatePointsForHand(tilesOnHand);
+    GIPoints points = new GIPoints(pointsAsInteger);
+
+    return points;
   }
 }

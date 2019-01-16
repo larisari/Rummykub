@@ -1,11 +1,14 @@
 package gameinfo;
 
-import gameinfo.tile.Tile;
+import gameinfo.util.GITile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 class Rules {
+
+  //TODO ? remove class ?
 
   private GameFlow gameFlow;
   private PointsCalculator pointsCalculator;
@@ -17,71 +20,62 @@ class Rules {
     combRules = new CombRules(pointsCalculator);
   }
 
-  void registerBy(String id) {
+  void registerBy(Integer id) {
     gameFlow.registerPlayerBy(id);
+    gameFlow.addPlayerToSequence(id);
   }
 
-  void deregisterPlayerBy(String id) {
+  void deregisterPlayerBy(Integer id) {
     gameFlow.deregisterPlayerBy(id);
+    gameFlow.removePlayerFromSequence(id);
   }
 
   void startGame() {
     this.gameFlow.startGame();
   }
 
+  void addDistribution() {
+    gameFlow.addDistribution();
+  }
+
+  void nextPlayersTurn() {
+    gameFlow.nextPlayersTurn();
+  }
+
+  int getNumberOfPlayers() {
+    return gameFlow.getNumberOfPlayers();
+  }
+
+  Optional<Player> getPlayerBy(Integer id) {
+    return gameFlow.getPlayerBy(id);
+  }
+
+  boolean isPlayerExistingBy(Integer id) {
+    return gameFlow.playerExists(id);
+  }
+
+  Integer getNextPlayerID() {
+    return gameFlow.getNextPlayerID();
+  }
+
+  boolean isValidPlayerBy(Integer id) {
+    return gameFlow.isValidPlayer(id);
+  }
+
+  boolean isValid(List<List<GITile>> combinations) {
+    return combRules.isValid(combinations);
+  }
+
+  boolean isValid(List<List<GITile>> combinations, int minimumPoints) {
+    return combRules.isValid(combinations, minimumPoints);
+  }
+
   boolean isDistributing() {
     return gameFlow.isDistributing();
   }
 
-  boolean isPlayerExistingBy(String id) {
-    return gameFlow.playerExists(id);
-  }
-
-  boolean isValidPlayerBy(String id) {
-    return this.gameFlow.isValidPlayer(id);
-  }
-
-  List<Player> getAllPlayers() {
+  Map<Integer, Player> getAllPlayers() {
     return gameFlow.getPlayers();
-  }
-
-  Optional<Player> getPlayerBy(String id) {
-    return gameFlow.getPlayerBy(id);
-  }
-
-  String getNextPlayerID() {
-    return gameFlow.getNextPlayerID();
-  }
-
-  boolean isValid(List<Tile> combination) {
-    return combRules.isValid(combination);
-  }
-
-  boolean isValid(List<Tile> combination, int minimumPoints) {
-    return combRules.isValid(combination, minimumPoints);
-  }
-
-//  int getPointsFor(List<Tile> combination) {
-//    if (combRules.isGroup(combination)) {
-//      return pointsCalculator.getPointsForGroup(combination);
-//    } else if (combRules.isStreet(combination)) {
-//      return pointsCalculator.getPointsForStreet(combination);
-//    } else {
-//      // TODO !!! handle better !!!
-//      throw new IllegalStateException();
-//    }
-//  }
-
-  void nextPlayersTurn() {
-    this.gameFlow.nextPlayersTurn();
-  }
-
-  int getNumberOfPlayers() {
-    return this.gameFlow.getNumberOfPlayers();
-  }
-
-  void addDistribution() {
-    gameFlow.addDistribution();
   }
 
 }
