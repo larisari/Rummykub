@@ -45,10 +45,10 @@ public class ServerListener extends Thread {
             // create a new thread object
             ServerClientCommunication t = new ServerClientCommunication(s, in, out, clientID);
             // Invoking the start() method
-            Server.gameInfo.registerBy(clientID);
             t.start();
 
             clients.add(t);
+            Server.gameInfo.registerBy(clientID);
             clientID++;
           } else {
             isRunning = false;
