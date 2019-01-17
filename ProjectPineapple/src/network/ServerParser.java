@@ -38,6 +38,7 @@ public class ServerParser {
         break;
       case "startGame":
         Server.gameInfo.startGame();
+        Server.broadcastToAllClients("forStartGame");
         break;
       case "getNextPlayerID":
         Optional<Integer> resultID = Server.gameInfo.getNextPlayerId();

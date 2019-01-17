@@ -1,8 +1,6 @@
 package gui;
 
-import java.util.Optional;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -13,6 +11,8 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.util.Optional;
+
 public class Main extends Application {
 //private Host host;
 
@@ -20,7 +20,7 @@ public Main(){
 
 }
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Parent root;
         root = FXMLLoader.load(getClass().getResource("startingScreen.fxml"));
         Scene scene = new Scene(root);

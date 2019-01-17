@@ -29,7 +29,7 @@ public class Server {
     }
   }
 
-  public void broadcastToAllClients(String message) {
+  public static void broadcastToAllClients(String message) {
     List<ServerClientCommunication> clients = ServerListener.getClients();
 
     String command = "";

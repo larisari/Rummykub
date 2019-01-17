@@ -4,6 +4,7 @@ import gui.GuiController;
 import gui.LoadingScreenController;
 import javafx.scene.image.ImageView;
 
+import java.io.IOException;
 import java.util.List;
 
 public class ClientParser {
@@ -113,6 +114,12 @@ public class ClientParser {
         guiController.setPlayerID(Integer.parseInt(messageAsArray[1]));
         break;
       // TODO REST
+      case "forStartGame":
+        try {
+          loadingScreenController.openGameWindow();
+        } catch (IOException e) {
+        }
+        break;
     }
   }
 
