@@ -232,7 +232,6 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     } else {
       return Optional.empty();
     }
-
   }
 
   private List<GITile> getStackFor(Integer id) {
