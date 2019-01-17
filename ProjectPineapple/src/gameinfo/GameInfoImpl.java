@@ -196,17 +196,19 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public Optional<GITuple<Integer, Boolean>> finishedTurnBy(Integer id) {
+  public Optional<GITuple<Integer, List<List<GITile>>>> finishedTurnBy(Integer id) {
     if (!rules.isPlayerExistingBy(id)) {
       return Optional.empty();
     }
 
     if (rules.isValidPlayerBy(id)) {
       rules.nextPlayersTurn();
-      return Optional.of(new GITuple<>(id, true));
+      return Optional.of(new GITuple<>(id, board.getActiveCombos()));
     } else {
       // it is not the players turn.
-      return Optional.of(new GITuple<>(id, false));
+      //return Optional.of(new GITuple<>(id, board.getActiveCombos()));
+      // TODO !!! HANDLE BETTER !!!
+      return Optional.empty();
     }
   }
 

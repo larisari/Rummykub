@@ -1,33 +1,32 @@
 package gui;
 
-import gameinfo.GIFactory;
-import gameinfo.GIGameInfo;
 import gameinfo.util.GITile;
 import gameinfo.util.GITuple;
 import gui.util.Image;
+import gameinfo.GIFactory;
+import gameinfo.GIGameInfo;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 //test: mousepressed besser als mouseclicked?
 //Alle anfragen an Server.
 
 public class GuiController {
 
-  private static final int HAND_SPACE = 13;
-  private final static int MAX_BOXHEIGHT = 68;
-  private final static int MAX_BOXWIDTH = 45;
-  static int numberOfPlayers;
   //Client client;
   //Host host;
   @FXML
@@ -62,18 +61,21 @@ public class GuiController {
   private Label playerRightName;
   @FXML
   private Label playerLeftName;
-  @FXML
-  private HBox selectionBoard;
-  @FXML
-  private Button placeOnBoard;
+  @FXML private HBox selectionBoard;
+  @FXML private Button placeOnBoard;
+
   private List<ImageView> selectedTiles = new ArrayList<>();
   private List<List<ImageView>> selectedCombinations = new ArrayList<>();
   private List<HBox> placedCombinations = new ArrayList<>(); //wird an Server geschickt.
   private List<Image> hand = new ArrayList<>();
   private TileView tView = new TileView();
   private int playerID;
+  static int numberOfPlayers;
+  private static final int HAND_SPACE = 13;
   private GIGameInfo gameInfo;
   private int turn = 0;
+  private final static int MAX_BOXHEIGHT = 68;
+  private final static int MAX_BOXWIDTH = 45;
 
   public GuiController() {
     gameInfo = GIFactory.make();
@@ -141,26 +143,25 @@ public class GuiController {
   protected void handleEnterComb(MouseEvent event) {
     if (!selectedTiles.isEmpty()) {
       List<ImageView> sTiles = new ArrayList<>();
-      HBox comb = new HBox();
-      comb.prefHeight(MAX_BOXHEIGHT);
-      comb.prefWidth(selectedTiles.size() * MAX_BOXWIDTH);
-      for (int i = 0; i < selectedTiles.size(); i++) {
-        sTiles.add(selectedTiles.get(i));
-        comb.getChildren().add(sTiles.get(i));
-      }
-      selectionBoard.getChildren().add(comb);
-      selectedCombinations.add(sTiles);
-      cancelSelection();
+        HBox comb = new HBox();
+        comb.prefHeight(MAX_BOXHEIGHT);
+        comb.prefWidth(selectedTiles.size()*MAX_BOXWIDTH);
+        for (int i = 0; i < selectedTiles.size(); i++) {
+          sTiles.add(selectedTiles.get(i));
+          comb.getChildren().add(sTiles.get(i));
+        }
+        selectionBoard.getChildren().add(comb);
+        selectedCombinations.add(sTiles);
+        cancelSelection();
 
+      }
     }
-  }
 
 
   /**
    * checks if selected combination is valid.
    */
-  @FXML
-  protected void handleplaceOnBoard(MouseEvent event) {
+  @FXML protected void handleplaceOnBoard(MouseEvent event) {
     System.out.println(selectionBoard.getChildren().size());
     if (!selectionBoard.getChildren().isEmpty()) {
       List<List<GITile>> allCombinations = new ArrayList<>();
@@ -175,7 +176,6 @@ public class GuiController {
         bag.setDisable(true);
         disableTileControl(selectedTiles);
         selectedTiles.clear();
-        updateHand();
       } else {
         cancelSelection();
       }
@@ -201,13 +201,16 @@ public class GuiController {
       board.getChildren().add(comb);
     }
     selectedCombinations.clear();
+    int size = selectionBoard.getChildren().size();
+    for (int i = 0; i < size; i++){
+      selectionBoard.getChildren().remove(selectionBoard.getChildren().get(i));
+    }
     selectedTiles.clear();
     updateHand();
     // if (client.send(hand).isEmpty(){
     // TODO öffne Gewinnerfenster
 
   }
-
   @FXML
   protected void handleDrawTile(MouseEvent event) {
     gameInfo.registerBy(1);
@@ -218,7 +221,7 @@ public class GuiController {
       for (int i = 0; i < hand.size(); i++) {
         createTile(hand.get(i));
       }
-//bag.setDisable(true); //TODO ist noch enabled zum testen.
+    //  bag.setDisable(true);
       // if (client.send("isValidPlayer").equals(true){
       // client.send("draw");
       // playerTurn.setText(client.send("getNextPlayerID"));
@@ -253,7 +256,7 @@ public class GuiController {
   private void updateHand() {
     refillImageViews(topHand);
     refillImageViews(bottomHand);
-    //TODO refillImageViews(selectionBoard)
+
     // String handTiles = client.receive(getAllTilesBy);
     // if (handTiles.equals(""){
     // endGame();
@@ -277,7 +280,7 @@ public class GuiController {
   @FXML
   protected void handleEndTurn(MouseEvent event) {
 
-    List<List<GITile>> allCombinations = new ArrayList<>();
+    List<List<GITile>> allCombinations =  new ArrayList<>();
     for (int i = 0; i < placedCombinations.size(); i++) {
       HBox box = placedCombinations.get(i);
       List<ImageView> comb = new ArrayList<>();
@@ -294,10 +297,10 @@ public class GuiController {
       // playerTurn.setText(client.send("getNextPlayerID"));
       disableControl();
       cancelSelection();
-      turn++;
+      turn ++;
     } else {
       Alert alert = new Alert(AlertType.CONFIRMATION, "Error! Unable to end turn. Rearrange "
-              + "the combinations on the board to valid combinations", ButtonType.OK);
+          + "the combinations on the board to valid combinations", ButtonType.OK);
       alert.showAndWait();
 
       if (alert.getResult() == ButtonType.YES) {
@@ -308,13 +311,14 @@ public class GuiController {
 
   /**
    * funktioniert nur für Tiles die von der Hand kommen.
+   * ne sollte eigentlich für alle funktionieren.
    */
   @FXML
   protected void handleTileClick(
-          MouseEvent event) {
+      MouseEvent event) {
     ImageView imageV = (ImageView) event.getSource();
     if (topHand.getChildren().contains(imageV) || bottomHand.getChildren()
-            .contains(imageV)) { //gilt nur wenn Tile auf der Hand liegt.
+        .contains(imageV)) { //gilt nur wenn Tile auf der Hand liegt.
       if (imageV.getImage() == null || imageV.getImage().isError()) {
         return;
       }
@@ -331,20 +335,22 @@ public class GuiController {
     }
   }
 
+
+  //TODO passt noch nicht. mittlere Tiles von selection werden nicht gecancelled
   @FXML
   protected void handleCancelSel(MouseEvent event) {
     if (!selectionBoard.getChildren().isEmpty()) {
+      System.out.println(selectionBoard.getChildren().size() + " selectionboardsize");
       for (int i = 0; i < selectionBoard.getChildren().size(); i++) {
         HBox comb = (HBox) selectionBoard.getChildren().get(i);
+
         for (int j = 0; j < comb.getChildren().size(); j++) {
-          if (topHand.getChildren().size() <= HAND_SPACE) {
-            topHand.getChildren().add(comb.getChildren().get(j));
-          }
-          if (topHand.getChildren().size() == HAND_SPACE
-                  && bottomHand.getChildren().size() <= HAND_SPACE) {
-            bottomHand.getChildren().add(comb.getChildren().get(j));
-          }
+          ImageView tile = (ImageView)comb.getChildren().get(j);
+
+            bottomHand.getChildren().add(tile);
+
         }
+
       }
 
     }
@@ -361,6 +367,7 @@ public class GuiController {
   }
 
 
+
   /**
    * enables control on tiles on board
    */
@@ -374,17 +381,17 @@ public class GuiController {
         ImageView tile = (ImageView) box.getChildren().get(j);
 
         tile.setOnMouseClicked(
-                e -> {
-                  if (!selectedTiles.contains(tile)) {
-                    tile.setStyle("-fx-translate-y: -15;");
-                    TileView.highlightTile(tile);
-                    selectedTiles.add(tile);
-                  } else {
-                    tile.setStyle("-fx-translate-y: 0");
-                    tile.setEffect(null);
-                    selectedTiles.remove(tile);
-                  }
-                });
+            e -> {
+              if (!selectedTiles.contains(tile)) {
+                tile.setStyle("-fx-translate-y: -15;");
+                TileView.highlightTile(tile);
+                selectedTiles.add(tile);
+              } else {
+                tile.setStyle("-fx-translate-y: 0");
+                tile.setEffect(null);
+                selectedTiles.remove(tile);
+              }
+            });
       }
 
     }
@@ -395,16 +402,18 @@ public class GuiController {
    */
   @FXML
   protected void handleAddTo(MouseEvent event) {
-    addToExisting.setDisable(true);
+
     if (!selectedTiles.isEmpty()) {
       for (int i = 0; i < board.getChildren().size(); i++) {
         HBox box = (HBox) board.getChildren().get(i);
         Button front = new Button("add here");
         front.setOnMousePressed(event1 -> {
+          addToExisting.setDisable(true);
           addToFront(box);
         });
         Button back = new Button("add here");
         back.setOnMousePressed(event2 -> {
+          addToExisting.setDisable(true);
           addToBack(box);
         });
         box.getChildren().add(0, front);
@@ -420,7 +429,7 @@ public class GuiController {
   void addToFront(HBox comb) {
     List<ImageView> combination = new ArrayList<>();   //erstellt liste mit gewünschter neuer kombination.
     for (int i = 1; i < comb.getChildren().size() - 1;
-         i++) {   //1 und size-1 weil an diesen Stellen Buttons sind.
+        i++) {   //1 und size-1 weil an diesen Stellen Buttons sind.
       combination.add((ImageView) comb.getChildren().get(i));
     }
     String selectedT = GuiParser.parseToString(selectedTiles);
@@ -442,7 +451,7 @@ public class GuiController {
         }
       }
       for (int i = selectedTiles.size() - 1; i >= 0;
-           i--) {    //soll ja in richtiger reihenfolge eingefügt werden, bei einer Tile ist index get(0)
+          i--) {    //soll ja in richtiger reihenfolge eingefügt werden, bei einer Tile ist index get(0)
         ImageView tile = selectedTiles.get(i);
         comb.getChildren().add(0, tile); //added tile vorne in hbox
       }
@@ -482,7 +491,7 @@ public class GuiController {
         }
       }
       for (int i = 0; i < selectedTiles.size();
-           i++) { //problem weil tile nach verschieben nicht mehr als selected gilt -> selectedtiles.size verringert sich
+          i++) { //problem weil tile nach verschieben nicht mehr als selected gilt -> selectedtiles.size verringert sich
         ImageView tile = selectedTiles.get(i);
         comb.getChildren().add(comb.getChildren().size(), tile);
       }
@@ -538,9 +547,9 @@ public class GuiController {
       ImageView iView = (ImageView) bottomHand.getChildren().get(i);
       handTiles.add(iView);
     }
-    for (int i = 0; i < placedCombinations.size(); i++) {
+    for (int i = 0; i < placedCombinations.size(); i++){
       HBox box = placedCombinations.get(i);
-      for (int j = 0; j < box.getChildren().size(); j++) {
+      for (int j = 0; j < box.getChildren().size(); j++){
         ImageView iView = (ImageView) box.getChildren().get(j);
         handTiles.add(iView);
       }
