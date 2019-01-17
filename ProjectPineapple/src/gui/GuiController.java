@@ -87,6 +87,7 @@ public class GuiController {
   private final static int MAX_BOXHEIGHT = 68;
   private final static int MAX_BOXWIDTH = 45;
   private boolean isFirstTurn = false;
+  private Integer nextPlayerID = 0;
 
   private ClientParser parser;
 
@@ -118,6 +119,19 @@ public class GuiController {
   public void setPlayerID(Integer playerID){
     this.playerID = playerID;
   }
+
+  private void getNextPlayerID(){
+    parser.getNextPlayerID();
+  }
+
+  /**
+   * wird von Server aufgerufen, antwort auf getNextplayerID
+   * @param ID
+   */
+  public void setNextPlayerID(Integer ID){
+    this.nextPlayerID = ID;
+  }
+
   /**
    * funktioniert.
    */
@@ -319,8 +333,7 @@ public class GuiController {
 
   @FXML
   protected void handleEndTurn(MouseEvent event) {
-
-    List<List<GITile>> allCombinations = new ArrayList<>();
+    List<List<ImageView>> allCombinations = new ArrayList<>();
     for (int i = 0; i < placedCombinations.size(); i++) {
       HBox box = placedCombinations.get(i);
       List<ImageView> comb = new ArrayList<>();
@@ -328,27 +341,39 @@ public class GuiController {
         ImageView iView = (ImageView) box.getChildren().get(j);
         comb.add(iView);
       }
-      allCombinations.add(GuiParser.parseStringToTile(GuiParser.parseToString(comb)));
+      allCombinations.add(comb);
     }
 
-    if (gameInfo.play(allCombinations, 1).get().getSecond()) {
+      parser.play(allCombinations);
       // if (client.send(boardcombinations)==true){
       //client.endTurn();
       // playerTurn.setText(client.send("getNextPlayerID"));
-      disableControl();
-      cancelSelection();
-      parser.finishedTurn();
-      turn++;
-    } else {
-      Alert alert = new Alert(AlertType.CONFIRMATION, "Error! Unable to end turn. Rearrange "
-          + "the combinations on the board to valid combinations", ButtonType.OK);
-      alert.showAndWait();
 
-      if (alert.getResult() == ButtonType.YES) {
-
-      }
     }
   }
+  /**
+   * von Server aufgerufen, antwort auf play = true. (handleEndTurn)
+   */
+  public void validEndTurn(){
+    disableControl();
+    cancelSelection();
+    parser.getNextPlayerID();
+    parser.finishedTurn();
+  }
+
+  /**
+   * von Server aufgerufen, antwort auf play = false. (handleEndTurn)
+   */
+  public void errorEndTurn(){
+    Alert alert = new Alert(AlertType.CONFIRMATION, "Error! Unable to end turn. Rearrange "
+        + "the combinations on the board to valid combinations", ButtonType.OK);
+    alert.showAndWait();
+
+    if (alert.getResult() == ButtonType.YES) {
+
+    }
+  }
+
 
   /**
    * funktioniert nur für Tiles die von der Hand kommen. ne sollte eigentlich für alle
