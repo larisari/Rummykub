@@ -1,5 +1,8 @@
 package gui;
 
+//TODO methoden splitten wenn bei parser methode aufgerufen wird.
+
+//TODO Buttons per default disablen und enablen wenn player am zug ist.
 
 import gameinfo.util.GITile;
 import gameinfo.util.GITuple;
@@ -24,6 +27,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import network.Client;
+import network.ClientParser;
 import network.GuiParser;
 
 //test: mousepressed besser als mouseclicked?
@@ -82,21 +86,43 @@ public class GuiController {
   private int turn = 0;
   private final static int MAX_BOXHEIGHT = 68;
   private final static int MAX_BOXWIDTH = 45;
+  private boolean isFirstTurn = false;
 
-  private GuiParser parser;
+  private ClientParser parser;
 
   public GuiController() {
     gameInfo = GIFactory.make();
-    parser = new GuiParser(this);
-    // playerID = client.getID();
+    parser = new ClientParser(this);
   }
 
+  private void getNumberOfPlayers(){
+   parser.numberOfPlayers();
+  }
+
+  /**
+   * wird von Server aufgerufen. antwort auf numberOfPlayers()
+   * @param numberPlayers
+   */
+  public void setNumberOfPlayers(int numberPlayers){
+    numberOfPlayers = numberPlayers;
+  }
+
+  private void getPlayerID(){
+    parser.getPlayerID();
+  }
+
+  /**
+   * wird vom Server aufgerufen. antwort auf getPlayerID.
+   * @param playerID
+   */
+  public void setPlayerID(Integer playerID){
+    this.playerID = playerID;
+  }
   /**
    * funktioniert.
    */
   @FXML
-  private void initialize() {
-    //   numberOfPlayers = gameInfo.getNumberOfPlayers().get();
+  private void initialize() { ;
     switch (numberOfPlayers) {
       case 2:
         rightBoard.setVisible(false);
@@ -109,6 +135,7 @@ public class GuiController {
     setPlayerNames();
 //while is first turn: manipulate.setDisable(true);
   }
+
 
   private void setPlayerNames() {
     switch (playerID) {
@@ -172,29 +199,18 @@ public class GuiController {
    */
   @FXML
   protected void handleplaceOnBoard(MouseEvent event) {
-    System.out.println(selectionBoard.getChildren().size());
     if (!selectionBoard.getChildren().isEmpty()) {
-      List<List<GITile>> allCombinations = new ArrayList<>();
+      List<List<ImageView>> allCombinations = new ArrayList<>();
       for (int i = 0; i < selectedCombinations.size(); i++) {
-        String selectedT = GuiParser.parseToString(selectedCombinations.get(i));
-        allCombinations.add(GuiParser.parseStringToTile(selectedT));
+        allCombinations.add(selectedCombinations.get(i));
       }
-
-      //parser.play(allCombinations);
-      Optional<GITuple<Integer, Boolean>> valid = gameInfo.play(allCombinations, 1);
-      if (valid.get().getSecond()) {
-        //List<List<ImageView>> selectionTiles = new ArrayList();
-        //selectionTiles.add(selectedTiles);
-        // (parser.play(selectionTiles);
-        placeTiles(); //wird von server aufgerufen
-      } else {
-        cancelSelection(); //wird von server aufgerufen
+      parser.play(allCombinations);
       }
     }
-  }
 
 
   /**
+   * wird von Server aufgerufen. antwort auf placeOnBoard == true
    * For placing new combinations on the board. validated in handleEnterComb
    */
   public void placeTiles() {
@@ -231,22 +247,12 @@ public class GuiController {
    */
   @FXML
   protected void handleDrawTile(MouseEvent event) {
-    gameInfo.registerBy(1);
-    if (gameInfo.isValidPlayerBy(1).get().getSecond()) {
-      String parsedTiles = GuiParser.parseTileToString(gameInfo.drawBy(1));
-      System.out.println(parsedTiles);
-      //parser.draw();
-      //parser.getNextPlayerID();
-
-
-      //  disableControl();
-      // }
-
+      parser.draw();
+      parser.getNextPlayerID();
     }
-  }
 
   /**
-   * wird von Server aufgerufen.
+   * wird von Server aufgerufen. antwort auf draw
    * @param tiles
    */
   public void loadTiles(String tiles){
@@ -258,7 +264,7 @@ public class GuiController {
 }
 
   /**
-   * wird von Server aufgerufen.
+   * wird von Server aufgerufen. antwort auf getNextPlayerID
    * @param ID
    */
   public void updateNextPlayerName(Integer ID){
@@ -331,6 +337,7 @@ public class GuiController {
       // playerTurn.setText(client.send("getNextPlayerID"));
       disableControl();
       cancelSelection();
+      parser.finishedTurn();
       turn++;
     } else {
       Alert alert = new Alert(AlertType.CONFIRMATION, "Error! Unable to end turn. Rearrange "
@@ -392,6 +399,7 @@ public class GuiController {
       cancelSelection();
     }
   }
+  //wird auch vom Server aufgerufen wenn entercomb false zurückgibt.
 //TODO noch anpassen
     public void cancelSelection () {
       for (int i = 0; i < selectedTiles.size(); i++) {
@@ -455,6 +463,8 @@ public class GuiController {
         }
       }
     }
+
+    //TODO jedes mal wenn methode im ClientParser aufgerufen wird -> dieser ruft je nach ergebnis methode im controller auf.
 
     /**
      * For placing tiles to existing combinations on board. check if new tiles may be laid to existing
