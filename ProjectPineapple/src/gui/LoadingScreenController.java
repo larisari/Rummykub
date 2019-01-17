@@ -28,10 +28,10 @@ public class LoadingScreenController {
   protected void handleStartGamePressed(MouseEvent event) throws IOException {
  //   Stage startingStage = sC.getStage();
     parser.startGame();
-    Parent root = FXMLLoader.load(getClass().getResource("clientgui.fxml"));
-    Scene scene = new Scene(root);
-    Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    stage.setScene(scene);
+ //   Parent root = FXMLLoader.load(getClass().getResource("clientgui.fxml"));
+ //   Scene scene = new Scene(root);
+ //   Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+ //   stage.setScene(scene);
 
   //  startingStage.close();
   }
@@ -39,7 +39,7 @@ public class LoadingScreenController {
   public void openGameWindow() throws IOException{
     Parent root = FXMLLoader.load(getClass().getResource("clientgui.fxml"));
     Scene scene = new Scene(root);
-    Stage stage = new Stage();
+    Stage stage = new Stage(); //new Stage
     stage.setScene(scene);
     stage.show();
   }
