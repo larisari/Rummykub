@@ -86,7 +86,7 @@ public class GuiController {
   public GuiController() {
     gameInfo = GIFactory.make();
     parser = new GuiParser(this);
-    // playerID = client.getID();
+   // playerID = client.getID();
   }
 
   /**
@@ -94,7 +94,7 @@ public class GuiController {
    */
   @FXML
   private void initialize() {
-    numberOfPlayers = gameInfo.getNumberOfPlayers().get();
+ //   numberOfPlayers = gameInfo.getNumberOfPlayers().get();
     switch (numberOfPlayers) {
       case 2:
         rightBoard.setVisible(false);
@@ -192,7 +192,7 @@ public class GuiController {
   /**
    * For placing new combinations on the board. validated in handleEnterComb
    */
-  void placeTiles() {
+  public void placeTiles() {
     System.out.println(selectionBoard.getChildren().size());
     for (int i = 0; i < selectedCombinations.size(); i++) {
       HBox comb = new HBox();
@@ -365,7 +365,7 @@ public class GuiController {
     cancelSelection();
   }
 //TODO noch anpassen
-  void cancelSelection() {
+  public void cancelSelection() {
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView imageV = selectedTiles.get(i);
       imageV.setStyle("-fx-translate-y: 0");
