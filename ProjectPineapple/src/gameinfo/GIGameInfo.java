@@ -13,7 +13,7 @@ public interface GIGameInfo {
 
   void deregisterBy(Integer id);
 
-  void start();
+  void startGame();
 
   Optional<Integer> getNumberOfPlayers();
 

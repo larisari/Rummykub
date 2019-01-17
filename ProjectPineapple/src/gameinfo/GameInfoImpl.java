@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-class GameInfoImpl implements GIGameInfo {
+class GameInfoImpl extends Thread implements GIGameInfo {
 
   private static int MINIMUM_POINTS_ON_FIRST_MOVE = 30;
   private static int NUMBER_OF_TILES_IN_STACK = 14;
@@ -44,7 +44,7 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public void start() {
+  public void startGame() {
     rules.startGame();
     canModifyRegisteredPlayers = false;
   }
