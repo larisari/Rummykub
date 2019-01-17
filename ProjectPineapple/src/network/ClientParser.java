@@ -12,6 +12,7 @@ public class ClientParser {
     receivedMessageFromServer = recievedMessageFromServer;
   }
 
+
   public static void getCurrentConnectedClients() {
     Client.sendMessageToServer("getCurrentConnectedClients");
 

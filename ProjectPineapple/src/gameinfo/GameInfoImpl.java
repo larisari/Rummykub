@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-class GameInfoImpl implements GIGameInfo {
+class GameInfoImpl extends Thread implements GIGameInfo {
 
   private static int MINIMUM_POINTS_ON_FIRST_MOVE = 30;
   private static int NUMBER_OF_TILES_IN_STACK = 14;
@@ -44,7 +44,7 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public void start() {
+  public void startGame() {
     rules.startGame();
     canModifyRegisteredPlayers = false;
   }
@@ -196,17 +196,19 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public Optional<GITuple<Integer, Boolean>> finishedTurnBy(Integer id) {
+  public Optional<GITuple<Integer, List<List<GITile>>>> finishedTurnBy(Integer id) {
     if (!rules.isPlayerExistingBy(id)) {
       return Optional.empty();
     }
 
     if (rules.isValidPlayerBy(id)) {
       rules.nextPlayersTurn();
-      return Optional.of(new GITuple<>(id, true));
+      return Optional.of(new GITuple<>(id, board.getActiveCombos()));
     } else {
       // it is not the players turn.
-      return Optional.of(new GITuple<>(id, false));
+      //return Optional.of(new GITuple<>(id, board.getActiveCombos()));
+      // TODO !!! HANDLE BETTER !!!
+      return Optional.empty();
     }
   }
 
