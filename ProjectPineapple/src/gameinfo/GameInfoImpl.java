@@ -27,6 +27,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     rules = new Rules();
     hasRegisteredPlayers = false;
     canModifyRegisteredPlayers = true;
+    start();
   }
 
   @Override
