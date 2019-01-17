@@ -32,6 +32,15 @@ public class LoadingScreenController {
     Scene scene = new Scene(root);
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
+
   //  startingStage.close();
+  }
+
+  public void openGameWindow() throws IOException{
+    Parent root = FXMLLoader.load(getClass().getResource("clientgui.fxml"));
+    Scene scene = new Scene(root);
+    Stage stage = new Stage();
+    stage.setScene(scene);
+    stage.show();
   }
 }

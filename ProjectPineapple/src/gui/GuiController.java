@@ -4,6 +4,9 @@ package gui;
 
 //TODO Buttons per default disablen und enablen wenn player am zug ist.
 
+
+//TODO sachen die für alle angezeigt werden muss im MainThread ausgeführt werden.
+
 import gameinfo.util.GITile;
 import gameinfo.util.GITuple;
 import gameinfo.GIGameInfo;
