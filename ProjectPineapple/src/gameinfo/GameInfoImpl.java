@@ -7,8 +7,11 @@ import gameinfo.util.GITuple;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 class GameInfoImpl extends Thread implements GIGameInfo {
+
+  private static Logger log = Logger.getLogger(GameInfoImpl.class.getName());
 
   private static int MINIMUM_POINTS_ON_FIRST_MOVE = 30;
   private static int NUMBER_OF_TILES_IN_STACK = 14;
@@ -24,6 +27,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     rules = new Rules();
     hasRegisteredPlayers = false;
     canModifyRegisteredPlayers = true;
+    start();
   }
 
   @Override
@@ -31,12 +35,18 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     if (canModifyRegisteredPlayers) {
       rules.registerBy(id);
       hasRegisteredPlayers = true;
+
+      log.info("Registered Player " + id + ".");
+    } else {
+      log.info("Registering of Player " + id + " has failed.");
     }
   }
 
   @Override
   public void deregisterBy(Integer id) {
     rules.deregisterPlayerBy(id);
+
+    log.info("Deregistered Player " + id + ".");
 
     if (rules.getAllPlayers().isEmpty()) {
       hasRegisteredPlayers = false;
@@ -47,6 +57,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   public void startGame() {
     rules.startGame();
     canModifyRegisteredPlayers = false;
+    log.info("Game started.");
   }
 
   @Override
