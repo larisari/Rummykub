@@ -20,6 +20,8 @@ public class ClientParser {
     receivedMessageFromServer = recievedMessageFromServer;
   }
 
+  // Messages to send to Server.
+
   public void startGame() {
     Client.sendMessageToServer("startGame");
   }
@@ -71,5 +73,32 @@ public class ClientParser {
 
   public void isFirstTurn() {
     Client.sendMessageToServer("isFirstTurn");
+  }
+
+  // Received messages from Server.
+
+  static void parseForController(String message) {
+
+    String[] messageAsArray = message.split("[|]");
+
+    switch (messageAsArray[0]) {
+      case "responseForDraw":
+        guiController.loadTiles(messageAsArray[1]);
+        break;
+      case "responseForGetNextPlayerId":
+        guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1]));
+        break;
+      case "responseForPlay":
+        if (messageAsArray[1].equals("true")) {
+          guiController.placeTiles();
+        } else if (messageAsArray[1].equals("false")) {
+          guiController.cancelSelection();
+        }
+        break;
+      case "responseForPlayBoard":
+        // TODO wenn es in guiContoller steht.
+        break;
+      // TODO REST
+    }
   }
 }

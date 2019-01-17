@@ -74,7 +74,7 @@ public class Client extends Thread {
 
             System.out.println("[Client] Imcoming message from Server: " + msg);
 
-            ClientParser.parseForView(msg);
+            ClientParser.parseForController(msg);
 
 //              //an Parser weitergeben...
 //            }
