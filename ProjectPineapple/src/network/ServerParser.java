@@ -25,11 +25,15 @@ public class ServerParser {
   public static void getResultFromModel(String incomingClientMessage, int id) {
 
 
+
+
     if (incomingClientMessage.equals("gibStein")) {
       List<ServerClientCommunication> allClients = ServerListener.getClients();
       allClients.get(id).sendMessageToClient(testRückgabe());
     }
   }
+
+
 
 
   public static String testRückgabe() {

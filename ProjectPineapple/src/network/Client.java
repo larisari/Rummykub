@@ -49,7 +49,7 @@ public class Client extends Thread {
     }
   }
 
-  public void sendMessageToServer(String message) {
+  public static void sendMessageToServer(String message) {
     String messageToServer = message;
     try {
       out.writeUTF(messageToServer);
