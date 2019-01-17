@@ -3,14 +3,12 @@ package network;
 import gameinfo.util.GIColor;
 import gameinfo.util.GINumber;
 import gameinfo.util.GITile;
-import gameinfo.util.GITuple;
 import gui.GuiController;
 import gui.util.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class GuiParser {
   //TODO methoden vom controller nonstatic, antwortmethoden static
@@ -140,53 +138,5 @@ public class GuiParser {
     }
     return tileList;
 
-  }
-
-
-  public static String parseTileToString(Optional<GITuple<Integer, List<GITile>>> stack) {
-    String parsedTiles = "comb:";
-    List<GITile> tiles = stack.get().getSecond();
-    for (int i = 0; i < tiles.size(); i++) {
-      String colorNumber = parseColorToString(tiles.get(i).getColor(),
-          tiles.get(i).getNumber().value());
-      parsedTiles += colorNumber;
-    }
-    return parsedTiles;
-  }
-
-  private static String parseColorToString(GIColor color, int number) {
-    StringBuilder builder = new StringBuilder();
-    builder.append("tile.");
-
-    switch (color) {
-      case BLUE:
-        builder.append("blue");
-        break;
-      case RED:
-        builder.append("red");
-        break;
-      case BLACK:
-        builder.append("black");
-        break;
-      case YELLOW:
-        builder.append("yellow");
-        break;
-      case JOKER:
-        builder.append("joker");
-        break;
-      default:
-        break;
-    }
-
-    builder.append("/");
-
-    if (number == 0) {
-      builder.append("joker");
-    } else {
-      builder.append(number);
-    }
-    builder.append(",");
-
-    return builder.toString();
   }
 }
