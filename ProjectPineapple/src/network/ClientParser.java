@@ -1,6 +1,7 @@
 package network;
 
 import gui.GuiController;
+import gui.LoadingScreenController;
 import javafx.scene.image.ImageView;
 
 import java.util.List;
@@ -11,9 +12,14 @@ public class ClientParser {
   private static String sendMessage;
 
   private static GuiController guiController;
+  private static LoadingScreenController loadingScreenController;
 
   public ClientParser(GuiController controller) {
     guiController = controller;
+  }
+
+  public ClientParser(LoadingScreenController controller) {
+    loadingScreenController = controller;
   }
 
   public static void getStringIntoClientParser(String receivedMessageFromServer) {
@@ -21,6 +27,8 @@ public class ClientParser {
   }
 
   // Messages to send to Server.
+
+  // TODO add null checks
 
   public void startGame() {
     Client.sendMessageToServer("startGame");
@@ -75,8 +83,6 @@ public class ClientParser {
     Client.sendMessageToServer("isFirstTurn");
   }
 
-  // Received messages from Server.
-
   static void parseForController(String message) {
 
     String[] messageAsArray = message.split("[|]");
@@ -97,8 +103,16 @@ public class ClientParser {
         break;
       case "responseForPlayBoard":
         // TODO wenn es in guiContoller steht.
+      case "responseForGetNextPlayerID":
+        guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1]));
         break;
       // TODO REST
     }
+  }
+
+  // Received messages from Server.
+
+  public void getNextPlayerID() {
+    Client.sendMessageToServer("getNextPlayerId");
   }
 }
