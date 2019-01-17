@@ -14,6 +14,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import network.Client;
+import network.Server;
 
 public class StartingScreenController {
 
@@ -37,8 +39,8 @@ public class StartingScreenController {
    */
   @FXML
   protected void handleCreateGame(MouseEvent event) throws IOException {
- //   Server server = new Server();
- //   Client host = new Client("localhost");
+    Server server = new Server();
+    Client host = new Client("localhost");
     loadLoadingScreen();
 // TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
   }
@@ -46,8 +48,6 @@ public class StartingScreenController {
 
   @FXML
   protected void handleJoinGame(MouseEvent event) throws IOException {
-
-    // TODO if (host.waitForConnection() == true) { //else Pop up Fenster "Error! Could not connect, try again later" oder "Error! Could not connect, game is full" oder "Error! No game found!"
     String ipAdress;
     TextInputDialog dialogue = new TextInputDialog();
     dialogue.setTitle("Login");
@@ -58,9 +58,9 @@ public class StartingScreenController {
     if (result.isPresent()) {
       ipAdress = result.get();
       try {
-        // Client c = new Client(ipAdress);
+         Client c = new Client(ipAdress);
       } catch (Exception e) {
-
+//ev Error Fenster.
       }
       ok.setDisable(false);
 //kein loadingscreen wenn kein game existiert.

@@ -1,5 +1,6 @@
 package gui;
 
+
 import gameinfo.util.GITile;
 import gameinfo.util.GITuple;
 import gui.util.Image;
@@ -21,14 +22,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import network.Client;
+import network.GuiParser;
 
 //test: mousepressed besser als mouseclicked?
 //Alle anfragen an Server.
 
 public class GuiController {
 
-  //Client client;
-  //Host host;
+  Client client;
+
   @FXML
   private HBox topHand;
   @FXML
@@ -77,8 +80,11 @@ public class GuiController {
   private final static int MAX_BOXHEIGHT = 68;
   private final static int MAX_BOXWIDTH = 45;
 
+  private GuiParser parser;
+
   public GuiController() {
     gameInfo = GIFactory.make();
+    parser = new GuiParser(this);
     // playerID = client.getID();
   }
 
@@ -169,15 +175,14 @@ public class GuiController {
         String selectedT = GuiParser.parseToString(selectedCombinations.get(i));
         allCombinations.add(GuiParser.parseStringToTile(selectedT));
       }
+
+      //parser.play(allCombinations);
       Optional<GITuple<Integer, Boolean>> valid = gameInfo.play(allCombinations, 1);
       if (valid.get().getSecond()) {
-        // if (client.send(GuiParser.parseToString(selectedTiles)) == true) {
-        placeTiles();
-        bag.setDisable(true);
-        disableTileControl(selectedTiles);
-        selectedTiles.clear();
+        // if (client.send(play(GuiParser.parseToString((selectedTiles))) == true) {
+        placeTiles(); //wird von server aufgerufen
       } else {
-        cancelSelection();
+        cancelSelection(); //wird von server aufgerufen
       }
     }
   }
@@ -205,6 +210,8 @@ public class GuiController {
     for (int i = 0; i < size; i++){
       selectionBoard.getChildren().remove(selectionBoard.getChildren().get(i));
     }
+    bag.setDisable(true);
+    disableTileControl(selectedTiles);
     selectedTiles.clear();
     updateHand();
     // if (client.send(hand).isEmpty(){
@@ -356,8 +363,8 @@ public class GuiController {
     }
     cancelSelection();
   }
-
-  private void cancelSelection() {
+//TODO noch anpassen
+  void cancelSelection() {
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView imageV = selectedTiles.get(i);
       imageV.setStyle("-fx-translate-y: 0");
