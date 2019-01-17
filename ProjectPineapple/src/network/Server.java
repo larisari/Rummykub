@@ -2,6 +2,8 @@ package network;
 
 import java.util.ArrayList;
 import java.util.List;
+import gameinfo.GIGameInfo;
+import gameinfo.GIFactory;
 
 public class Server {
 
@@ -11,7 +13,7 @@ public class Server {
     try {
       List<ServerClientCommunication> listOfClients = new ArrayList<ServerClientCommunication>();
 
-      GameInfoImpl game = new GameInfoImpl(listOfClients);
+      GIGameInfo game = GIFactory.make();
       System.out.println("Spiel wird geladen....");
       game.start();
 
@@ -19,8 +21,8 @@ public class Server {
       listener.start();
 
 
-      while (game.isAlive()) {
-      }
+//      while (game.isAlive()) {
+//      }
     } catch (Exception e) {
       e.printStackTrace();
     }

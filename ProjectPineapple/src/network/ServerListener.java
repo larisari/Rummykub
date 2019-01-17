@@ -31,8 +31,6 @@ public class ServerListener extends Thread {
       // client request
 
       while (isRunning) {
-
-
         try {
           if (clientID < 4) {
             System.out.println("[Server] Warte auf eingehende Verbindung....");

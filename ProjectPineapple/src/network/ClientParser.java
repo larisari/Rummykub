@@ -12,6 +12,7 @@ public class ClientParser {
     receivedMessageFromServer = recievedMessageFromServer;
   }
 
+
 //  public static String parseToString(List<ImageView> tiles){
 //    String selectedT = "comb:";
 //    for (int i = 0; i < tiles.size(); i++){
