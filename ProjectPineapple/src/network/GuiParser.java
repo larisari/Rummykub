@@ -13,7 +13,8 @@ import javafx.scene.image.ImageView;
 
 public class GuiParser {
   //TODO methoden vom controller nonstatic, antwortmethoden static
-
+//parse format
+  //  list<comb:tile.color/number,tile.color/number;comb:tile.color/number;
   private static GuiController guiController;
 
   public GuiParser(GuiController guiController) {
@@ -46,6 +47,7 @@ public class GuiParser {
     }
   }
 
+  //ergebnis in liste packen -> List<List<GITile>>
   public static List<GITile> parseStringToTile(String tiles) {
     List<GITile> tileList = new ArrayList<>();
     tiles = tiles.substring(0, tiles.length() - 1);
