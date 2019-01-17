@@ -2,6 +2,7 @@ package network;
 
 import gui.GuiController;
 import gui.LoadingScreenController;
+import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
@@ -33,6 +34,20 @@ public class ClientParser {
 
   // TODO add null checks
 
+  public void getNextPlayerID() {
+    Client.sendMessageToServer("getNextPlayerID");
+  }
+
+  public void numberOfPlayers() {
+    Client.sendMessageToServer("numberOfPlayers");
+  }
+
+  // Received messages from Server.
+
+  public void getPlayerID() {
+    Client.sendMessageToServer("getPlayerID");
+  }
+
   public void startGame() {
     Client.sendMessageToServer("startGame");
   }
@@ -49,9 +64,9 @@ public class ClientParser {
   }
 
   public void play(
-          List<ImageView> tilesFromHand,
-          List<ImageView> tilesFromBoard,
-          List<List<ImageView>> newCombinations) {
+      List<ImageView> tilesFromHand,
+      List<ImageView> tilesFromBoard,
+      List<List<ImageView>> newCombinations) {
 
     StringBuilder builder = new StringBuilder();
 
@@ -92,50 +107,46 @@ public class ClientParser {
 
     switch (messageAsArray[0]) {
       case "responseForDraw":
-        guiController.loadTiles(messageAsArray[1]);
+        Platform.runLater(() -> guiController.loadTiles(messageAsArray[1]));
         break;
       case "responseForGetNextPlayerId":
-        guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1]));
+        Platform.runLater(
+            () -> guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
         break;
       case "responseForPlay":
-        if (messageAsArray[1].equals("true")) {
-          guiController.placeTiles();
-        } else if (messageAsArray[1].equals("false")) {
-          guiController.cancelSelection();
-        }
+        Platform.runLater(
+            () -> {
+              if (messageAsArray[1].equals("true")) {
+                guiController.placeTiles();
+              } else if (messageAsArray[1].equals("false")) {
+                guiController.cancelSelection();
+              }
+            });
         break;
       case "responseForPlayBoard":
         // TODO wenn es in guiContoller steht.
       case "responseForGetNextPlayerID":
-        guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1]));
+        Platform.runLater(
+            () -> guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
         break;
       case "responseForNumberOfPlayers":
-        guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1]));
+        Platform.runLater(
+            () -> guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1])));
         break;
       case "responseForGetPlayerID":
-        guiController.setPlayerID(Integer.parseInt(messageAsArray[1]));
+        Platform.runLater(() -> guiController.setPlayerID(Integer.parseInt(messageAsArray[1])));
         break;
-      // TODO REST
+        // TODO REST
       case "forStartGame":
-        try {
-          loadingScreenController.openGameWindow();
-        } catch (IOException e) {
-        }
+        Platform.runLater(
+            () -> {
+              try {
+                loadingScreenController.openGameWindow();
+              } catch (IOException e) {
+                // e.printStackTrace();
+              }
+            });
         break;
     }
-  }
-
-  public void getNextPlayerID() {
-    Client.sendMessageToServer("getNextPlayerID");
-  }
-
-  public void numberOfPlayers() {
-    Client.sendMessageToServer("numberOfPlayers");
-  }
-
-  // Received messages from Server.
-
-  public void getPlayerID() {
-    Client.sendMessageToServer("getPlayerID");
   }
 }
