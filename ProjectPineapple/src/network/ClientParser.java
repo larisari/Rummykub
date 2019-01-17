@@ -106,13 +106,27 @@ public class ClientParser {
       case "responseForGetNextPlayerID":
         guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1]));
         break;
+      case "responseForNumberOfPlayers":
+        guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1]));
+        break;
+      case "responseForGetPlayerID":
+        guiController.setPlayerID(Integer.parseInt(messageAsArray[1]));
+        break;
       // TODO REST
     }
   }
 
+  public void getNextPlayerID() {
+    Client.sendMessageToServer("getNextPlayerID");
+  }
+
+  public void numberOfPlayers() {
+    Client.sendMessageToServer("numberOfPlayers");
+  }
+
   // Received messages from Server.
 
-  public void getNextPlayerID() {
-    Client.sendMessageToServer("getNextPlayerId");
+  public void getPlayerID() {
+    Client.sendMessageToServer("getPlayerID");
   }
 }

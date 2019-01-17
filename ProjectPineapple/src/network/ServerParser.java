@@ -23,15 +23,40 @@ public class ServerParser {
   static void getStringIntoServerParser(String receivedMessageFromClient, int id) {
 
     String[] receivedMessage = receivedMessageFromClient.split("[|]");
+    List<ServerClientCommunication> clients = ServerListener.getClients();
 
     switch (receivedMessage[0]) {
       case "draw":
         Optional<GITuple<Integer, List<GITile>>> result = Server.gameInfo.drawBy(id);
 
-        List<ServerClientCommunication> clients = ServerListener.getClients();
-
         if (result.isPresent()) {
-          clients.get(id).sendMessageToClient(parseTileToString(result.get().getSecond()));
+          clients.get(id).sendMessageToClient("responseForDraw|" + parseTileToString(result.get().getSecond()));
+        } else {
+          // id is not registered in model.
+          log.info("There is no " + id + " registered in the model.");
+        }
+        break;
+      case "startGame":
+        Server.gameInfo.startGame();
+        break;
+      case "getNextPlayerID":
+        Optional<Integer> resultID = Server.gameInfo.getNextPlayerId();
+
+        if (resultID.isPresent()) {
+          clients.get(id).sendMessageToClient("responseForGetNextPlayerID|" + resultID.get());
+        } else {
+          // id is not registered in model.
+          log.info("There is no " + id + " registered in the model.");
+        }
+        break;
+      case "getPlayerID":
+        clients.get(id).sendMessageToClient("responseForGetPlayerID|" + id);
+        break;
+      case "numberOfPlayers":
+        Optional<Integer> resultNumber = Server.gameInfo.getNumberOfPlayers();
+
+        if (resultNumber.isPresent()) {
+          clients.get(id).sendMessageToClient("responseForNumberOfPlayers|" + resultNumber.get());
         } else {
           // id is not registered in model.
           log.info("There is no " + id + " registered in the model.");
