@@ -183,7 +183,9 @@ public class GuiController {
       //parser.play(allCombinations);
       Optional<GITuple<Integer, Boolean>> valid = gameInfo.play(allCombinations, 1);
       if (valid.get().getSecond()) {
-        // if (client.send(play(GuiParser.parseToString((selectedTiles))) == true) {
+        //List<List<ImageView>> selectionTiles = new ArrayList();
+        //selectionTiles.add(selectedTiles);
+        // (parser.play(selectionTiles);
         placeTiles(); //wird von server aufgerufen
       } else {
         cancelSelection(); //wird von server aufgerufen
@@ -218,31 +220,51 @@ public class GuiController {
     disableTileControl(selectedTiles);
     selectedTiles.clear();
     updateHand();
-    // if (client.send(hand).isEmpty(){
+    // if (hand.isEmpty(){
     // TODO öffne Gewinnerfenster
 
   }
 
+  /**
+   * check dass bag disabled is für alle anderen
+   * @param event
+   */
   @FXML
   protected void handleDrawTile(MouseEvent event) {
     gameInfo.registerBy(1);
     if (gameInfo.isValidPlayerBy(1).get().getSecond()) {
       String parsedTiles = GuiParser.parseTileToString(gameInfo.drawBy(1));
       System.out.println(parsedTiles);
-      hand = tView.createImgs(parsedTiles);
-      for (int i = 0; i < hand.size(); i++) {
-        createTile(hand.get(i));
-      }
-      //  bag.setDisable(true);
-      // if (client.send("isValidPlayer").equals(true){
-      // client.send("draw");
-      // playerTurn.setText(client.send("getNextPlayerID"));
+      //parser.draw();
+      //parser.getNextPlayerID();
+
+
       //  disableControl();
-      // turn ++;
       // }
-      //
+
     }
   }
+
+  /**
+   * wird von Server aufgerufen.
+   * @param tiles
+   */
+  public void loadTiles(String tiles){
+  hand = tView.createImgs(tiles);
+  for (int i = 0; i < hand.size(); i++) {
+    createTile(hand.get(i));
+  }
+  bag.setDisable(true);
+}
+
+  /**
+   * wird von Server aufgerufen.
+   * @param ID
+   */
+  public void updateNextPlayerName(Integer ID){
+    playerTurn.setText("Player " + ID + "'s turn.");
+    disableControl();
+}
 
   /**
    * If topHand is full insert in bottomHand.
@@ -356,15 +378,14 @@ public class GuiController {
       for (int i = 0; i < selectionBoard.getChildren().size(); i++) {
         HBox comb = (HBox) selectionBoard.getChildren().get(i);
 
-        for (int j = 0; j < comb.getChildren().size(); j++) {
+        for (int j = comb.getChildren().size(); j >= 0; j--) {
           ImageView tile = (ImageView) comb.getChildren().get(j);
           if (topHand.getChildren().size() <= HAND_SPACE) {
             topHand.getChildren().add(tile);
           } else {
             bottomHand.getChildren().add(tile);
-
+//TODO leere Hboxen aus selectionboard löschen.
           }
-
         }
 
       }
