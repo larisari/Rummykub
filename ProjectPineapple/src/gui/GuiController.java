@@ -356,15 +356,14 @@ public class GuiController {
       for (int i = 0; i < selectionBoard.getChildren().size(); i++) {
         HBox comb = (HBox) selectionBoard.getChildren().get(i);
 
-        for (int j = 0; j < comb.getChildren().size(); j++) {
+        for (int j = comb.getChildren().size(); j >= 0; j--) {
           ImageView tile = (ImageView) comb.getChildren().get(j);
           if (topHand.getChildren().size() <= HAND_SPACE) {
             topHand.getChildren().add(tile);
           } else {
             bottomHand.getChildren().add(tile);
-
+//TODO leere Hboxen aus selectionboard löschen.
           }
-
         }
 
       }
