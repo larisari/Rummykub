@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -9,14 +10,11 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class LoadingScreenController {
 
   @FXML
   private Button startGame;
   private StartingScreenController sC = new StartingScreenController();
-
   @FXML
   private void initialize() {
 
