@@ -45,11 +45,14 @@ public class ServerListener extends Thread {
             // create a new thread object
             ServerClientCommunication t = new ServerClientCommunication(s, in, out, clientID);
             // Invoking the start() method
+            Server.gameInfo.registerBy(clientID);
             t.start();
 
             clients.add(t);
             clientID++;
-          } else isRunning = false;
+          } else {
+            isRunning = false;
+          }
         } catch (Exception e) {
           //s.close();
           System.out.println("[Server] Verbindung getrennt.");

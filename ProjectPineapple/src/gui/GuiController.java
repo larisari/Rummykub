@@ -2,9 +2,10 @@ package gui;
 
 import gameinfo.util.GITile;
 import gameinfo.util.GITuple;
-import gui.util.Image;
-import gameinfo.GIFactory;
 import gameinfo.GIGameInfo;
+import gameinfo.GIFactory;
+import gui.util.Image;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

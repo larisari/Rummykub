@@ -1,6 +1,5 @@
 package gui;
 
-import gameinfo.GIGameInfo;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 

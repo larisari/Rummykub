@@ -1,21 +1,22 @@
 package network;
 
+import gameinfo.GIFactory;
+import gameinfo.GIGameInfo;
+
 import java.util.ArrayList;
 import java.util.List;
-import gameinfo.GIGameInfo;
-import gameinfo.GIFactory;
 
 public class Server {
 
-  public Server() {
+  static GIGameInfo gameInfo;
 
+  public Server() {
 
     try {
       List<ServerClientCommunication> listOfClients = new ArrayList<ServerClientCommunication>();
 
-      GIGameInfo game = GIFactory.make();
+      gameInfo = GIFactory.make();
       System.out.println("Spiel wird geladen....");
-      game.start();
 
       ServerListener listener = new ServerListener(listOfClients);
       listener.start();
