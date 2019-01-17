@@ -217,10 +217,22 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       return Optional.of(new GITuple<>(id, board.getActiveCombos()));
     } else {
       // it is not the players turn.
-      //return Optional.of(new GITuple<>(id, board.getActiveCombos()));
+      // return Optional.of(new GITuple<>(id, board.getActiveCombos()));
       // TODO !!! HANDLE BETTER !!!
       return Optional.empty();
     }
+  }
+
+  @Override
+  public Optional<GITuple<Integer, Boolean>> isFirstTurnBy(Integer id) {
+    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
+
+    if (optionalPlayer.isPresent()) {
+      return Optional.of(new GITuple<>(id, optionalPlayer.get().isFirstMove()));
+    } else {
+      return Optional.empty();
+    }
+
   }
 
   private List<GITile> getStackFor(Integer id) {
