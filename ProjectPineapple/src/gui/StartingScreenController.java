@@ -1,5 +1,7 @@
 package gui;
 
+import java.io.IOException;
+import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,11 +14,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import network.Client;
-import network.Server;
-
-import java.io.IOException;
-import java.util.Optional;
 
 public class StartingScreenController {
 
@@ -32,17 +29,16 @@ public class StartingScreenController {
   private int numberOfPlayers;
   private int JoinedY = 160;
 
-  public StartingScreenController() {
+  public StartingScreenController(){
 
   }
-
   /**
    * Loads loadingScreen after clicking "Create Game".
    */
   @FXML
   protected void handleCreateGame(MouseEvent event) throws IOException {
-    Server server = new Server();
-    Client host = new Client("localhost");
+ //   Server server = new Server();
+ //   Client host = new Client("localhost");
     loadLoadingScreen();
 // TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
   }
@@ -73,7 +69,7 @@ public class StartingScreenController {
       JoinedY += 50;
       Text joined = new Text("Joined");
       joined.setStyle(
-              "-fx-text-fill: 18b522; -fx-font-family: 'Franklin Gothic Medium'; -fx-font-size:19; ");
+          "-fx-text-fill: 18b522; -fx-font-family: 'Franklin Gothic Medium'; -fx-font-size:19; ");
       joined.relocate(497, JoinedY);
       loadingScreen.getChildren().add(joined); // TODO selbes Problem wie bei StartButton disablen. // loading screen existiert nur im loadingscreen controller
     }
