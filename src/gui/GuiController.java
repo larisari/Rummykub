@@ -221,7 +221,7 @@ public class GuiController {
       for (int i = 0; i < hand.size(); i++) {
         createTile(hand.get(i));
       }
-      bag.setDisable(true);
+    //  bag.setDisable(true);
       // if (client.send("isValidPlayer").equals(true){
       // client.send("draw");
       // playerTurn.setText(client.send("getNextPlayerID"));
