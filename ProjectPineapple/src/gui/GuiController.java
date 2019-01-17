@@ -350,7 +350,7 @@ public class GuiController {
       // playerTurn.setText(client.send("getNextPlayerID"));
 
     }
-  }
+
   /**
    * von Server aufgerufen, antwort auf play = true. (handleEndTurn)
    */
