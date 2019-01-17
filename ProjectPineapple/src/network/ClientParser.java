@@ -9,6 +9,8 @@ import java.util.List;
 
 public class ClientParser {
 
+  // TODO CALL ALL METHODS OF CONTROLLER IN ITS THREAD (POSSIBLE MAIN)
+
   private static String recievedMessageFromServer;
   private static String sendMessage;
 
