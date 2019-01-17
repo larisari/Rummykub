@@ -65,13 +65,13 @@ public class StartingScreenController {
       ok.setDisable(false);
 //kein loadingscreen wenn kein game existiert.
       loadLoadingScreen();
-      numberOfPlayers++;
-      JoinedY += 50;
-      Text joined = new Text("Joined");
-      joined.setStyle(
-          "-fx-text-fill: 18b522; -fx-font-family: 'Franklin Gothic Medium'; -fx-font-size:19; ");
-      joined.relocate(497, JoinedY);
-      loadingScreen.getChildren().add(joined); // TODO selbes Problem wie bei StartButton disablen. // loading screen existiert nur im loadingscreen controller
+ //     numberOfPlayers++;
+  //    JoinedY += 50;
+  //    Text joined = new Text("Joined");
+  //    joined.setStyle(
+  //        "-fx-text-fill: 18b522; -fx-font-family: 'Franklin Gothic Medium'; -fx-font-size:19; ");
+  //    joined.relocate(497, JoinedY);
+  //    loadingScreen.getChildren().add(joined); // TODO selbes Problem wie bei StartButton disablen. // loading screen existiert nur im loadingscreen controller
     }
   }
 

@@ -21,7 +21,7 @@ public class LoadingScreenController {
   @FXML
   private void initialize() {
 
-    startGame.setDisable(true);
+ //   startGame.setDisable(true);
   }
 
   @FXML
@@ -33,6 +33,5 @@ public class LoadingScreenController {
     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     stage.setScene(scene);
     startingStage.close();
-
   }
 }
