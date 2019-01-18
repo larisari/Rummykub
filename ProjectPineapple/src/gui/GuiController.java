@@ -240,11 +240,7 @@ public class GuiController {
       placedCombinations.add(comb);
       board.getChildren().add(comb);
     }
-    selectedCombinations.clear();
-    int size = selectionBoard.getChildren().size();
-    for (int i = 0; i < size; i++) {
-      selectionBoard.getChildren().remove(selectionBoard.getChildren().get(i));
-    }
+    cancelSelection();
     bag.setDisable(true);
     disableTileControl(selectedTiles);
     selectedTiles.clear();
@@ -352,7 +348,7 @@ public class GuiController {
    */
   public void validEndTurn() {
     disableControl();
-    cancelSelEffect();
+    cancelSelection();
     parser.getNextPlayerID();
     parser.finishedTurn();
   }
@@ -421,6 +417,7 @@ public class GuiController {
       }
 
     }
+    selectedCombinations.clear();
     cancelSelEffect();
   }
 
