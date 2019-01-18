@@ -134,7 +134,7 @@
               <Font name="Franklin Gothic Medium" size="16.0" />
             </font>
                <tooltip>
-                  <Tooltip prefHeight="100.0" prefWidth="100.0" text="Click here to place a new combination on the board." wrapText="true">
+                  <Tooltip prefHeight="120.0" prefWidth="130.0" text="Click here to place a combination on the selection board, from where you can place tiles on the board." wrapText="true">
                      <font>
                         <Font name="Franklin Gothic Medium" size="13.0" />
                      </font>
@@ -201,6 +201,18 @@
                </font>
                <tooltip>
                   <Tooltip prefHeight="100.0" prefWidth="130.0" text="Click here to add selected tiles to an existing combination on the board." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
+            </Button>
+            <Button fx:id="swapJoker" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="594.0" mnemonicParsing="false" onMouseClicked="#handleSwapJoker" prefHeight="65.0" prefWidth="110.0" styleClass="manipulate" text="Swap Joker" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="16.0" />
+               </font>
+               <tooltip>
+                  <Tooltip prefHeight="120.0" prefWidth="130.0" text="Click manipulate, then select a tile from your hand and then the joker which you like to swap your tile with." wrapText="true">
                      <font>
                         <Font name="Franklin Gothic Medium" size="13.0" />
                      </font>

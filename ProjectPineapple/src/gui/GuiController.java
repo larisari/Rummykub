@@ -90,6 +90,8 @@ public class GuiController {
   private final static int MAX_IVIEW_HEIGHT = 65;
   private boolean isFirstTurn = false;
   private Integer nextPlayerID = 0;
+  private ImageView tile = new ImageView();
+  private ImageView joker = new ImageView();
 
   private ClientParser parser;
 
@@ -193,7 +195,6 @@ public class GuiController {
   protected void handleEnterComb(MouseEvent event) {
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView tile = selectedTiles.get(i);
-      System.out.println(tile.getParent());
       if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren().contains(tile)) {
         moveTiles(selectedTiles);
         return;
@@ -548,6 +549,60 @@ public class GuiController {
     }
     cancelSelEffect();
   }
+
+  @FXML
+  protected void handleSwapJoker(MouseEvent event){
+    if (selectedTiles.size() == 2) {
+      Image image = (Image) selectedTiles.get(1).getImage();
+      tile = selectedTiles.get(0);
+      if (image.getId() != null && (tile.getParent() == topHand
+          || tile.getParent() == bottomHand)) {
+        joker = selectedTiles.get(1);
+        HBox box = (HBox) joker.getParent();
+        int jokerIndex = getIndexOf(box, joker);
+        List<List<ImageView>> combination = new ArrayList<>();
+        List<ImageView> comb = new ArrayList<>();
+        for (int j = 0; j < box.getChildren().size(); j++) {
+          comb.add((ImageView) box.getChildren().get(j));
+          comb.set(jokerIndex, tile);
+        }
+        combination.add(comb);
+        parser.play(combination);
+      }
+    }
+
+    }
+
+
+  private int getIndexOf(HBox box, ImageView tile){
+    int counter = 0;
+    int noIndexFound = -1;
+    for (int i = 0; i < box.getChildren().size(); i++){
+      if (box.getChildren().get(i).equals(tile)){
+        return counter;
+      }
+      counter++;
+    }
+    return noIndexFound;
+  }
+
+  /**
+   * antwort = true auf handleSwapJoker
+   */
+  public void swapWithJoker(){
+    HBox box = (HBox)joker.getParent();
+    int jokerIndex = getIndexOf(box, joker);
+    if (topHand.getChildren().size() <= HAND_SPACE) {
+      topHand.getChildren().add(joker);
+    } else {
+      bottomHand.getChildren().add(joker);
+    }
+    box.getChildren().add(jokerIndex, tile);
+
+  cancelSelEffect();
+  }
+
+
 
   private void deleteAddToButtons() {
     for (int i = 0; i < board.getChildren().size(); i++) {
