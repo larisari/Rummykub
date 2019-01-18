@@ -277,7 +277,7 @@ public class GuiController {
   }
 
   /**
-   * wird von Server aufgerufen. antwort auf draw
+   * wird von Server aufgerufen. antwort == true auf draw
    */
   public void loadTiles(String tiles) {
     hand = tView.createImgs(tiles);
@@ -392,7 +392,6 @@ public class GuiController {
   }
 
 
-  //wird auch vom Server aufgerufen wenn entercomb false zurückgibt.
   public void cancelSelEffect() {
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView imageV = selectedTiles.get(i);
@@ -474,43 +473,42 @@ public class GuiController {
    * combination. (4 or 13 max) check if new tiles fit existing combination.
    */
   void addToFront(HBox comb) {
-    List<ImageView> combination = new ArrayList<>();   //erstellt liste mit gewünschter neuer kombination.
+    List<ImageView> boardTiles = new ArrayList<>();   //erstellt liste mit gewünschter neuer kombination.
     for (int i = 1; i < comb.getChildren().size() - 1;
         i++) {   //1 und size-1 weil an diesen Stellen Buttons sind.
-      combination.add((ImageView) comb.getChildren().get(i));
+      boardTiles.add((ImageView) comb.getChildren().get(i));
     }
-    String selectedT = GuiParser.parseToString(selectedTiles);
-    String boardTiles = GuiParser.parseToString(combination);
-    combination.addAll(0, selectedTiles);
-    String combTiles = GuiParser.parseToString(combination);
-    List<GITile> selectedTls = GuiParser.parseStringToTile(selectedT);
-    List<GITile> combinationTiles = GuiParser.parseStringToTile(combTiles);
-    List<GITile> boardT = GuiParser.parseStringToTile(boardTiles);
-    List<List<GITile>> newCombs = new ArrayList<>();
-    newCombs.add(combinationTiles);
-    if (gameInfo.play(selectedTls, boardT, newCombs, 1).get().getSecond()) {
+    List<List<ImageView>> newComb = new ArrayList<>();
+    newComb.add(selectedTiles);
+    newComb.add(boardTiles);
+    parser.play(selectedTiles, boardTiles, newComb);
 
-      //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
-      deleteAddToButtons();
-      for (int j = 0; j < selectedTiles.size(); j++) {
-        if (comb.getChildren().contains(selectedTiles.get(j))) {
-          return;
-        }
+//TODO hier spalten -> Problem woher weiß ich wo hinzugefügt werden soll?
+    //if (client.send("list<" + selectedT + "><" + boardTiles + "><" + combTiles + ">") == true){
+    deleteAddToButtons();
+    for (int j = 0; j < selectedTiles.size(); j++) {
+      if (comb.getChildren().contains(selectedTiles.get(j))) {
+        return;
       }
-      for (int i = selectedTiles.size() - 1; i >= 0;
-          i--) {    //soll ja in richtiger reihenfolge eingefügt werden, bei einer Tile ist index get(0)
-        ImageView tile = selectedTiles.get(i);
-        comb.getChildren().add(0, tile); //added tile vorne in hbox
-      }
-
-      deselectTiles(selectedTiles);
-      selectedTiles.clear();
-      updateBoard();
-    } else {
-      deleteAddToButtons();
     }
-    cancelSelEffect();
+    for (int i = selectedTiles.size() - 1; i >= 0;
+        i--) {    //soll ja in richtiger reihenfolge eingefügt werden, bei einer Tile ist index get(0)
+      ImageView tile = selectedTiles.get(i);
+      comb.getChildren().add(0, tile); //added tile vorne in hbox
+    }
+
+    deselectTiles(selectedTiles);
+    selectedTiles.clear();
+    updateBoard();
+ // } else
+
+  {
+    deleteAddToButtons();
   }
+
+  cancelSelEffect();
+
+}
 
   void addToBack(HBox comb) {
     // if (client.send(isValidPlayerBy) == true) {
@@ -551,7 +549,7 @@ public class GuiController {
   }
 
   @FXML
-  protected void handleSwapJoker(MouseEvent event){
+  protected void handleSwapJoker(MouseEvent event) {
     if (selectedTiles.size() == 2) {
       Image image = (Image) selectedTiles.get(1).getImage();
       tile = selectedTiles.get(0);
@@ -571,14 +569,14 @@ public class GuiController {
       }
     }
 
-    }
+  }
 
 
-  private int getIndexOf(HBox box, ImageView tile){
+  private int getIndexOf(HBox box, ImageView tile) {
     int counter = 0;
     int noIndexFound = -1;
-    for (int i = 0; i < box.getChildren().size(); i++){
-      if (box.getChildren().get(i).equals(tile)){
+    for (int i = 0; i < box.getChildren().size(); i++) {
+      if (box.getChildren().get(i).equals(tile)) {
         return counter;
       }
       counter++;
@@ -589,8 +587,8 @@ public class GuiController {
   /**
    * antwort = true auf handleSwapJoker
    */
-  public void swapWithJoker(){
-    HBox box = (HBox)joker.getParent();
+  public void swapWithJoker() {
+    HBox box = (HBox) joker.getParent();
     int jokerIndex = getIndexOf(box, joker);
     if (topHand.getChildren().size() <= HAND_SPACE) {
       topHand.getChildren().add(joker);
@@ -599,9 +597,8 @@ public class GuiController {
     }
     box.getChildren().add(jokerIndex, tile);
 
-  cancelSelEffect();
+    cancelSelEffect();
   }
-
 
 
   private void deleteAddToButtons() {
