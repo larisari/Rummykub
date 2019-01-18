@@ -87,6 +87,7 @@ public class GuiController {
   private int turn = 0;
   private final static int MAX_BOXHEIGHT = 68;
   private final static int MAX_BOXWIDTH = 45;
+  private final static int MAX_IVIEW_HEIGHT = 65;
   private boolean isFirstTurn = false;
   private Integer nextPlayerID = 0;
 
@@ -243,7 +244,6 @@ public class GuiController {
     cancelSelection();
     bag.setDisable(true);
     deselectTiles(selectedTiles); //löscht auch tiles aus selectedTiles
-    updateHand();
     // if (hand.isEmpty(){
     // TODO öffne Gewinnerfenster
 
@@ -281,48 +281,27 @@ public class GuiController {
    * If topHand is full insert in bottomHand.
    */
   void createTile(Image tile) {
-    for (int i = 0; i < topHand.getChildren().size(); i++) {
-      ImageView imageView = (ImageView) topHand.getChildren().get(i);
-      if (imageView.getImage() == null) {
-        imageView.setImage(tile);
-        onTileClicked(imageView);
-        return;
-      }
+    for (int i = topHand.getChildren().size(); i < HAND_SPACE; i++) {
+      ImageView imageView = new ImageView();
+      imageView.setFitHeight(MAX_IVIEW_HEIGHT);
+      imageView.setFitWidth(MAX_BOXWIDTH);
+      imageView.setImage(tile);
+      topHand.getChildren().add(imageView);
+      onTileClicked(imageView);
+      return;
     }
-    for (int i = 0; i < bottomHand.getChildren().size(); i++) {
-      ImageView iView = (ImageView) bottomHand.getChildren().get(i);
-      if (iView.getImage() == null) {
-        iView.setImage(tile);
-        onTileClicked(iView);
-        return;
-      }
+    for (int i = bottomHand.getChildren().size(); i < HAND_SPACE; i++) {
+      ImageView imageView = new ImageView();
+      imageView.setFitHeight(MAX_IVIEW_HEIGHT);
+      imageView.setFitWidth(MAX_BOXWIDTH);
+      imageView.setImage(tile);
+      bottomHand.getChildren().add(imageView);
+      onTileClicked(imageView);
+      return;
     }
 
   }
 
-  private void updateHand() {
-    refillImageViews(topHand);
-    refillImageViews(bottomHand);
-
-    // String handTiles = client.receive(getAllTilesBy);
-    // if (handTiles.equals(""){
-    // endGame();
-    // } else {
-    // hand = tView.createImgs(stack);
-    // for (int i = 0; i < hand.size(); i++){
-    // tView.createTile(hand.get(i));
-    // }
-    //}
-  }
-
-  private void refillImageViews(HBox hand) {
-    while (hand.getChildren().size() < HAND_SPACE) {
-      ImageView iView = new ImageView();
-      iView.setFitWidth(45);
-      iView.setFitHeight(65);
-      hand.getChildren().add(iView);
-    }
-  }
 
   @FXML
   protected void handleEndTurn(MouseEvent event) {
@@ -338,10 +317,6 @@ public class GuiController {
     }
 
     parser.play(allCombinations);
-    // if (client.send(boardcombinations)==true){
-    //client.endTurn();
-    // playerTurn.setText(client.send("getNextPlayerID"));
-
   }
 
   /**
@@ -503,7 +478,6 @@ public class GuiController {
 
       deselectTiles(selectedTiles);
       selectedTiles.clear();
-      updateHand();
       updateBoard();
     } else {
       deleteAddToButtons();
@@ -543,7 +517,6 @@ public class GuiController {
 
       deselectTiles(selectedTiles);
       selectedTiles.clear();
-      updateHand();
       updateBoard();
     } else {
       deleteAddToButtons();
