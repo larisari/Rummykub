@@ -606,7 +606,7 @@ public class GuiController {
    * Disables tile control for player.
    */
   private void deselectTiles(List<ImageView> tiles) {
-    for (int i = tiles.size(); i >= 0; i--) {
+    for (int i = tiles.size()-1; i >= 0; i--) {
       ImageView tile = tiles.get(i);
       tile.setStyle("-fx-translate-y: 0");
       tile.setEffect(null);
