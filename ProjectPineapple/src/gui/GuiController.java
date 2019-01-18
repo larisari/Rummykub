@@ -409,23 +409,24 @@ public class GuiController {
   @FXML
   protected void handleCancelSel(MouseEvent event) {
     if (!selectionBoard.getChildren().isEmpty()) {
-      System.out.println(selectionBoard.getChildren().size() + " selectionboardsize");
-      for (int i = 0; i < selectionBoard.getChildren().size(); i++) {
+      int size = selectionBoard.getChildren().size();
+      for (int i = size-1; i >= 0; i--) {
         HBox comb = (HBox) selectionBoard.getChildren().get(i);
+        int combSize = comb.getChildren().size();
+        for (int j = combSize-1; j >= 0; j--) {
+          ImageView tile = (ImageView)comb.getChildren().get(j);
 
-        for (int j = comb.getChildren().size(); j >= 0; j--) {
-          ImageView tile = (ImageView) comb.getChildren().get(j);
-          if (topHand.getChildren().size() <= HAND_SPACE) {
+          if (topHand.getChildren().size() <= HAND_SPACE){
             topHand.getChildren().add(tile);
           } else {
             bottomHand.getChildren().add(tile);
-//TODO leere Hboxen aus selectionboard löschen.
           }
         }
-
+        selectionBoard.getChildren().remove(selectionBoard.getChildren().get(i));
       }
-      cancelSelection();
+
     }
+    cancelSelection();
   }
   //wird auch vom Server aufgerufen wenn entercomb false zurückgibt.
 //TODO noch anpassen
