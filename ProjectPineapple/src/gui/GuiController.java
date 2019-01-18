@@ -242,8 +242,7 @@ public class GuiController {
     }
     cancelSelection();
     bag.setDisable(true);
-    disableTileControl(selectedTiles);
-    selectedTiles.clear();
+    deselectTiles(selectedTiles); //löscht auch tiles aus selectedTiles
     updateHand();
     // if (hand.isEmpty(){
     // TODO öffne Gewinnerfenster
@@ -286,6 +285,7 @@ public class GuiController {
       ImageView imageView = (ImageView) topHand.getChildren().get(i);
       if (imageView.getImage() == null) {
         imageView.setImage(tile);
+        onTileClicked(imageView);
         return;
       }
     }
@@ -293,6 +293,7 @@ public class GuiController {
       ImageView iView = (ImageView) bottomHand.getChildren().get(i);
       if (iView.getImage() == null) {
         iView.setImage(tile);
+        onTileClicked(iView);
         return;
       }
     }
@@ -366,33 +367,6 @@ public class GuiController {
     }
   }
 
-
-  /**
-   * funktioniert nur für Tiles die von der Hand kommen. ne sollte eigentlich für alle
-   * funktionieren.
-   */
-  @FXML
-  protected void handleTileClick(
-      MouseEvent event) {
-    ImageView imageV = (ImageView) event.getSource();
-    if (topHand.getChildren().contains(imageV) || bottomHand.getChildren()
-        .contains(imageV)) { //gilt nur wenn Tile auf der Hand liegt.
-      if (imageV.getImage() == null || imageV.getImage().isError()) {
-        return;
-      }
-      if (!selectedTiles.contains(imageV)) {
-        imageV.setStyle("-fx-translate-y: -15;");
-        TileView.highlightTile(imageV);
-        selectedTiles.add(imageV);
-      } else {
-        imageV.setStyle("-fx-translate-y: 0;");
-        imageV.setEffect(null);
-        selectedTiles.remove(imageV);
-
-      }
-    }
-  }
-
   @FXML
   protected void handleCancelSel(MouseEvent event) {
     cancelSelection();
@@ -443,23 +417,28 @@ public class GuiController {
       HBox box = (HBox) board.getChildren().get(i);
       for (int j = 0; j < box.getChildren().size(); j++) {
         ImageView tile = (ImageView) box.getChildren().get(j);
-
-        tile.setOnMouseClicked(
-            e -> {
-              if (!selectedTiles.contains(tile)) {
-                tile.setStyle("-fx-translate-y: -15;");
-                TileView.highlightTile(tile);
-                selectedTiles.add(tile);
-              } else {
-                tile.setStyle("-fx-translate-y: 0");
-                tile.setEffect(null);
-                selectedTiles.remove(tile);
-              }
-            });
+        onTileClicked(tile);
       }
-
     }
   }
+
+  private void onTileClicked(ImageView tile) {
+    tile.setOnMouseClicked(
+        e -> {
+          if (!selectedTiles.contains(tile)) {
+            tile.setStyle("-fx-translate-y: -15;");
+            TileView.highlightTile(tile);
+            selectedTiles.add(tile);
+          } else {
+            tile.setStyle("-fx-translate-y: 0");
+            tile.setEffect(null);
+            selectedTiles.remove(tile);
+          }
+        });
+  }
+
+
+
 
   /**
    * for adding to existing combinations.
@@ -522,7 +501,8 @@ public class GuiController {
         comb.getChildren().add(0, tile); //added tile vorne in hbox
       }
 
-      disableTileControl(selectedTiles);
+      deselectTiles(selectedTiles);
+      selectedTiles.clear();
       updateHand();
       updateBoard();
     } else {
@@ -561,7 +541,8 @@ public class GuiController {
         comb.getChildren().add(comb.getChildren().size(), tile);
       }
 
-      disableTileControl(selectedTiles);
+      deselectTiles(selectedTiles);
+      selectedTiles.clear();
       updateHand();
       updateBoard();
     } else {
@@ -611,26 +592,26 @@ public class GuiController {
       ImageView iView = (ImageView) bottomHand.getChildren().get(i);
       handTiles.add(iView);
     }
-    for (int i = 0; i < placedCombinations.size(); i++) {
-      HBox box = placedCombinations.get(i);
+    for (int i = 0; i < board.getChildren().size(); i++) {
+      HBox box = (HBox)board.getChildren().get(i);
       for (int j = 0; j < box.getChildren().size(); j++) {
         ImageView iView = (ImageView) box.getChildren().get(j);
         handTiles.add(iView);
       }
     }
-    disableTileControl(handTiles);
+    deselectTiles(handTiles);
   }
 
   /**
    * Disables tile control for player.
    */
-  private void disableTileControl(List<ImageView> tiles) {
-    for (int i = 0; i < tiles.size(); i++) {
+  private void deselectTiles(List<ImageView> tiles) {
+    for (int i = tiles.size(); i >= 0; i--) {
       ImageView tile = tiles.get(i);
       tile.setStyle("-fx-translate-y: 0");
       tile.setEffect(null);
       tile.setDisable(true);
-      selectedTiles.remove(tile);
+      tiles.remove(tile);
     }
   }
 
