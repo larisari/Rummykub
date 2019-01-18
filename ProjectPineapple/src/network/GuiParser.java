@@ -51,7 +51,7 @@ public class GuiParser {
     if (antwort.equals("true")) {
       guiController.placeTiles();
     } else if (antwort.equals("false")) {
-      guiController.cancelSelection();
+      guiController.cancelSelEffect();
     }
   }
 

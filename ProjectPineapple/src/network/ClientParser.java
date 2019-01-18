@@ -101,7 +101,7 @@ public class ClientParser {
         if (messageAsArray[1].equals("true")) {
           guiController.placeTiles();
         } else if (messageAsArray[1].equals("false")) {
-          guiController.cancelSelection();
+          guiController.cancelSelEffect();
         }
         break;
       case "responseForPlayBoard":
