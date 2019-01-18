@@ -388,6 +388,9 @@ public class GuiController {
   @FXML
   protected void handleManipulate(MouseEvent event) {
 //if first turn do not allow
+    disableTilesOnBoard();
+  }
+  private void disableTilesOnBoard(){
     for (int i = 0; i < board.getChildren().size(); i++) {
       HBox box = (HBox) board.getChildren().get(i);
       for (int j = 0; j < box.getChildren().size(); j++) {
@@ -424,14 +427,18 @@ public class GuiController {
     if (!selectedTiles.isEmpty()) {
       for (int i = 0; i < board.getChildren().size(); i++) {
         HBox box = (HBox) board.getChildren().get(i);
+        for (int j = 0; j < box.getChildren().size(); j++){
+
+          if (box.getChildren().get(j) instanceof Button) {
+            return;
+          }
+        }
         Button front = new Button("add here");
         front.setOnMousePressed(event1 -> {
-          addToExisting.setDisable(true);
           addToFront(box);
         });
         Button back = new Button("add here");
         back.setOnMousePressed(event2 -> {
-          addToExisting.setDisable(true);
           addToBack(box);
         });
         box.getChildren().add(0, front);
