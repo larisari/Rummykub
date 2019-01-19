@@ -49,7 +49,7 @@ public class Client extends Thread {
     }
   }
 
-  public void sendMessageToServer(String message) {
+  public static void sendMessageToServer(String message) {
     String messageToServer = message;
     try {
       out.writeUTF(messageToServer);
@@ -74,7 +74,7 @@ public class Client extends Thread {
 
             System.out.println("[Client] Imcoming message from Server: " + msg);
 
-            ClientParser.parseForView(msg);
+            ClientParser.parseForController(msg);
 
 //              //an Parser weitergeben...
 //            }

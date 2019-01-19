@@ -1,32 +1,35 @@
 package network;
 
+import gameinfo.GIFactory;
+import gameinfo.GIGameInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Server {
 
-  public Server() {
+  static GIGameInfo gameInfo;
 
+  public Server() {
 
     try {
       List<ServerClientCommunication> listOfClients = new ArrayList<ServerClientCommunication>();
 
-      GameInfoImpl game = new GameInfoImpl(listOfClients);
+      gameInfo = GIFactory.make();
       System.out.println("Spiel wird geladen....");
-      game.start();
 
       ServerListener listener = new ServerListener(listOfClients);
       listener.start();
 
 
-      while (game.isAlive()) {
-      }
+//      while (game.isAlive()) {
+//      }
     } catch (Exception e) {
       e.printStackTrace();
     }
   }
 
-  public void broadcastToAllClients(String message) {
+  public static void broadcastToAllClients(String message) {
     List<ServerClientCommunication> clients = ServerListener.getClients();
 
     String command = "";

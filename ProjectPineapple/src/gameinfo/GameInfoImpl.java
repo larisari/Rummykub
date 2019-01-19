@@ -7,8 +7,11 @@ import gameinfo.util.GITuple;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
-class GameInfoImpl implements GIGameInfo {
+class GameInfoImpl extends Thread implements GIGameInfo {
+
+  private static Logger log = Logger.getLogger(GameInfoImpl.class.getName());
 
   private static int MINIMUM_POINTS_ON_FIRST_MOVE = 30;
   private static int NUMBER_OF_TILES_IN_STACK = 14;
@@ -24,6 +27,7 @@ class GameInfoImpl implements GIGameInfo {
     rules = new Rules();
     hasRegisteredPlayers = false;
     canModifyRegisteredPlayers = true;
+    start();
   }
 
   @Override
@@ -31,6 +35,10 @@ class GameInfoImpl implements GIGameInfo {
     if (canModifyRegisteredPlayers) {
       rules.registerBy(id);
       hasRegisteredPlayers = true;
+
+      log.info("Registered Player " + id + ".");
+    } else {
+      log.info("Registering of Player " + id + " has failed.");
     }
   }
 
@@ -38,15 +46,18 @@ class GameInfoImpl implements GIGameInfo {
   public void deregisterBy(Integer id) {
     rules.deregisterPlayerBy(id);
 
+    log.info("Deregistered Player " + id + ".");
+
     if (rules.getAllPlayers().isEmpty()) {
       hasRegisteredPlayers = false;
     }
   }
 
   @Override
-  public void start() {
+  public void startGame() {
     rules.startGame();
     canModifyRegisteredPlayers = false;
+    log.info("Game started.");
   }
 
   @Override
@@ -196,17 +207,30 @@ class GameInfoImpl implements GIGameInfo {
   }
 
   @Override
-  public Optional<GITuple<Integer, Boolean>> finishedTurnBy(Integer id) {
+  public Optional<GITuple<Integer, List<List<GITile>>>> finishedTurnBy(Integer id) {
     if (!rules.isPlayerExistingBy(id)) {
       return Optional.empty();
     }
 
     if (rules.isValidPlayerBy(id)) {
       rules.nextPlayersTurn();
-      return Optional.of(new GITuple<>(id, true));
+      return Optional.of(new GITuple<>(id, board.getActiveCombos()));
     } else {
       // it is not the players turn.
-      return Optional.of(new GITuple<>(id, false));
+      // return Optional.of(new GITuple<>(id, board.getActiveCombos()));
+      // TODO !!! HANDLE BETTER !!!
+      return Optional.empty();
+    }
+  }
+
+  @Override
+  public Optional<GITuple<Integer, Boolean>> isFirstTurnBy(Integer id) {
+    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
+
+    if (optionalPlayer.isPresent()) {
+      return Optional.of(new GITuple<>(id, optionalPlayer.get().isFirstMove()));
+    } else {
+      return Optional.empty();
     }
   }
 

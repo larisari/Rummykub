@@ -13,7 +13,7 @@ public interface GIGameInfo {
 
   void deregisterBy(Integer id);
 
-  void start();
+  void startGame();
 
   Optional<Integer> getNumberOfPlayers();
 
@@ -38,5 +38,7 @@ public interface GIGameInfo {
   // is negative
   Optional<GITuple<Integer, GIPoints>> calculatePointsBy(Integer id);
 
-  Optional<GITuple<Integer, Boolean>> finishedTurnBy(Integer id);
+  Optional<GITuple<Integer, List<List<GITile>>>> finishedTurnBy(Integer id);
+
+  Optional<GITuple<Integer, Boolean>> isFirstTurnBy(Integer id);
 }

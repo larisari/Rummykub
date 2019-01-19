@@ -1,20 +1,32 @@
-package gui;
+package network;
 
 import gameinfo.util.GIColor;
 import gameinfo.util.GINumber;
 import gameinfo.util.GITile;
-import gameinfo.util.GITuple;
+import gui.GuiController;
 import gui.util.Image;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class GuiParser {
+  //TODO methoden vom controller nonstatic, antwortmethoden static
+//parse format
+  //  list<comb:tile.color/number,tile.color/number;comb:tile.color/number;
+  private static GuiController guiController;
 
-  public GuiParser() {
+  public GuiParser(GuiController controller) {
+    guiController = controller;
+  }
 
+  // TODO rename method
+  public static String parseListToString(List<List<ImageView>> listOfTiles) {
+    StringBuilder builder = new StringBuilder();
+    builder.append("list<");
+    listOfTiles.forEach(combination -> builder.append(GuiParser.parseToString(combination)));
+
+    return builder.toString();
   }
 
   public static String parseToString(List<ImageView> tiles) {
@@ -35,6 +47,15 @@ public class GuiParser {
     return selectedT + ";";
   }
 
+  public static void response(String antwort) {
+    if (antwort.equals("true")) {
+      guiController.placeTiles();
+    } else if (antwort.equals("false")) {
+      guiController.cancelSelEffect();
+    }
+  }
+
+  //ergebnis in liste packen -> List<List<GITile>>
   public static List<GITile> parseStringToTile(String tiles) {
     List<GITile> tileList = new ArrayList<>();
     tiles = tiles.substring(0, tiles.length() - 1);
@@ -117,54 +138,5 @@ public class GuiParser {
     }
     return tileList;
 
-  }
-
-
-  public static String parseTileToString(Optional<GITuple<Integer, List<GITile>>> stack) {
-    String parsedTiles = "comb:";
-    List<GITile> tiles = stack.get().getSecond();
-    for (int i = 0; i < tiles.size(); i++) {
-      String colorNumber = parseColorToString(tiles.get(i).getColor(), tiles.get(i).getNumber().value());
-      parsedTiles += colorNumber;
-    }
-    return parsedTiles;
-  }
-
-  private static String parseColorToString(GIColor color, int number) {
-    StringBuilder builder = new StringBuilder();
-    builder.append("tile.");
-
-    switch (color) {
-      case BLUE:
-        builder.append("blue");
-        break;
-      case RED:
-        builder.append("red");
-        break;
-      case BLACK:
-        builder.append("black");
-        break;
-      case YELLOW:
-        builder.append("yellow");
-        break;
-      case JOKER:
-        builder.append("joker");
-        break;
-      default:
-        break;
-    }
-
-
-    builder.append("/");
-
-
-    if (number == 0) {
-      builder.append("joker");
-    } else {
-      builder.append(number);
-    }
-    builder.append(",");
-
-    return builder.toString();
   }
 }
