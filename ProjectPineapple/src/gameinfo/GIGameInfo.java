@@ -41,4 +41,6 @@ public interface GIGameInfo {
   Optional<GITuple<Integer, List<List<GITile>>>> finishedTurnBy(Integer id);
 
   Optional<GITuple<Integer, Boolean>> isFirstTurnBy(Integer id);
+
+  List<GITuple<Integer,GIPoints>> getAllPlayersScore();
 }
