@@ -55,7 +55,7 @@ public class ServerParser {
         clients.get(id).sendMessageToClient("responseForGetPlayerID|" + id);
         break;
       case "getPlayerPoints":
-        //Server.broadcastToAllClients("responseForGetPlayerPoints|" + parsePointsToString(getPlayerPoints()));
+        // Server.broadcastToAllClients("responseForGetPlayerPoints|" + parsePointsToString(getPlayerPoints()));
         break;
       case "numberOfPlayers":
         Optional<Integer> resultNumber = Server.gameInfo.getNumberOfPlayers();
@@ -65,6 +65,13 @@ public class ServerParser {
         } else {
           // id is not registered in model.
           log.info("There is no " + id + " registered in the model.");
+        }
+        break;
+      case "notifyWin":
+        for(int i = 0; i < clients.size(); i++){
+          if(i != id){
+            clients.get(i).sendMessageToClient("responseToNotifyWin");
+          }
         }
         break;
     }

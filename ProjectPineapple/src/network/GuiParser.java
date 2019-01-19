@@ -5,15 +5,16 @@ import gameinfo.util.GINumber;
 import gameinfo.util.GITile;
 import gui.GuiController;
 import gui.util.Image;
+import java.io.IOException;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class GuiParser {
-  //TODO methoden vom controller nonstatic, antwortmethoden static
-//parse format
-  //  list<comb:tile.color/number,tile.color/number;comb:tile.color/number;
+
+  // parse format
+  // list<comb:tile.color/number,tile.color/number;comb:tile.color/number;
   private static GuiController guiController;
 
   public GuiParser(GuiController controller) {
@@ -56,13 +57,18 @@ public class GuiParser {
     return points;
   }
 
+  /*
   public static void response(String antwort) {
     if (antwort.equals("true")) {
-      guiController.placeTiles();
+      try {
+        guiController.placeTiles();
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
     } else if (antwort.equals("false")) {
       guiController.cancelSelEffect();
     }
-  }
+  }*/
 
   //ergebnis in liste packen -> List<List<GITile>>
   public static List<GITile> parseStringToTile(String tiles) {

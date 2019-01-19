@@ -35,10 +35,10 @@ public class EndScreenController {
   private Label player4;
 
   //noch ändern:
-  private int p1Points = 1;
-  private int p2Points = 2;
-  private int p3Points = 3;
-  private int p4Points = 4;
+  private int p1Points;
+  private int p2Points;
+  private int p3Points;
+  private int p4Points;
   private ClientParser parser;
 
   public EndScreenController() {
