@@ -9,12 +9,16 @@ import gameinfo.GIGameInfo;
 import gameinfo.GIFactory;
 import gui.util.Image;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -25,6 +29,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import network.Client;
 import network.ClientParser;
 
@@ -265,8 +271,34 @@ public class GuiController {
     updateBoard();
 
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
-      // TODO öffne Gewinnerfenster
+      parser.calculatePoints();
     }
+  }
+
+  /**
+   * Gets called if user has won.
+   * @throws IOException if some error occurs while loading fxml file.
+   */
+  public void openWinScreen() throws IOException {
+    Parent root = FXMLLoader.load(getClass().getResource("winnerScreen.fxml"));
+    Scene scene = new Scene(root);
+    Stage stage = new Stage();
+    stage.setScene(scene);
+    stage.setResizable(false);
+    stage.show();
+  }
+
+  /**
+   * Gets called if user has lost.
+   * @throws IOException if some error occurs while loading fxml file.
+   */
+  public void openLoserScreen() throws IOException {
+    Parent root = FXMLLoader.load(getClass().getResource("loserScreen.fxml"));
+    Scene scene = new Scene(root);
+    Stage stage = new Stage();
+    stage.setScene(scene);
+    stage.setResizable(false);
+    stage.show();
   }
 
   /**

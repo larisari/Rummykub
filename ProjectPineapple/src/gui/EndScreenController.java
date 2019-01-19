@@ -2,6 +2,7 @@ package gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import network.ClientParser;
 
 public class EndScreenController {
 
@@ -32,12 +33,24 @@ public class EndScreenController {
   @FXML
   private Label player4;
 
-  final int p1Points = 1;
-  final int p2Points = 2;
-  final int p3Points = 3;
-  final int p4Points = 4;
+//noch ändern:
+  private final int p1Points = 1;
+  private final int p2Points = 2;
+  private final int p3Points = 3;
+  private final int p4Points = 4;
+  private ClientParser parser;
 
+public EndScreenController(){
+ // parser = new ClientParser(this);
+}
 
+ private void getPlayerPoints(){
+ // parser.getPlayerPoints();
+ }
+
+ public void setPlayerPoints(){
+  // liste durchgehen und punkte für player 1-? setzen.
+ }
   /**
    * nach anz players label hiden bei winnerScreen: wer hat gewonnen -> namen anpassen bei beiden:
    * wer hat wieviele punkte
@@ -69,7 +82,6 @@ public class EndScreenController {
         break;
     }
 
-    //client
   }
 
   void setPoints2Players() {
