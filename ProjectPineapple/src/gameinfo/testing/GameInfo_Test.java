@@ -1,5 +1,5 @@
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.Test;
 
-class GameInfo_Test {
+//class GameInfo_Test {
 
-}
+//}

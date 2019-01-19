@@ -49,6 +49,7 @@ public class LoadingScreenController {
    */
   public void enableStart(){
     if (controller.getPlayerID() == 0) {
+      System.out.println("enable");
       startGame.setDisable(false);
     }
   }

@@ -58,8 +58,8 @@ public class StartingScreenController {
       try {
         Client c = new Client(ipAdress);
         loadLoadingScreen();
-      } catch (Exception e) {
-
+      } catch (IOException e) {
+//DialogError: Error! Please enter valid IP adress!
         return;
       }
     }
