@@ -55,7 +55,7 @@ public class ServerParser {
         clients.get(id).sendMessageToClient("responseForGetPlayerID|" + id);
         break;
       case "getPlayerPoints":
-        //Server.broadcastToAllClients("responseForGetPlayerPoints|" + parsePointsToString(getPlayerPoints()));
+        // Server.broadcastToAllClients("responseForGetPlayerPoints|" + parsePointsToString(getPlayerPoints()));
         break;
       case "numberOfPlayers":
         Optional<Integer> resultNumber = Server.gameInfo.getNumberOfPlayers();

@@ -72,14 +72,6 @@ public class ClientParser {
     Client.sendMessageToServer(builder.toString());
   }
 
-  public void getAllTiles() {
-    Client.sendMessageToServer("getAllTiles");
-  }
-
-  public void calculatePoints() {
-    Client.sendMessageToServer("calculatePoints");
-  }
-
   public void finishedTurn() {
     Client.sendMessageToServer("finishedTurn");
   }
@@ -126,7 +118,11 @@ public class ClientParser {
         break;
       case "responseForPlay":
         if (messageAsArray[1].equals("true")) {
-          guiController.placeTiles();
+          try {
+            guiController.placeTiles();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
         } else if (messageAsArray[1].equals("false")) {
           guiController.cancelSelEffect();
         }
