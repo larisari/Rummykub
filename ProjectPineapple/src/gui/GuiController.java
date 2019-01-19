@@ -172,19 +172,19 @@ public class GuiController {
    */
   private void setPlayerNames() {
     switch (playerID) {
-      case 1:
+      case 0:
         break; //bleibt auf default
-      case 2:
+      case 1:
         playerTopName.setText("Player 1");
         playerRightName.setText("Player 4");
         playerLeftName.setText("Player 3");
         break;
-      case 3:
+      case 2:
         playerTopName.setText("Player 4");
         playerRightName.setText("Player 2");
         playerLeftName.setText("Player 1");
         break;
-      case 4:
+      case 3:
         playerTopName.setText("Player 3");
         playerRightName.setText("Player 1");
         playerLeftName.setText("Player 2");
