@@ -42,5 +42,5 @@ public interface GIGameInfo {
 
   Optional<GITuple<Integer, Boolean>> isFirstTurnBy(Integer id);
 
-  List<GITuple<Integer,GIPoints>> getAllPlayersScore();
+  List<GITuple<Integer,GIPoints>> getPlayerPoints();
 }

@@ -262,7 +262,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   }
 
   @Override
-  public List<GITuple<Integer,GIPoints>> getAllPlayersScore() {
-    return rules.getAllPlayersScore();
+  public List<GITuple<Integer,GIPoints>> getPlayerPoints() {
+    return rules.getPlayerPoints();
   }
 }

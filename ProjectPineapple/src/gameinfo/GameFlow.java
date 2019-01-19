@@ -96,7 +96,7 @@ class GameFlow {
     }
   }
 
-  List<GITuple<Integer,GIPoints>> getAllPlayersScore() {
+  List<GITuple<Integer,GIPoints>> getPlayerPoints() {
     List<GITuple<Integer,GIPoints>> allPlayersHands = new ArrayList<>();
     for (Map.Entry<Integer,Player> player : players.entrySet()) {
         GITuple<Integer, GIPoints> playersHand =
