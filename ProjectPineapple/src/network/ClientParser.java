@@ -1,5 +1,6 @@
 package network;
 
+import gui.EndScreenController;
 import gui.GuiController;
 import gui.LoadingScreenController;
 import javafx.scene.image.ImageView;
@@ -16,14 +17,15 @@ public class ClientParser {
 
   private static GuiController guiController;
   private static LoadingScreenController loadingScreenController;
+  private static EndScreenController endScreenController;
 
   public ClientParser(GuiController controller) {
     guiController = controller;
   }
 
-  public ClientParser(LoadingScreenController controller) {
-    loadingScreenController = controller;
-  }
+  public ClientParser(LoadingScreenController controller) { loadingScreenController = controller; }
+
+  public ClientParser(EndScreenController controller) { endScreenController = controller; }
 
   public static void getStringIntoClientParser(String receivedMessageFromServer) {
     receivedMessageFromServer = recievedMessageFromServer;
@@ -86,6 +88,25 @@ public class ClientParser {
     Client.sendMessageToServer("isFirstTurn");
   }
 
+  public void getNextPlayerID() {
+    Client.sendMessageToServer("getNextPlayerID");
+  }
+
+  public void numberOfPlayers() {
+    Client.sendMessageToServer("numberOfPlayers");
+  }
+
+  public void getPlayerID() {
+    Client.sendMessageToServer("getPlayerID");
+  }
+
+  public void getPlayerPoints() {
+    Client.sendMessageToServer("getPlayerPoints");
+  }
+
+
+  // Received messages from Server.
+
   static void parseForController(String message) {
 
     String[] messageAsArray = message.split("[|]");
@@ -115,6 +136,12 @@ public class ClientParser {
       case "responseForGetPlayerID":
         guiController.setPlayerID(Integer.parseInt(messageAsArray[1]));
         break;
+      case "responseForGetPlayerPoints":
+        endScreenController.setPlayerPoints(GuiParser.parseStringToIntegerList(messageAsArray[1]));
+        break;
+      case "possibleToStart":
+        loadingScreenController.enableStart();
+        break;
       // TODO REST
       case "forStartGame":
         try {
@@ -123,19 +150,5 @@ public class ClientParser {
         }
         break;
     }
-  }
-
-  public void getNextPlayerID() {
-    Client.sendMessageToServer("getNextPlayerID");
-  }
-
-  public void numberOfPlayers() {
-    Client.sendMessageToServer("numberOfPlayers");
-  }
-
-  // Received messages from Server.
-
-  public void getPlayerID() {
-    Client.sendMessageToServer("getPlayerID");
   }
 }

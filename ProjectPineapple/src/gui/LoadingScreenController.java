@@ -22,26 +22,41 @@ public class LoadingScreenController {
   private ClientParser parser = new ClientParser(this);
   private int numberOfPlayers = 1;
   private int JoinedY = 160;
+  private GuiController controller;
 
+  public LoadingScreenController(){
+    controller = new GuiController();
+  }
   /**
    * Initializes loadingScreen FXML file.
    * Disables the start button.
    */
   @FXML
   private void initialize() {
-    startGame.setDisable(true);
+    if (controller.getPlayerID() != 0) {
+      startGame.setVisible(false);
+    }
+      startGame.setDisable(true);
+    }
+
+
+  public void getNumberOfPlayer(){
+    numberOfPlayers++;
   }
 
   /**
    * Gets called if at least two Players are present.
    */
   public void enableStart(){
-    startGame.setDisable(false);
+    if (controller.getPlayerID() == 0) {
+      startGame.setDisable(false);
+    }
   }
 
   /**
    * Gets called if new player joined. Adds "Joined" on loading screen next to the newly joined
    * player.
+   * muss checken der wievielte spieler das ist.
    */
   public void addJoined(){
     JoinedY += 50;

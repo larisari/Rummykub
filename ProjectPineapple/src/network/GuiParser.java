@@ -47,6 +47,15 @@ public class GuiParser {
     return selectedT + ";";
   }
 
+  public static List<Integer> parseStringToIntegerList(String pointsFromServer){
+    List<Integer> points = new ArrayList<>();
+    String[] pointsString = pointsFromServer.split(",");
+    for (String point : pointsString){
+      points.add(Integer.parseInt(point));
+    }
+    return points;
+  }
+
   public static void response(String antwort) {
     if (antwort.equals("true")) {
       guiController.placeTiles();
