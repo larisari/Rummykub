@@ -78,7 +78,6 @@ public class GuiController {
   private int playerID;
   static int numberOfPlayers;
   private final static int HAND_SPACE = 13;
-  private GIGameInfo gameInfo;
   private int turn = 0;
   private final static int MAX_BOXHEIGHT = 68;
   private final static int MAX_BOXWIDTH = 45;
@@ -95,7 +94,6 @@ public class GuiController {
    * Interface between network and view.
    */
   public GuiController() {
-    gameInfo = GIFactory.make();
     parser = new ClientParser(this);
   }
 
