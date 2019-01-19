@@ -721,6 +721,8 @@ public class GuiController {
     }
   }
 
+  //TODO reload Board für andere clients
+
   /**
    * Disables control for the user. All buttons and tiles are set to disabled.
    */

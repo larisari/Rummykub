@@ -1,5 +1,6 @@
 package gui;
 
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import network.ClientParser;
@@ -33,24 +34,42 @@ public class EndScreenController {
   @FXML
   private Label player4;
 
-//noch ändern:
-  private final int p1Points = 1;
-  private final int p2Points = 2;
-  private final int p3Points = 3;
-  private final int p4Points = 4;
+  //noch ändern:
+  private int p1Points = 1;
+  private int p2Points = 2;
+  private int p3Points = 3;
+  private int p4Points = 4;
   private ClientParser parser;
 
-public EndScreenController(){
- // parser = new ClientParser(this);
-}
+  public EndScreenController() {
+    parser = new ClientParser(this);
+  }
 
- private void getPlayerPoints(){
- // parser.getPlayerPoints();
- }
+  private void getPlayerPoints() {
+    parser.getPlayerPoints();
+  }
 
- public void setPlayerPoints(){
-  // liste durchgehen und punkte für player 1-? setzen.
- }
+  public void setPlayerPoints(List<Integer> points) {
+    switch (points.size()) {
+      case 2:
+        p1Points = points.get(0);
+        p2Points = points.get(1);
+        break;
+      case 3:
+        p1Points = points.get(0);
+        p2Points = points.get(1);
+        p3Points = points.get(2);
+        break;
+      case 4:
+        p1Points = points.get(0);
+        p2Points = points.get(1);
+        p3Points = points.get(2);
+        p4Points = points.get(3);
+        break;
+
+    }
+  }
+
   /**
    * nach anz players label hiden bei winnerScreen: wer hat gewonnen -> namen anpassen bei beiden:
    * wer hat wieviele punkte
@@ -85,8 +104,6 @@ public EndScreenController(){
   }
 
   void setPoints2Players() {
-    //p1Points = client.receive(getPointsBy(1));
-    //p2Points = client.receive(getPointsBy(2));
     Loserp1Points.setText(p1Points + "");
     Loserp2Points.setText(p2Points + "");
     if (p2Points < p1Points) {
@@ -97,69 +114,57 @@ public EndScreenController(){
     }
   }
 
-    void setPoints3Players() {
-      //p1Points = client.receive(getPointsBy(1));
-      // p2Points = client.receive(getPointsBy(2));
-      // p3Points = client.receive(getPointsBy(3));
-      Loserp1Points.setText(p1Points + "");
-      Loserp2Points.setText(p2Points + "");
-      Loserp3Points.setText(p3Points + "");
-      if (p3Points == 0) {
-        player2.setText("Player 1");
-        player3.setText("Player 2");
-        player2Points.setText(p1Points + "");
-        player3Points.setText(p2Points + "");
-      }
-      if (p2Points == 0) {
-        player2.setText("Player 1");
-        //player3 default
-        player2Points.setText(p1Points + "");
-        player3Points.setText(p3Points + "");
-      }
-      if (p1Points == 0) {
-        player2Points.setText(p2Points + "");
-        player3Points.setText(p3Points + "");
-      }
+  void setPoints3Players() {
+    Loserp1Points.setText(p1Points + "");
+    Loserp2Points.setText(p2Points + "");
+    Loserp3Points.setText(p3Points + "");
+    if (p3Points == 0) {
+      player2.setText("Player 1");
+      player3.setText("Player 2");
+      player2Points.setText(p1Points + "");
+      player3Points.setText(p2Points + "");
     }
-
-    void setPoints4Players(){
-      //p1Points = client.receive(getPointsBy(1));
-      // p2Points = client.receive(getPointsBy(2));
-      // p3Points = client.receive(getPointsBy(3));
-      // p4Points = client.receive(getPointsBy(4));
-      Loserp1Points.setText(p1Points + "");
-      Loserp2Points.setText(p2Points + "");
-      Loserp3Points.setText(p3Points + "");
-      Loserp4Points.setText(p4Points + "");
-      switch (0){
-        case p1Points:
-          player2Points.setText(p2Points + "");
-          player3Points.setText(p3Points + "");
-          player4Points.setText(p4Points + "");
-          break;
-        case p2Points:
-          player2.setText("Player 1");
-          player2Points.setText(p1Points + "");
-          player3Points.setText(p3Points + "");
-          player4Points.setText(p4Points + "");
-          break;
-        case p3Points:
-          player2.setText("Player 1");
-          player3.setText("Player 2");
-          player2Points.setText(p1Points + "");
-          player3Points.setText(p2Points + "");
-          player4Points.setText(p4Points + "");
-          break;
-        case p4Points:
-          player2.setText("Player 1");
-          player3.setText("Player 2");
-          player4.setText("Player 3");
-          player2Points.setText(p1Points + "");
-          player3Points.setText(p2Points + "");
-          player4Points.setText(p3Points + "");
-          break;
-      }
-
+    if (p2Points == 0) {
+      player2.setText("Player 1");
+      //player3 default
+      player2Points.setText(p1Points + "");
+      player3Points.setText(p3Points + "");
+    }
+    if (p1Points == 0) {
+      player2Points.setText(p2Points + "");
+      player3Points.setText(p3Points + "");
     }
   }
+
+  void setPoints4Players() {
+    Loserp1Points.setText(p1Points + "");
+    Loserp2Points.setText(p2Points + "");
+    Loserp3Points.setText(p3Points + "");
+    Loserp4Points.setText(p4Points + "");
+    if (p4Points == 0) {
+      player2Points.setText(p2Points + "");
+      player3Points.setText(p3Points + "");
+      player4Points.setText(p4Points + "");
+    } else if (p2Points == 0) {
+      player2.setText("Player 1");
+      player2Points.setText(p1Points + "");
+      player3Points.setText(p3Points + "");
+      player4Points.setText(p4Points + "");
+    } else if (p3Points == 0) {
+      player2.setText("Player 1");
+      player3.setText("Player 2");
+      player2Points.setText(p1Points + "");
+      player3Points.setText(p2Points + "");
+      player4Points.setText(p4Points + "");
+    } else if (p4Points == 0) {
+      player2.setText("Player 1");
+      player3.setText("Player 2");
+      player4.setText("Player 3");
+      player2Points.setText(p1Points + "");
+      player3Points.setText(p2Points + "");
+      player4Points.setText(p3Points + "");
+    }
+
+  }
+}
 
