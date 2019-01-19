@@ -5,8 +5,6 @@ package gui;
 
 //TODO sachen die für alle angezeigt werden muss im MainThread ausgeführt werden.
 
-import gameinfo.GIGameInfo;
-import gameinfo.GIFactory;
 import gui.util.Image;
 
 import java.io.IOException;
@@ -29,9 +27,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import network.Client;
 import network.ClientParser;
 
 //test: mousepressed besser als mouseclicked?
@@ -101,6 +97,7 @@ public class GuiController {
    */
   public GuiController() {
     parser = new ClientParser(this);
+    getClientID();
   }
 
   /**
@@ -120,7 +117,7 @@ public class GuiController {
   /**
    * Requests the user's player ID from the network.
    */
-  private void getPlayerID() {
+  private void getClientID() {
     parser.getPlayerID();
   }
 
@@ -129,6 +126,10 @@ public class GuiController {
    */
   public void setPlayerID(Integer playerID) {
     this.playerID = playerID;
+  }
+
+  public Integer getPlayerID(){
+    return this.playerID;
   }
 
   /**
