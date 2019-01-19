@@ -1,6 +1,7 @@
 package network;
 
 import gameinfo.util.GIColor;
+import gameinfo.util.GIPoints;
 import gameinfo.util.GITile;
 import gameinfo.util.GITuple;
 
@@ -53,6 +54,9 @@ public class ServerParser {
       case "getPlayerID":
         clients.get(id).sendMessageToClient("responseForGetPlayerID|" + id);
         break;
+      case "getPlayerPoints":
+        //Server.broadcastToAllClients("responseForGetPlayerPoints|" + parsePointsToString(getPlayerPoints()));
+        break;
       case "numberOfPlayers":
         Optional<Integer> resultNumber = Server.gameInfo.getNumberOfPlayers();
 
@@ -64,6 +68,17 @@ public class ServerParser {
         }
         break;
     }
+  }
+
+  static String parsePointsToString(List<GITuple<Integer, GIPoints>> list){
+    String points = "";
+    for(int i = 0; i < list.size(); i++){
+      points += list.get(i).getSecond();
+      if(i != list.size()-1) {
+        points += ",";
+      }
+    }
+    return points;
   }
 
   static String parseTileToString(List<GITile> tiles) {

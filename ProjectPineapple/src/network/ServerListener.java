@@ -44,6 +44,9 @@ public class ServerListener extends Thread {
             System.out.println("[Server] erstelle eigenen Thread für Client " + clientID);
             // create a new thread object
             ServerClientCommunication t = new ServerClientCommunication(s, in, out, clientID);
+
+            t.sendMessageToClient("addJoined");
+
             // Invoking the start() method
             t.start();
 
