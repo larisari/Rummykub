@@ -96,14 +96,18 @@ class GameFlow {
     }
   }
 
-  List<GITuple<Integer,GIPoints>> getPlayerPoints() {
-    List<GITuple<Integer,GIPoints>> allPlayersHands = new ArrayList<>();
-    for (Map.Entry<Integer,Player> player : players.entrySet()) {
+  Optional<List<GITuple<Integer,GIPoints>>> getPlayerPoints() {
+    if (!players.isEmpty()) {
+      List<GITuple<Integer, GIPoints>> allPlayersHands = new ArrayList<>();
+      for (Map.Entry<Integer, Player> player : players.entrySet()) {
         GITuple<Integer, GIPoints> playersHand =
-            new GITuple<>(player.getValue().getId(),
-                player.getValue().calculatePointsOfHand());
+            new GITuple<>(player.getValue().getId(), player.getValue().calculatePointsOfHand());
         allPlayersHands.add(playersHand);
+      }
+      return Optional.of(allPlayersHands);
     }
-    return allPlayersHands;
+    else {
+      return Optional.empty();
+    }
   }
 }

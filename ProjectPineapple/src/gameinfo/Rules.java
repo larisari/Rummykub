@@ -81,7 +81,7 @@ class Rules {
     return gameFlow.getPlayers();
   }
 
-  List<GITuple<Integer, GIPoints>> getPlayerPoints() {
+  Optional<List<GITuple<Integer, GIPoints>>> getPlayerPoints() {
     return gameFlow.getPlayerPoints();
   }
 
