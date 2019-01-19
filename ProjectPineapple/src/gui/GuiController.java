@@ -260,8 +260,9 @@ public class GuiController {
   /**
    * Places tiles combination on the main board. Disables the bag.
    * Checks if the player's hand is now empty.
+   * @throws IOException
    */
-  public void placeTiles() {
+  public void placeTiles() throws IOException {
 
     for (int i = 0; i < selectedCombinations.size(); i++) {
       List<ImageView> combination = selectedCombinations.get(i);
@@ -272,7 +273,8 @@ public class GuiController {
     updateBoard();
 
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
-      parser.calculatePoints();
+      openWinScreen();
+      parser.notifyWin();
     }
   }
 
