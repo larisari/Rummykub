@@ -104,6 +104,12 @@ public class ClientParser {
     Client.sendMessageToServer("getPlayerPoints");
   }
 
+  public void notifyWin() {
+    Client.sendMessageToServer("notifyWin");
+  }
+
+
+
 
   // Received messages from Server.
 
@@ -142,7 +148,13 @@ public class ClientParser {
       case "possibleToStart":
         loadingScreenController.enableStart();
         break;
-      // TODO REST
+      case "responseToNotifyWin":
+        try {
+          guiController.openLoserScreen();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+        // TODO REST
       case "forStartGame":
         try {
           loadingScreenController.openGameWindow();

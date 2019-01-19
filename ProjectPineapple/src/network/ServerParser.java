@@ -67,6 +67,13 @@ public class ServerParser {
           log.info("There is no " + id + " registered in the model.");
         }
         break;
+      case "notifyWin":
+        for(int i = 0; i < clients.size(); i++){
+          if(i != id){
+            clients.get(i).sendMessageToClient("responseToNotifyWin");
+          }
+        }
+        break;
     }
   }
 
