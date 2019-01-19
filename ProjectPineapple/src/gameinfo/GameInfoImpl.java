@@ -260,4 +260,9 @@ class GameInfoImpl extends Thread implements GIGameInfo {
               player.remove(combination);
             });
   }
+
+  @Override
+  public List<GITuple<Integer,GIPoints>> getPlayerPoints() {
+    return rules.getPlayerPoints();
+  }
 }
