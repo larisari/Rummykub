@@ -21,48 +21,6 @@ public class TileView {
   private HBox bottomHand;
 
 
-  /**
-   *
-   */
-  List<Image> createImgs(String hand) {
-    List<Image> tilesImg = new ArrayList<>();
-    String[] block = hand.split(":");
-    String[] tiles = block[1].split(",");
-    for (int i = 0; i < tiles.length; i++) {
-      String[] attributeswS = tiles[i].split("[.]");
-      String[] attributes = attributeswS[1].split("/");
-      String color = attributes[0];
-      String number = attributes[1];
-
-      if (color.equals("joker")) {
-        Image joker = new Image("gui/images/tiles/joker/joker.png");
-        tilesImg.add(joker);
-      } else {
-        Image tile = new Image("gui/images/tiles/" + color + "/" + number + ".png");
-        tilesImg.add(tile);
-      }
-
-
-    }
-    return tilesImg;
-    }
-
-
-
-
-  /**
-   * Returns false if ImageView contains an image or if an error occured while loading.
-   *
-   * @param imageV - ImageView to be checked.
-   */
-  private static boolean isEmpty(ImageView imageV) {
-    Image image = (Image) imageV.getImage();
-    if (image != null || image.isError()) {
-      return false;
-    } else {
-      return true;
-    }
-  }
 
 
   public static void highlightTile(Node node) {

@@ -29,18 +29,30 @@ public class ServerParser {
     switch (receivedMessage[0]) {
       case "draw":
         Optional<GITuple<Integer, List<GITile>>> result = Server.gameInfo.drawBy(id);
-
         if (result.isPresent()) {
           clients.get(id).sendMessageToClient("responseForDraw|" + parseTileToString(result.get().getSecond()));
+          clients.get(Server.gameInfo.getCurrentPlayerId()).sendMessageToClient("itsYourTurn");
         } else {
           // id is not registered in model.
           log.info("There is no " + id + " registered in the model.");
         }
         break;
+
       case "startGame":
         Server.gameInfo.startGame();
         Server.broadcastToAllClients("responseStartGame");
+        Server.broadcastToAllClients("closeStartScreen");
         break;
+
+      case "finishedTurn":
+        Optional<GITuple<Integer, List<List<GITile>>>> resultOfTurn = Server.gameInfo.finishedTurnBy(id);
+
+        if (resultOfTurn.isPresent()){
+          Server.broadcastToAllClients("responseForFinishedTurn|" + parseCombinationsToString(resultOfTurn.get().getSecond()));
+          clients.get(Server.gameInfo.getCurrentPlayerId()).sendMessageToClient("itsYourTurn");
+        } else {log.info("There is no " + id + " registered in the model.");}
+        break;
+
       case "getNextPlayerID":
         Optional<Integer> resultID = Server.gameInfo.getNextPlayerId();
 
@@ -51,15 +63,17 @@ public class ServerParser {
           log.info("There is no " + id + " registered in the model.");
         }
         break;
+
       case "getPlayerID":
         clients.get(id).sendMessageToClient("responseForGetPlayerID|" + id);
         break;
+
       case "getPlayerPoints":
         Server.broadcastToAllClients("responseForGetPlayerPoints|" + parsePointsToString(Server.gameInfo.getPlayerPoints()));
         break;
+
       case "numberOfPlayers":
         Optional<Integer> resultNumber = Server.gameInfo.getNumberOfPlayers();
-
         if (resultNumber.isPresent()) {
           clients.get(id).sendMessageToClient("responseForNumberOfPlayers|" + resultNumber.get());
         } else {
@@ -67,6 +81,7 @@ public class ServerParser {
           log.info("There is no " + id + " registered in the model.");
         }
         break;
+
       case "notifyWin":
         for(int i = 0; i < clients.size(); i++){
           if(i != id){
@@ -97,7 +112,17 @@ public class ServerParser {
               parseColorToString(tiles.get(i).getColor(), tiles.get(i).getNumber().value());
       parsedTiles += colorNumber;
     }
+    parsedTiles += ";";
     return parsedTiles;
+  }
+
+  static String parseCombinationsToString(List<List<GITile>> combs){
+    String parsedCombs = "list<";
+
+    for(List<GITile> comb : combs){
+      parsedCombs += parseTileToString(comb);
+    }
+    return parsedCombs;
   }
 
   private static String parseColorToString(GIColor color, int number) {

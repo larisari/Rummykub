@@ -3,6 +3,8 @@ package network;
 import gui.EndScreenController;
 import gui.GuiController;
 import gui.LoadingScreenController;
+import gui.StartingScreenController;
+import gui.util.Image;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
@@ -19,6 +21,7 @@ public class ClientParser {
   private static GuiController guiController;
   private static LoadingScreenController loadingScreenController;
   private static EndScreenController endScreenController;
+  private static StartingScreenController startingScreenController;
 
   public ClientParser(GuiController controller) {
     guiController = controller;
@@ -27,6 +30,8 @@ public class ClientParser {
   public ClientParser(LoadingScreenController controller) { loadingScreenController = controller; }
 
   public ClientParser(EndScreenController controller) { endScreenController = controller; }
+
+  public ClientParser(StartingScreenController controller) { startingScreenController = controller; }
 
   public static void getStringIntoClientParser(String receivedMessageFromServer) {
     receivedMessageFromServer = recievedMessageFromServer;
@@ -120,12 +125,26 @@ public class ClientParser {
             }
           });
         break;
+
+      case "closeStartScreen":
+        Platform.runLater(() -> startingScreenController.closeStartScreen());
+
       case "responseForDraw":
-        Platform.runLater(() ->guiController.loadTiles(messageAsArray[1]));
+        Platform.runLater(() ->guiController.loadTiles(GuiParser.parseStringToImgsForOneComb(messageAsArray[1])));
         break;
+
+      case "responseForFinishedTurn":
+        Platform.runLater(() -> guiController.reloadBoard(GuiParser.parseStringToWholeBoard(messageAsArray[1])));
+        break;
+
+      case "itsYourTurn":
+        Platform.runLater(() -> guiController.enableControl());
+        break;
+
       case "responseForGetNextPlayerId":
         Platform.runLater(() ->guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
         break;
+
       case "responseForPlay":
         if (messageAsArray[1].equals("true")) {
             Platform.runLater(() -> {
@@ -139,17 +158,22 @@ public class ClientParser {
           Platform.runLater(() ->guiController.cancelSelEffect());
         }
         break;
+
       case "responseForPlayBoard":
         // TODO wenn es in guiContoller steht.
+
       case "responseForGetNextPlayerID":
         Platform.runLater(() -> guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
         break;
+
       case "responseForNumberOfPlayers":
         Platform.runLater(() -> guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1])));
         break;
+
       case "responseForGetPlayerID":
         Platform.runLater(() -> guiController.setPlayerID(Integer.parseInt(messageAsArray[1])));
         break;
+
       case "responseForGetPlayerPoints":
         Platform.runLater(() -> endScreenController.setPlayerPoints(GuiParser.parseStringToIntegerList(messageAsArray[1])));
         break;

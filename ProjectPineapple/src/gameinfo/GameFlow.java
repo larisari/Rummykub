@@ -110,4 +110,8 @@ class GameFlow {
       return Optional.empty();
     }
   }
+
+  Integer getCurrentPlayerId() {
+    return playerSequence.get(currentPlayerIndex);
+  }
 }

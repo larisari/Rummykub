@@ -71,6 +71,7 @@ public class GuiController {
   private HBox selectionBoard;
   @FXML
   private Button placeOnBoard;
+  @FXML private Button swapJoker;
 
   private List<ImageView> selectedTiles = new ArrayList<>();
   private List<List<ImageView>> selectedCombinations = new ArrayList<>();
@@ -164,6 +165,7 @@ public class GuiController {
         break;
     }
     setPlayerNames();
+    disableControl();
 //while is first turn: manipulate.setDisable(true);
   }
 
@@ -339,8 +341,8 @@ public class GuiController {
    * Gets called if user may draw from the bag. Loads the tiles and disables the bag.
    * @param tiles to be loaded.
    */
-  public void loadTiles(String tiles) {
-    hand = tView.createImgs(tiles);
+  public void loadTiles(List<Image> tiles) {
+    hand = tiles;
     for (int i = 0; i < hand.size(); i++) {
       createTile(hand.get(i));
     }
@@ -426,6 +428,56 @@ public class GuiController {
     if (alert.getResult() == ButtonType.YES) {
 
     }
+  }
+
+  /**
+   * Gets called when turn is finished, reloads board for all players
+   * @param boardTiles
+   */
+  public void reloadBoard(List<List<Image>> boardTiles){
+    for (int i = 0; i < boardTiles.size(); i++){
+      HBox box = new HBox();
+      List <Image> tiles = boardTiles.get(i);
+      for (Image image : tiles){
+        ImageView imageView = new ImageView();
+        imageView.setFitHeight(MAX_IVIEW_HEIGHT);
+        imageView.setFitWidth(MAX_BOXWIDTH);
+        imageView.setImage(image);
+        box.getChildren().add(imageView);
+        onTileClicked(imageView);
+      }
+      board.getChildren().add(box);
+
+    }
+  }
+
+  /**
+   * gets called if its this player's turn, enables Button control.
+   */
+  public void enableControl(){
+      enter.setDisable(false); //TODO alle buttons in liste packen -> enablen disablen durchiterieren.
+      endTurn.setDisable(false);
+      cancelSelection.setDisable(false);
+      addToExisting.setDisable(false);
+      manipulate.setDisable(false);
+      placeOnBoard.setDisable(false);
+      swapJoker.setDisable(false);
+      for (int i = 0; i < topHand.getChildren().size(); i++) {
+        ImageView iView = (ImageView) topHand.getChildren().get(i);
+        iView.setDisable(false);
+      }
+      for (int i = 0; i < bottomHand.getChildren().size(); i++) {
+        ImageView iView = (ImageView) bottomHand.getChildren().get(i);
+        iView.setDisable(false);
+      }
+      for (int i = 0; i < board.getChildren().size(); i++) {
+        HBox box = (HBox) board.getChildren().get(i);
+        for (int j = 0; j < box.getChildren().size(); j++) {
+          ImageView iView = (ImageView) box.getChildren().get(j);
+          iView.setDisable(false);
+        }
+      }
+
   }
 
   /**
@@ -736,6 +788,7 @@ public class GuiController {
     addToExisting.setDisable(true);
     manipulate.setDisable(true);
     placeOnBoard.setDisable(true);
+    swapJoker.setDisable(true);
     List<ImageView> handTiles = new ArrayList<>();
     for (int i = 0; i < topHand.getChildren().size(); i++) {
       ImageView iView = (ImageView) topHand.getChildren().get(i);
