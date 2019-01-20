@@ -13,7 +13,7 @@
             <Font name="Franklin Gothic Medium" size="22.0" />
          </font>
       </Label>
-      <Text layoutX="171.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1 (You)...">
+      <Text layoutX="171.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player 1...">
          <font>
             <Font name="Franklin Gothic Medium" size="19.0" />
          </font>
