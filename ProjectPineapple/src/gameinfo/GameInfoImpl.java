@@ -265,4 +265,9 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   public Optional<List<GITuple<Integer, GIPoints>>> getPlayerPoints() {
     return rules.getPlayerPoints();
   }
+
+  @Override
+  public Integer getCurrentPlayerId() {
+    return rules.getCurrentPlayerId();
+  }
 }

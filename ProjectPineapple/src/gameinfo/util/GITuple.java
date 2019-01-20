@@ -19,6 +19,6 @@ public class GITuple<F, S> {
 
   @Override
   public String toString() {
-    return "(" + getFirst().toString() + ";" + getSecond().toString() + ")";
+    return "(" + getFirst().toString() + "|" + getSecond().toString() + ")";
   }
 }

@@ -48,10 +48,12 @@ class GameInfo_Test {
   void orderedTestCase() {
     signInPlayers();
     start();
-    //draw();
     putTilesOnHand();
+    //draw();
     //lessThanMinPoints();
-    validCombo();
+    //validCombo();
+    showhands();
+    //makeFirstMove();
   }
 
   void start() {
@@ -66,7 +68,7 @@ class GameInfo_Test {
   }
 
   void draw() {
-    gameInfo.drawBy(player_1_ID);
+    //gameInfo.drawBy(player_1_ID);
     gameInfo.drawBy(player_2_ID);
     gameInfo.drawBy(player_3_ID);
     gameInfo.drawBy(player_4_ID);
@@ -74,16 +76,16 @@ class GameInfo_Test {
 
   void putTilesOnHand() {
 
-    //group under 30 points
+  //group less than 30 points
     p1.put(one_black);
     p1.put(one_blue);
     p1.put(one_yellow);
 
-    //group 30 points
+  //group 30+ points
     p1.put(eleven_black);
     p1.put(eleven_blue);
     p1.put(eleven_yellow);
-  }
+}
 
   void lessThanMinPoints() {
     List<GITile> playersGroup =
@@ -104,11 +106,15 @@ class GameInfo_Test {
     List<List<GITile>> combinations = new ArrayList<>();
     combinations.add(playersGroup);
 
+    assert gameInfo.getNextPlayerId().get().equals(player_2_ID);
+
     System.out.println(gameInfo.play(combinations,player_1_ID).get());
+
+
 
     System.out.println(p1.getTilesOnHand());
 
-    System.out.println(gameInfo.getNextPlayerId());
+    assert gameInfo.getNextPlayerId().get().equals(player_3_ID);
 
     assert p1.getTilesOnHand().contains(one_black);
     assert p1.getTilesOnHand().contains(one_blue);
@@ -118,5 +124,26 @@ class GameInfo_Test {
 
   void getAllPlayersHands() {
     System.out.println(gameInfo.getPlayerPoints());
+  }
+
+  void showhands() {
+
+    System.out.println(p1.getTilesOnHand());
+    if (gameInfo.getAllTilesBy(player_1_ID).isPresent()) {
+      System.out.println(gameInfo.getAllTilesBy(player_1_ID));
+    }
+    else {
+
+    }
+//    System.out.println(gameInfo.getAllTilesBy(player_2_ID).get());
+//    System.out.println(gameInfo.getAllTilesBy(player_3_ID).get());
+//    System.out.println(gameInfo.getAllTilesBy(player_4_ID).get());
+  }
+
+  void makeFirstMove() {
+    assert gameInfo.getNextPlayerId().get().equals(player_2_ID);
+    gameInfo.drawBy(player_1_ID);
+    assert gameInfo.getNextPlayerId().get().equals(player_3_ID);
+    assert gameInfo.getAllTilesBy(player_1_ID).get().getSecond().size() == 15;
   }
 }

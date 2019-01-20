@@ -85,4 +85,8 @@ class Rules {
     return gameFlow.getPlayerPoints();
   }
 
+  Integer getCurrentPlayerId() {
+    return gameFlow.getCurrentPlayerId();
+  }
+
 }
