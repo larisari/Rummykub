@@ -430,7 +430,7 @@ public class GuiController {
   }
 
   /**
-   * Gets
+   * Gets called when turn is finished, reloads board for all players
    * @param boardTiles
    */
   public void reloadBoard(List<List<Image>> boardTiles){
@@ -448,6 +448,36 @@ public class GuiController {
       board.getChildren().add(box);
 
     }
+  }
+
+  /**
+   * gets called if its this player's turn, enables Button control.
+   * @param ID
+   */
+  public void enableControl(Integer ID){
+      enter.setDisable(false);
+      endTurn.setDisable(false);
+      cancelSelection.setDisable(false);
+      addToExisting.setDisable(false);
+      manipulate.setDisable(false);
+      placeOnBoard.setDisable(false);
+      swapJoker.setDisable(false);
+      for (int i = 0; i < topHand.getChildren().size(); i++) {
+        ImageView iView = (ImageView) topHand.getChildren().get(i);
+        iView.setDisable(false);
+      }
+      for (int i = 0; i < bottomHand.getChildren().size(); i++) {
+        ImageView iView = (ImageView) bottomHand.getChildren().get(i);
+        iView.setDisable(false);
+      }
+      for (int i = 0; i < board.getChildren().size(); i++) {
+        HBox box = (HBox) board.getChildren().get(i);
+        for (int j = 0; j < box.getChildren().size(); j++) {
+          ImageView iView = (ImageView) box.getChildren().get(j);
+          iView.setDisable(false);
+        }
+      }
+
   }
 
   /**
