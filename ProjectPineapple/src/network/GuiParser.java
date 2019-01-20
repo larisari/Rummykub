@@ -177,10 +177,10 @@ public class GuiParser {
       String number = attributes[1];
 
       if (color.equals("joker")) {
-        Image joker = new Image("src/gui/images/tiles/joker/joker.png", "joker");
+        Image joker = new Image("gui/images/tiles/joker/joker.png", "joker");
         tilesImg.add(joker);
       } else {
-        Image tile = new Image("src/gui/images/tiles/" + color + "/" + number + ".png");
+        Image tile = new Image("gui/images/tiles/" + color + "/" + number + ".png");
         tilesImg.add(tile);
       }
     }

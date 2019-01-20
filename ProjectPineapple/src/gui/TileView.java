@@ -21,26 +21,6 @@ public class TileView {
   private HBox bottomHand;
 
 
-  /**
-   *
-   */
-
-
-
-
-  /**
-   * Returns false if ImageView contains an image or if an error occured while loading.
-   *
-   * @param imageV - ImageView to be checked.
-   */
-  private static boolean isEmpty(ImageView imageV) {
-    Image image = (Image) imageV.getImage();
-    if (image != null || image.isError()) {
-      return false;
-    } else {
-      return true;
-    }
-  }
 
 
   public static void highlightTile(Node node) {
