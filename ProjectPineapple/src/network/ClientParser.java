@@ -128,7 +128,7 @@ public class ClientParser {
         break;
 
       case "closeStartScreen":
-        Platform.runLater(() -> startingScreenController.closeStartScreen());
+//        Platform.runLater(() -> startingScreenController.closeStartScreen());
 
       case "responseForDraw":
         Platform.runLater(() ->guiController.loadTiles(GuiParser.parseStringToImgsForOneComb(messageAsArray[1])));
@@ -156,7 +156,7 @@ public class ClientParser {
               }
             });
         } else if (messageAsArray[1].equals("false")) {
-          Platform.runLater(() ->guiController.cancelSelEffect());
+          Platform.runLater(() -> guiController.cancelSelEffect());
         }
         break;
 
