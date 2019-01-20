@@ -16,19 +16,22 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import network.Client;
+import network.ClientParser;
 import network.Server;
 
 public class StartingScreenController {
 
   @FXML
   private AnchorPane startingS;
+  private ClientParser parser;
 
-  public StartingScreenController(){
-
+  public StartingScreenController() {
+  parser = new ClientParser(this);
   }
 
   /**
    * Creates a new Server and the host.
+   *
    * @param event - onMouseClicked event if user presses "Create Game" button.
    * @throws IOException if some error occurs while loading fxml file.
    */
@@ -41,8 +44,9 @@ public class StartingScreenController {
   }
 
   /**
-   * Prompts user to input IP adress. Prints error message if input is not valid.
-   * Opens loading screen if client could register successfully.
+   * Prompts user to input IP adress. Prints error message if input is not valid. Opens loading
+   * screen if client could register successfully.
+   *
    * @param event - onMouseClicked event if user presses "Join Game" button.
    */
   @FXML
@@ -68,6 +72,7 @@ public class StartingScreenController {
 
   /**
    * Loads loading screen.
+   *
    * @throws IOException if some error occurs while loading fxml file.
    */
   private void loadLoadingScreen() throws IOException {
@@ -78,14 +83,10 @@ public class StartingScreenController {
     stage.setScene(scene);
     stage.setResizable(false);
     stage.show();
-    startingS.getScene().getWindow().hide();
   }
 
-  /**
-   * Closes starting screen window.
-   */
-  public void close(){
-//    startingS.getScene().getWindow().hide();
+  public void closeStartScreen(){
+    startingS.getScene().getWindow().hide();
   }
 }
 
