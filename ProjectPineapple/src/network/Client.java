@@ -72,7 +72,7 @@ public class Client extends Thread {
             DataInputStream in = new DataInputStream(socket.getInputStream());
             String msg = in.readUTF();
 
-            System.out.println("[Client] Imcoming message from Server: " + msg);
+            System.out.println("[Client] Incoming message from Server: " + msg);
 
             ClientParser.parseForController(msg);
 

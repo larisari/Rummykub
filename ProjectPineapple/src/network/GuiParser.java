@@ -154,4 +154,36 @@ public class GuiParser {
     return tileList;
 
   }
+
+
+  static List<List<Image>> parseStringToWholeBoard(String message){
+    List<List<Image>> endList = new ArrayList<>();
+    String[] tempS = message.split("<");
+    String[] combs = tempS[1].split(";");
+    for (int i = 0; i < combs.length; i++){
+      endList.add(parseStringToImgsForOneComb(combs[i]));
+    }
+    return endList;
+  }
+
+  static List<Image> parseStringToImgsForOneComb(String hand) {
+    List<Image> tilesImg = new ArrayList<>();
+    String[] block = hand.split(":");
+    String[] tiles = block[1].split(",");
+    for (int i = 0; i < tiles.length; i++) {
+      String[] attributeswS = tiles[i].split("[.]");
+      String[] attributes = attributeswS[1].split("/");
+      String color = attributes[0];
+      String number = attributes[1];
+
+      if (color.equals("joker")) {
+        Image joker = new Image("gui/images/tiles/joker/joker.png");
+        tilesImg.add(joker);
+      } else {
+        Image tile = new Image("gui/images/tiles/" + color + "/" + number + ".png");
+        tilesImg.add(tile);
+      }
+    }
+    return tilesImg;
+  }
 }

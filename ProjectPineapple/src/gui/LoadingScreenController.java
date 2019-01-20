@@ -44,12 +44,13 @@ public class LoadingScreenController {
     numberOfPlayers++;
   }
 
+  //TODO benachrichtigung an server wenn client loadingscreen schließt.
+
   /**
    * Gets called if at least two Players are present.
    */
   public void enableStart(){
     if (controller.getPlayerID() == 0) {
-      System.out.println("enable");
       startGame.setDisable(false);
     }
   }
@@ -75,7 +76,6 @@ public class LoadingScreenController {
   protected void handleStartGamePressed(MouseEvent event) {
     parser.startGame();
     startGame.getScene().getWindow().hide();
-    sC.close();
   }
 
   /**
@@ -86,7 +86,10 @@ public class LoadingScreenController {
     Parent root = FXMLLoader.load(getClass().getResource("clientgui.fxml"));
     Scene scene = new Scene(root);
     Stage stage = new Stage(); //new Stage
+    stage.setResizable(false);
+    stage.setTitle("RUMMYKUB");
     stage.setScene(scene);
     stage.show();
+
   }
 }
