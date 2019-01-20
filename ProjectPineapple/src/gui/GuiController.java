@@ -340,8 +340,8 @@ public class GuiController {
    * Gets called if user may draw from the bag. Loads the tiles and disables the bag.
    * @param tiles to be loaded.
    */
-  public void loadTiles(String tiles) {
-    hand = tView.createImgs(tiles);
+  public void loadTiles(List<Image> tiles) {
+    hand = tiles;
     for (int i = 0; i < hand.size(); i++) {
       createTile(hand.get(i));
     }
