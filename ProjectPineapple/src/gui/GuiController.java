@@ -452,10 +452,9 @@ public class GuiController {
 
   /**
    * gets called if its this player's turn, enables Button control.
-   * @param ID
    */
-  public void enableControl(Integer ID){
-      enter.setDisable(false);
+  public void enableControl(){
+      enter.setDisable(false); //TODO alle buttons in liste packen -> enablen disablen durchiterieren.
       endTurn.setDisable(false);
       cancelSelection.setDisable(false);
       addToExisting.setDisable(false);
