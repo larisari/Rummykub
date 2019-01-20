@@ -5,10 +5,13 @@ import gameinfo.GIGameInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Server {
 
   static GIGameInfo gameInfo;
+  private static Logger log = Logger.getLogger(Server.class.getName());
+
 
   public Server() {
 
@@ -16,7 +19,10 @@ public class Server {
       List<ServerClientCommunication> listOfClients = new ArrayList<ServerClientCommunication>();
 
       gameInfo = GIFactory.make();
-      System.out.println("Spiel wird geladen....");
+      //System.out.println("Spiel wird geladen....");
+      log.info("Spiel wird geladen....");
+
+
 
       ServerListener listener = new ServerListener(listOfClients);
       listener.start();

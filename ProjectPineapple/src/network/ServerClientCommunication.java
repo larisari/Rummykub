@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 public class ServerClientCommunication extends Thread {
 
@@ -11,6 +12,7 @@ public class ServerClientCommunication extends Thread {
   private final DataOutputStream out;
   private final Socket s;
   private final int clientID;
+  private static Logger log = Logger.getLogger(ServerClientCommunication.class.getName());
 
 
   public ServerClientCommunication(Socket s, DataInputStream in, DataOutputStream out, int clientID) {
@@ -29,14 +31,17 @@ public class ServerClientCommunication extends Thread {
 
       try {
         received = in.readUTF();
-        System.out.println("[Server] Nachricht von " + clientID + "erhalten:" + received);
-        System.out.println("[Server] Habe die Nachricht an den Parser übergeben....");
+        //System.out.println("[Server] Nachricht von " + clientID + "erhalten:" + received);
+        log.info("[Server] Nachricht von " + clientID + "erhalten:" + received);
+
         ServerParser.getStringIntoServerParser(received, clientID);
+        log.info("[Server] Habe die Nachricht an den Parser übergeben....");
 
 
       } catch (IOException e) {
         e.printStackTrace();
-        System.out.println("No inputconnection to client: " + clientID);
+        //System.out.println("No inputconnection to client: " + clientID);
+        log.info("No inputconnection to client: " + clientID);
       }
       if (received != null) {
 
@@ -49,7 +54,8 @@ public class ServerClientCommunication extends Thread {
     try {
 
       out.writeUTF(messageToClient);
-      System.out.println("[Server] Nachricht an Client " + clientID + " geschickt.");
+      //System.out.println("[Server] Nachricht an Client " + clientID + " geschickt.");
+      log.info("[Server] Nachricht an Client " + clientID + " geschickt.");
     } catch (IOException e) {
       e.printStackTrace();
     }

@@ -23,6 +23,7 @@ public class ClientParser {
   private static EndScreenController endScreenController;
   private static StartingScreenController startingScreenController;
 
+
   public ClientParser(GuiController controller) {
     guiController = controller;
   }
