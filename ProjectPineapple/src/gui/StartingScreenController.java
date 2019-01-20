@@ -85,9 +85,9 @@ public class StartingScreenController {
     stage.show();
   }
 
-  public void closeStartScreen(){
-    startingS.getScene().getWindow().hide();
-  }
+ // public void closeStartScreen(){
+ //   startingS.getScene().getWindow().hide();
+ // }
 }
 
 
