@@ -168,6 +168,7 @@ public class GuiParser {
 
   static List<Image> parseStringToImgsForOneComb(String hand) {
     List<Image> tilesImg = new ArrayList<>();
+    hand = hand.substring(0,hand.length()-2);
     String[] block = hand.split(":");
     String[] tiles = block[1].split(",");
     for (int i = 0; i < tiles.length; i++) {
