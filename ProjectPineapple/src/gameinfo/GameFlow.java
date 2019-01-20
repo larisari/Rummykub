@@ -1,5 +1,9 @@
 package gameinfo;
 
+import gameinfo.util.GIPoints;
+import gameinfo.util.GITile;
+import gameinfo.util.GITuple;
+
 import java.util.*;
 
 class GameFlow {
@@ -92,5 +96,18 @@ class GameFlow {
     }
   }
 
-
+  Optional<List<GITuple<Integer,GIPoints>>> getPlayerPoints() {
+    if (!players.isEmpty()) {
+      List<GITuple<Integer, GIPoints>> allPlayersHands = new ArrayList<>();
+      for (Map.Entry<Integer, Player> player : players.entrySet()) {
+        GITuple<Integer, GIPoints> playersHand =
+            new GITuple<>(player.getValue().getId(), player.getValue().calculatePointsOfHand());
+        allPlayersHands.add(playersHand);
+      }
+      return Optional.of(allPlayersHands);
+    }
+    else {
+      return Optional.empty();
+    }
+  }
 }

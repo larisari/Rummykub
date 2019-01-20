@@ -21,7 +21,6 @@ public class Server {
       ServerListener listener = new ServerListener(listOfClients);
       listener.start();
 
-
 //      while (game.isAlive()) {
 //      }
     } catch (Exception e) {
@@ -32,11 +31,6 @@ public class Server {
   public static void broadcastToAllClients(String message) {
     List<ServerClientCommunication> clients = ServerListener.getClients();
 
-    String command = "";
-
-    switch (command) {
-      case "finish":
-    }
     for (ServerClientCommunication client : clients) {
       client.sendMessageToClient(message);
     }

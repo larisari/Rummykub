@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,22 +21,16 @@ import network.Server;
 public class StartingScreenController {
 
   @FXML
-  private Button createGame;
-  @FXML
-  private Button joinGame;
-  @FXML
   private AnchorPane startingS;
-  @FXML
-  private AnchorPane loadingScreen; //in loadingscreen
-
-  private int numberOfPlayers;
-  private int JoinedY = 160;
 
   public StartingScreenController(){
 
   }
+
   /**
-   * Loads loadingScreen after clicking "Create Game".
+   * Creates a new Server and the host.
+   * @param event - onMouseClicked event if user presses "Create Game" button.
+   * @throws IOException if some error occurs while loading fxml file.
    */
   @FXML
   protected void handleCreateGame(MouseEvent event) throws IOException {
@@ -45,36 +40,35 @@ public class StartingScreenController {
 // TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
   }
 
-
+  /**
+   * Prompts user to input IP adress. Prints error message if input is not valid.
+   * Opens loading screen if client could register successfully.
+   * @param event - onMouseClicked event if user presses "Join Game" button.
+   */
   @FXML
-  protected void handleJoinGame(MouseEvent event) throws IOException {
-    String ipAdress;
-    TextInputDialog dialogue = new TextInputDialog();
-    dialogue.setTitle("Login");
-    dialogue.setHeaderText("Please enter your IP Adress!");
-    Button ok = (Button) dialogue.getDialogPane().lookupButton(ButtonType.OK);
-    // ok.setDisable(true);
-    Optional<String> result = dialogue.showAndWait();
+  protected void handleJoinGame(MouseEvent event) {
+    String ipAdress = "";
+    TextInputDialog dialog = new TextInputDialog();
+    dialog.setTitle("Login");
+    dialog.setHeaderText("Please enter your IP Adress!");
+    Button ok = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
+    Optional<String> result = dialog.showAndWait();
     if (result.isPresent()) {
       ipAdress = result.get();
       try {
-         Client c = new Client(ipAdress);
-      } catch (Exception e) {
-//ev Error Fenster.
+        Client c = new Client(ipAdress);
+        loadLoadingScreen();
+      } catch (IOException e) {
+//DialogError: Error! Please enter valid IP adress!
+        return;
       }
-      ok.setDisable(false);
-//kein loadingscreen wenn kein game existiert.
-      loadLoadingScreen();
- //     numberOfPlayers++;
-  //    JoinedY += 50;
-  //    Text joined = new Text("Joined");
-  //    joined.setStyle(
-  //        "-fx-text-fill: 18b522; -fx-font-family: 'Franklin Gothic Medium'; -fx-font-size:19; ");
-  //    joined.relocate(497, JoinedY);
-  //    loadingScreen.getChildren().add(joined); // TODO selbes Problem wie bei StartButton disablen. // loading screen existiert nur im loadingscreen controller
     }
   }
 
+  /**
+   * Loads loading screen.
+   * @throws IOException if some error occurs while loading fxml file.
+   */
   private void loadLoadingScreen() throws IOException {
     Parent dialogue = FXMLLoader.load(getClass().getResource("loadingScreen.fxml"));
     Scene scene = new Scene(dialogue);
@@ -85,9 +79,11 @@ public class StartingScreenController {
     stage.show();
   }
 
-  public Stage getStage() {
-    Stage startingScreen = (Stage) startingS.getScene().getWindow();
-    return startingScreen;
+  /**
+   * Closes starting screen window.
+   */
+  public void close(){
+    startingS.getScene().getWindow().hide();
   }
 }
 

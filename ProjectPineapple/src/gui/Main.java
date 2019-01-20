@@ -32,6 +32,10 @@ public Main(){
         primaryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     }
 
+    /**
+     * Opens confirmation alert if user tries to exit application by pressing "x".
+     * @param event - WindowEvent if user presses "x" icon.
+     */
     private void closeWindowEvent(WindowEvent event){
         ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
         ButtonType no = new ButtonType("No",

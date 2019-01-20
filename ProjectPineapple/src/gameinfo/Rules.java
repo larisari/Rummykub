@@ -1,6 +1,9 @@
 package gameinfo;
 
+import gameinfo.util.GIPoints;
 import gameinfo.util.GITile;
+import gameinfo.util.GITuple;
+import org.w3c.dom.stylesheets.LinkStyle;
 
 import java.util.List;
 import java.util.Map;
@@ -76,6 +79,10 @@ class Rules {
 
   Map<Integer, Player> getAllPlayers() {
     return gameFlow.getPlayers();
+  }
+
+  Optional<List<GITuple<Integer, GIPoints>>> getPlayerPoints() {
+    return gameFlow.getPlayerPoints();
   }
 
 }

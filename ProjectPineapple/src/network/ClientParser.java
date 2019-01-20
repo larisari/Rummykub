@@ -1,8 +1,8 @@
 package network;
 
+import gui.EndScreenController;
 import gui.GuiController;
 import gui.LoadingScreenController;
-import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
@@ -17,14 +17,15 @@ public class ClientParser {
 
   private static GuiController guiController;
   private static LoadingScreenController loadingScreenController;
+  private static EndScreenController endScreenController;
 
   public ClientParser(GuiController controller) {
     guiController = controller;
   }
 
-  public ClientParser(LoadingScreenController controller) {
-    loadingScreenController = controller;
-  }
+  public ClientParser(LoadingScreenController controller) { loadingScreenController = controller; }
+
+  public ClientParser(EndScreenController controller) { endScreenController = controller; }
 
   public static void getStringIntoClientParser(String receivedMessageFromServer) {
     receivedMessageFromServer = recievedMessageFromServer;
@@ -33,20 +34,6 @@ public class ClientParser {
   // Messages to send to Server.
 
   // TODO add null checks
-
-  public void getNextPlayerID() {
-    Client.sendMessageToServer("getNextPlayerID");
-  }
-
-  public void numberOfPlayers() {
-    Client.sendMessageToServer("numberOfPlayers");
-  }
-
-  // Received messages from Server.
-
-  public void getPlayerID() {
-    Client.sendMessageToServer("getPlayerID");
-  }
 
   public void startGame() {
     Client.sendMessageToServer("startGame");
@@ -64,9 +51,9 @@ public class ClientParser {
   }
 
   public void play(
-      List<ImageView> tilesFromHand,
-      List<ImageView> tilesFromBoard,
-      List<List<ImageView>> newCombinations) {
+          List<ImageView> tilesFromHand,
+          List<ImageView> tilesFromBoard,
+          List<List<ImageView>> newCombinations) {
 
     StringBuilder builder = new StringBuilder();
 
@@ -85,14 +72,6 @@ public class ClientParser {
     Client.sendMessageToServer(builder.toString());
   }
 
-  public void getAllTiles() {
-    Client.sendMessageToServer("getAllTiles");
-  }
-
-  public void calculatePoints() {
-    Client.sendMessageToServer("calculatePoints");
-  }
-
   public void finishedTurn() {
     Client.sendMessageToServer("finishedTurn");
   }
@@ -101,52 +80,83 @@ public class ClientParser {
     Client.sendMessageToServer("isFirstTurn");
   }
 
+  public void getNextPlayerID() {
+    Client.sendMessageToServer("getNextPlayerID");
+  }
+
+  public void numberOfPlayers() {
+    Client.sendMessageToServer("numberOfPlayers");
+  }
+
+  public void getPlayerID() {
+    Client.sendMessageToServer("getPlayerID");
+  }
+
+  public void getPlayerPoints() {
+    Client.sendMessageToServer("getPlayerPoints");
+  }
+
+  public void notifyWin() {
+    Client.sendMessageToServer("notifyWin");
+  }
+
+
+
+
+  // Received messages from Server.
+
   static void parseForController(String message) {
 
     String[] messageAsArray = message.split("[|]");
 
     switch (messageAsArray[0]) {
+      case "responseStartGame":
+        try {
+          loadingScreenController.openGameWindow();
+        } catch (IOException e) {
+        }
+        break;
       case "responseForDraw":
-        Platform.runLater(() -> guiController.loadTiles(messageAsArray[1]));
+        guiController.loadTiles(messageAsArray[1]);
         break;
       case "responseForGetNextPlayerId":
-        Platform.runLater(
-            () -> guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
+        guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1]));
         break;
       case "responseForPlay":
-        Platform.runLater(
-            () -> {
-              if (messageAsArray[1].equals("true")) {
-                guiController.placeTiles();
-              } else if (messageAsArray[1].equals("false")) {
-                guiController.cancelSelection();
-              }
-            });
+        if (messageAsArray[1].equals("true")) {
+          try {
+            guiController.placeTiles();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        } else if (messageAsArray[1].equals("false")) {
+          guiController.cancelSelEffect();
+        }
         break;
       case "responseForPlayBoard":
         // TODO wenn es in guiContoller steht.
       case "responseForGetNextPlayerID":
-        Platform.runLater(
-            () -> guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
+        guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1]));
         break;
       case "responseForNumberOfPlayers":
-        Platform.runLater(
-            () -> guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1])));
+        guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1]));
         break;
       case "responseForGetPlayerID":
-        Platform.runLater(() -> guiController.setPlayerID(Integer.parseInt(messageAsArray[1])));
+        guiController.setPlayerID(Integer.parseInt(messageAsArray[1]));
         break;
-        // TODO REST
-      case "forStartGame":
-        Platform.runLater(
-            () -> {
-              try {
-                loadingScreenController.openGameWindow();
-              } catch (IOException e) {
-                // e.printStackTrace();
-              }
-            });
+      case "responseForGetPlayerPoints":
+        endScreenController.setPlayerPoints(GuiParser.parseStringToIntegerList(messageAsArray[1]));
         break;
+      case "possibleToStart":
+        loadingScreenController.enableStart();
+        break;
+      case "responseToNotifyWin":
+        try {
+          guiController.openLoserScreen();
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+      // TODO REST
     }
   }
 }

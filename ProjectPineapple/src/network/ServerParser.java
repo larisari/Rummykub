@@ -1,6 +1,7 @@
 package network;
 
 import gameinfo.util.GIColor;
+import gameinfo.util.GIPoints;
 import gameinfo.util.GITile;
 import gameinfo.util.GITuple;
 
@@ -38,7 +39,7 @@ public class ServerParser {
         break;
       case "startGame":
         Server.gameInfo.startGame();
-        Server.broadcastToAllClients("forStartGame");
+        Server.broadcastToAllClients("responseStartGame");
         break;
       case "getNextPlayerID":
         Optional<Integer> resultID = Server.gameInfo.getNextPlayerId();
@@ -53,6 +54,9 @@ public class ServerParser {
       case "getPlayerID":
         clients.get(id).sendMessageToClient("responseForGetPlayerID|" + id);
         break;
+      case "getPlayerPoints":
+        Server.broadcastToAllClients("responseForGetPlayerPoints|" + parsePointsToString(Server.gameInfo.getPlayerPoints()));
+        break;
       case "numberOfPlayers":
         Optional<Integer> resultNumber = Server.gameInfo.getNumberOfPlayers();
 
@@ -63,7 +67,26 @@ public class ServerParser {
           log.info("There is no " + id + " registered in the model.");
         }
         break;
+      case "notifyWin":
+        for(int i = 0; i < clients.size(); i++){
+          if(i != id){
+            clients.get(i).sendMessageToClient("responseToNotifyWin");
+          }
+        }
+        break;
     }
+  }
+
+  static String parsePointsToString(Optional<List<GITuple<Integer, GIPoints>>> list){
+    String points = "";
+    List<GITuple<Integer, GIPoints>> tempList = list.get();
+    for(int i = 0; i < tempList.size(); i++){
+      points += tempList.get(i).getSecond();
+      if(i != tempList.size()-1) {
+        points += ",";
+      }
+    }
+    return points;
   }
 
   static String parseTileToString(List<GITile> tiles) {
