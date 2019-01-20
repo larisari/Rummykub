@@ -227,6 +227,7 @@ public class GuiController {
       }
       updateBoard();
     }
+    //TODO tiles auf hand und tiles auf board zu neuer kombi kombinieren können nach manipulate drücken.
     if (!selectedTiles.isEmpty()) {
       List<ImageView> sTiles = new ArrayList<>();
       HBox comb = new HBox();
@@ -404,13 +405,6 @@ public class GuiController {
         allCombinations.add(comb);
       }
     }
-    parser.play(allCombinations);
-  }
-
-  /**
-   * Gets called if user may end his turn. Ends the current user's turn.
-   */
-  public void validEndTurn() {
     disableControl();
     cancelSelection();
     parser.getNextPlayerID();
@@ -616,6 +610,7 @@ public class GuiController {
     List<List<ImageView>> newComb = new ArrayList<>();
     newComb.add(selectedTiles);
     newComb.add(boardTiles);
+    //TODO newComb soll alle combinationen am board enthalten
     parser.play(selectedTiles, boardTiles, newComb);
   }
 
@@ -750,6 +745,10 @@ public class GuiController {
     box.getChildren().add(jokerIndex, tile);
 
     cancelSelEffect();
+  }
+
+  private void swapEverything(){
+    //TODO selected tiles zu neuer kombination auf board.
   }
 
   /**
