@@ -60,6 +60,7 @@ public class LoadingScreenController {
    * player.
    * muss checken der wievielte spieler das ist.
    */
+  //TODO
   public void addJoined(){
     JoinedY += 50;
     Text joined = new Text("Joined");
