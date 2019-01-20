@@ -34,6 +34,17 @@ class GameInfo_Test {
   private static GITile eleven_black = new GITile(GINumber.ELEVEN, GIColor.BLACK);
   private static GITile eleven_blue = new GITile(GINumber.ELEVEN, GIColor.BLUE);
   private static GITile eleven_yellow = new GITile(GINumber.ELEVEN, GIColor.YELLOW);
+  private static GITile two_black = new GITile(GINumber.TWO, GIColor.BLACK);
+  private static GITile two_blue = new GITile(GINumber.TWO, GIColor.BLUE);
+  private static GITile two_yellow = new GITile(GINumber.TWO, GIColor.YELLOW);
+  private static GITile three_black = new GITile(GINumber.THREE,
+      GIColor.BLACK);
+  private static GITile three_blue = new GITile(GINumber.THREE, GIColor.BLUE);
+  private static GITile three_yellow = new GITile(GINumber.THREE, GIColor.YELLOW);
+  private static GITile four_black = new GITile(GINumber.FOUR, GIColor.BLACK);
+  private static GITile four_blue = new GITile(GINumber.FOUR,
+      GIColor.BLUE);
+
 
   @BeforeAll
   static void setup() {
@@ -44,16 +55,18 @@ class GameInfo_Test {
     p4 = new Player(player_4_ID,new PointsCalculator());
   }
 
+
   @Test
   void orderedTestCase() {
     signInPlayers();
     start();
-    putTilesOnHand();
+    drawCustom();
     //draw();
     //lessThanMinPoints();
     //validCombo();
-    showhands();
+    //showHands();
     //makeFirstMove();
+    //getCurrentPlayer();
   }
 
   void start() {
@@ -68,23 +81,26 @@ class GameInfo_Test {
   }
 
   void draw() {
-    //gameInfo.drawBy(player_1_ID);
-    gameInfo.drawBy(player_2_ID);
-    gameInfo.drawBy(player_3_ID);
-    gameInfo.drawBy(player_4_ID);
+      //gameInfo.drawBy(player_1_ID);
+      gameInfo.drawBy(player_2_ID);
+      gameInfo.drawBy(player_3_ID);
+      gameInfo.drawBy(player_4_ID);
   }
 
-  void putTilesOnHand() {
+  void drawCustom() {
+    List<GITile> player_1_hand = new ArrayList<>(Arrays.asList(one_black,
+        one_blue,one_yellow,two_black,two_blue,two_yellow,three_black,
+        three_blue,three_yellow,four_black,four_blue,eleven_black,eleven_blue
+        , eleven_yellow));
 
-  //group less than 30 points
-    p1.put(one_black);
-    p1.put(one_blue);
-    p1.put(one_yellow);
+    gameInfo.drawBy(player_1_ID,player_1_hand);
+    System.out.println(gameInfo.getAllTilesBy(player_1_ID));
+}
 
-  //group 30+ points
-    p1.put(eleven_black);
-    p1.put(eleven_blue);
-    p1.put(eleven_yellow);
+void getCurrentPlayer() {
+    System.out.println(gameInfo.getCurrentPlayerId());
+    gameInfo.drawBy(player_1_ID);
+    System.out.println(gameInfo.getCurrentPlayerId());
 }
 
   void lessThanMinPoints() {
@@ -126,18 +142,11 @@ class GameInfo_Test {
     System.out.println(gameInfo.getPlayerPoints());
   }
 
-  void showhands() {
-
-    System.out.println(p1.getTilesOnHand());
-    if (gameInfo.getAllTilesBy(player_1_ID).isPresent()) {
-      System.out.println(gameInfo.getAllTilesBy(player_1_ID));
-    }
-    else {
-
-    }
-//    System.out.println(gameInfo.getAllTilesBy(player_2_ID).get());
-//    System.out.println(gameInfo.getAllTilesBy(player_3_ID).get());
-//    System.out.println(gameInfo.getAllTilesBy(player_4_ID).get());
+  void showHands() {
+    System.out.println(gameInfo.getAllTilesBy(player_1_ID).get());
+    System.out.println(gameInfo.getAllTilesBy(player_2_ID).get());
+    System.out.println(gameInfo.getAllTilesBy(player_3_ID).get());
+    System.out.println(gameInfo.getAllTilesBy(player_4_ID).get());
   }
 
   void makeFirstMove() {
