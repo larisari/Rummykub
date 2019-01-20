@@ -31,6 +31,7 @@ public class ServerParser {
         Optional<GITuple<Integer, List<GITile>>> result = Server.gameInfo.drawBy(id);
         if (result.isPresent()) {
           clients.get(id).sendMessageToClient("responseForDraw|" + parseTileToString(result.get().getSecond()));
+          clients.get(Server.gameInfo.getCurrentPlayerId()).sendMessageToClient("itsYourTurn");
         } else {
           // id is not registered in model.
           log.info("There is no " + id + " registered in the model.");
@@ -44,11 +45,10 @@ public class ServerParser {
 
       case "finishedTurn":
         Optional<GITuple<Integer, List<List<GITile>>>> resultOfTurn = Server.gameInfo.finishedTurnBy(id);
-        Integer currentPlayerID = Server.gameInfo.getCurrentPlayerId();
 
         if (resultOfTurn.isPresent()){
           Server.broadcastToAllClients("responseForFinishedTurn|" + parseCombinationsToString(resultOfTurn.get().getSecond()));
-          clients.get(currentPlayerID).sendMessageToClient("itsYourTurn");
+          clients.get(Server.gameInfo.getCurrentPlayerId()).sendMessageToClient("itsYourTurn");
         } else {log.info("There is no " + id + " registered in the model.");}
         break;
 
