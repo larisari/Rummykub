@@ -3,6 +3,7 @@ package network;
 import gui.EndScreenController;
 import gui.GuiController;
 import gui.LoadingScreenController;
+import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
@@ -111,51 +112,58 @@ public class ClientParser {
 
     switch (messageAsArray[0]) {
       case "responseStartGame":
-        try {
-          loadingScreenController.openGameWindow();
-        } catch (IOException e) {
-        }
+          Platform.runLater(() -> {
+            try {
+              loadingScreenController.openGameWindow();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          });
         break;
       case "responseForDraw":
-        guiController.loadTiles(messageAsArray[1]);
+        Platform.runLater(() ->guiController.loadTiles(messageAsArray[1]));
         break;
       case "responseForGetNextPlayerId":
-        guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1]));
+        Platform.runLater(() ->guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
         break;
       case "responseForPlay":
         if (messageAsArray[1].equals("true")) {
-          try {
-            guiController.placeTiles();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
+            Platform.runLater(() -> {
+              try {
+                guiController.placeTiles();
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            });
         } else if (messageAsArray[1].equals("false")) {
-          guiController.cancelSelEffect();
+          Platform.runLater(() ->guiController.cancelSelEffect());
         }
         break;
       case "responseForPlayBoard":
         // TODO wenn es in guiContoller steht.
       case "responseForGetNextPlayerID":
-        guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1]));
+        Platform.runLater(() -> guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
         break;
       case "responseForNumberOfPlayers":
-        guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1]));
+        Platform.runLater(() -> guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1])));
         break;
       case "responseForGetPlayerID":
-        guiController.setPlayerID(Integer.parseInt(messageAsArray[1]));
+        Platform.runLater(() -> guiController.setPlayerID(Integer.parseInt(messageAsArray[1])));
         break;
       case "responseForGetPlayerPoints":
-        endScreenController.setPlayerPoints(GuiParser.parseStringToIntegerList(messageAsArray[1]));
+        Platform.runLater(() -> endScreenController.setPlayerPoints(GuiParser.parseStringToIntegerList(messageAsArray[1])));
         break;
       case "possibleToStart":
-        loadingScreenController.enableStart();
+        Platform.runLater(() -> loadingScreenController.enableStart());
         break;
       case "responseToNotifyWin":
-        try {
-          guiController.openLoserScreen();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
+          Platform.runLater(() -> {
+            try {
+              guiController.openLoserScreen();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          });
       // TODO REST
     }
   }
