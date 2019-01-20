@@ -71,6 +71,7 @@ public class GuiController {
   private HBox selectionBoard;
   @FXML
   private Button placeOnBoard;
+  @FXML private Button swapJoker;
 
   private List<ImageView> selectedTiles = new ArrayList<>();
   private List<List<ImageView>> selectedCombinations = new ArrayList<>();
@@ -429,6 +430,27 @@ public class GuiController {
   }
 
   /**
+   * Gets
+   * @param boardTiles
+   */
+  public void reloadBoard(List<List<Image>> boardTiles){
+    for (int i = 0; i < boardTiles.size(); i++){
+      HBox box = new HBox();
+      List <Image> tiles = boardTiles.get(i);
+      for (Image image : tiles){
+        ImageView imageView = new ImageView();
+        imageView.setFitHeight(MAX_IVIEW_HEIGHT);
+        imageView.setFitWidth(MAX_BOXWIDTH);
+        imageView.setImage(image);
+        box.getChildren().add(imageView);
+        onTileClicked(imageView);
+      }
+      board.getChildren().add(box);
+
+    }
+  }
+
+  /**
    * Handles event if user pressed "Cancel Selection" button.
    * @param event - onMouseClicked event if user pressed "Cancel Selection" button.
    */
@@ -736,6 +758,7 @@ public class GuiController {
     addToExisting.setDisable(true);
     manipulate.setDisable(true);
     placeOnBoard.setDisable(true);
+    swapJoker.setDisable(true);
     List<ImageView> handTiles = new ArrayList<>();
     for (int i = 0; i < topHand.getChildren().size(); i++) {
       ImageView iView = (ImageView) topHand.getChildren().get(i);

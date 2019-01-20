@@ -47,6 +47,7 @@ public class StartingScreenController {
    */
   @FXML
   protected void handleJoinGame(MouseEvent event) {
+    //TODO abfrage nach alter.
     String ipAdress = "";
     TextInputDialog dialog = new TextInputDialog();
     dialog.setTitle("Login");
@@ -83,7 +84,7 @@ public class StartingScreenController {
    * Closes starting screen window.
    */
   public void close(){
-    startingS.getScene().getWindow().hide();
+//    startingS.getScene().getWindow().hide();
   }
 }
 

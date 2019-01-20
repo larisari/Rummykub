@@ -1,7 +1,7 @@
 package gameinfo;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+//import org.junit.jupiter.api.BeforeAll;
+//import org.junit.jupiter.api.Test;
 
 class GameInfo_Test {
 
@@ -15,12 +15,12 @@ class GameInfo_Test {
   private final Integer player_3_ID = 3;
   private final Integer player_4_ID = 4;
 
-  @BeforeAll
+//  @BeforeAll
   static void setup() {
     // make GIGI
   }
 
-  @Test
+ // @Test
   void getAllPlayersHands() {
     gameInfo = factory.make();
 
