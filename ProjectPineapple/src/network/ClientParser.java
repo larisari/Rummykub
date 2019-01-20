@@ -110,6 +110,12 @@ public class ClientParser {
     String[] messageAsArray = message.split("[|]");
 
     switch (messageAsArray[0]) {
+      case "responseStartGame":
+        try {
+          loadingScreenController.openGameWindow();
+        } catch (IOException e) {
+        }
+        break;
       case "responseForDraw":
         guiController.loadTiles(messageAsArray[1]);
         break;
@@ -150,13 +156,7 @@ public class ClientParser {
         } catch (IOException e) {
           e.printStackTrace();
         }
-        // TODO REST
-      case "forStartGame":
-        try {
-          loadingScreenController.openGameWindow();
-        } catch (IOException e) {
-        }
-        break;
+      // TODO REST
     }
   }
 }
