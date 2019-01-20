@@ -128,11 +128,16 @@ public class ClientParser {
 
       case "responseForFinishedTurn":
         Platform.runLater(() -> guiController.reloadBoard(GuiParser.parseStringToWholeBoard(messageAsArray[1])));
+        break;
 
+      case "itsYourTurn":
+        Platform.runLater(() -> guiController.enableControl());
+        break;
 
       case "responseForGetNextPlayerId":
         Platform.runLater(() ->guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
         break;
+
       case "responseForPlay":
         if (messageAsArray[1].equals("true")) {
             Platform.runLater(() -> {
@@ -146,17 +151,22 @@ public class ClientParser {
           Platform.runLater(() ->guiController.cancelSelEffect());
         }
         break;
+
       case "responseForPlayBoard":
         // TODO wenn es in guiContoller steht.
+
       case "responseForGetNextPlayerID":
         Platform.runLater(() -> guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
         break;
+
       case "responseForNumberOfPlayers":
         Platform.runLater(() -> guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1])));
         break;
+
       case "responseForGetPlayerID":
         Platform.runLater(() -> guiController.setPlayerID(Integer.parseInt(messageAsArray[1])));
         break;
+
       case "responseForGetPlayerPoints":
         Platform.runLater(() -> endScreenController.setPlayerPoints(GuiParser.parseStringToIntegerList(messageAsArray[1])));
         break;
