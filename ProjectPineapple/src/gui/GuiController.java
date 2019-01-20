@@ -165,6 +165,7 @@ public class GuiController {
         break;
     }
     setPlayerNames();
+    disableControl();
 //while is first turn: manipulate.setDisable(true);
   }
 
