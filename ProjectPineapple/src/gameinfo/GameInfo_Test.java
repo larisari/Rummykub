@@ -35,18 +35,21 @@ class GameInfo_Test {
     p2 = new Player(player_2_ID,new PointsCalculator());
     p3 = new Player(player_3_ID,new PointsCalculator());
     p4 = new Player(player_4_ID,new PointsCalculator());
-    gameInfo.startGame();
   }
 
   @Test
   void orderedTestCase() {
     signInPlayers();
-    draw();
+    start();
+    //draw();
     putTilesOnHand();
     validCombo();
   }
 
-  @Test
+  void start() {
+    gameInfo.startGame();
+  }
+
   void signInPlayers() {
     gameInfo.registerBy(player_1_ID);
     gameInfo.registerBy(player_2_ID);
@@ -54,7 +57,6 @@ class GameInfo_Test {
     gameInfo.registerBy(player_4_ID);
   }
 
-  @Test
   void draw() {
     gameInfo.drawBy(player_1_ID);
     gameInfo.drawBy(player_2_ID);
@@ -62,20 +64,24 @@ class GameInfo_Test {
     gameInfo.drawBy(player_4_ID);
   }
 
-  @Test
   void putTilesOnHand() {
+    GITile one_black = new GITile(GINumber.ONE, GIColor.BLACK);
+    GITile one_blue = new GITile(GINumber.ONE, GIColor.BLUE);
+    GITile one_yellow = new GITile(GINumber.ONE, GIColor.YELLOW);
+    GITile eleven_black = new GITile(GINumber.ELEVEN, GIColor.BLACK);
+    GITile eleven_blue = new GITile(GINumber.ELEVEN, GIColor.BLUE);
+    GITile eleven_yellow = new GITile(GINumber.ELEVEN, GIColor.YELLOW);
     //group under 30 points
-    p1.put(new GITile(GINumber.ONE, GIColor.BLACK));
-    p1.put(new GITile(GINumber.ONE, GIColor.BLUE));
-    p1.put(new GITile(GINumber.ONE, GIColor.YELLOW));
+    p1.put(one_black);
+    p1.put(one_blue);
+    p1.put(one_yellow);
 
     //group 30 points
-    p1.put(new GITile(GINumber.ELEVEN, GIColor.BLACK));
-    p1.put(new GITile(GINumber.ELEVEN, GIColor.BLUE));
-    p1.put(new GITile(GINumber.ELEVEN, GIColor.YELLOW));
+    p1.put(eleven_black);
+    p1.put(eleven_blue);
+    p1.put(eleven_yellow);
   }
 
-  @Test
   void lessThanMinPoints() {
     List<GITile> playersGroup =
         new ArrayList<>(Arrays.asList(p1.getTilesOnHand().get(0),
@@ -87,7 +93,6 @@ class GameInfo_Test {
     System.out.println(gameInfo.play(combinations,player_1_ID));
   }
 
-  @Test
   void validCombo() {
     List<GITile> playersGroup =
         new ArrayList<>(Arrays.asList(p1.getTilesOnHand().get(3),
@@ -96,10 +101,13 @@ class GameInfo_Test {
     List<List<GITile>> combinations = new ArrayList<>();
     combinations.add(playersGroup);
 
-    System.out.println(gameInfo.play(combinations,player_1_ID));
+    gameInfo.play(combinations,player_1_ID);
+
+    System.out.println(p1.getTilesOnHand());
+
+    assert p1.getTilesOnHand().size() == 6;
   }
 
-  @Test
   void getAllPlayersHands() {
     System.out.println(gameInfo.getPlayerPoints());
   }

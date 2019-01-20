@@ -29,4 +29,10 @@ public class GITile {
   public GIColor getColor() {
     return this.color;
   }
+
+  //for internal model testing only
+  @Override
+  public String toString() {
+    return "{" + getNumber().toString() + "," + getColor().toString() + "}";
+  }
 }
