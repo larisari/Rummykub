@@ -1,0 +1,8 @@
+-Netzwerk wurde fertiggestellt und getestet.
+-Netzwerk in Programm eingebunden und mit den jeweiligen Schnittstellen (Model und View) connected.
+
+
+-Klick  auf Host-Game Button setzt einen Server auf und registriert den Host-Client im Netzwerk.
+-„externe“ Clients können sich auf dem Server erfolgreich connecten.
+-Ab 2 Clients ist für den Hoster der Start-Game Button enabled und er kann das Spiel starten.
+-Draw-Tile funktioniert.
