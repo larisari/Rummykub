@@ -28,6 +28,13 @@ class GameInfo_Test {
   private static final Integer player_3_ID = 3;
   private static final Integer player_4_ID = 4;
 
+  private static GITile one_black = new GITile(GINumber.ONE, GIColor.BLACK);
+  private static GITile one_blue = new GITile(GINumber.ONE, GIColor.BLUE);
+  private static GITile one_yellow = new GITile(GINumber.ONE, GIColor.YELLOW);
+  private static GITile eleven_black = new GITile(GINumber.ELEVEN, GIColor.BLACK);
+  private static GITile eleven_blue = new GITile(GINumber.ELEVEN, GIColor.BLUE);
+  private static GITile eleven_yellow = new GITile(GINumber.ELEVEN, GIColor.YELLOW);
+
   @BeforeAll
   static void setup() {
     gameInfo = GIFactory.make();
@@ -43,6 +50,7 @@ class GameInfo_Test {
     start();
     //draw();
     putTilesOnHand();
+    //lessThanMinPoints();
     validCombo();
   }
 
@@ -65,12 +73,7 @@ class GameInfo_Test {
   }
 
   void putTilesOnHand() {
-    GITile one_black = new GITile(GINumber.ONE, GIColor.BLACK);
-    GITile one_blue = new GITile(GINumber.ONE, GIColor.BLUE);
-    GITile one_yellow = new GITile(GINumber.ONE, GIColor.YELLOW);
-    GITile eleven_black = new GITile(GINumber.ELEVEN, GIColor.BLACK);
-    GITile eleven_blue = new GITile(GINumber.ELEVEN, GIColor.BLUE);
-    GITile eleven_yellow = new GITile(GINumber.ELEVEN, GIColor.YELLOW);
+
     //group under 30 points
     p1.put(one_black);
     p1.put(one_blue);
@@ -90,7 +93,7 @@ class GameInfo_Test {
     List<List<GITile>> combinations = new ArrayList<>();
     combinations.add(playersGroup);
 
-    System.out.println(gameInfo.play(combinations,player_1_ID));
+    assert !gameInfo.play(combinations,player_1_ID).get().getSecond();
   }
 
   void validCombo() {
@@ -101,10 +104,15 @@ class GameInfo_Test {
     List<List<GITile>> combinations = new ArrayList<>();
     combinations.add(playersGroup);
 
-    gameInfo.play(combinations,player_1_ID);
+    System.out.println(gameInfo.play(combinations,player_1_ID).get());
 
     System.out.println(p1.getTilesOnHand());
 
+    System.out.println(gameInfo.getNextPlayerId());
+
+    assert p1.getTilesOnHand().contains(one_black);
+    assert p1.getTilesOnHand().contains(one_blue);
+    assert p1.getTilesOnHand().contains(one_yellow);
     assert p1.getTilesOnHand().size() == 6;
   }
 
