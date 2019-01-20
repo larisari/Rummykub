@@ -155,7 +155,18 @@ public class GuiParser {
 
   }
 
-  List<Image> createImgs(String hand) {
+
+  static List<List<Image>> parseStringToWholeBoard(String message){
+    List<List<Image>> endList = new ArrayList<>();
+    String[] tempS = message.split("<");
+    String[] combs = tempS[1].split(";");
+    for (int i = 0; i < combs.length; i++){
+      endList.add(parseStringToImgsForOneComb(combs[i]));
+    }
+    return endList;
+  }
+
+  static List<Image> parseStringToImgsForOneComb(String hand) {
     List<Image> tilesImg = new ArrayList<>();
     String[] block = hand.split(":");
     String[] tiles = block[1].split(",");
@@ -172,8 +183,6 @@ public class GuiParser {
         Image tile = new Image("gui/images/tiles/" + color + "/" + number + ".png");
         tilesImg.add(tile);
       }
-
-
     }
     return tilesImg;
   }

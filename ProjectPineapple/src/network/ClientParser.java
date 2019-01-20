@@ -3,6 +3,7 @@ package network;
 import gui.EndScreenController;
 import gui.GuiController;
 import gui.LoadingScreenController;
+import gui.util.Image;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
@@ -120,9 +121,15 @@ public class ClientParser {
             }
           });
         break;
+
       case "responseForDraw":
-        Platform.runLater(() ->guiController.loadTiles(messageAsArray[1]));
+        Platform.runLater(() ->guiController.loadTiles(GuiParser.parseStringToImgsForOneComb(messageAsArray[1])));
         break;
+
+      case "responseForFinishedTurn":
+        Platform.runLater(() -> guiController.reloadBoard(GuiParser.parseStringToWholeBoard(messageAsArray[1])));
+
+
       case "responseForGetNextPlayerId":
         Platform.runLater(() ->guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
         break;
