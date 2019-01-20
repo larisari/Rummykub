@@ -78,6 +78,7 @@ public class StartingScreenController {
     stage.setScene(scene);
     stage.setResizable(false);
     stage.show();
+    startingS.getScene().getWindow().hide();
   }
 
   /**
