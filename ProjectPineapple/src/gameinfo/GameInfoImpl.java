@@ -113,6 +113,12 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   }
 
   @Override
+  public Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id, List<GITile> customStack) {
+    //TODO implement if needed for testing purpose
+    return Optional.empty();
+  }
+
+  @Override
   public Optional<GITuple<Integer, List<GITile>>> getAllTilesBy(Integer id) {
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
