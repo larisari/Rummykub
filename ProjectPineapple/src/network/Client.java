@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.logging.Logger;
 
 public class Client extends Thread {
 
@@ -13,6 +14,8 @@ public class Client extends Thread {
   Thread listeningThread;
   Socket socket;
   private String ip;
+  private static Logger log = Logger.getLogger(Client.class.getName());
+
 
   /**
    * Client-constructor for Hoster
@@ -27,7 +30,8 @@ public class Client extends Thread {
       this.startListening();
 
 
-      System.out.println("[Host-Client] wurde erstellt. In-/Outputstreams geöffnet. ");
+      //System.out.println("[Host-Client] wurde erstellt. In-/Outputstreams geöffnet. ");
+      log.info("[Host-Client] wurde erstellt. In-/Outputstreams geöffnet. ");
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -41,7 +45,8 @@ public class Client extends Thread {
 
       in = new DataInputStream(socket.getInputStream());
       out = new DataOutputStream(socket.getOutputStream());
-      System.out.println("[Client] wurde erstellt. In-/Outputstreams geöffnet.");
+      //System.out.println("[Client] wurde erstellt. In-/Outputstreams geöffnet.");
+      log.info("[Client] wurde erstellt. In-/Outputstreams geöffnet.");
       this.startListening();
 
     } catch (IOException e) {
@@ -72,7 +77,8 @@ public class Client extends Thread {
             DataInputStream in = new DataInputStream(socket.getInputStream());
             String msg = in.readUTF();
 
-            System.out.println("[Client] Incoming message from Server: " + msg);
+            //System.out.println("[Client] Incoming message from Server: " + msg);
+            log.info("[Client] Incoming message from Server: " + msg);
 
             ClientParser.parseForController(msg);
 

@@ -5,16 +5,19 @@ import java.io.DataOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ServerListener extends Thread {
 
   static List<ServerClientCommunication> clients;
   boolean isRunning = true;
   private int clientID = 0;
+  private static Logger log = Logger.getLogger(ServerListener.class.getName());
 
   public ServerListener(List<ServerClientCommunication> listOfClients) {
     clients = listOfClients;
-    System.out.println("Listener Start");
+    log.info("Listener Start...");
+    //System.out.println("Listener Start");
   }
 
   public static List<ServerClientCommunication> getClients() {
@@ -26,22 +29,26 @@ public class ServerListener extends Thread {
     // server is listening on port 48410
     try {
       ServerSocket ss = new ServerSocket(48410);
-      System.out.println("[Server] wird initialisiert...");
+      //System.out.println("[Server] wird initialisiert...");
+      log.info("[Server] wird initialisiert...");
       // running infinite loop for getting
       // client request
 
       while (isRunning) {
         try {
           if (clientID < 4) {
-            System.out.println("[Server] Warte auf eingehende Verbindung....");
+            //System.out.println("[Server] Warte auf eingehende Verbindung....");
+            log.info("[Server] Warte auf eingehende Verbindung....");
             Socket s = ss.accept();
 
-            System.out.println("[Server] neuer Client wurde aufgenommen " + s);
+            //System.out.println("[Server] neuer Client wurde aufgenommen " + s);
+            log.info("[Server] neuer Client wurde aufgenommen " + s);
 
             DataInputStream in = new DataInputStream(s.getInputStream());
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
 
-            System.out.println("[Server] erstelle eigenen Thread für Client " + clientID);
+            //System.out.println("[Server] erstelle eigenen Thread für Client " + clientID);
+            log.info("[Server] erstelle eigenen Thread für Client " + clientID);
             // create a new thread object
             ServerClientCommunication t = new ServerClientCommunication(s, in, out, clientID);
 
@@ -62,7 +69,8 @@ public class ServerListener extends Thread {
           }
         } catch (Exception e) {
           //s.close();
-          System.out.println("[Server] Verbindung getrennt.");
+          //System.out.println("[Server] Verbindung getrennt.");
+          log.info("[Server] Verbindung getrennt.");
           e.printStackTrace();
         }
       }
