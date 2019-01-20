@@ -41,6 +41,7 @@ public class ServerParser {
       case "startGame":
         Server.gameInfo.startGame();
         Server.broadcastToAllClients("responseStartGame");
+        Server.broadcastToAllClients("closeStartScreen");
         break;
 
       case "finishedTurn":

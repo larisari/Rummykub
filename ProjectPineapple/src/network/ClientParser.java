@@ -3,6 +3,7 @@ package network;
 import gui.EndScreenController;
 import gui.GuiController;
 import gui.LoadingScreenController;
+import gui.StartingScreenController;
 import gui.util.Image;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
@@ -20,6 +21,7 @@ public class ClientParser {
   private static GuiController guiController;
   private static LoadingScreenController loadingScreenController;
   private static EndScreenController endScreenController;
+  private static StartingScreenController startingScreenController;
 
   public ClientParser(GuiController controller) {
     guiController = controller;
@@ -28,6 +30,8 @@ public class ClientParser {
   public ClientParser(LoadingScreenController controller) { loadingScreenController = controller; }
 
   public ClientParser(EndScreenController controller) { endScreenController = controller; }
+
+  public ClientParser(StartingScreenController controller) { startingScreenController = controller; }
 
   public static void getStringIntoClientParser(String receivedMessageFromServer) {
     receivedMessageFromServer = recievedMessageFromServer;
@@ -121,6 +125,9 @@ public class ClientParser {
             }
           });
         break;
+
+      case "closeStartScreen":
+        Platform.runLater(() -> startingScreenController.closeStartScreen());
 
       case "responseForDraw":
         Platform.runLater(() ->guiController.loadTiles(GuiParser.parseStringToImgsForOneComb(messageAsArray[1])));

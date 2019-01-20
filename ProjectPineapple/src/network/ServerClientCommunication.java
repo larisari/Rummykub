@@ -49,7 +49,7 @@ public class ServerClientCommunication extends Thread {
     try {
 
       out.writeUTF(messageToClient);
-      System.out.println("[Server] Nachricht an Client " + clientID + "geschickt.");
+      System.out.println("[Server] Nachricht an Client " + clientID + " geschickt.");
     } catch (IOException e) {
       e.printStackTrace();
     }
