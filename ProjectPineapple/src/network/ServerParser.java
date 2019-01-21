@@ -31,7 +31,9 @@ public class ServerParser {
     switch (receivedMessage[0]) {
       case "draw":
         Optional<GITuple<Integer, List<GITile>>> result = Server.gameInfo.drawBy(id);
+        System.out.println(result.get());
         if (result.isPresent()) {
+
           clients.get(id).sendMessageToClient("responseForDraw|" + parseTileToString(result.get().getSecond()));
           clients.get(Server.gameInfo.getCurrentPlayerId()).sendMessageToClient("itsYourTurn");
         } else {
@@ -134,7 +136,7 @@ public class ServerParser {
 
   static List<List<GITile>> parseStringToListListTileComb(String s){
     List<List<GITile>> result = new ArrayList<>();
-    s = s.substring(0,s.length()-2);
+    s = s.substring(0,s.length()-1);
     String[] split1 = s.split("<");
     String[] split2 = split1[1].split(";");
 

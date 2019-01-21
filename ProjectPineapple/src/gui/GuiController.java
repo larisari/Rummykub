@@ -221,7 +221,7 @@ public class GuiController {
   protected void handleEnterComb(MouseEvent event) {
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView tile = selectedTiles.get(i);
-      if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren().contains(tile)) {
+      if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren().contains(tile)) { //wenn tiles auf dem board liegen.
         moveTiles(selectedTiles);
         return;
       }
@@ -244,6 +244,23 @@ public class GuiController {
     }
   }
 
+  /**
+   * Creates a new combination on the main board with the given List of tiles.
+   * @param combination to be added to the board.
+   */
+  private void moveTiles(List<ImageView> combination) {
+    HBox comb = new HBox();
+    for (int j = 0; j < combination.size(); j++) {
+      ImageView tile = combination.get(j);
+      tile.setStyle("-fx-translate-y: 0");
+      tile.setEffect(null);
+      tile.setDisable(true);
+      comb.getChildren().add(tile);
+    }
+    placedCombinations.add(comb);
+    board.getChildren().add(comb);
+    deselectTiles(selectedTiles); //löscht auch tiles aus selectedTiles
+  }
 
   /**
    * Checks if tile combinations on the selection board are valid.
@@ -267,7 +284,7 @@ public class GuiController {
    * @throws IOException
    */
   public void placeTiles() throws IOException {
-
+    System.out.println("placing tiles");
     for (int i = 0; i < selectedCombinations.size(); i++) {
       List<ImageView> combination = selectedCombinations.get(i);
       moveTiles(combination);
@@ -308,23 +325,7 @@ public class GuiController {
     stage.show();
   }
 
-  /**
-   * Creates a new combination on the main board with the given List of tiles.
-   * @param combination to be added to the board.
-   */
-  private void moveTiles(List<ImageView> combination) {
-    HBox comb = new HBox();
-    for (int j = 0; j < combination.size(); j++) {
-      ImageView tile = combination.get(j);
-      tile.setStyle("-fx-translate-y: 0");
-      tile.setEffect(null);
-      tile.setDisable(true);
-      comb.getChildren().add(tile);
-    }
-    placedCombinations.add(comb);
-    board.getChildren().add(comb);
-    deselectTiles(selectedTiles); //löscht auch tiles aus selectedTiles
-  }
+
 
 
   /**
@@ -456,6 +457,7 @@ public class GuiController {
       manipulate.setDisable(false);
       placeOnBoard.setDisable(false);
       swapJoker.setDisable(false);
+      bag.setDisable(false);
       for (int i = 0; i < topHand.getChildren().size(); i++) {
         ImageView iView = (ImageView) topHand.getChildren().get(i);
         iView.setDisable(false);
