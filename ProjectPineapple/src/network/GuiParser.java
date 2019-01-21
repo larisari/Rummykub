@@ -26,7 +26,6 @@ public class GuiParser {
     StringBuilder builder = new StringBuilder();
     builder.append("list<");
     listOfTiles.forEach(combination -> builder.append(parseToString(combination)));
-    System.out.println(builder.toString());
     return builder.toString();
   }
 

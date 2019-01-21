@@ -150,8 +150,6 @@ public class ServerParser {
   //ergebnis in liste packen -> List<List<GITile>>
   public static List<GITile> parseStringToTile(String tiles) {
     List<GITile> tileList = new ArrayList<>();
-    tiles = tiles.substring(0, tiles.length() - 1);
-    System.out.println(tiles);
     String[] comb = tiles.split(":");
     String[] tileS = comb[1].split(",");
     for (int i = 0; i < tileS.length; i++) {
