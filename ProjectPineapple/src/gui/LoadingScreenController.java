@@ -1,12 +1,15 @@
 package gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -18,14 +21,15 @@ public class LoadingScreenController {
   @FXML
   private Button startGame;
   @FXML private AnchorPane loadingScreen;
-  private StartingScreenController sC = new StartingScreenController();
+  @FXML private Text player1Joined;
+  @FXML private Text player2Joined;
+  @FXML private Text player3Joined;
+  @FXML private Text player4Joined;
   private ClientParser parser = new ClientParser(this);
-  private int numberOfPlayers = 1;
-  private int JoinedY = 160;
-  private GuiController controller;
+  private StartingScreenController controller;
 
   public LoadingScreenController(){
-    controller = new GuiController();
+    controller = new StartingScreenController();
   }
   /**
    * Initializes loadingScreen FXML file.
@@ -33,16 +37,17 @@ public class LoadingScreenController {
    */
   @FXML
   private void initialize() {
+    player1Joined.setVisible(false);
+    player2Joined.setVisible(false);
+    player3Joined.setVisible(false);
+    player4Joined.setVisible(false);
+
     if (controller.getPlayerID() != 0) {
       startGame.setVisible(false);
     }
       startGame.setDisable(true);
     }
 
-
-  public void getNumberOfPlayer(){
-    numberOfPlayers++;
-  }
 
   //TODO benachrichtigung an server wenn client loadingscreen schließt.
 
@@ -60,12 +65,27 @@ public class LoadingScreenController {
    * player.
    * muss checken der wievielte spieler das ist.
    */
-  public void addJoined(){
-    JoinedY += 50;
-    Text joined = new Text("Joined");
-    joined.setStyle("-fx-text-fill: 18b522; -fx-font-family: 'Franklin Gothic Medium'; -fx-font-size:19; ");
-    joined.relocate(497, JoinedY);
-    loadingScreen.getChildren().add(joined);
+  public void addJoined(Integer numberOfClients){
+    switch (numberOfClients){
+      case 0:
+        player1Joined.setVisible(true);
+        break;
+      case 1:
+        player1Joined.setVisible(true);
+        player2Joined.setVisible(true);
+        break;
+      case 2:
+        player1Joined.setVisible(true);
+        player2Joined.setVisible(true);
+        player3Joined.setVisible(true);
+        break;
+      case 3:
+        player1Joined.setVisible(true);
+        player2Joined.setVisible(true);
+        player3Joined.setVisible(true);
+        player4Joined.setVisible(true);
+        break;
+    }
   }
 
   /**

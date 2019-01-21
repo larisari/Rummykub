@@ -78,7 +78,6 @@ public class GuiController {
   private List<HBox> placedCombinations = new ArrayList<>(); //wird an Server geschickt.
   private List<Image> hand = new ArrayList<>();
   private TileView tView = new TileView();
-  private int playerID;
   static int numberOfPlayers;
   private final static int HAND_SPACE = 13;
   private int turn = 0;
@@ -89,6 +88,7 @@ public class GuiController {
   private ImageView tile = new ImageView();
   private ImageView joker = new ImageView();
   private HBox boardComb = new HBox();
+  private StartingScreenController controller;
 
   private ClientParser parser;
 
@@ -98,7 +98,7 @@ public class GuiController {
    */
   public GuiController() {
     parser = new ClientParser(this);
-    getClientID();
+    controller = new StartingScreenController();
   }
 
   /**
@@ -115,24 +115,6 @@ public class GuiController {
     numberOfPlayers = numberPlayers;
   }
 
-  /**
-   * Requests the user's player ID from the network.
-   */
-  private void getClientID() {
-    parser.getPlayerID();
-  }
-
-  /**
-   * Gets called by network. Sets the player ID.
-   */
-  public void setPlayerID(Integer playerID) {
-    this.playerID = playerID;
-  }
-
-
-  public Integer getPlayerID(){
-    return this.playerID;
-  }
 
   /**
    * Requests the next player's ID from the network.
@@ -154,7 +136,7 @@ public class GuiController {
    */
   @FXML
   private void initialize() {
-    ;
+
     switch (numberOfPlayers) {
       case 2:
         rightBoard.setVisible(false);
@@ -165,6 +147,7 @@ public class GuiController {
         break;
     }
     setPlayerNames();
+    disableControl();
 //while is first turn: manipulate.setDisable(true);
   }
 
@@ -173,7 +156,7 @@ public class GuiController {
    * Sets player names on player boards, according to each player.
    */
   private void setPlayerNames() {
-    switch (playerID) {
+    switch (controller.getPlayerID()) {
       case 0:
         break; //bleibt auf default
       case 1:
@@ -220,12 +203,13 @@ public class GuiController {
   protected void handleEnterComb(MouseEvent event) {
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView tile = selectedTiles.get(i);
-      if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren().contains(tile)) {
+      if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren().contains(tile)) { //wenn tiles auf dem board liegen.
         moveTiles(selectedTiles);
         return;
       }
       updateBoard();
     }
+    //TODO tiles auf hand und tiles auf board zu neuer kombi kombinieren können nach manipulate drücken.
     if (!selectedTiles.isEmpty()) {
       List<ImageView> sTiles = new ArrayList<>();
       HBox comb = new HBox();
@@ -242,6 +226,23 @@ public class GuiController {
     }
   }
 
+  /**
+   * Creates a new combination on the main board with the given List of tiles.
+   * @param combination to be added to the board.
+   */
+  private void moveTiles(List<ImageView> combination) {
+    HBox comb = new HBox();
+    for (int j = 0; j < combination.size(); j++) {
+      ImageView tile = combination.get(j);
+      tile.setStyle("-fx-translate-y: 0");
+      tile.setEffect(null);
+      tile.setDisable(true);
+      comb.getChildren().add(tile);
+    }
+    placedCombinations.add(comb);
+    board.getChildren().add(comb);
+    deselectTiles(selectedTiles); //löscht auch tiles aus selectedTiles
+  }
 
   /**
    * Checks if tile combinations on the selection board are valid.
@@ -250,11 +251,7 @@ public class GuiController {
   @FXML
   protected void handleplaceOnBoard(MouseEvent event) {
     if (!selectionBoard.getChildren().isEmpty()) {
-      List<List<ImageView>> allCombinations = new ArrayList<>();
-      for (int i = 0; i < selectedCombinations.size(); i++) {
-        allCombinations.add(selectedCombinations.get(i));
-      }
-      parser.play(allCombinations);
+      parser.play(selectedCombinations);
     }
   }
 
@@ -265,7 +262,7 @@ public class GuiController {
    * @throws IOException
    */
   public void placeTiles() throws IOException {
-
+    System.out.println("placing tiles");
     for (int i = 0; i < selectedCombinations.size(); i++) {
       List<ImageView> combination = selectedCombinations.get(i);
       moveTiles(combination);
@@ -306,23 +303,7 @@ public class GuiController {
     stage.show();
   }
 
-  /**
-   * Creates a new combination on the main board with the given List of tiles.
-   * @param combination to be added to the board.
-   */
-  private void moveTiles(List<ImageView> combination) {
-    HBox comb = new HBox();
-    for (int j = 0; j < combination.size(); j++) {
-      ImageView tile = combination.get(j);
-      tile.setStyle("-fx-translate-y: 0");
-      tile.setEffect(null);
-      tile.setDisable(true);
-      comb.getChildren().add(tile);
-    }
-    placedCombinations.add(comb);
-    board.getChildren().add(comb);
-    deselectTiles(selectedTiles); //löscht auch tiles aus selectedTiles
-  }
+
 
 
   /**
@@ -354,7 +335,6 @@ public class GuiController {
    */
   public void updateNextPlayerName(Integer ID) {
     playerTurn.setText("Player " + ID + "'s turn.");
-    disableControl();
   }
 
   /**
@@ -390,7 +370,7 @@ public class GuiController {
   @FXML
   protected void handleEndTurn(MouseEvent event) {
     List<List<ImageView>> allCombinations = new ArrayList<>();
-    for (int i = placedCombinations.size(); i >= 0; i--) {
+    for (int i = placedCombinations.size()-1; i >= 0; i--) {
       HBox box = placedCombinations.get(i);
       if (box.getChildren().isEmpty()) {
         placedCombinations.remove(box);
@@ -403,13 +383,6 @@ public class GuiController {
         allCombinations.add(comb);
       }
     }
-    parser.play(allCombinations);
-  }
-
-  /**
-   * Gets called if user may end his turn. Ends the current user's turn.
-   */
-  public void validEndTurn() {
     disableControl();
     cancelSelection();
     parser.getNextPlayerID();
@@ -452,16 +425,16 @@ public class GuiController {
 
   /**
    * gets called if its this player's turn, enables Button control.
-   * @param ID
    */
-  public void enableControl(Integer ID){
-      enter.setDisable(false);
+  public void enableControl(){
+      enter.setDisable(false); //TODO alle buttons in liste packen -> enablen disablen durchiterieren.
       endTurn.setDisable(false);
       cancelSelection.setDisable(false);
       addToExisting.setDisable(false);
       manipulate.setDisable(false);
       placeOnBoard.setDisable(false);
       swapJoker.setDisable(false);
+      bag.setDisable(false);
       for (int i = 0; i < topHand.getChildren().size(); i++) {
         ImageView iView = (ImageView) topHand.getChildren().get(i);
         iView.setDisable(false);
@@ -614,9 +587,10 @@ public class GuiController {
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
     List<List<ImageView>> newComb = new ArrayList<>();
+    selectedTiles.addAll(boardTiles);
     newComb.add(selectedTiles);
-    newComb.add(boardTiles);
-    parser.play(selectedTiles, boardTiles, newComb);
+    //TODO newComb soll alle combinationen am board enthalten -> schmarrn weil ja nur die eine kombination verändert werden kann.
+    parser.playL(selectedTiles, boardTiles, newComb);
   }
 
   /**
@@ -663,9 +637,9 @@ public class GuiController {
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
     List<List<ImageView>> newComb = new ArrayList<>();
+    boardTiles.addAll(selectedTiles);
     newComb.add(boardTiles);
-    newComb.add(selectedTiles);
-    parser.play(selectedTiles, boardTiles, newComb);
+    parser.playR(selectedTiles, boardTiles, newComb);
   }
 
   /**
@@ -711,7 +685,7 @@ public class GuiController {
           comb.set(jokerIndex, tile);
         }
         combination.add(comb);
-        parser.play(combination);
+        parser.playSwapJoker(combination);
       }
     }
 
@@ -750,6 +724,10 @@ public class GuiController {
     box.getChildren().add(jokerIndex, tile);
 
     cancelSelEffect();
+  }
+
+  private void swapEverything(){
+    //TODO selected tiles zu neuer kombination auf board.
   }
 
   /**
