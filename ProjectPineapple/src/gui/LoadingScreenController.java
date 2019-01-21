@@ -21,10 +21,10 @@ public class LoadingScreenController {
   @FXML
   private Button startGame;
   @FXML private AnchorPane loadingScreen;
-  @FXML private Label player1Joined;
-  @FXML private Label player2Joined;
-  @FXML private Label player3Joined;
-  @FXML private Label player4Joined;
+  @FXML private Text player1Joined;
+  @FXML private Text player2Joined;
+  @FXML private Text player3Joined;
+  @FXML private Text player4Joined;
   private ClientParser parser = new ClientParser(this);
   private StartingScreenController controller;
 

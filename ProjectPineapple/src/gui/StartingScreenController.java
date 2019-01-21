@@ -1,7 +1,6 @@
 package gui;
 
 import java.io.IOException;
-import java.net.ConnectException;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,7 +11,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import network.Client;
@@ -28,7 +26,7 @@ public class StartingScreenController {
 
   public StartingScreenController() {
   parser = new ClientParser(this);
-  getClientID();
+
   }
 
   /**
@@ -42,6 +40,7 @@ public class StartingScreenController {
     Server server = new Server();
     Client host = new Client("localhost");
     loadLoadingScreen();
+    getClientIDFromServer();
 // TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
   }
 
@@ -70,12 +69,13 @@ public class StartingScreenController {
         return;
       }
     }
+    getClientIDFromServer();
   }
 
   /**
    * Requests the user's player ID from the network.
    */
-  private void getClientID() {
+  private void getClientIDFromServer() {
     parser.getPlayerID();
   }
 
