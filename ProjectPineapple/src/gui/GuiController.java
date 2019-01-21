@@ -389,7 +389,7 @@ public class GuiController {
   @FXML
   protected void handleEndTurn(MouseEvent event) {
     List<List<ImageView>> allCombinations = new ArrayList<>();
-    for (int i = placedCombinations.size(); i >= 0; i--) {
+    for (int i = placedCombinations.size()-1; i >= 0; i--) {
       HBox box = placedCombinations.get(i);
       if (box.getChildren().isEmpty()) {
         placedCombinations.remove(box);
