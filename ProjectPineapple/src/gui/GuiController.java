@@ -608,8 +608,8 @@ public class GuiController {
     List<List<ImageView>> newComb = new ArrayList<>();
     selectedTiles.addAll(boardTiles);
     newComb.add(selectedTiles);
-    //TODO newComb soll alle combinationen am board enthalten
-    parser.play(selectedTiles, boardTiles, newComb);
+    //TODO newComb soll alle combinationen am board enthalten -> schmarrn weil ja nur die eine kombination verändert werden kann.
+    parser.playL(selectedTiles, boardTiles, newComb);
   }
 
   /**
@@ -658,7 +658,7 @@ public class GuiController {
     List<List<ImageView>> newComb = new ArrayList<>();
     boardTiles.addAll(selectedTiles);
     newComb.add(boardTiles);
-    parser.play(selectedTiles, boardTiles, newComb);
+    parser.playR(selectedTiles, boardTiles, newComb);
   }
 
   /**
