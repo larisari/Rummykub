@@ -57,6 +57,13 @@ public class ClientParser {
     Client.sendMessageToServer(builder.toString());
   }
 
+  public void playSwapJoker(List<List<ImageView>> combinations) {
+    StringBuilder builder = new StringBuilder();
+    builder.append("playSwapJoker|");
+    builder.append(GuiParser.parseListToString(combinations));
+    Client.sendMessageToServer(builder.toString());
+  }
+
   public void playL(
           List<ImageView> tilesFromHand,
           List<ImageView> tilesFromBoard,
@@ -182,6 +189,14 @@ public class ClientParser {
         }
         break;
 
+      case "responseForPlaySwapJoker":
+        if (messageAsArray[1].equals("true")) {
+          Platform.runLater(() -> guiController.swapWithJoker());
+        } else if (messageAsArray[1].equals("false")) {
+          Platform.runLater(() -> guiController.cancelSelEffect());
+        }
+        break;
+
       case "responseForPlayWithBoardTilesR":
         if (messageAsArray[1].equals("true")) {
           Platform.runLater(() -> guiController.allowAddBack());
@@ -216,6 +231,10 @@ public class ClientParser {
 
       case "possibleToStart":
         Platform.runLater(() -> loadingScreenController.enableStart());
+        break;
+
+      case "addJoined":
+        Platform.runLater(() -> loadingScreenController.addJoined(Integer.parseInt(messageAsArray[1])));
         break;
 
       case "responseToNotifyWin":

@@ -63,7 +63,9 @@ public class ServerListener extends Thread {
             if(clients.size() == 2) {
               clients.get(0).sendMessageToClient("possibleToStart");
             }
+            Server.broadcastToAllClients("addJoined|" + clientID);
             clientID++;
+
           } else {
             isRunning = false;
           }

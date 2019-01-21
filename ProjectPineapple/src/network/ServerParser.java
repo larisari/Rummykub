@@ -61,7 +61,7 @@ public class ServerParser {
         Optional<Integer> resultID = Server.gameInfo.getNextPlayerId();
 
         if (resultID.isPresent()) {
-          clients.get(id).sendMessageToClient("responseForGetNextPlayerID|" + resultID.get());
+          Server.broadcastToAllClients("responseForGetNextPlayerID|" + resultID.get());
         } else {
           // id is not registered in model.
           log.info("There is no " + id + " registered in the model.");
@@ -69,9 +69,13 @@ public class ServerParser {
         break;
 
       case "play":
-        System.out.println(parseStringToListListTileComb(receivedMessage[1]).toString());
         String answer = Server.gameInfo.play(parseStringToListListTileComb(receivedMessage[1]), id).get().getSecond().toString();
         clients.get(id).sendMessageToClient("responseForPlay|" + answer);
+        break;
+
+      case "playSwapJoker":
+        String answer3 = Server.gameInfo.play(parseStringToListListTileComb(receivedMessage[1]), id).get().getSecond().toString();
+        clients.get(id).sendMessageToClient("responseForPlaySwapJoker|" + answer3);
         break;
 
       case "playWithBoardTilesR":
