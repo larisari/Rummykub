@@ -57,14 +57,36 @@ public class ClientParser {
     Client.sendMessageToServer(builder.toString());
   }
 
-  public void play(
+  public void playL(
           List<ImageView> tilesFromHand,
           List<ImageView> tilesFromBoard,
           List<List<ImageView>> newCombinations) {
 
     StringBuilder builder = new StringBuilder();
 
-    builder.append("playWithBoardTiles|");
+    builder.append("playWithBoardTilesL|");
+
+    builder.append(GuiParser.parseToString(tilesFromHand));
+
+    builder.append("|");
+
+    builder.append(GuiParser.parseToString(tilesFromBoard));
+
+    builder.append("|");
+
+    builder.append(GuiParser.parseListToString(newCombinations));
+
+    Client.sendMessageToServer(builder.toString());
+  }
+
+  public void playR(
+      List<ImageView> tilesFromHand,
+      List<ImageView> tilesFromBoard,
+      List<List<ImageView>> newCombinations) {
+
+    StringBuilder builder = new StringBuilder();
+
+    builder.append("playWithBoardTilesR|");
 
     builder.append(GuiParser.parseToString(tilesFromHand));
 
@@ -160,8 +182,20 @@ public class ClientParser {
         }
         break;
 
-      case "responseForPlayBoard":
-        // TODO wenn es in guiContoller steht.
+      case "responseForPlayWithBoardTilesR":
+        if (messageAsArray[1].equals("true")) {
+          Platform.runLater(() -> guiController.allowAddBack());
+          } else if (messageAsArray[1].equals("false")) {
+          Platform.runLater(() -> guiController.disallowAddTo());
+        }
+        break;
+
+      case "responseForPlayWithBoardTilesL":
+        if (messageAsArray[1].equals("true")) {
+          Platform.runLater(() -> guiController.allowAddFront());
+        } else if (messageAsArray[1].equals("false")) {
+          Platform.runLater(() -> guiController.disallowAddTo());
+        }
         break;
 
       case "responseForGetNextPlayerID":
