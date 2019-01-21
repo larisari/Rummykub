@@ -69,6 +69,7 @@ public class ServerParser {
         break;
 
       case "play":
+        System.out.println(parseStringToListListTileComb(receivedMessage[1]).toString());
         String answer = Server.gameInfo.play(parseStringToListListTileComb(receivedMessage[1]), id).get().getSecond().toString();
         clients.get(id).sendMessageToClient("responseForPlay|" + answer);
         break;

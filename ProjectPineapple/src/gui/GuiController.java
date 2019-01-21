@@ -269,11 +269,7 @@ public class GuiController {
   @FXML
   protected void handleplaceOnBoard(MouseEvent event) {
     if (!selectionBoard.getChildren().isEmpty()) {
-      List<List<ImageView>> allCombinations = new ArrayList<>();
-      for (int i = 0; i < selectedCombinations.size(); i++) {
-        allCombinations.add(selectedCombinations.get(i));
-      }
-      parser.play(allCombinations);
+      parser.play(selectedCombinations);
     }
   }
 

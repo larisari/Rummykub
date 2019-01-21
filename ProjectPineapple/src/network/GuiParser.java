@@ -25,8 +25,8 @@ public class GuiParser {
   public static String parseListToString(List<List<ImageView>> listOfTiles) {
     StringBuilder builder = new StringBuilder();
     builder.append("list<");
-    listOfTiles.forEach(combination -> builder.append(GuiParser.parseToString(combination)));
-
+    listOfTiles.forEach(combination -> builder.append(parseToString(combination)));
+    System.out.println(builder.toString());
     return builder.toString();
   }
 
@@ -36,11 +36,16 @@ public class GuiParser {
       ImageView iView = tiles.get(i);
       Image tile = (Image) iView.getImage();
       String url = tile.getURL();
+      System.out.println(url);
       String[] urlArray = url.split("/");
       String color = urlArray[urlArray.length - 2];
       String[] numberArray = urlArray[urlArray.length - 1].split("[.]");
       String number = numberArray[0];
-      selectedT += "tile." + color + "/" + number;
+      if (number.equals("20")){
+        selectedT += "tile." + color + "/joker";
+      } else {
+        selectedT += "tile." + color + "/" + number;
+      }
       if (i != tiles.size() - 1) {
         selectedT += ",";
       }
