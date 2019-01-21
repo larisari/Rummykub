@@ -606,8 +606,8 @@ public class GuiController {
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
     List<List<ImageView>> newComb = new ArrayList<>();
+    selectedTiles.addAll(boardTiles);
     newComb.add(selectedTiles);
-    newComb.add(boardTiles);
     //TODO newComb soll alle combinationen am board enthalten
     parser.play(selectedTiles, boardTiles, newComb);
   }
@@ -656,8 +656,8 @@ public class GuiController {
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
     List<List<ImageView>> newComb = new ArrayList<>();
+    boardTiles.addAll(selectedTiles);
     newComb.add(boardTiles);
-    newComb.add(selectedTiles);
     parser.play(selectedTiles, boardTiles, newComb);
   }
 
