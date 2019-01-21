@@ -234,6 +234,7 @@ public class ClientParser {
         break;
 
       case "addJoined":
+        System.out.println(messageAsArray.length);
         Platform.runLater(() -> loadingScreenController.addJoined(Integer.parseInt(messageAsArray[1])));
         break;
 

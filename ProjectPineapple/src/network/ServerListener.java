@@ -52,8 +52,6 @@ public class ServerListener extends Thread {
             // create a new thread object
             ServerClientCommunication t = new ServerClientCommunication(s, in, out, clientID);
 
-            t.sendMessageToClient("addJoined");
-
             // Invoking the start() method
             t.start();
 
