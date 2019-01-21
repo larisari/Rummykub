@@ -143,7 +143,7 @@ public class ClientParser {
         break;
 
       case "responseForGetNextPlayerId":
-        Platform.runLater(() ->guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
+        Platform.runLater(() -> guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
         break;
 
       case "responseForPlay":
@@ -162,6 +162,7 @@ public class ClientParser {
 
       case "responseForPlayBoard":
         // TODO wenn es in guiContoller steht.
+        break;
 
       case "responseForGetNextPlayerID":
         Platform.runLater(() -> guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
@@ -178,9 +179,11 @@ public class ClientParser {
       case "responseForGetPlayerPoints":
         Platform.runLater(() -> endScreenController.setPlayerPoints(GuiParser.parseStringToIntegerList(messageAsArray[1])));
         break;
+
       case "possibleToStart":
         Platform.runLater(() -> loadingScreenController.enableStart());
         break;
+
       case "responseToNotifyWin":
           Platform.runLater(() -> {
             try {
@@ -189,7 +192,7 @@ public class ClientParser {
               e.printStackTrace();
             }
           });
-      // TODO REST
+        break;
     }
   }
 }
