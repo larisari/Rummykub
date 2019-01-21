@@ -43,5 +43,20 @@
             <Font name="Franklin Gothic Medium" size="17.0" />
          </font>
       </Button>
+      <Text fx:id="player2Joined" fill="#18b522" layoutX="497.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joined">
+         <font>
+            <Font name="Franklin Gothic Medium" size="19.0" />
+         </font>
+      </Text>
+      <Text fx:id="player3Joined" fill="#18b522" layoutX="497.0" layoutY="260.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joined">
+         <font>
+            <Font name="Franklin Gothic Medium" size="19.0" />
+         </font>
+      </Text>
+      <Text fx:id="player4Joined" fill="#18b522" layoutX="497.0" layoutY="310.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Joined">
+         <font>
+            <Font name="Franklin Gothic Medium" size="19.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

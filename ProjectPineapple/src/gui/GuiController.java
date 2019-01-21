@@ -154,7 +154,7 @@ public class GuiController {
    */
   @FXML
   private void initialize() {
-    ;
+
     switch (numberOfPlayers) {
       case 2:
         rightBoard.setVisible(false);
@@ -353,7 +353,6 @@ public class GuiController {
    */
   public void updateNextPlayerName(Integer ID) {
     playerTurn.setText("Player " + ID + "'s turn.");
-    disableControl();
   }
 
   /**
@@ -704,7 +703,7 @@ public class GuiController {
           comb.set(jokerIndex, tile);
         }
         combination.add(comb);
-        parser.play(combination);
+        parser.playSwapJoker(combination);
       }
     }
 
