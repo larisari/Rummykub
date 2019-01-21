@@ -64,7 +64,7 @@ public class ClientParser {
 
     StringBuilder builder = new StringBuilder();
 
-    builder.append("play|");
+    builder.append("playWithBoardTiles|");
 
     builder.append(GuiParser.parseToString(tilesFromHand));
 

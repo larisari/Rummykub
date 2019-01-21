@@ -35,7 +35,7 @@ public class ServerClientCommunication extends Thread {
         log.info("[Server] Nachricht von " + clientID + "erhalten:" + received);
 
         ServerParser.getStringIntoServerParser(received, clientID);
-        log.info("[Server] Habe die Nachricht an den Parser übergeben....");
+        log.info("[Server] Habe die Nachricht an den Serverparser übergeben....");
 
 
       } catch (IOException e) {
