@@ -26,10 +26,10 @@ public class LoadingScreenController {
   @FXML private Label player3Joined;
   @FXML private Label player4Joined;
   private ClientParser parser = new ClientParser(this);
-  private GuiController controller;
+  private StartingScreenController controller;
 
   public LoadingScreenController(){
-    controller = new GuiController();
+    controller = new StartingScreenController();
   }
   /**
    * Initializes loadingScreen FXML file.

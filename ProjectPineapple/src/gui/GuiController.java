@@ -78,7 +78,6 @@ public class GuiController {
   private List<HBox> placedCombinations = new ArrayList<>(); //wird an Server geschickt.
   private List<Image> hand = new ArrayList<>();
   private TileView tView = new TileView();
-  private int playerID;
   static int numberOfPlayers;
   private final static int HAND_SPACE = 13;
   private int turn = 0;
@@ -89,6 +88,7 @@ public class GuiController {
   private ImageView tile = new ImageView();
   private ImageView joker = new ImageView();
   private HBox boardComb = new HBox();
+  private StartingScreenController controller;
 
   private ClientParser parser;
 
@@ -98,7 +98,7 @@ public class GuiController {
    */
   public GuiController() {
     parser = new ClientParser(this);
-    getClientID();
+    controller = new StartingScreenController();
   }
 
   /**
@@ -115,24 +115,6 @@ public class GuiController {
     numberOfPlayers = numberPlayers;
   }
 
-  /**
-   * Requests the user's player ID from the network.
-   */
-  private void getClientID() {
-    parser.getPlayerID();
-  }
-
-  /**
-   * Gets called by network. Sets the player ID.
-   */
-  public void setPlayerID(Integer playerID) {
-    this.playerID = playerID;
-  }
-
-
-  public Integer getPlayerID(){
-    return this.playerID;
-  }
 
   /**
    * Requests the next player's ID from the network.
@@ -174,7 +156,7 @@ public class GuiController {
    * Sets player names on player boards, according to each player.
    */
   private void setPlayerNames() {
-    switch (playerID) {
+    switch (controller.getPlayerID()) {
       case 0:
         break; //bleibt auf default
       case 1:

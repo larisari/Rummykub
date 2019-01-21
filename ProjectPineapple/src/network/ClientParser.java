@@ -222,7 +222,7 @@ public class ClientParser {
         break;
 
       case "responseForGetPlayerID":
-        Platform.runLater(() -> guiController.setPlayerID(Integer.parseInt(messageAsArray[1])));
+        Platform.runLater(() -> startingScreenController.setPlayerID(Integer.parseInt(messageAsArray[1])));
         break;
 
       case "responseForGetPlayerPoints":

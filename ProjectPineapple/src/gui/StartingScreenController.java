@@ -24,9 +24,11 @@ public class StartingScreenController {
   @FXML
   private AnchorPane startingS;
   private ClientParser parser;
+  private int playerID;
 
   public StartingScreenController() {
   parser = new ClientParser(this);
+  getClientID();
   }
 
   /**
@@ -69,6 +71,26 @@ public class StartingScreenController {
       }
     }
   }
+
+  /**
+   * Requests the user's player ID from the network.
+   */
+  private void getClientID() {
+    parser.getPlayerID();
+  }
+
+  /**
+   * Gets called by network. Sets the player ID.
+   */
+  public void setPlayerID(Integer playerID) {
+    this.playerID = playerID;
+  }
+
+
+  public Integer getPlayerID(){
+    return this.playerID;
+  }
+
 
   /**
    * Loads loading screen.
