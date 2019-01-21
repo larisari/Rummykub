@@ -25,7 +25,7 @@ public Main(){
         loader.setLocation(getClass().getResource("/startingScreen.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        scene.getStylesheets().add("/gui/button.css");
+        scene.getStylesheets().add("/button.css");
         primaryStage.setResizable(false);
         primaryStage.setTitle("RUMMYKUB");
         primaryStage.setScene(scene);

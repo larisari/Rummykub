@@ -98,7 +98,9 @@ public class StartingScreenController {
    * @throws IOException if some error occurs while loading fxml file.
    */
   private void loadLoadingScreen() throws IOException {
-    Parent dialogue = FXMLLoader.load(getClass().getResource("../../resources/loadingScreen.fxml"));
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation(getClass().getResource("/loadingScreen.fxml"));
+    Parent dialogue = loader.load();
     Scene scene = new Scene(dialogue);
     Stage stage = new Stage();
     stage.initModality(Modality.APPLICATION_MODAL);

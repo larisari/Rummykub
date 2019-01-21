@@ -100,7 +100,9 @@ public class LoadingScreenController {
    * @throws IOException if some error occurs while loading fxml file.
    */
   public void openGameWindow() throws IOException{
-    Parent root = FXMLLoader.load(getClass().getResource("../../resources/clientgui.fxml"));
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation(getClass().getResource("/clientgui.fxml"));
+    Parent root = loader.load();
     Scene scene = new Scene(root);
     Stage stage = new Stage(); //new Stage
     stage.setResizable(false);
