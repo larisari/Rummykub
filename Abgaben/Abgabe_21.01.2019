@@ -4,7 +4,7 @@ Um die .jar zu starten muss folgendes in das Terminal eingegeben werden (In dem 
 
 java --module-path $PATH_TO_JAVAFXLIB --add-modules=javafx.controls,javafx.fxml -jar ProjectPineappleG.jar
 
-Anstatt $PATH_TO_JAVAFXLIB muss der entsprechende Pfad zu dem lib orderner vom javafx-sdk-11.0.1 angegeben werden.
+Anstatt $PATH_TO_JAVAFXLIB muss der entsprechende Pfad zu dem lib Ordner vom javafx-sdk-11.0.1 angegeben werden.
 -------------------
 
 -Netzwerk wurde fertiggestellt und getestet.
