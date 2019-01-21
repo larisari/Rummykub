@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1238.0" stylesheets="@gui/button.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GuiController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="75.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="75.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="25.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+  <children>
+    <VBox alignment="TOP_CENTER" fillWidth="false" prefHeight="150.0" prefWidth="149.0" style="-fx-background-color: #F7E3AA#F7E3AA;" GridPane.columnIndex="2" GridPane.columnSpan="2147483647" GridPane.rowSpan="2147483647">
+      <children>
+        <Label alignment="TOP_CENTER" text="MENU" textAlignment="CENTER">
+          <VBox.margin>
+            <Insets bottom="20.0" />
+          </VBox.margin>
+          <font>
+            <Font name="Franklin Gothic Medium" size="23.0" />
+          </font>
+        </Label>
+        <Button accessibleRole="PARENT" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="27.0" prefWidth="110.0" text="Surrender" textAlignment="CENTER" VBox.vgrow="NEVER">
+          <font>
+            <Font name="Franklin Gothic Medium" size="14.0" />
+          </font>
+        </Button>
+        <Button accessibleRole="PARENT" alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#handleQuit" prefHeight="27.0" prefWidth="110.0" text="Quit" textAlignment="CENTER">
+          <font>
+            <Font name="Franklin Gothic Medium" size="14.0" />
+          </font>
+          <VBox.margin>
+            <Insets bottom="30.0" top="10.0" />
+          </VBox.margin>
+        </Button>
+            <Label text="Rules">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="17.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Label>
+            <ScrollPane prefHeight="584.0" prefWidth="174.0">
+               <content>
+                  <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The youngest player starts. Each player receives 14 random tiles by clicking on the bag. Each turn a player can choose to draw a tile or to place tiles on the board. &#10;Tiles may only be placed in certain combinations: &#10;1. Tiles with the same number (max. 4 tiles).&#10;2. tiles in acending order but in the same colour (starts again at 1 after 13), no max. limit. &#10;Each combination must consist of at least 3 tiles. At the first turn each player must place a combination worth at least 30 points. Each tile is worth its number. A joker has the worth of the number it should represent. &#10;At the end of the game the joker is worth 20 points. Tiles on the board may be rearranged. Players may add tiles to existing combinations on the board. At the end of a turn, only valid combinations of 3 tiles may lay on the board. &#10;The object of the game is to get rid of ones tiles as fast as possible. Once someone achieves that, the player can proclaim &quot;Rummykub&quot; and thus ends the game. The losers add up the value of their remaining tiles. The player with the highest score loses." wrappingWidth="145.0">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Text>
+               </content>
+               <padding>
+                  <Insets bottom="5.0" left="7.0" right="4.0" top="5.0" />
+               </padding>
+            </ScrollPane>
+      </children>
+      <padding>
+        <Insets left="2.0" top="10.0" />
+      </padding>
+    </VBox>
+  <Group />
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="1058.0" style="-fx-background-color: #1C6A04#1C6A04;" GridPane.columnSpan="2" GridPane.rowSpan="3">
+         <children>
+            <HBox fx:id="selectionBoard" layoutX="202.0" layoutY="592.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="68.0" prefWidth="654.0" spacing="8.0" style="-fx-background-color: #1C481E#1C481E; -fx-border-color: #163717#163717;" AnchorPane.bottomAnchor="136.0" />
+        <Group fx:id="handBoards" layoutX="202.0" layoutY="592.0" style="-fx-translate-x: 0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="202.0" AnchorPane.rightAnchor="202.0">
+          <children>
+            <HBox fx:id="topHand" alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="68.0" prefWidth="654.0" style="-fx-background-color: black; -fx-border-color: #2E342E#2E342E;" />
+            <HBox fx:id="bottomHand" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="68.0" prefWidth="654.0" style="-fx-background-color: black; -fx-border-color: #2E342E#2E342E;" translateY="68.0" />
+          </children>
+        </Group>
+        <Group fx:id="topBoard" layoutX="387.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="386.0" AnchorPane.topAnchor="0.0">
+          <children>
+            <Rectangle accessibleRole="PARENT" arcHeight="10.0" arcWidth="10.0" height="84.0" stroke="WHITE" strokeType="INSIDE" width="285.0" />
+            <Label fx:id="playerTopName" alignment="CENTER" layoutX="95.0" layoutY="27.0" text="PLAYER 2" textAlignment="CENTER" textFill="WHITE">
+              <font>
+                <Font name="Franklin Gothic Medium" size="22.0" />
+              </font>
+            </Label>
+          </children>
+        </Group>
+      <Group fx:id="rightBoard" layoutX="871.0" layoutY="322.0" rotate="270.0" AnchorPane.bottomAnchor="221.5" AnchorPane.rightAnchor="-100.0" AnchorPane.topAnchor="322.0">
+        <children>
+          <Rectangle accessibleRole="PARENT" arcHeight="10.0" arcWidth="10.0" height="84.0" stroke="WHITE" strokeType="INSIDE" width="285.0" />
+          <Label fx:id="playerRightName" layoutX="94.0" layoutY="30.0" text="PLAYER 3" textFill="WHITE">
+            <font>
+              <Font name="Franklin Gothic Medium" size="22.0" />
+            </font>
+          </Label>
+        </children>
+      </Group>
+        <Group fx:id="leftBoard" layoutX="-93.0" layoutY="37.0" AnchorPane.bottomAnchor="221.5" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="221.5">
+          <children>
+            <Rectangle accessibleRole="PARENT" arcHeight="10.0" arcWidth="10.0" height="84.0" layoutY="285.0" rotate="270.0" stroke="WHITE" strokeType="INSIDE" width="285.0" />
+            <Label fx:id="playerLeftName" layoutX="104.0" layoutY="310.0" rotate="90.0" text="PLAYER 4" textAlignment="CENTER" textFill="WHITE">
+              <font>
+                <Font name="Franklin Gothic Medium" size="22.0" />
+              </font>
+            </Label>
+          </children>
+        </Group>
+          <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="231.0" style="-fx-background-color: white;">
+            <children>
+              <Label fx:id="playerTurn" alignment="TOP_LEFT" layoutX="57.0" layoutY="14.0" text="Player 1's turn" textAlignment="CENTER">
+                <font>
+                  <Font name="Franklin Gothic Medium" size="19.0" />
+                </font>
+              </Label>
+            </children>
+          </Pane>
+          <Button fx:id="enter" accessibleRole="PARENT" alignment="CENTER" layoutX="857.0" layoutY="729.0" mnemonicParsing="false" onMouseClicked="#handleEnterComb" prefHeight="65.0" prefWidth="200.0" styleClass="enterBtn" text="Enter new Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="2.0">
+            <font>
+              <Font name="Franklin Gothic Medium" size="16.0" />
+            </font>
+               <tooltip>
+                  <Tooltip prefHeight="120.0" prefWidth="130.0" text="Click here to place a combination on the selection board, from where you can place tiles on the board." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
+          </Button>
+            <Button fx:id="endTurn" accessibleRole="PARENT" alignment="CENTER" layoutX="1.0" layoutY="659.0" mnemonicParsing="false" onMouseClicked="#handleEndTurn" prefHeight="136.0" prefWidth="89.0" styleClass="endTurnBtn" text="End Turn" AnchorPane.bottomAnchor="1.0">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="16.0" />
+               </font>
+               <tooltip>
+                  <Tooltip prefHeight="70.0" prefWidth="100.0" text="Click here to end your turn." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
+            </Button>
+            <Button fx:id="cancelSelection" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="726.0" mnemonicParsing="false" onMouseClicked="#handleCancelSel" prefHeight="67.0" prefWidth="110.0" styleClass="cancelBtn" text="Cancel Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="3.0">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="16.0" />
+               </font>
+               <tooltip>
+                  <Tooltip prefHeight="70.0" prefWidth="100.0" text="Click here to cancel your selected tiles." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
+            </Button>
+            <ImageView fx:id="bag" fitHeight="170.0" fitWidth="184.0" layoutX="848.0" layoutY="25.0" onMouseClicked="#handleDrawTile" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@gui/images/bag.png" />
+               </image>
+            </ImageView>
+            <FlowPane fx:id="board" hgap="30.0" layoutX="133.0" layoutY="106.0" prefHeight="473.0" prefWidth="723.0" vgap="30.0" AnchorPane.bottomAnchor="217.0" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="106.0" />
+            <Button fx:id="addToExisting" accessibleRole="PARENT" alignment="CENTER" layoutX="857.0" layoutY="660.0" mnemonicParsing="false" onMouseClicked="#handleAddTo" prefHeight="66.0" prefWidth="200.0" styleClass="addTo" text="Add to existing Combination" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="70.0">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="16.0" />
+               </font>
+               <tooltip>
+                  <Tooltip prefHeight="100.0" prefWidth="130.0" text="Click here to add selected tiles to an existing combination on the board." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
+            </Button>
+            <Button fx:id="manipulate" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="660.0" mnemonicParsing="false" onMouseClicked="#handleManipulate" prefHeight="65.0" prefWidth="110.0" styleClass="manipulate" text="Manipulate Tiles" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="71.0">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="16.0" />
+               </font>
+               <tooltip>
+                  <Tooltip prefHeight="120.0" prefWidth="130.0" text="Click here to manipulate tiles on the board after you finished placing tiles from your hand." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
+            </Button>
+            <Button fx:id="placeOnBoard" accessibleRole="PARENT" alignment="CENTER" layoutX="857.0" layoutY="592.0" mnemonicParsing="false" onMouseClicked="#handleplaceOnBoard" prefHeight="66.0" prefWidth="200.0" styleClass="placeSelection" text="Place Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="138.0">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="16.0" />
+               </font>
+               <tooltip>
+                  <Tooltip prefHeight="100.0" prefWidth="130.0" text="Click here to add selected tiles to an existing combination on the board." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
+            </Button>
+            <Button fx:id="swapJoker" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="594.0" mnemonicParsing="false" onMouseClicked="#handleSwapJoker" prefHeight="65.0" prefWidth="110.0" styleClass="manipulate" text="Swap Joker" textAlignment="CENTER" wrapText="true">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="16.0" />
+               </font>
+               <tooltip>
+                  <Tooltip prefHeight="120.0" prefWidth="130.0" text="Click manipulate, then select a tile from your hand and then the joker which you like to swap your tile with." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
+            </Button>
+         </children>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+      </AnchorPane>
+  </children>
+  <padding>
+    <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
+  </padding>
+</GridPane>
