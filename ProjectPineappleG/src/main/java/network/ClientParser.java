@@ -23,6 +23,8 @@ public class ClientParser {
   private static EndScreenController endScreenController;
   private static StartingScreenController startingScreenController;
 
+  private static GuiParser guiParser = new GuiParser();
+
 
   public ClientParser(GuiController controller) {
     guiController = controller;
@@ -149,7 +151,7 @@ public class ClientParser {
       case "responseStartGame":
           Platform.runLater(() -> {
             try {
-              loadingScreenController.openGameWindow(); //missing parameters
+              loadingScreenController.openGameWindow();
             } catch (IOException e) {
               e.printStackTrace();
             }
@@ -160,11 +162,12 @@ public class ClientParser {
 //        Platform.runLater(() -> startingScreenController.closeStartScreen());
         break;
       case "responseForDraw":
-        Platform.runLater(() ->guiController.loadTiles(GuiParser.parseStringToImgsForOneComb(messageAsArray[1])));
+        Platform.runLater(() -> guiController.loadTiles(guiParser.parseStringToImgsForOneComb(messageAsArray[1])));
+
         break;
 
       case "responseForFinishedTurn":
-        Platform.runLater(() -> guiController.reloadBoard(GuiParser.parseStringToWholeBoard(messageAsArray[1])));
+        Platform.runLater(() -> guiController.reloadBoard(guiParser.parseStringToWholeBoard(messageAsArray[1])));
         break;
 
       case "itsYourTurn":
@@ -218,7 +221,7 @@ public class ClientParser {
         break;
 
       case "responseForNumberOfPlayers":
-        Platform.runLater(() -> loadingScreenController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1])));
+        Platform.runLater(() -> guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1])));
         break;
 
       case "responseForGetPlayerID":

@@ -25,7 +25,7 @@ public class StartingScreenController {
   private int playerID;
 
   public StartingScreenController() {
-  parser = new ClientParser(this);
+    parser = new ClientParser(this);
 
   }
 
@@ -39,7 +39,7 @@ public class StartingScreenController {
   protected void handleCreateGame(MouseEvent event) throws IOException {
     Server server = new Server();
     Client host = new Client("localhost");
-   // loadLoadingScreen();
+    // loadLoadingScreen();
     getClientIDFromServer();
 // TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
   }
@@ -98,9 +98,9 @@ public class StartingScreenController {
     lController.setPlayerID(playerID);
   }
 
- // public void closeStartScreen(){
- //   startingS.getScene().getWindow().hide();
- // }
+  // public void closeStartScreen(){
+  //   startingS.getScene().getWindow().hide();
+  // }
 }
 
 

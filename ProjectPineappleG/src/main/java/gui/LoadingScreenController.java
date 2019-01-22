@@ -45,13 +45,13 @@ public class LoadingScreenController {
     if (playerID != 0) {
       startGame.setVisible(false);
     }
-      startGame.setDisable(true);
-    }
+    startGame.setDisable(true);
+  }
 
-    public void setPlayerID(Integer playerID){
+  public void setPlayerID(Integer playerID){
     this.playerID = playerID;
-      System.out.println(playerID);
-    }
+    System.out.println(playerID);
+  }
 
   //TODO benachrichtigung an server wenn client loadingscreen schließt.
 
