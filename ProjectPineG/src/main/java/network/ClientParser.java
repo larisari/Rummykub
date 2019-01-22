@@ -149,6 +149,7 @@ public class ClientParser {
       case "responseStartGame":
           Platform.runLater(() -> {
             try {
+              System.out.println(loadingScreenController);
               loadingScreenController.openGameWindow(Integer.parseInt(messageAsArray[1]), Integer.parseInt(messageAsArray[2]));
             } catch (IOException e) {
               e.printStackTrace();

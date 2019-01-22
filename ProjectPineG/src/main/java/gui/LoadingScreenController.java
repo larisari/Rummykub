@@ -41,10 +41,6 @@ public class LoadingScreenController {
     player2Joined.setVisible(false);
     player3Joined.setVisible(false);
     player4Joined.setVisible(false);
-
-    if (playerID != 0) {
-      startGame.setVisible(false);
-    }
     startGame.setDisable(true);
   }
 
@@ -69,6 +65,9 @@ public class LoadingScreenController {
    * muss checken der wievielte spieler das ist.
    */
   public void addJoined(Integer numberOfClients){
+    if (playerID != 0) {
+      startGame.setVisible(false);
+    }
     switch (numberOfClients){
       case 0:
         player1Joined.setVisible(true);
@@ -111,15 +110,18 @@ public class LoadingScreenController {
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation((getClass().getResource("/clientgui.fxml")));
     Parent root = loader.load();
+    GuiController controller = loader.getController();
+    controller.setNumberOfPlayers(numberOfPlayers);
+    controller.setPlayerID(playerID);
+    controller.setPlayerNames();
+    controller.setPlayerBoards();
     Scene scene = new Scene(root);
     Stage stage = new Stage(); //new Stage
     stage.setResizable(false);
     stage.setTitle("RUMMYKUB");
     stage.setScene(scene);
     stage.show();
-    GuiController controller = loader.getController();
-    controller.setNumberOfPlayers(numberOfPlayers);
-    controller.setPlayerID(playerID);
+
 
 
   }

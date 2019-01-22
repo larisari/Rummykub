@@ -125,26 +125,27 @@ public class GuiController {
    */
   @FXML
   private void initialize() {
-
-    switch (numberOfPlayers) {
-      case 2:
-        rightBoard.setVisible(false);
-        leftBoard.setVisible(false);
-        break;
-      case 3:
-        leftBoard.setVisible(false);
-        break;
-    }
-    setPlayerNames();
     disableControl();
 //while is first turn: manipulate.setDisable(true);
   }
 
 
+public void setPlayerBoards(){
+  switch (numberOfPlayers) {
+    case 2:
+      rightBoard.setVisible(false);
+      leftBoard.setVisible(false);
+      break;
+    case 3:
+      leftBoard.setVisible(false);
+      break;
+  }
+}
+
   /**
    * Sets player names on player boards, according to each player.
    */
-  private void setPlayerNames() {
+  public void setPlayerNames() {
     switch (playerID) {
       case 0:
         break; //bleibt auf default
@@ -334,6 +335,7 @@ public class GuiController {
    *
    * @param ID of the next player.
    */
+  //TODO passt!
   public void updateNextPlayerName(Integer ID) {
     if (playerID == ID) {
       playerTurn.setText("Your turn.");
