@@ -8,7 +8,7 @@ Content of "gradle.properties":
     #PATH_TO_JDK has to be replaced to the actual path for example: org.gradle.java.home=/Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home
 
     ##Set and uncomment:
-    #path.to.fx.mods=PATH_TO_JAVAFX/LIB
+    #path.to.fx.mods=PATH_TO_JAVAFX
 
-    #PATH_TO_JAVAFX/LIB has to be replaced with the actual path for the lib Directory of the javafx-sdk-11.0.1 for example /Users/$username/javafx-sdk-11.0.1/lib
+    #PATH_TO_JAVAFX has to be replaced with the actual path for the lib Directory of the javafx-sdk-11.0.1 for example /Users/$username/javafx-sdk-11.0.1/lib
     #where $username is the account name.
