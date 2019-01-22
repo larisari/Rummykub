@@ -77,7 +77,6 @@ public class GuiController {
   private List<List<ImageView>> selectedCombinations = new ArrayList<>();
   private List<HBox> placedCombinations = new ArrayList<>(); //wird an Server geschickt.
   private List<Image> hand = new ArrayList<>();
-  private TileView tView = new TileView();
   public int numberOfPlayers;
   private final static int HAND_SPACE = 13;
   private int turn = 0;
