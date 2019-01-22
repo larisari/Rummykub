@@ -126,9 +126,7 @@ public class ClientParser {
     Client.sendMessageToServer("numberOfPlayers");
   }
 
-  public void getPlayerID() {
-    Client.sendMessageToServer("getPlayerID");
-  }
+  //public void getPlayerID() { Client.sendMessageToServer("getPlayerID"); }
 
   public void getPlayerPoints() {
     Client.sendMessageToServer("getPlayerPoints");
@@ -151,7 +149,7 @@ public class ClientParser {
       case "responseStartGame":
           Platform.runLater(() -> {
             try {
-              loadingScreenController.openGameWindow();
+              loadingScreenController.openGameWindow(Integer.parseInt(messageAsArray[1]), Integer.parseInt(messageAsArray[2]));
             } catch (IOException e) {
               e.printStackTrace();
             }
@@ -224,10 +222,11 @@ public class ClientParser {
         Platform.runLater(() -> guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1])));
         break;
 
+        /*
       case "responseForGetPlayerID":
-        Platform.runLater(() -> startingScreenController.setPlayerID(Integer.parseInt(messageAsArray[1])));
+        Platform.runLater(() -> loadingScreenController.setPlayerID(Integer.parseInt(messageAsArray[1])));
         break;
-
+        */
       case "responseForGetPlayerPoints":
         Platform.runLater(() -> endScreenController.setPlayerPoints(GuiParser.parseStringToIntegerList(messageAsArray[1])));
         break;
@@ -237,10 +236,18 @@ public class ClientParser {
         break;
 
       case "addJoined":
-        System.out.println(messageAsArray.length);
         Platform.runLater(() -> loadingScreenController.addJoined(Integer.parseInt(messageAsArray[1])));
         break;
 
+      case "loadLoadingScreen":
+        Platform.runLater(() -> {
+          try {
+            startingScreenController.loadLoadingScreen(Integer.parseInt(messageAsArray[1]));
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
+        break;
       case "responseToNotifyWin":
           Platform.runLater(() -> {
             try {

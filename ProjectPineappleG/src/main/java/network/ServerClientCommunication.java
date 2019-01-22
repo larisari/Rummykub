@@ -22,6 +22,10 @@ public class ServerClientCommunication extends Thread {
     this.clientID = clientID;
   }
 
+  public int getClientID(){
+    return this.clientID;
+  }
+
   // Startet Thread und "lauscht" innerhalb der while-Schleife ununterbrochen auf eingehende Nachricht vom Client.
   @Override
   public void run() {

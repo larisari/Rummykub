@@ -39,8 +39,6 @@ public class StartingScreenController {
   protected void handleCreateGame(MouseEvent event) throws IOException {
     Server server = new Server();
     Client host = new Client("localhost");
-    // loadLoadingScreen();
-    getClientIDFromServer();
 // TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
   }
 
@@ -63,21 +61,13 @@ public class StartingScreenController {
       ipAdress = result.get();
       try {
         Client c = new Client(ipAdress);
-        // loadLoadingScreen();
-      } catch (IOException e) {
+      } catch (Exception e) {
 //DialogError: Error! Please enter valid IP adress!
         return;
       }
     }
-    getClientIDFromServer();
   }
 
-  /**
-   * Requests the user's player ID from the network.
-   */
-  private void getClientIDFromServer() {
-    parser.getPlayerID();
-  }
 
   /**
    * Gets called it Client could register successfully.
@@ -85,8 +75,9 @@ public class StartingScreenController {
    * @throws IOException if some error occurs while loading fxml file.
    */
   //TODO muss von Server aufgerufen werden.
-  private void loadLoadingScreen(Integer playerID) throws IOException {
-    FXMLLoader loader = FXMLLoader.load(getClass().getResource("loadingScreen.fxml"));
+  public void loadLoadingScreen(Integer playerID) throws IOException {
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation((getClass().getResource("/loadingScreen.fxml")));
     Parent dialogue = loader.load();
     Scene scene = new Scene(dialogue);
     Stage stage = new Stage();
@@ -98,9 +89,9 @@ public class StartingScreenController {
     lController.setPlayerID(playerID);
   }
 
-  // public void closeStartScreen(){
-  //   startingS.getScene().getWindow().hide();
-  // }
+ // public void closeStartScreen(){
+ // startingS.getScene().getWindow().hide();
+ //  }
 }
 
 
