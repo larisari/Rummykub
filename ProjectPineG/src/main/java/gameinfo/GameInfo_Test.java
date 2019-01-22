@@ -42,7 +42,7 @@ class GameInfo_Test {
               GIColor.JOKER
               ), new GITile(GINumber.JOKER,GIColor.JOKER)));
 
- // @BeforeAll
+//  @BeforeAll
   static void setup() {
     gameInfo = GIFactory.make();
     p1 = new Player(player_1_ID,new PointsCalculator());
