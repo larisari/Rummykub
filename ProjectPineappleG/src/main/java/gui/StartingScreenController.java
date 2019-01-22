@@ -85,7 +85,7 @@ public class StartingScreenController {
    * @throws IOException if some error occurs while loading fxml file.
    */
   //TODO muss von Server aufgerufen werden.
-  private void loadLoadingScreen(Integer playerID) throws IOException {
+  public void loadLoadingScreen(Integer playerID) throws IOException {
     FXMLLoader loader = FXMLLoader.load(getClass().getResource("loadingScreen.fxml"));
     Parent dialogue = loader.load();
     Scene scene = new Scene(dialogue);
