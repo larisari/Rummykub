@@ -28,13 +28,6 @@ class GameInfo_Test {
   private static final Integer player_3_ID = 3;
   private static final Integer player_4_ID = 4;
 
-  private static GITile one_black = new GITile(GINumber.ONE, GIColor.BLACK);
-  private static GITile one_blue = new GITile(GINumber.ONE, GIColor.BLUE);
-  private static GITile one_yellow = new GITile(GINumber.ONE, GIColor.YELLOW);
-  private static GITile eleven_black = new GITile(GINumber.ELEVEN, GIColor.BLACK);
-  private static GITile eleven_blue = new GITile(GINumber.ELEVEN, GIColor.BLUE);
-  private static GITile eleven_yellow = new GITile(GINumber.ELEVEN, GIColor.YELLOW);
-
   private static List<GITile> hand_player_1 =
       new ArrayList<>(Arrays.asList(new GITile(GINumber.THREE,GIColor.BLACK),
        new GITile(GINumber.THREE,GIColor.BLUE), new GITile(GINumber.THREE,
@@ -43,9 +36,9 @@ class GameInfo_Test {
           new GITile(GINumber.FOUR,GIColor.YELLOW), new GITile(GINumber.FIVE,
               GIColor.BLACK),
           new GITile(GINumber.FIVE,GIColor.BLUE), new GITile(GINumber.FIVE,
-              GIColor.YELLOW), new GITile(GINumber.SIX,GIColor.BLACK),
-          new GITile(GINumber.SIX,GIColor.BLUE),
-          new GITile(GINumber.SIX,GIColor.YELLOW), new GITile(GINumber.JOKER,
+              GIColor.YELLOW), new GITile(GINumber.ELEVEN,GIColor.BLACK),
+          new GITile(GINumber.ELEVEN,GIColor.BLUE),
+          new GITile(GINumber.ELEVEN,GIColor.YELLOW), new GITile(GINumber.JOKER,
               GIColor.JOKER
               ), new GITile(GINumber.JOKER,GIColor.JOKER)));
 
@@ -62,10 +55,9 @@ class GameInfo_Test {
   void orderedTestCase() {
     signInPlayers();
     start();
-    //putTilesOnHand();
     draw();
     //lessThanMinPoints();
-    //validCombo();
+    validCombo();
     showhands();
     //makeFirstMove();
   }
@@ -82,29 +74,18 @@ class GameInfo_Test {
   }
 
   void draw() {
-    gameInfo.drawBy(player_1_ID,hand_player_1);
+    gameInfo.drawBy(player_1_ID, hand_player_1);
     gameInfo.drawBy(player_2_ID);
     gameInfo.drawBy(player_3_ID);
     gameInfo.drawBy(player_4_ID);
   }
 
-  void putTilesOnHand() {
-
-  //group less than 30 points
-    p1.put(one_black);
-    p1.put(one_blue);
-    p1.put(one_yellow);
-
-  //group 30+ points
-    p1.put(eleven_black);
-    p1.put(eleven_blue);
-    p1.put(eleven_yellow);
-}
 
   void lessThanMinPoints() {
     List<GITile> playersGroup =
-        new ArrayList<>(Arrays.asList(p1.getTilesOnHand().get(0),
-            p1.getTilesOnHand().get(1), p1.getTilesOnHand().get(2)));
+        new ArrayList<>(Arrays.asList(gameInfo.getAllTilesBy(player_1_ID).get().getSecond().get(0),
+            gameInfo.getAllTilesBy(player_1_ID).get().getSecond().get(1),
+            gameInfo.getAllTilesBy(player_1_ID).get().getSecond().get(2)));
 
     List<List<GITile>> combinations = new ArrayList<>();
     combinations.add(playersGroup);
@@ -114,26 +95,16 @@ class GameInfo_Test {
 
   void validCombo() {
     List<GITile> playersGroup =
-        new ArrayList<>(Arrays.asList(p1.getTilesOnHand().get(3),
-            p1.getTilesOnHand().get(4), p1.getTilesOnHand().get(5)));
+        new ArrayList<>(Arrays.asList(gameInfo.getAllTilesBy(player_1_ID).get()
+            .getSecond().get(9), gameInfo.getAllTilesBy(player_1_ID).get()
+            .getSecond().get(10), gameInfo.getAllTilesBy(player_1_ID).get()
+            .getSecond().get(11)));
 
     List<List<GITile>> combinations = new ArrayList<>();
     combinations.add(playersGroup);
 
-    assert gameInfo.getNextPlayerId().get().equals(player_2_ID);
+    assert gameInfo.play(combinations,player_1_ID).get().getSecond();
 
-    System.out.println(gameInfo.play(combinations,player_1_ID).get());
-
-
-
-    System.out.println(p1.getTilesOnHand());
-
-    assert gameInfo.getNextPlayerId().get().equals(player_3_ID);
-
-    assert p1.getTilesOnHand().contains(one_black);
-    assert p1.getTilesOnHand().contains(one_blue);
-    assert p1.getTilesOnHand().contains(one_yellow);
-    assert p1.getTilesOnHand().size() == 6;
   }
 
   void getAllPlayersHands() {
@@ -145,6 +116,9 @@ class GameInfo_Test {
     System.out.println(gameInfo.getAllTilesBy(player_2_ID).get());
     System.out.println(gameInfo.getAllTilesBy(player_3_ID).get());
     System.out.println(gameInfo.getAllTilesBy(player_4_ID).get());
+
+    //player playes 3 tiles, so he should now have 11 left on his hand
+    assert gameInfo.getAllTilesBy(player_1_ID).get().getSecond().size() == 11;
   }
 
   void makeFirstMove() {
