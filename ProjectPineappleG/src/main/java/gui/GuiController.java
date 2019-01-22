@@ -78,7 +78,7 @@ public class GuiController {
   private List<HBox> placedCombinations = new ArrayList<>(); //wird an Server geschickt.
   private List<Image> hand = new ArrayList<>();
   private TileView tView = new TileView();
-  static int numberOfPlayers;
+  public int numberOfPlayers;
   private final static int HAND_SPACE = 13;
   private int turn = 0;
   private final static int MAX_BOXHEIGHT = 68;
@@ -88,7 +88,7 @@ public class GuiController {
   private ImageView tile = new ImageView();
   private ImageView joker = new ImageView();
   private HBox boardComb = new HBox();
-  private StartingScreenController controller;
+  private int playerID = 0;
 
   private ClientParser parser;
 
@@ -98,23 +98,15 @@ public class GuiController {
    */
   public GuiController() {
     parser = new ClientParser(this);
-    controller = new StartingScreenController();
   }
 
-  /**
-   * Requests the current number of players from the network.
-   */
-  private void getNumberOfPlayers() {
-    parser.numberOfPlayers();
+  public void setNumberOfPlayers (int numberPlayers){
+    this.numberOfPlayers = numberPlayers;
   }
 
-  /**
-   * Gets called by network. Sets the number of players.
-   */
-  public void setNumberOfPlayers(int numberPlayers) {
-    numberOfPlayers = numberPlayers;
+  public void setPlayerID(int playerID){
+    this.playerID = playerID;
   }
-
 
   /**
    * Requests the next player's ID from the network.
@@ -156,7 +148,7 @@ public class GuiController {
    * Sets player names on player boards, according to each player.
    */
   private void setPlayerNames() {
-    switch (controller.getPlayerID()) {
+    switch (playerID) {
       case 0:
         break; //bleibt auf default
       case 1:
@@ -282,12 +274,15 @@ public class GuiController {
    * @throws IOException if some error occurs while loading fxml file.
    */
   public void openWinScreen() throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("../../resources/winnerScreen.fxml"));
+    FXMLLoader loader = FXMLLoader.load(getClass().getResource("winnerScreen.fxml"));
+    Parent root = loader.load();
     Scene scene = new Scene(root);
     Stage stage = new Stage();
     stage.setScene(scene);
     stage.setResizable(false);
     stage.show();
+    EndScreenController eController = loader.getController();
+    eController.setNumberOfPlayers(numberOfPlayers);
   }
 
   /**
@@ -295,12 +290,15 @@ public class GuiController {
    * @throws IOException if some error occurs while loading fxml file.
    */
   public void openLoserScreen() throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("../../resources/loserScreen.fxml"));
+    FXMLLoader loader = FXMLLoader.load(getClass().getResource("loserScreen.fxml"));
+    Parent root = loader.load();
     Scene scene = new Scene(root);
     Stage stage = new Stage();
     stage.setScene(scene);
     stage.setResizable(false);
     stage.show();
+    EndScreenController eController = loader.getController();
+    eController.setNumberOfPlayers(numberOfPlayers);
   }
 
 
@@ -427,29 +425,29 @@ public class GuiController {
    * gets called if its this player's turn, enables Button control.
    */
   public void enableControl(){
-      enter.setDisable(false); //TODO alle buttons in liste packen -> enablen disablen durchiterieren.
-      endTurn.setDisable(false);
-      cancelSelection.setDisable(false);
-      addToExisting.setDisable(false);
-      manipulate.setDisable(false);
-      placeOnBoard.setDisable(false);
-      swapJoker.setDisable(false);
-      bag.setDisable(false);
-      for (int i = 0; i < topHand.getChildren().size(); i++) {
-        ImageView iView = (ImageView) topHand.getChildren().get(i);
+    enter.setDisable(false); //TODO alle buttons in liste packen -> enablen disablen durchiterieren.
+    endTurn.setDisable(false);
+    cancelSelection.setDisable(false);
+    addToExisting.setDisable(false);
+    manipulate.setDisable(false);
+    placeOnBoard.setDisable(false);
+    swapJoker.setDisable(false);
+    bag.setDisable(false);
+    for (int i = 0; i < topHand.getChildren().size(); i++) {
+      ImageView iView = (ImageView) topHand.getChildren().get(i);
+      iView.setDisable(false);
+    }
+    for (int i = 0; i < bottomHand.getChildren().size(); i++) {
+      ImageView iView = (ImageView) bottomHand.getChildren().get(i);
+      iView.setDisable(false);
+    }
+    for (int i = 0; i < board.getChildren().size(); i++) {
+      HBox box = (HBox) board.getChildren().get(i);
+      for (int j = 0; j < box.getChildren().size(); j++) {
+        ImageView iView = (ImageView) box.getChildren().get(j);
         iView.setDisable(false);
       }
-      for (int i = 0; i < bottomHand.getChildren().size(); i++) {
-        ImageView iView = (ImageView) bottomHand.getChildren().get(i);
-        iView.setDisable(false);
-      }
-      for (int i = 0; i < board.getChildren().size(); i++) {
-        HBox box = (HBox) board.getChildren().get(i);
-        for (int j = 0; j < box.getChildren().size(); j++) {
-          ImageView iView = (ImageView) box.getChildren().get(j);
-          iView.setDisable(false);
-        }
-      }
+    }
 
   }
 
@@ -804,6 +802,5 @@ public class GuiController {
 // TODO Anzeige für wenn ein Player aussteigt.
 
 //TODO hover funktion für bag
-
 
 
