@@ -44,7 +44,9 @@ public class ServerParser {
 
       case "startGame":
         Server.gameInfo.startGame();
-        Server.broadcastToAllClients("responseStartGame");
+        for (ServerClientCommunication client : clients) {
+            client.sendMessageToClient("responseStartGame|" + clients.size() + "|" + client.getClientID());
+        }
         Server.broadcastToAllClients("closeStartScreen");
         break;
 
@@ -96,9 +98,10 @@ public class ServerParser {
         clients.get(id).sendMessageToClient("responseForPlayWithBoardTilesL|" + answer2);
         break;
 
+        /*
       case "getPlayerID":
         clients.get(id).sendMessageToClient("responseForGetPlayerID|" + id);
-        break;
+        break;*/
 
       case "getPlayerPoints":
         Server.broadcastToAllClients("responseForGetPlayerPoints|" + parsePointsToString(Server.gameInfo.getPlayerPoints()));
