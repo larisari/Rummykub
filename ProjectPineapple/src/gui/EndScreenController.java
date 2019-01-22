@@ -40,6 +40,7 @@ public class EndScreenController {
   private int p3Points;
   private int p4Points;
   private ClientParser parser;
+  private int numberOfPlayers = 0;
 
   public EndScreenController() {
     parser = new ClientParser(this);
@@ -47,6 +48,10 @@ public class EndScreenController {
 
   private void getPlayerPoints() {
     parser.getPlayerPoints();
+  }
+
+  public void setNumberOfPlayers(Integer numberOfPlayers){
+    this.numberOfPlayers = numberOfPlayers;
   }
 
   public void setPlayerPoints(List<Integer> points) {
@@ -76,7 +81,7 @@ public class EndScreenController {
    */
   @FXML
   private void initialize() {
-    switch (GuiController.numberOfPlayers) {
+    switch (numberOfPlayers) {
       case 2:
         Loserp3Points.setVisible(false);
         Loserp4Points.setVisible(false);

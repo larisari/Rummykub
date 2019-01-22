@@ -167,7 +167,7 @@
             </Button>
             <ImageView fx:id="bag" fitHeight="170.0" fitWidth="184.0" layoutX="848.0" layoutY="25.0" onMouseClicked="#handleDrawTile" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@gui/images/bag.png" />
+                  <Image url="@images/bag.png" />
                </image>
             </ImageView>
             <FlowPane fx:id="board" hgap="30.0" layoutX="133.0" layoutY="106.0" prefHeight="473.0" prefWidth="723.0" vgap="30.0" AnchorPane.bottomAnchor="217.0" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="106.0" />
@@ -207,7 +207,7 @@
                   </Tooltip>
                </tooltip>
             </Button>
-            <Button fx:id="swapJoker" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="594.0" mnemonicParsing="false" onMouseClicked="#handleSwapJoker" prefHeight="65.0" prefWidth="110.0" styleClass="manipulate" text="Swap Joker" textAlignment="CENTER" wrapText="true">
+            <Button fx:id="swapJoker" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="594.0" mnemonicParsing="false" onMouseClicked="#handleSwapJoker" prefHeight="65.0" prefWidth="110.0" styleClass="manipulate" text="Swap Joker" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="137.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>

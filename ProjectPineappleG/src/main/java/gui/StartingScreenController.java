@@ -25,7 +25,7 @@ public class StartingScreenController {
   private int playerID;
 
   public StartingScreenController() {
-  parser = new ClientParser(this);
+    parser = new ClientParser(this);
 
   }
 
@@ -39,7 +39,7 @@ public class StartingScreenController {
   protected void handleCreateGame(MouseEvent event) throws IOException {
     Server server = new Server();
     Client host = new Client("localhost");
-    loadLoadingScreen();
+    // loadLoadingScreen();
     getClientIDFromServer();
 // TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
   }
@@ -63,7 +63,7 @@ public class StartingScreenController {
       ipAdress = result.get();
       try {
         Client c = new Client(ipAdress);
-        loadLoadingScreen();
+        // loadLoadingScreen();
       } catch (IOException e) {
 //DialogError: Error! Please enter valid IP adress!
         return;
@@ -80,26 +80,13 @@ public class StartingScreenController {
   }
 
   /**
-   * Gets called by network. Sets the player ID.
-   */
-  public void setPlayerID(Integer playerID) {
-    this.playerID = playerID;
-  }
-
-
-  public Integer getPlayerID(){
-    return this.playerID;
-  }
-
-
-  /**
-   * Loads loading screen.
+   * Gets called it Client could register successfully.
    *
    * @throws IOException if some error occurs while loading fxml file.
    */
-  private void loadLoadingScreen() throws IOException {
-    FXMLLoader loader = new FXMLLoader();
-    loader.setLocation(getClass().getResource("/loadingScreen.fxml"));
+  //TODO muss von Server aufgerufen werden.
+  private void loadLoadingScreen(Integer playerID) throws IOException {
+    FXMLLoader loader = FXMLLoader.load(getClass().getResource("loadingScreen.fxml"));
     Parent dialogue = loader.load();
     Scene scene = new Scene(dialogue);
     Stage stage = new Stage();
@@ -107,11 +94,13 @@ public class StartingScreenController {
     stage.setScene(scene);
     stage.setResizable(false);
     stage.show();
+    LoadingScreenController lController = loader.getController();
+    lController.setPlayerID(playerID);
   }
 
- // public void closeStartScreen(){
- //   startingS.getScene().getWindow().hide();
- // }
+  // public void closeStartScreen(){
+  //   startingS.getScene().getWindow().hide();
+  // }
 }
 
 

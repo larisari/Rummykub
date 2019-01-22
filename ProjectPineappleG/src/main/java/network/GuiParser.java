@@ -1,13 +1,10 @@
 package network;
 
-import gameinfo.util.GIColor;
-import gameinfo.util.GINumber;
-import gameinfo.util.GITile;
 import gui.GuiController;
 import gui.util.Image;
-import java.io.IOException;
 import javafx.scene.image.ImageView;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,11 +12,8 @@ public class GuiParser {
 
   // parse format
   // list<comb:tile.color/number,tile.color/number;comb:tile.color/number;
-  private static GuiController guiController;
 
-  public GuiParser(GuiController controller) {
-    guiController = controller;
-  }
+  public GuiParser() { }
 
   // TODO rename method
   public static String parseListToString(List<List<ImageView>> listOfTiles) {
@@ -77,7 +71,7 @@ public class GuiParser {
 
 
 
-  static List<List<Image>> parseStringToWholeBoard(String message){
+  List<List<Image>> parseStringToWholeBoard(String message){
     List<List<Image>> endList = new ArrayList<>();
     String[] tempS = message.split("<");
     String[] combs = tempS[1].split(";");
@@ -87,7 +81,7 @@ public class GuiParser {
     return endList;
   }
 
-  static List<Image> parseStringToImgsForOneComb(String hand) {
+  List<Image> parseStringToImgsForOneComb(String hand) {
     List<Image> tilesImg = new ArrayList<>();
     hand = hand.substring(0,hand.length()-1);
     String[] block = hand.split(":");
@@ -99,10 +93,12 @@ public class GuiParser {
       String number = attributes[1];
 
       if (color.equals("joker")) {
-        Image joker = new Image("gui/images/tiles/joker/joker.png", "joker");
+        Image joker = new Image("/images/tiles/joker/joker.png", "joker");
         tilesImg.add(joker);
       } else {
-        Image tile = new Image("gui/images/tiles/" + color + "/" + number + ".png");
+        URL url = this.getClass().getResource("/images/tiles/" + color + "/" + number + ".png");
+        String urlString = url.toString();
+        Image tile = new Image(urlString);
         tilesImg.add(tile);
       }
     }

@@ -149,7 +149,7 @@ public class ClientParser {
       case "responseStartGame":
           Platform.runLater(() -> {
             try {
-              loadingScreenController.openGameWindow();
+              loadingScreenController.openGameWindow(); //missing parameters
             } catch (IOException e) {
               e.printStackTrace();
             }
@@ -218,7 +218,7 @@ public class ClientParser {
         break;
 
       case "responseForNumberOfPlayers":
-        Platform.runLater(() -> guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1])));
+        Platform.runLater(() -> loadingScreenController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1])));
         break;
 
       case "responseForGetPlayerID":

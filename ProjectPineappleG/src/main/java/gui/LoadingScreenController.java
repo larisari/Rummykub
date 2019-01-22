@@ -1,12 +1,15 @@
 package gui;
 
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
@@ -22,11 +25,11 @@ public class LoadingScreenController {
   @FXML private Text player2Joined;
   @FXML private Text player3Joined;
   @FXML private Text player4Joined;
+  private static int numberOfPlayers = 0;
   private ClientParser parser = new ClientParser(this);
-  private StartingScreenController controller;
+  private int playerID = 0;
 
   public LoadingScreenController(){
-    controller = new StartingScreenController();
   }
   /**
    * Initializes loadingScreen FXML file.
@@ -39,12 +42,16 @@ public class LoadingScreenController {
     player3Joined.setVisible(false);
     player4Joined.setVisible(false);
 
-    if (controller.getPlayerID() != 0) {
+    if (playerID != 0) {
       startGame.setVisible(false);
     }
-      startGame.setDisable(true);
-    }
+    startGame.setDisable(true);
+  }
 
+  public void setPlayerID(Integer playerID){
+    this.playerID = playerID;
+    System.out.println(playerID);
+  }
 
   //TODO benachrichtigung an server wenn client loadingscreen schließt.
 
@@ -52,7 +59,7 @@ public class LoadingScreenController {
    * Gets called if at least two Players are present.
    */
   public void enableStart(){
-    if (controller.getPlayerID() == 0) {
+    if (playerID == 0) {
       startGame.setDisable(false);
     }
   }
@@ -95,20 +102,25 @@ public class LoadingScreenController {
     startGame.getScene().getWindow().hide();
   }
 
+
   /**
    * Opens Game Window.
    * @throws IOException if some error occurs while loading fxml file.
    */
-  public void openGameWindow() throws IOException{
-    FXMLLoader loader = new FXMLLoader();
-    loader.setLocation(getClass().getResource("/clientgui.fxml"));
-    Parent root = loader.load();
+  //TODO braucht 2 parameter von Server.
+  public void openGameWindow(Integer numberOfPlayers, Integer playerID) throws IOException{
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("clientgui.fxml"));
+    Parent root = (Parent) loader.load();
     Scene scene = new Scene(root);
     Stage stage = new Stage(); //new Stage
     stage.setResizable(false);
     stage.setTitle("RUMMYKUB");
     stage.setScene(scene);
     stage.show();
+    GuiController controller = loader.getController();
+    controller.setNumberOfPlayers(numberOfPlayers);
+    controller.setPlayerID(playerID);
+
 
   }
 }
