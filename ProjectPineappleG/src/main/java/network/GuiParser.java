@@ -93,7 +93,9 @@ public class GuiParser {
       String number = attributes[1];
 
       if (color.equals("joker")) {
-        Image joker = new Image("/images/tiles/joker/joker.png", "joker");
+        URL url = this.getClass().getResource("/images/tiles/joker/joker.png");
+        String urlString = url.toString();
+        Image joker = new Image(urlString, "joker");
         tilesImg.add(joker);
       } else {
         URL url = this.getClass().getResource("/images/tiles/" + color + "/" + number + ".png");
