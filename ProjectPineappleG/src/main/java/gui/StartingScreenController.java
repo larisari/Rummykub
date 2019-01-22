@@ -76,7 +76,8 @@ public class StartingScreenController {
    */
   //TODO muss von Server aufgerufen werden.
   public void loadLoadingScreen(Integer playerID) throws IOException {
-    FXMLLoader loader = FXMLLoader.load(getClass().getResource("loadingScreen.fxml"));
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation((getClass().getResource("/loadingScreen.fxml")));
     Parent dialogue = loader.load();
     Scene scene = new Scene(dialogue);
     Stage stage = new Stage();
@@ -88,9 +89,9 @@ public class StartingScreenController {
     lController.setPlayerID(playerID);
   }
 
-  // public void closeStartScreen(){
-  //   startingS.getScene().getWindow().hide();
-  // }
+ // public void closeStartScreen(){
+ // startingS.getScene().getWindow().hide();
+ //  }
 }
 
 

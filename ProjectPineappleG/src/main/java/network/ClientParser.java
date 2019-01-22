@@ -247,7 +247,7 @@ public class ClientParser {
             e.printStackTrace();
           }
         });
-
+        break;
       case "responseToNotifyWin":
           Platform.runLater(() -> {
             try {

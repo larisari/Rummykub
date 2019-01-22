@@ -29,6 +29,7 @@ public class LoadingScreenController {
   private int playerID = 0;
 
   public LoadingScreenController(){
+    parser = new ClientParser(this);
   }
   /**
    * Initializes loadingScreen FXML file.
@@ -107,7 +108,8 @@ public class LoadingScreenController {
    */
   //TODO braucht 2 parameter von Server.
   public void openGameWindow(Integer numberOfPlayers, Integer playerID) throws IOException{
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("clientgui.fxml"));
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation((getClass().getResource("/clientgui.fxml")));
     Parent root = loader.load();
     Scene scene = new Scene(root);
     Stage stage = new Stage(); //new Stage
