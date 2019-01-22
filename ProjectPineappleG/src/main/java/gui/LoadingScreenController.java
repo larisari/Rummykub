@@ -25,7 +25,6 @@ public class LoadingScreenController {
   @FXML private Text player2Joined;
   @FXML private Text player3Joined;
   @FXML private Text player4Joined;
-  private static int numberOfPlayers = 0;
   private ClientParser parser = new ClientParser(this);
   private int playerID = 0;
 
@@ -50,7 +49,6 @@ public class LoadingScreenController {
 
   public void setPlayerID(Integer playerID){
     this.playerID = playerID;
-    System.out.println(playerID);
   }
 
   //TODO benachrichtigung an server wenn client loadingscreen schließt.
@@ -110,7 +108,7 @@ public class LoadingScreenController {
   //TODO braucht 2 parameter von Server.
   public void openGameWindow(Integer numberOfPlayers, Integer playerID) throws IOException{
     FXMLLoader loader = new FXMLLoader(getClass().getResource("clientgui.fxml"));
-    Parent root = (Parent) loader.load();
+    Parent root = loader.load();
     Scene scene = new Scene(root);
     Stage stage = new Stage(); //new Stage
     stage.setResizable(false);
