@@ -1,0 +1,950 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="ProjectPineappleG:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1aedf33b-7266-4650-b9f8-b68db20c18a4" name="Default Changelist" comment="merged and changed some details in ClientParser/GuiParser.">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/HOW_TO_SETUP_PROJECT.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/Bag.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/Board.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/CombRules.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/GIFactory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/GIGameInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/GameFlow.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/GameInfoImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/GameInfo_Test.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/GameState.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/Hand.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/Player.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/PointsCalculator.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/Rules.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/util/GIColor.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/util/GINumber.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/util/GIPoints.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/util/GITile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gameinfo/util/GITuple.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/EndScreenController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/GuiController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/LoadingScreenController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/StartingScreenController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/TileView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gui/util/Image.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/ClientParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/GuiParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/Server.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/ServerClientCommunication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/ServerListener.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/network/ServerParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/button.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/clientgui.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/bag.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/black/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/black/10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/black/11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/black/12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/black/13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/black/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/black/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/black/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/black/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/black/6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/black/7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/black/8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/black/9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/blue/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/blue/10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/blue/11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/blue/12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/blue/13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/blue/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/blue/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/blue/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/blue/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/blue/6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/blue/7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/blue/8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/blue/9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/joker/joker.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/red/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/red/10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/red/11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/red/12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/red/13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/red/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/red/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/red/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/red/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/red/6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/red/7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/red/8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/red/9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/yellow/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/yellow/10.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/yellow/11.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/yellow/12.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/yellow/13.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/yellow/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/yellow/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/yellow/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/yellow/5.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/yellow/6.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/yellow/7.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/yellow/8.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/images/tiles/yellow/9.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/loadingScreen.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/loserScreen.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/startingScreen.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/winnerScreen.fxml" beforeDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/.gradle/" />
+    <ignored path="$PROJECT_DIR$/build/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ProjectPineappleG" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ProjectPineappleG" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ProjectPineappleG" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="application" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ProjectPineappleG" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="ProjectPineappleG" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="other" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/gameinfo/Rules.java" />
+        <option value="$PROJECT_DIR$/src/main/java/gui/Main.java" />
+        <option value="$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF" />
+        <option value="$PROJECT_DIR$/src/main/java/gui/LoadingScreenController.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/gradle.properties" />
+        <option value="$PROJECT_DIR$/src/main/java/network/GuiParser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/gui/GuiController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/network/ClientParser.java" />
+        <option value="$PROJECT_DIR$/src/main/java/module-info.java" />
+        <option value="$PROJECT_DIR$/src/main/java/gui/StartingScreenController.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/src/main/java/gameinfo/GameInfo_Test.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="51" />
+    <option name="y" value="23" />
+    <option name="width" value="1657" />
+    <option name="height" value="1346" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="ProjectPineappleG" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="Course" />
+      <pane id="PackagesPane" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/gradle.properties&#10;true" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548191337859" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.gutterIcons" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Gradle.ProjectPineappleG [dependencies]">
+    <configuration name="ProjectPineappleG [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ProjectPineappleG [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="dependencies" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ProjectPineappleG [jlink]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="jlink" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ProjectPineappleG [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="run" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ProjectPineappleG [testClasses]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="testClasses" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>true</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ProjectPineappleG.jar" type="JarApplication" factoryName="JAR Application">
+      <option name="JAR_PATH" value="$PROJECT_DIR$/build/libs/ProjectPineappleG.jar" />
+      <option name="VM_PARAMETERS" value="java --add-modules=javafx.controls,javafx.fxml" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.ProjectPineappleG [run]" />
+      <item itemvalue="Gradle.ProjectPineappleG [testClasses]" />
+      <item itemvalue="JAR Application.ProjectPineappleG.jar" />
+      <item itemvalue="Gradle.ProjectPineappleG [jlink]" />
+      <item itemvalue="Gradle.ProjectPineappleG [build]" />
+      <item itemvalue="Gradle.ProjectPineappleG [dependencies]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.ProjectPineappleG [dependencies]" />
+        <item itemvalue="Gradle.ProjectPineappleG [jlink]" />
+        <item itemvalue="Gradle.ProjectPineappleG [build]" />
+        <item itemvalue="Gradle.ProjectPineappleG [run]" />
+        <item itemvalue="Gradle.ProjectPineappleG [testClasses]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1aedf33b-7266-4650-b9f8-b68db20c18a4" name="Default Changelist" comment="" />
+      <created>1548102477978</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1548102477978</updated>
+      <workItem from="1548102492217" duration="7986000" />
+      <workItem from="1548110867607" duration="44000" />
+      <workItem from="1548110916826" duration="540000" />
+      <workItem from="1548111730404" duration="1456000" />
+      <workItem from="1548152793535" duration="6595000" />
+    </task>
+    <task id="LOCAL-00001" summary="initial commit&#10;&#10;setup whole Rummykub project as a Gradle Project.">
+      <created>1548105700600</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1548105700601</updated>
+    </task>
+    <task id="LOCAL-00002" summary="added .jar and fiexed some bugs.">
+      <created>1548109271098</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1548109271098</updated>
+    </task>
+    <task id="LOCAL-00003" summary="added gradle.properties to gitignore.">
+      <created>1548109896012</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1548109896012</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added ProjectPineappleG with .gitignore.">
+      <created>1548111810880</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1548111810880</updated>
+    </task>
+    <task id="LOCAL-00005" summary="added gradle.properties">
+      <created>1548112089548</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1548112089548</updated>
+    </task>
+    <task id="LOCAL-00006" summary="moved images package to resources.">
+      <created>1548153697084</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1548153697085</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="16621000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="51" y="23" width="1657" height="1346" extended-state="0" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2111455" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Designer" order="2" />
+      <window_info id="Image Layers" order="3" />
+      <window_info id="Capture Tool" order="4" />
+      <window_info id="UI Designer" order="5" />
+      <window_info id="Favorites" order="6" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49902913" weight="0.28229666" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32981133" />
+      <window_info anchor="bottom" id="Build" order="7" sideWeight="0.49951455" weight="0.18714403" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32981133" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Educational.CheckDetails" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.5009709" side_tool="true" weight="0.3375" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.32981133" />
+      <window_info anchor="bottom" id="Database Changes" order="13" />
+      <window_info anchor="bottom" id="Version Control" order="14" weight="0.17464115" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.24951456" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" weight="0.32961166" />
+      <window_info anchor="right" id="Palette" order="4" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Gradle" order="6" visible="true" weight="0.13931888" />
+      <window_info anchor="right" id="Database" order="7" weight="0.32961166" />
+      <window_info anchor="right" id="Palette&#9;" order="8" />
+      <window_info anchor="right" id="Theme Preview" order="9" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="initial commit&#10;&#10;setup whole Rummykub project as a Gradle Project." />
+    <MESSAGE value="added .jar and fiexed some bugs." />
+    <MESSAGE value="added gradle.properties to gitignore." />
+    <MESSAGE value="added ProjectPineappleG with .gitignore." />
+    <MESSAGE value="added gradle.properties" />
+    <MESSAGE value="moved images package to resources." />
+    <MESSAGE value="merged and changed some details in ClientParser/GuiParser." />
+    <option name="LAST_COMMIT_MESSAGE" value="merged and changed some details in ClientParser/GuiParser." />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/network/ServerParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/startingScreen.fxml">
+      <provider selected="true" editor-type-id="text-editor" />
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/util/GIColor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/util/GINumber.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="12" selection-start-line="2" selection-start-column="12" selection-end-line="2" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/util/GIPoints.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/util/GITile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/util/GITuple.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/Bag.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="9" column="6" selection-start-line="9" selection-start-column="6" selection-end-line="9" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/CombRules.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/GameFlow.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/GameInfoImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/GIFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/GIGameInfo.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/Hand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="8" column="6" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/PointsCalculator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/Rules.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="29">
+          <caret line="10" column="6" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradlew">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradlew.bat">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/artifacts/ProjectPineappleG_jar.xml" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/META-INF/MANIFEST.MF" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/gui/TileView.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build/tmp/jar/MANIFEST.MF">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="12" selection-start-line="1" selection-start-column="12" selection-end-line="1" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/network/ServerListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../Abgaben/Abgabe_21.01.2019">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HOWTO.txt" />
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="435">
+          <caret line="29" selection-start-line="29" selection-end-line="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/gradle.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/HOW_TO_SETUP_PROJECT.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gui/EndScreenController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/clientgui.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1696" />
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/images/bag.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/images/tiles/black/1.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gui/util/Image.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/network/Client.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="652">
+          <caret line="64" selection-start-line="64" selection-end-line="64" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gui/LoadingScreenController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="65" column="5" selection-start-line="65" selection-start-column="5" selection-end-line="65" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/network/ClientParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="152" column="37" selection-start-line="152" selection-start-column="37" selection-end-line="152" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#815#816#0" expanded="true" />
+            <element signature="e#851#852#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gui/StartingScreenController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="67" column="5" selection-start-line="67" selection-start-column="5" selection-end-line="67" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gui/GuiController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-5109">
+          <caret line="147" column="23" selection-start-line="147" selection-start-column="23" selection-end-line="147" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2576#2577#0" expanded="true" />
+            <element signature="e#2617#2618#0" expanded="true" />
+            <element signature="e#2672#2673#0" expanded="true" />
+            <element signature="e#2718#2719#0" expanded="true" />
+            <element signature="e#2761#2762#0" expanded="true" />
+            <element signature="e#2795#2796#0" expanded="true" />
+            <element signature="e#2896#2897#0" expanded="true" />
+            <element signature="e#2930#2931#0" expanded="true" />
+            <element signature="e#3043#3044#0" expanded="true" />
+            <element signature="e#3075#3076#0" expanded="true" />
+            <element signature="e#13444#13445#0" expanded="true" />
+            <element signature="e#13471#13472#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/network/GuiParser.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="622">
+          <caret line="76" column="41" selection-start-line="76" selection-start-column="41" selection-end-line="76" selection-end-column="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gui/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="13" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="1" selection-start-line="17" selection-start-column="1" selection-end-line="17" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/gameinfo/GameInfo_Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="675">
+          <caret line="45" column="9" selection-start-line="45" selection-start-column="9" selection-end-line="45" selection-end-column="9" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2019#2020#0" expanded="true" />
+            <element signature="e#2049#2050#0" expanded="true" />
+            <element signature="e#3409#3410#0" expanded="true" />
+            <element signature="e#3465#3466#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/module-info.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="1" lean-forward="true" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>ProjectPineappleG:jar</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>11</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>main|ProjectPineappleG</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>11</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Gradle: org.openjfx:javafx-base:11.0.1</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
