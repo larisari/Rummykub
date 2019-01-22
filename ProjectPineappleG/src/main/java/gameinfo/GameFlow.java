@@ -60,6 +60,8 @@ class GameFlow {
   }
 
   void addPlayerToSequence(Integer id) {
+    //current order: time of registration
+    //TODO modify the order according to will
     if (players.containsKey(id)) {
       playerSequence.add(id);
     }

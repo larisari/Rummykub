@@ -45,4 +45,8 @@ public interface GIGameInfo {
   Optional<List<GITuple<Integer, GIPoints>>> getPlayerPoints();
 
   Integer getCurrentPlayerId();
+
+  //testing purpose only
+  public Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id,
+                                                         List<GITile> customTiles);
 }

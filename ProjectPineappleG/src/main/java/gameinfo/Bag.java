@@ -6,6 +6,7 @@ import gameinfo.util.GITile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 class Bag {
   private final int SUM_TILES = 106;
@@ -42,12 +43,37 @@ class Bag {
     return tile;
   }
 
+  Optional<GITile> takeTile(GITile tile) {
+    if (tiles.contains(tile)) {
+      tiles.remove(tile);
+      return Optional.of(tile);
+    }
+    else {
+      return Optional.empty();
+    }
+  }
+
   List<GITile> takeStack(int numberOfTiles) {
     List<GITile> stack = new ArrayList<>();
     for (int i = 0; i < numberOfTiles; i++) {
       int index = (int) (Math.random() * (this.tiles.size() - 1));
       stack.add(this.tiles.get(index));
       this.tiles.remove(index);
+    }
+    return stack;
+  }
+
+  List<GITile> takeStack(int numberOfTiles,List<GITile> customStack) {
+
+    if (customStack.size()!=numberOfTiles) {
+      throw new IllegalArgumentException("number of tiles are not equivalent " +
+          "in custom takeStack method()");
+    }
+
+    List<GITile> stack = new ArrayList<>();
+    for (int i = 0; i < customStack.size(); i++) {
+      stack.add(customStack.get(i));
+      this.tiles.remove(customStack.get(i));
     }
     return stack;
   }
