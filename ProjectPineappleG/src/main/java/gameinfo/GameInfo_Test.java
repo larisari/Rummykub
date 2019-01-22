@@ -35,6 +35,20 @@ class GameInfo_Test {
   private static GITile eleven_blue = new GITile(GINumber.ELEVEN, GIColor.BLUE);
   private static GITile eleven_yellow = new GITile(GINumber.ELEVEN, GIColor.YELLOW);
 
+  private static List<GITile> hand_player_1 =
+      new ArrayList<>(Arrays.asList(new GITile(GINumber.THREE,GIColor.BLACK),
+       new GITile(GINumber.THREE,GIColor.BLUE), new GITile(GINumber.THREE,
+              GIColor.YELLOW), new GITile(GINumber.FOUR,GIColor.BLACK),
+          new GITile(GINumber.FOUR,GIColor.BLUE),
+          new GITile(GINumber.FOUR,GIColor.YELLOW), new GITile(GINumber.FIVE,
+              GIColor.BLACK),
+          new GITile(GINumber.FIVE,GIColor.BLUE), new GITile(GINumber.FIVE,
+              GIColor.YELLOW), new GITile(GINumber.SIX,GIColor.BLACK),
+          new GITile(GINumber.SIX,GIColor.BLUE),
+          new GITile(GINumber.SIX,GIColor.YELLOW), new GITile(GINumber.JOKER,
+              GIColor.JOKER
+              ), new GITile(GINumber.JOKER,GIColor.JOKER)));
+
   @BeforeAll
   static void setup() {
     gameInfo = GIFactory.make();
@@ -48,8 +62,8 @@ class GameInfo_Test {
   void orderedTestCase() {
     signInPlayers();
     start();
-    putTilesOnHand();
-    //draw();
+    //putTilesOnHand();
+    draw();
     //lessThanMinPoints();
     //validCombo();
     showhands();
@@ -68,7 +82,7 @@ class GameInfo_Test {
   }
 
   void draw() {
-    //gameInfo.drawBy(player_1_ID);
+    gameInfo.drawBy(player_1_ID,hand_player_1);
     gameInfo.drawBy(player_2_ID);
     gameInfo.drawBy(player_3_ID);
     gameInfo.drawBy(player_4_ID);
@@ -127,17 +141,10 @@ class GameInfo_Test {
   }
 
   void showhands() {
-
-    System.out.println(p1.getTilesOnHand());
-    if (gameInfo.getAllTilesBy(player_1_ID).isPresent()) {
-      System.out.println(gameInfo.getAllTilesBy(player_1_ID));
-    }
-    else {
-
-    }
-//    System.out.println(gameInfo.getAllTilesBy(player_2_ID).get());
-//    System.out.println(gameInfo.getAllTilesBy(player_3_ID).get());
-//    System.out.println(gameInfo.getAllTilesBy(player_4_ID).get());
+    System.out.println(gameInfo.getAllTilesBy(player_1_ID).get());
+    System.out.println(gameInfo.getAllTilesBy(player_2_ID).get());
+    System.out.println(gameInfo.getAllTilesBy(player_3_ID).get());
+    System.out.println(gameInfo.getAllTilesBy(player_4_ID).get());
   }
 
   void makeFirstMove() {

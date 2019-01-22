@@ -68,6 +68,11 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   }
 
   @Override
+  public Integer getCurrentPlayerId() {
+    return rules.getCurrentPlayerId();
+  }
+
+  @Override
   public Optional<Integer> getNextPlayerId() {
     if (hasRegisteredPlayers) {
       return Optional.of(rules.getNextPlayerID());
@@ -109,6 +114,61 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       rules.nextPlayersTurn();
       returnValue = new GITuple<>(id, tiles);
       return Optional.of(returnValue);
+    }
+  }
+
+  //testing purpose only
+  //either one or fourteen tiles !!
+ @Override
+  public Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id,
+                                                         List<GITile> customTiles) {
+    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
+
+    if (!optionalPlayer.isPresent()) {
+      return Optional.empty();
+    }
+
+    if (!rules.isValidPlayerBy(id)) {
+      // it is not the players turn.
+      return Optional.of(new GITuple<>(id, new ArrayList<>()));
+    }
+
+    GITuple<Integer, List<GITile>> returnValue;
+
+    if (rules.isDistributing()) {
+      rules.addDistribution();
+      rules.nextPlayersTurn();
+      returnValue = new GITuple<>(id, getStackFor(id,customTiles));
+      return Optional.of(returnValue);
+    } else {
+      GITile tile = getTileFor(id,customTiles.get(0));
+      List<GITile> tiles = new ArrayList<>();
+      tiles.add(tile);
+      rules.nextPlayersTurn();
+      returnValue = new GITuple<>(id, tiles);
+      return Optional.of(returnValue);
+    }
+  }
+
+  private List<GITile> getStackFor(Integer id, List<GITile> customTiles) {
+    // .get() is allowed here because it is always called after isPresent check !!!
+    Player player = rules.getPlayerBy(id).get();
+    List<GITile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK,customTiles);
+    player.put(stack);
+    return stack;
+  }
+
+  private GITile getTileFor(Integer id, GITile customTile) {
+    // .get() is allowed here because it is always called after isPresent check !!!
+    Player player = rules.getPlayerBy(id).get();
+
+    if (board.getTileFromBag(customTile).isPresent()) {
+      GITile tile = board.getTileFromBag(customTile).get();
+      player.put(tile);
+      return tile;
+    }
+    else {
+      throw new IllegalArgumentException("Tile is not in stack anymore.");
     }
   }
 
@@ -234,6 +294,11 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     }
   }
 
+  @Override
+  public Optional<List<GITuple<Integer, GIPoints>>> getPlayerPoints() {
+    return rules.getPlayerPoints();
+  }
+
   private List<GITile> getStackFor(Integer id) {
     // .get() is allowed here because it is always called after isPresent check !!!
     Player player = rules.getPlayerBy(id).get();
@@ -261,13 +326,4 @@ class GameInfoImpl extends Thread implements GIGameInfo {
             });
   }
 
-  @Override
-  public Optional<List<GITuple<Integer, GIPoints>>> getPlayerPoints() {
-    return rules.getPlayerPoints();
-  }
-
-  @Override
-  public Integer getCurrentPlayerId() {
-    return rules.getCurrentPlayerId();
-  }
 }
