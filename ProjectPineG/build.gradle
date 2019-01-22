@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.5'
+}
+
+group 'pineapple'
+version '1.0'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    /* uncomment for cross-platform jar: */
+//    compile "org.openjfx:javafx-graphics:11:win"
+//    compile "org.openjfx:javafx-graphics:11:linux"
+//    compile "org.openjfx:javafx-graphics:11:mac"
+    compile 'org.openjfx:javafx-base'
+    compile 'org.openjfx:javafx-controls'
+    compile 'org.openjfx:javafx-fxml'
+    compile 'org.openjfx:javafx-graphics'
+}
+
+javafx {
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+mainClassName = 'gui.Main'
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'gui.Main'
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
