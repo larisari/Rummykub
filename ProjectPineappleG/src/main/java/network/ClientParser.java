@@ -237,9 +237,17 @@ public class ClientParser {
         break;
 
       case "addJoined":
-        System.out.println(messageAsArray.length);
         Platform.runLater(() -> loadingScreenController.addJoined(Integer.parseInt(messageAsArray[1])));
         break;
+
+      case "loadLoadingScreen":
+        Platform.runLater(() -> {
+          try {
+            startingScreenController.loadLoadingScreen(Integer.parseInt(messageAsArray[1]));
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
 
       case "responseToNotifyWin":
           Platform.runLater(() -> {

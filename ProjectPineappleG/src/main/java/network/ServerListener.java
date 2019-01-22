@@ -61,6 +61,7 @@ public class ServerListener extends Thread {
             if(clients.size() == 2) {
               clients.get(0).sendMessageToClient("possibleToStart");
             }
+            clients.get(clients.size()-1).sendMessageToClient("loadLoadingScreen|" + clientID);
             Server.broadcastToAllClients("addJoined|" + clientID);
             clientID++;
 
