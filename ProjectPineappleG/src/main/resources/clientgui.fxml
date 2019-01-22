@@ -167,7 +167,7 @@
             </Button>
             <ImageView fx:id="bag" fitHeight="170.0" fitWidth="184.0" layoutX="848.0" layoutY="25.0" onMouseClicked="#handleDrawTile" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@gui/images/bag.png" />
+                  <Image url="@images/bag.png" />
                </image>
             </ImageView>
             <FlowPane fx:id="board" hgap="30.0" layoutX="133.0" layoutY="106.0" prefHeight="473.0" prefWidth="723.0" vgap="30.0" AnchorPane.bottomAnchor="217.0" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="106.0" />

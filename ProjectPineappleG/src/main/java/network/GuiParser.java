@@ -1,11 +1,7 @@
 package network;
 
-import gameinfo.util.GIColor;
-import gameinfo.util.GINumber;
-import gameinfo.util.GITile;
 import gui.GuiController;
 import gui.util.Image;
-import java.io.IOException;
 import javafx.scene.image.ImageView;
 
 import java.util.ArrayList;
@@ -99,10 +95,10 @@ public class GuiParser {
       String number = attributes[1];
 
       if (color.equals("joker")) {
-        Image joker = new Image("gui/images/tiles/joker/joker.png", "joker");
+        Image joker = new Image("images/tiles/joker/joker.png", "joker");
         tilesImg.add(joker);
       } else {
-        Image tile = new Image("gui/images/tiles/" + color + "/" + number + ".png");
+        Image tile = new Image("images/tiles/" + color + "/" + number + ".png");
         tilesImg.add(tile);
       }
     }
