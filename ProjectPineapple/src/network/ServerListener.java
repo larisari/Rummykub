@@ -62,6 +62,7 @@ public class ServerListener extends Thread {
               clients.get(0).sendMessageToClient("possibleToStart");
             }
             Server.broadcastToAllClients("addJoined|" + clientID);
+
             clientID++;
 
           } else {
