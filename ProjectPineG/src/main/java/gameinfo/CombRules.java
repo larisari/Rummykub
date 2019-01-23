@@ -40,6 +40,7 @@ class CombRules {
         log.info("The passed combination is a street and is worth " + points + " points.");
       } else {
         log.info("The combination is neither a group nor a street.");
+        throw new IllegalStateException("The combination " + combination + "is not legal.");
       }
     }
 
