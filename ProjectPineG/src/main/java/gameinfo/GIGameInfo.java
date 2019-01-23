@@ -88,14 +88,15 @@ public interface GIGameInfo {
    * is returned.
    *
    * @param tilesFromHand the tiles that where played from the players hand.
-   * @param combinationsOnBoard all the combinations that are currently on the board.
+   * @param newCombinations all the combinations that are currently on the board.
    * @param id by which the combination is played.
    * @return the id by which the combination was played, and whether the combination was valid or
    *     not. If the player id is not registered in the model an Optional.empty() is returned.
    */
   Optional<GITuple<Integer, Boolean>> play(
       List<GITile> tilesFromHand,
-      List<List<GITile>> combinationsOnBoard,
+      List<GITile> tilesFromBoard,
+      List<List<GITile>> newCombinations,
       Integer id);
 
   /**
