@@ -5,11 +5,13 @@ import gui.GuiController;
 import gui.LoadingScreenController;
 import gui.StartingScreenController;
 import gui.util.Image;
+import java.sql.SQLOutput;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.util.List;
+import org.graalvm.compiler.code.SourceStackTraceBailoutException;
 
 public class ClientParser {
 
@@ -85,6 +87,8 @@ public class ClientParser {
 
     builder.append(GuiParser.parseListToString(newCombinations));
 
+    System.out.println(builder.toString());
+
     Client.sendMessageToServer(builder.toString());
   }
 
@@ -106,6 +110,8 @@ public class ClientParser {
     builder.append("|");
 
     builder.append(GuiParser.parseListToString(newCombinations));
+
+    System.out.println(builder.toString());
 
     Client.sendMessageToServer(builder.toString());
   }
