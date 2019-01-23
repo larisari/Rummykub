@@ -219,7 +219,10 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   @Override
   public Optional<GITuple<Integer, Boolean>> play(
-      List<GITile> tilesFromHand, List<List<GITile>> combinationsOnBoard, Integer id) {
+      List<GITile> tilesFromHand,
+      List<GITile> tilesFromBoard,
+      List<List<GITile>> newCombinations,
+      Integer id) {
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
@@ -231,13 +234,13 @@ class GameInfoImpl extends Thread implements GIGameInfo {
         return Optional.of(new GITuple<>(id, false));
       }
 
-      boolean allValid = combRules.isValid(combinationsOnBoard);
+      boolean allValid = combRules.isValid(newCombinations);
 
       if (allValid) {
         player.madeMove();
         player.remove(tilesFromHand);
-        board.clear();
-        combinationsOnBoard.forEach(combination -> board.addCombo(combination));
+        board.remove(tilesFromBoard);
+        newCombinations.forEach(combination -> board.addCombo(combination));
         return Optional.of(new GITuple<>(id, true));
       } else {
         return Optional.of(new GITuple<>(id, false));

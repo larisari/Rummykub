@@ -69,7 +69,6 @@ public class GuiController {
   private Button placeOnBoard;
   @FXML
   private Button swapJoker;
-
   private List<ImageView> selectedTiles = new ArrayList<>();
   private List<List<ImageView>> selectedCombinations = new ArrayList<>();
   private List<HBox> placedCombinations = new ArrayList<>(); //wird an Server geschickt.
@@ -193,16 +192,8 @@ public class GuiController {
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView tile = selectedTiles.get(i);
       if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren()
-          .contains(tile)) { //wenn irgendeine tile am board liegt
-        FlowPane tempBoard = new FlowPane(board);
-        HBox tempBox = new HBox();
-        tempBox.prefHeight(MAX_BOXHEIGHT);
-        tempBox.prefWidth(selectedTiles.size() * MAX_BOXWIDTH);
-        for (int j = 0; j < selectedTiles.size(); j++) {
-          tempBox.getChildren().add(selectedTiles.get(i));
-        }
-        tempBoard.getChildren().add(tempBox);
-        parser.playHandWithBoard(selectedTiles, boardToList(tempBoard));
+          .contains(tile)) {
+        parser.playHandWithBoard(selectedTiles, boardToList(board));
         return;
       }
       updateBoard();
@@ -621,16 +612,13 @@ public class GuiController {
         i++) {   //1 und size-1 weil an diesen Stellen Buttons sind.
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
-    FlowPane tempBoard = new FlowPane(board);
-    HBox tempBox = new HBox(boardComb);
-    deleteAddToButtons(tempBoard);
-    for (int i = 0; i < tempBoard.getChildren().size(); i++) {
-      if (tempBoard.getChildren().get(i) == tempBox) {
-        tempBox.getChildren().addAll(0, selectedTiles);
-      }
-    }
+    List<List<ImageView>> newComb = new ArrayList<>();
+    List<ImageView> newCombination = new ArrayList<>();
+    newCombination.addAll(selectedTiles);
+    newCombination.addAll(boardTiles);
+    newComb.add(newCombination);
+    parser.playL(selectedTiles, boardTiles, newComb);
 
-    parser.playL(selectedTiles, boardToList(tempBoard));
   }
 
   /**
@@ -638,8 +626,7 @@ public class GuiController {
    * selected tiles should be added to the same combination they are already contained in.
    */
   public void allowAddFront() throws IOException {
-    System.out.println("added to front");
-    deleteAddToButtons(board);
+    deleteAddToButtons();
     for (int j = 0; j < selectedTiles.size();
         j++) {    //hinzufügen in selber kombination soll nicht gehn.
       if (boardComb.getChildren().contains(selectedTiles.get(j))) {
@@ -654,6 +641,7 @@ public class GuiController {
 
     disableTiles(selectedTiles); //cleart auch selectedTiles
     updateBoard();
+
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();
       parser.notifyWin();
@@ -664,7 +652,7 @@ public class GuiController {
    * Gets called if selected tiles may not be added to existing combination.
    */
   public void disallowAddTo() {
-    deleteAddToButtons(board);
+    deleteAddToButtons();
     cancelSelEffect();
 
   }
@@ -680,14 +668,13 @@ public class GuiController {
     for (int i = 1; i < comb.getChildren().size() - 1; i++) {
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
-    FlowPane tempBoard = new FlowPane(board);
-    HBox tempBox = new HBox(boardComb);
-    for (int i = 0; i < tempBoard.getChildren().size(); i++) {
-      if (tempBoard.getChildren().get(i) == tempBox) {
-        tempBox.getChildren().addAll(tempBox.getChildren().size() - 1, selectedTiles);
-      }
-    }
-    //  parser.playR(selectedTiles, boardToList(tempBoard));
+    List<List<ImageView>> newComb = new ArrayList<>();
+    List<ImageView> newCombination = new ArrayList<>();
+    newCombination.addAll(boardTiles);
+    newCombination.addAll(selectedTiles);
+    newComb.add(newCombination);
+    parser.playR(selectedTiles, boardTiles, newComb);
+
   }
 
   /**
@@ -695,7 +682,7 @@ public class GuiController {
    * selected tiles should be added to the same combination they are already contained in.
    */
   public void allowAddBack() throws IOException {
-    deleteAddToButtons(board);
+    deleteAddToButtons();
     for (int j = 0; j < selectedTiles.size(); j++) {
       if (boardComb.getChildren().contains(selectedTiles.get(j))) {
         return;
@@ -709,6 +696,7 @@ public class GuiController {
     disableTiles(selectedTiles);
     selectedTiles.clear();
     updateBoard();
+
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();
       parser.notifyWin();
@@ -783,11 +771,9 @@ public class GuiController {
   /**
    * Deletes all "add here" buttons on the main board.
    */
-  private void deleteAddToButtons(FlowPane pane) {
-    for (int i = 0; i < pane.getChildren().size(); i++) {
-      System.out.println("INSTANCE OF " + (pane.getChildren().get(i) instanceof HBox));
-
-      HBox box = (HBox) pane.getChildren().get(i);
+  private void deleteAddToButtons() {
+    for (int i = 0; i < board.getChildren().size(); i++) {
+      HBox box = (HBox)board.getChildren().get(i);
       box.getChildren().remove(box.getChildren().get(box.getChildren().size() - 1));
       box.getChildren().remove(box.getChildren().get(0));
 

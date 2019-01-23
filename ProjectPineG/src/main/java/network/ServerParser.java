@@ -89,9 +89,10 @@ public class ServerParser {
 
       case "playWithBoardTilesL":
         List<GITile> tilesFromHand1 = parseStringToTile(receivedMessage[1]);
-        List<List<GITile>> CombinationsOnBoard = parseStringToListListTileComb(receivedMessage[2]);
+        List<GITile> tilesFromBoard2 = parseStringToTile(receivedMessage[2]);
+        List<List<GITile>> CombinationsOnBoard = parseStringToListListTileComb(receivedMessage[3]);
 
-        String answer2 = Server.gameInfo.play(tilesFromHand1, CombinationsOnBoard, id).get().getSecond().toString();
+        String answer2 = Server.gameInfo.play(tilesFromHand1, tilesFromBoard2,CombinationsOnBoard, id).get().getSecond().toString();
         clients.get(id).sendMessageToClient("responseForPlayWithBoardTilesL|" + answer2);
         break;
 
@@ -100,8 +101,8 @@ public class ServerParser {
         List<GITile> tilesFromBoard = parseStringToTile(receivedMessage[2]);
         List<List<GITile>> newCombinations = parseStringToListListTileComb(receivedMessage[3]);
 
-        // String answer1 = Server.gameInfo.play(tilesFromHand, tilesFromBoard, newCombinations, id).get().getSecond().toString();
-        // clients.get(id).sendMessageToClient("responseForPlayWithBoardTilesR|" + answer1);
+        String answer1 = Server.gameInfo.play(tilesFromHand, tilesFromBoard, newCombinations, id).get().getSecond().toString();
+        clients.get(id).sendMessageToClient("responseForPlayWithBoardTilesR|" + answer1);
         break;
 
         /*

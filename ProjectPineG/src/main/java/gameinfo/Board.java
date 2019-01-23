@@ -18,6 +18,10 @@ class Board {
     this.combos = new ArrayList<>();
   }
 
+  void remove(List<GITile> combination) {
+    this.combos.remove(combination);
+  }
+
   void clear() {
     log.info("Cleared Board.");
     this.combos = new ArrayList<>();
