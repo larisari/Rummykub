@@ -35,7 +35,7 @@ public class ServerParser {
         if (result.isPresent()) {
 
           clients.get(id).sendMessageToClient("responseForDraw|" + parseTileToString(result.get().getSecond()));
-          clients.get(Server.gameInfo.getNextPlayerId().get()).sendMessageToClient("itsYourTurn");
+          clients.get(Server.gameInfo.getCurrentPlayerId()).sendMessageToClient("itsYourTurn");
         } else {
           // id is not registered in model.
           log.info("There is no " + id + " registered in the model.");
