@@ -173,7 +173,7 @@ public class ClientParser {
         Platform.runLater(() -> guiController.enableControl());
         break;
 
-      case "responseForGetNextPlayerId":
+      case "UpdateCurrentPlayerTurn":
         Platform.runLater(() -> guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
         break;
 
