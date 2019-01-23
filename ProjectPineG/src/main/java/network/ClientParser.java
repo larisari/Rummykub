@@ -83,6 +83,7 @@ public class ClientParser {
 
   public void playL(
           List<ImageView> tilesFromHand,
+          List<ImageView> tilesFromBoard,
           List<List<ImageView>> CombinationsOnBoard) {
 
     StringBuilder builder = new StringBuilder();
@@ -90,6 +91,10 @@ public class ClientParser {
     builder.append("playWithBoardTilesL|");
 
     builder.append(GuiParser.parseToString(tilesFromHand));
+
+    builder.append("|");
+
+    builder.append(GuiParser.parseToString(tilesFromBoard));
 
     builder.append("|");
 
