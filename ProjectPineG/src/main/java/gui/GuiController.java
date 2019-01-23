@@ -629,7 +629,7 @@ public class GuiController {
         tempBox.getChildren().addAll(0, selectedTiles);
       }
     }
-    System.out.println(board.getChildren().size() + " boardsize");
+
     parser.playL(selectedTiles, boardToList(tempBoard));
   }
 
@@ -785,7 +785,9 @@ public class GuiController {
    */
   private void deleteAddToButtons(FlowPane pane) {
     for (int i = 0; i < pane.getChildren().size(); i++) {
-      HBox box = (HBox)pane.getChildren().get(i);
+      System.out.println("INSTANCE OF " + (pane.getChildren().get(i) instanceof HBox));
+
+      HBox box = (HBox) pane.getChildren().get(i);
       box.getChildren().remove(box.getChildren().get(box.getChildren().size() - 1));
       box.getChildren().remove(box.getChildren().get(0));
 
