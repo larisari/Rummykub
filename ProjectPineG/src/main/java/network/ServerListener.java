@@ -72,7 +72,6 @@ public class ServerListener extends Thread {
           }
         } catch (Exception e) {
           //s.close();
-          //System.out.println("[Server] Verbindung getrennt.");
           log.info("[Server] Verbindung getrennt.");
           e.printStackTrace();
         }

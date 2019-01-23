@@ -1,5 +1,7 @@
 package network;
 
+import gui.Main;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -46,8 +48,12 @@ public class ServerClientCommunication extends Thread {
 
       } catch (IOException e) {
         e.printStackTrace();
-        //System.out.println("No inputconnection to client: " + clientID);
         log.info("No inputconnection to client: " + clientID);
+        Thread.currentThread().interrupt();
+        //TODO
+        //was soll passieren, wenn Client-Verbindung trennt. -> Programm restart?
+        //alle in startingScreen zurück, server "löschen"
+
       }
     }
   }
