@@ -17,6 +17,8 @@ class CombRules {
   }
 
   boolean isValid(List<List<GITile>> combinations, int minimumPoints) {
+    log.info("Entered Method isValid(combinations, minimumPoints)");
+
     boolean allValid = combinations.stream().allMatch(this::isValidInternal);
 
     log.info("The combinations are all " + allValid + ".");
@@ -31,11 +33,13 @@ class CombRules {
       if (isGroup(combination)) {
         points += calculator.calculatePointsForGroup(combination);
         log.info("The passed combination is a group and is worth " + points + " points.");
-      } else {
+      } else if (isStreet(combination)) {
         // At this point I know that the combination has to be a street,
         // because otherwise the guard from before would have returned false.
         points += calculator.calculatePointsForStreet(combination);
         log.info("The passed combination is a street and is worth " + points + " points.");
+      } else {
+        log.info("The combination is neither a group nor a street.");
       }
     }
 
@@ -46,11 +50,15 @@ class CombRules {
             + " "
             + greaterThanMin
             + ".");
+
     return greaterThanMin;
   }
 
   boolean isValid(List<List<GITile>> combinations) {
-    return combinations.stream().allMatch(this::isValidInternal);
+    log.info("Entered Method isValid(combinations).");
+    boolean allValid = combinations.stream().allMatch(this::isValidInternal);
+    log.info("All the combinations are " + allValid + ".");
+    return allValid;
   }
 
   private boolean isValidInternal(List<GITile> combination) {
