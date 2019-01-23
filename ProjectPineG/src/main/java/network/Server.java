@@ -13,6 +13,9 @@ public class Server {
   private static Logger log = Logger.getLogger(Server.class.getName());
 
 
+  /**
+   * Constructor which initialize the gameInfo from our game model ands start the Server Listener Thread.
+   */
   public Server() {
 
     try {
@@ -21,8 +24,6 @@ public class Server {
       gameInfo = GIFactory.make();
       //System.out.println("Spiel wird geladen....");
       log.info("Spiel wird geladen....");
-
-
 
       ServerListener listener = new ServerListener(listOfClients);
       listener.start();
@@ -34,6 +35,10 @@ public class Server {
     }
   }
 
+  /**
+   * sends a message to all connected clients.
+   * @param message message, server sends to clients.
+   */
   public static void broadcastToAllClients(String message) {
     List<ServerClientCommunication> clients = ServerListener.getClients();
 

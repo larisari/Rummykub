@@ -7,6 +7,9 @@ import java.net.Socket;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * The Server Listener starts the Server and handles incoming client-connection.
+ */
 public class ServerListener extends Thread {
 
   static List<ServerClientCommunication> clients;
@@ -26,28 +29,27 @@ public class ServerListener extends Thread {
 
   @Override
   public void run() {
-    // server is listening on port 48410
+
     try {
       ServerSocket ss = new ServerSocket(48410);
-      //System.out.println("[Server] wird initialisiert...");
+
       log.info("[Server] wird initialisiert...");
-      // running infinite loop for getting
-      // client request
+
 
       while (isRunning) {
         try {
           if (clientID < 4) {
-            //System.out.println("[Server] Warte auf eingehende Verbindung....");
+
             log.info("[Server] Warte auf eingehende Verbindung....");
             Socket s = ss.accept();
 
-            //System.out.println("[Server] neuer Client wurde aufgenommen " + s);
+
             log.info("[Server] neuer Client wurde aufgenommen " + s);
 
             DataInputStream in = new DataInputStream(s.getInputStream());
             DataOutputStream out = new DataOutputStream(s.getOutputStream());
 
-            //System.out.println("[Server] erstelle eigenen Thread für Client " + clientID);
+
             log.info("[Server] erstelle eigenen Thread für Client " + clientID);
             // create a new thread object
             ServerClientCommunication t = new ServerClientCommunication(s, in, out, clientID);
@@ -70,7 +72,6 @@ public class ServerListener extends Thread {
           }
         } catch (Exception e) {
           //s.close();
-          //System.out.println("[Server] Verbindung getrennt.");
           log.info("[Server] Verbindung getrennt.");
           e.printStackTrace();
         }
@@ -79,11 +80,4 @@ public class ServerListener extends Thread {
       e.printStackTrace();
     }
   }
-
-  public void broadcastToAllClients(String message) {
-    for (ServerClientCommunication client : clients) {
-      client.sendMessageToClient(message);
-    }
-  }
-
 }
