@@ -36,6 +36,7 @@ public class ServerParser {
 
           clients.get(id).sendMessageToClient("responseForDraw|" + parseTileToString(result.get().getSecond()));
           clients.get(Server.gameInfo.getCurrentPlayerId()).sendMessageToClient("itsYourTurn");
+          System.out.println("SERVER: pressed draw by " + id + " next player " + Server.gameInfo.getCurrentPlayerId());
         } else {
           // id is not registered in model.
           log.info("There is no " + id + " registered in the model.");
@@ -60,14 +61,10 @@ public class ServerParser {
         break;
 
       case "getNextPlayerID":
-        Optional<Integer> resultID = Server.gameInfo.getNextPlayerId();
+        Integer resultID = Server.gameInfo.getCurrentPlayerId();
 
-        if (resultID.isPresent()) {
-          Server.broadcastToAllClients("responseForGetNextPlayerID|" + resultID.get());
-        } else {
-          // id is not registered in model.
-          log.info("There is no " + id + " registered in the model.");
-        }
+        Server.broadcastToAllClients("responseForGetNextPlayerID|" + resultID);
+
         break;
 
       case "play":
