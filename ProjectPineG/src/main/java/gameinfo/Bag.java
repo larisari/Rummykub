@@ -7,11 +7,14 @@ import gameinfo.util.GITile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Logger;
 
 class Bag {
   private final int SUM_TILES = 106;
   private final int MAX_NUM = 13;
   private List<GITile> tiles;
+
+  private static Logger log = Logger.getLogger(Bag.class.getName());
 
   Bag() {
     this.tiles = new ArrayList<>(SUM_TILES);
@@ -36,11 +39,27 @@ class Bag {
     this.tiles.add(new GITile(GINumber.JOKER, GIColor.JOKER));
   }
 
-  GITile takeTile() {
+  GITile drawRandomTile() {
     int position = (int) (Math.random() * (this.tiles.size() - 1));
     GITile tile = this.tiles.get(position);
     this.tiles.remove(position);
+
+    log.info("Drew random tile: " + tile + ".");
+
     return tile;
+  }
+
+  List<GITile> drawRandomStackWith(int numberOfTiles) {
+    List<GITile> stack = new ArrayList<>();
+    for (int i = 0; i < numberOfTiles; i++) {
+      int index = (int) (Math.random() * (this.tiles.size() - 1));
+      stack.add(this.tiles.get(index));
+      this.tiles.remove(index);
+    }
+
+    log.info("Drew random stack: " + stack + ".");
+
+    return stack;
   }
 
   Optional<GITile> takeTile(GITile tile) {
@@ -53,21 +72,11 @@ class Bag {
     }
   }
 
-  List<GITile> takeStack(int numberOfTiles) {
-    List<GITile> stack = new ArrayList<>();
-    for (int i = 0; i < numberOfTiles; i++) {
-      int index = (int) (Math.random() * (this.tiles.size() - 1));
-      stack.add(this.tiles.get(index));
-      this.tiles.remove(index);
-    }
-    return stack;
-  }
-
-  List<GITile> takeStack(int numberOfTiles,List<GITile> customStack) {
+  List<GITile> takeStack(int numberOfTiles, List<GITile> customStack) {
 
     if (customStack.size()!=numberOfTiles) {
       throw new IllegalArgumentException("number of tiles are not equivalent " +
-          "in custom takeStack method()");
+          "in custom drawRandomStackWith method()");
     }
 
     List<GITile> stack = new ArrayList<>();

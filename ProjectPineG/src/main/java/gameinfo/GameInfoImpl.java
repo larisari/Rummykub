@@ -307,7 +307,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     // .get() is allowed here because it is always called after isPresent check !!!
     Player player = gameFlow.getPlayerBy(id).get();
 
-    List<GITile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK);
+    List<GITile> stack = board.drawRandomStackWith(NUMBER_OF_TILES_IN_STACK);
     player.put(stack);
     return stack;
   }
@@ -316,7 +316,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     // .get() is allowed here because it is always called after isPresent check !!!
     Player player = gameFlow.getPlayerBy(id).get();
 
-    GITile tile = board.getTileFromBag();
+    GITile tile = board.drawRandomTile();
     player.put(tile);
 
     return tile;

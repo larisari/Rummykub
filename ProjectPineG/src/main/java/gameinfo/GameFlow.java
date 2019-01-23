@@ -61,29 +61,22 @@ class GameFlow {
   }
 
   Integer getNextPlayerID() {
-//    if (currentPlayerIndex < playerSequence.size() - 1) {
-//      return playerSequence.get(currentPlayerIndex + 1);
-//    } else {
-//      return playerSequence.get(0);
-//    }
-    return playerSequence.get(getNextPlayerIndex());
+    if (currentPlayerIndex < playerSequence.size() - 1) {
+      return playerSequence.get(currentPlayerIndex + 1);
+    } else {
+      return playerSequence.get(0);
+    }
   }
 
   void nextPlayersTurn() {
-    currentPlayerIndex = getNextPlayerIndex();
+    if (currentPlayerIndex < playerSequence.size() - 1) {
+      currentPlayerIndex++;
+    } else {
+      currentPlayerIndex = 0;
+    }
+
     Integer currentPlayerId  = playerSequence.get(currentPlayerIndex);
     players.get(currentPlayerId).resetMadeMove();
-//        playerSequence.get(
-//            currentPlayerIndex == playerSequence.size() - 1 ? 0 : currentPlayerIndex - 1);
-    //    if (currentPlayerIndex < playerSequence.size() - 1) {
-    //      currentPlayerIndex++;
-    //    } else {
-    //      currentPlayerIndex = 0;
-    //    }
-  }
-
-  private int getNextPlayerIndex() {
-    return (currentPlayerIndex == playerSequence.size() - 1 ? 0 : currentPlayerIndex - 1);
   }
 
   boolean isDistributing() {
