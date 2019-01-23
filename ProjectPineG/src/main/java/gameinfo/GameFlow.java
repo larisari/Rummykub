@@ -71,6 +71,8 @@ class GameFlow {
 
   void nextPlayersTurn() {
     currentPlayerIndex = getNextPlayerIndex();
+    Integer currentPlayerId  = playerSequence.get(currentPlayerIndex);
+    players.get(currentPlayerId).resetMadeMove();
 //        playerSequence.get(
 //            currentPlayerIndex == playerSequence.size() - 1 ? 0 : currentPlayerIndex - 1);
     //    if (currentPlayerIndex < playerSequence.size() - 1) {
@@ -111,6 +113,10 @@ class GameFlow {
     } else {
       return Optional.empty();
     }
+  }
+
+  boolean hasMadeMoveBy(Integer id) {
+    return players.get(id).hasMadeMove();
   }
 
 //  private void removePlayerFromSequence(Integer id) {

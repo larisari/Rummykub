@@ -88,7 +88,6 @@ public interface GIGameInfo {
    * is returned.
    *
    * @param tilesFromHand the tiles that where played from the players hand.
-   * @param oldCombination the combination to which the tilesFromHand were added
    * @param combinationsOnBoard all the combinations that are currently on the board.
    * @param id by which the combination is played.
    * @return the id by which the combination was played, and whether the combination was valid or
@@ -96,7 +95,6 @@ public interface GIGameInfo {
    */
   Optional<GITuple<Integer, Boolean>> play(
       List<GITile> tilesFromHand,
-      List<GITile> oldCombination,
       List<List<GITile>> combinationsOnBoard,
       Integer id);
 

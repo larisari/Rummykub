@@ -204,9 +204,11 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
       if (player.isFirstMove() && combRules.isValid(combinations, MINIMUM_POINTS_ON_FIRST_MOVE)) {
         putComboOnBoard(combinations, player);
+        player.madeMove();
         return Optional.of(new GITuple<>(id, true));
       } else if (!player.isFirstMove() && combRules.isValid(combinations)) {
         putComboOnBoard(combinations, player);
+        player.madeMove();
         return Optional.of(new GITuple<>(id, true));
       } else {
         // not a valid combination.
@@ -220,7 +222,6 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   @Override
   public Optional<GITuple<Integer, Boolean>> play(
           List<GITile> tilesFromHand,
-          List<GITile> oldCombination,
           List<List<GITile>> combinationsOnBoard,
           Integer id) {
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
@@ -238,6 +239,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
       if (allValid) {
         player.remove(tilesFromHand);
+        player.madeMove();
         board.clear();
         combinationsOnBoard.forEach(combination -> board.addCombo(combination));
         return Optional.of(new GITuple<>(id, true));
@@ -274,7 +276,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       return Optional.empty();
     }
 
-    if (gameFlow.isValidPlayerBy(id)) {
+    if (gameFlow.isValidPlayerBy(id) && gameFlow.hasMadeMoveBy(id)) {
       gameFlow.nextPlayersTurn();
       return Optional.of(new GITuple<>(id, board.getActiveCombos()));
     } else {
