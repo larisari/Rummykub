@@ -30,7 +30,7 @@ public class ServerClientCommunication extends Thread {
   @Override
   public void run() {
 
-    while (true) {
+    while (true && s.isConnected()) {
       String received = null;
 
       try {
@@ -46,9 +46,6 @@ public class ServerClientCommunication extends Thread {
         e.printStackTrace();
         //System.out.println("No inputconnection to client: " + clientID);
         log.info("No inputconnection to client: " + clientID);
-      }
-      if (received != null) {
-
       }
     }
   }
