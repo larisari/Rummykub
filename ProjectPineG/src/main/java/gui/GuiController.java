@@ -222,7 +222,7 @@ public class GuiController {
    *
    * @param combination to be added to the board.
    */
-  private void moveTiles(List<ImageView> combination) {
+  private void moveTiles(List<ImageView> combination) throws IOException {
     HBox comb = new HBox();
     for (int j = 0; j < combination.size(); j++) {
       ImageView tile = combination.get(j);
@@ -234,6 +234,10 @@ public class GuiController {
     placedCombinations.add(comb);
     board.getChildren().add(comb);
     deselectTiles(selectedTiles); //löscht auch tiles aus selectedTiles
+    if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
+      openWinScreen();
+      parser.notifyWin();
+    }
   }
 
   /**
@@ -311,7 +315,7 @@ public class GuiController {
   @FXML
   protected void handleDrawTile(MouseEvent event) {
     parser.draw();
-    // parser.getNextPlayerID();
+
   }
 
   /**
@@ -376,26 +380,10 @@ public class GuiController {
    */
   @FXML
   protected void handleEndTurn(MouseEvent event) {
-    /*
-    List<List<ImageView>> allCombinations = new ArrayList<>();
-    for (int i = placedCombinations.size() - 1; i >= 0; i--) {
-      HBox box = placedCombinations.get(i);
-      if (box.getChildren().isEmpty()) {
-        placedCombinations.remove(box);
-      } else {
-        List<ImageView> comb = new ArrayList<>();
-        for (int j = 0; j < box.getChildren().size(); j++) {
-          ImageView iView = (ImageView) box.getChildren().get(j);
-          comb.add(iView);
-        }
-        allCombinations.add(comb);
-      }
-    }
-    */
     disableControl();
     cancelSelection();
     parser.finishedTurn();
-    //  parser.getNextPlayerID();
+
 
   }
 
@@ -589,6 +577,23 @@ public class GuiController {
     }
   }
 
+  private List<List<ImageView>> boardToList(){
+    List<List<ImageView>> allCombinations = new ArrayList<>();
+   for (int i = 0; i < board.getChildren().size(); i++){
+     HBox box = (HBox)board.getChildren().get(i);
+      if (box.getChildren().isEmpty()) {
+        board.getChildren().remove(box);
+      } else {
+        List<ImageView> comb = new ArrayList<>();
+        for (int j = 0; j < box.getChildren().size(); j++) {
+          ImageView iView = (ImageView) box.getChildren().get(j);
+          comb.add(iView);
+        }
+        allCombinations.add(comb);
+      }
+    }
+   return allCombinations;
+  }
 
   /**
    * For placing tiles to existing combinations on main board. Checks if selected tiles may be added
@@ -601,19 +606,15 @@ public class GuiController {
         i++) {   //1 und size-1 weil an diesen Stellen Buttons sind.
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
-    List<List<ImageView>> newComb = new ArrayList<>();
-    List<ImageView> newCombination = new ArrayList<>();
-    newCombination.addAll(selectedTiles);
-    newCombination.addAll(boardTiles);
-    newComb.add(newCombination);
-    parser.playL(selectedTiles, boardTiles, newComb);
+
+    parser.playL(selectedTiles, boardTiles, boardToList());
   }
 
   /**
    * Adds selected tiles to the front of a cached combination on the main board. Exits method, if
    * selected tiles should be added to the same combination they are already contained in.
    */
-  public void allowAddFront() {
+  public void allowAddFront() throws IOException {
 
     deleteAddToButtons();
     for (int j = 0; j < selectedTiles.size();
@@ -630,6 +631,10 @@ public class GuiController {
 
     deselectTiles(selectedTiles); //cleart auch selectedTiles
     updateBoard();
+    if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
+      openWinScreen();
+      parser.notifyWin();
+    }
   }
 
   /**
@@ -652,19 +657,14 @@ public class GuiController {
     for (int i = 1; i < comb.getChildren().size() - 1; i++) {
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
-    List<List<ImageView>> newComb = new ArrayList<>();
-    List<ImageView> newCombination = new ArrayList<>();
-    newCombination.addAll(boardTiles);
-    newCombination.addAll(selectedTiles);
-    newComb.add(newCombination);
-    parser.playR(selectedTiles, boardTiles, newComb);
+    parser.playR(selectedTiles, boardTiles, boardToList());
   }
 
   /**
    * Adds selected tiles to the front of cached combination on the main board. Exits method if
    * selected tiles should be added to the same combination they are already contained in.
    */
-  public void allowAddBack() {
+  public void allowAddBack() throws IOException {
     deleteAddToButtons();
     for (int j = 0; j < selectedTiles.size(); j++) {
       if (boardComb.getChildren().contains(selectedTiles.get(j))) {
@@ -679,6 +679,10 @@ public class GuiController {
     deselectTiles(selectedTiles);
     selectedTiles.clear();
     updateBoard();
+    if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
+      openWinScreen();
+      parser.notifyWin();
+    }
   }
 
   /**
@@ -745,9 +749,6 @@ public class GuiController {
     cancelSelEffect();
   }
 
-  private void swapEverything() {
-    //TODO selected tiles zu neuer kombination auf board.
-  }
 
   /**
    * Deletes all "add here" buttons on the main board.
