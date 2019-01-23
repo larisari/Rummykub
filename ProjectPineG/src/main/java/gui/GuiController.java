@@ -193,8 +193,17 @@ public class GuiController {
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView tile = selectedTiles.get(i);
       if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren()
-          .contains(tile)) { //wenn tiles auf dem board liegen.
-        moveTiles(selectedTiles);
+          .contains(tile)) { //wenn irgendeine tile am board liegt
+        FlowPane tempBoard = new FlowPane(board);
+        HBox tempBox = new HBox();
+        tempBox.prefHeight(MAX_BOXHEIGHT);
+        tempBox.prefWidth(selectedTiles.size()*MAX_BOXWIDTH);
+        for (int j = 0; j < selectedTiles.size(); j++){
+          tempBox.getChildren().add(selectedTiles.get(i));
+        }
+        tempBoard.getChildren().add(tempBox);
+//parser.play(selectedTiles, boardToList(tempBoard));
+       // moveTiles(selectedTiles);
         return;
       }
       updateBoard();
@@ -230,9 +239,10 @@ public class GuiController {
       tile.setDisable(true);
       comb.getChildren().add(tile);
     }
-    placedCombinations.add(comb);
+    //TODO tiles an model zum validieren schicken
+  //  placedCombinations.add(comb);
     board.getChildren().add(comb);
-    deselectTiles(selectedTiles); //löscht auch tiles aus selectedTiles
+    disableTiles(selectedTiles); //löscht auch tiles aus selectedTiles
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();
       parser.notifyWin();
@@ -262,7 +272,8 @@ public class GuiController {
       moveTiles(combination);
     }
     bag.setDisable(true);
-    cancelSelection();
+    endTurn.setDisable(false);
+    disableTiles(selectedTiles);
     updateBoard();
 
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
@@ -384,13 +395,10 @@ public class GuiController {
    */
   @FXML
   protected void handleEndTurn(MouseEvent event) {
+    parser.finishedTurn();
     disableControl();
     cancelSelection();
-    parser.finishedTurn();
-
-
   }
-
   /**
    * Opens alert window if non valid combinations are still on the main board.
    */
@@ -431,7 +439,6 @@ public class GuiController {
    */
   public void enableControl() {
     enter.setDisable(false); //TODO alle buttons in liste packen -> enablen disablen durchiterieren.
-    endTurn.setDisable(false);
     cancelSelection.setDisable(false);
     addToExisting.setDisable(false);
     manipulate.setDisable(false);
@@ -512,13 +519,13 @@ public class GuiController {
   @FXML
   protected void handleManipulate(MouseEvent event) {
 //if first turn do not allow
-    disableTilesOnBoard();
+    enableTilesOnBoard();
   }
 
   /**
    * Disables all tiles on the main board.
    */
-  private void disableTilesOnBoard() {
+  private void enableTilesOnBoard() {
     for (int i = 0; i < board.getChildren().size(); i++) {
       HBox box = (HBox) board.getChildren().get(i);
       for (int j = 0; j < box.getChildren().size(); j++) {
@@ -540,10 +547,12 @@ public class GuiController {
             tile.setStyle("-fx-translate-y: -15;");
             TileView.highlightTile(tile);
             selectedTiles.add(tile);
+            tile.setDisable(false);
           } else {
             tile.setStyle("-fx-translate-y: 0");
             tile.setEffect(null);
             selectedTiles.remove(tile);
+            tile.setDisable(false);
           }
         });
   }
@@ -581,12 +590,12 @@ public class GuiController {
     }
   }
 
-  private List<List<ImageView>> boardToList(){
+  private List<List<ImageView>> boardToList(FlowPane pane){
     List<List<ImageView>> allCombinations = new ArrayList<>();
-   for (int i = 0; i < board.getChildren().size(); i++){
-     HBox box = (HBox)board.getChildren().get(i);
+   for (int i = 0; i < pane.getChildren().size(); i++){
+     HBox box = (HBox)pane.getChildren().get(i);
       if (box.getChildren().isEmpty()) {
-        board.getChildren().remove(box);
+        pane.getChildren().remove(box);
       } else {
         List<ImageView> comb = new ArrayList<>();
         for (int j = 0; j < box.getChildren().size(); j++) {
@@ -610,8 +619,16 @@ public class GuiController {
         i++) {   //1 und size-1 weil an diesen Stellen Buttons sind.
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
+    FlowPane tempBoard = new FlowPane(board);
+    HBox tempBox = new HBox(boardComb);
+    for (int i = 0; i < tempBoard.getChildren().size(); i++){
+      if (tempBoard.getChildren().get(i) == tempBox){
+        tempBox.getChildren().addAll(1,selectedTiles);
+      }
+    }
 
-    parser.playL(selectedTiles, boardTiles, boardToList());
+
+    parser.playL(selectedTiles, boardToList(tempBoard));
   }
 
   /**
@@ -633,7 +650,7 @@ public class GuiController {
       boardComb.getChildren().add(0, tile); //added tile vorne in hbox
     }
 
-    deselectTiles(selectedTiles); //cleart auch selectedTiles
+    disableTiles(selectedTiles); //cleart auch selectedTiles
     updateBoard();
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();
@@ -661,7 +678,14 @@ public class GuiController {
     for (int i = 1; i < comb.getChildren().size() - 1; i++) {
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
-    parser.playR(selectedTiles, boardTiles, boardToList());
+    FlowPane tempBoard = new FlowPane(board);
+    HBox tempBox = new HBox(boardComb);
+    for (int i = 0; i < tempBoard.getChildren().size(); i++){
+      if (tempBoard.getChildren().get(i) == tempBox){
+        tempBox.getChildren().addAll(tempBox.getChildren().size()-1,selectedTiles);
+      }
+    }
+    parser.playR(selectedTiles, boardToList(tempBoard));
   }
 
   /**
@@ -680,7 +704,7 @@ public class GuiController {
       boardComb.getChildren().add(boardComb.getChildren().size(), tile);
     }
 
-    deselectTiles(selectedTiles);
+    disableTiles(selectedTiles);
     selectedTiles.clear();
     updateBoard();
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
@@ -778,8 +802,6 @@ public class GuiController {
     }
   }
 
-  //TODO reload Board für andere clients
-
   /**
    * Disables control for the user. All buttons and tiles are set to disabled.
    */
@@ -807,13 +829,13 @@ public class GuiController {
         handTiles.add(iView);
       }
     }
-    deselectTiles(handTiles);
+    disableTiles(handTiles);
   }
 
   /**
    * Deselects and disables a list of tiles.
    */
-  private void deselectTiles(List<ImageView> tiles) {
+  private void disableTiles(List<ImageView> tiles) {
     for (int i = tiles.size() - 1; i >= 0; i--) {
       ImageView tile = tiles.get(i);
       tile.setStyle("-fx-translate-y: 0");

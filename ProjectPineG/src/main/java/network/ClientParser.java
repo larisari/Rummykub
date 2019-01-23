@@ -70,8 +70,7 @@ public class ClientParser {
 
   public void playL(
           List<ImageView> tilesFromHand,
-          List<ImageView> tilesFromBoard,
-          List<List<ImageView>> newCombinations) {
+          List<List<ImageView>> CombinationsOnBoard) {
 
     StringBuilder builder = new StringBuilder();
 
@@ -81,13 +80,7 @@ public class ClientParser {
 
     builder.append("|");
 
-    builder.append(GuiParser.parseToString(tilesFromBoard));
-
-    builder.append("|");
-
-    builder.append(GuiParser.parseListToString(newCombinations));
-
-    System.out.println(builder.toString());
+    builder.append(GuiParser.parseListToString(CombinationsOnBoard));
 
     Client.sendMessageToServer(builder.toString());
   }
@@ -110,8 +103,6 @@ public class ClientParser {
     builder.append("|");
 
     builder.append(GuiParser.parseListToString(newCombinations));
-
-    System.out.println(builder.toString());
 
     Client.sendMessageToServer(builder.toString());
   }
@@ -210,7 +201,13 @@ public class ClientParser {
 
       case "responseForPlayWithBoardTilesR":
         if (messageAsArray[1].equals("true")) {
-          Platform.runLater(() -> guiController.allowAddBack());
+          Platform.runLater(() -> {
+            try {
+              guiController.allowAddBack();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          });
           } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.disallowAddTo());
         }
@@ -218,7 +215,13 @@ public class ClientParser {
 
       case "responseForPlayWithBoardTilesL":
         if (messageAsArray[1].equals("true")) {
-          Platform.runLater(() -> guiController.allowAddFront());
+          Platform.runLater(() -> {
+            try {
+              guiController.allowAddFront();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          });
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.disallowAddTo());
         }
