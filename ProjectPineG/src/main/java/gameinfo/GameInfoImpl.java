@@ -17,14 +17,18 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   private static int NUMBER_OF_TILES_IN_STACK = 14;
 
   private Board board;
-  private Rules rules;
+  private PointsCalculator calculator;
+  private GameFlow gameFlow;
+  private CombRules combRules;
 
   private boolean hasRegisteredPlayers;
   private boolean canModifyRegisteredPlayers;
 
   GameInfoImpl() {
     board = new Board();
-    rules = new Rules();
+    gameFlow = new GameFlow(calculator);
+    combRules = new CombRules(calculator);
+
     hasRegisteredPlayers = false;
     canModifyRegisteredPlayers = true;
     start();
@@ -33,7 +37,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   @Override
   public void registerBy(Integer id) {
     if (canModifyRegisteredPlayers) {
-      rules.registerBy(id);
+      gameFlow.registerBy(id);
       hasRegisteredPlayers = true;
 
       log.info("Registered Player " + id + ".");
@@ -44,38 +48,38 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   @Override
   public void deregisterBy(Integer id) {
-    rules.deregisterPlayerBy(id);
+    gameFlow.deregisterBy(id);
 
     log.info("Deregistered Player " + id + ".");
 
-    if (rules.getAllPlayers().isEmpty()) {
+    if (gameFlow.getPlayers().isEmpty()) {
       hasRegisteredPlayers = false;
     }
   }
 
   @Override
   public void startGame() {
-    rules.startGame();
+    gameFlow.startGame();
     canModifyRegisteredPlayers = false;
     log.info("Game started.");
   }
 
   @Override
   public Optional<GITuple<Integer, Boolean>> isValidPlayerBy(Integer id) {
-    Boolean isValidPlayer = rules.isValidPlayerBy(id);
+    Boolean isValidPlayer = gameFlow.isValidPlayerBy(id);
     GITuple<Integer, Boolean> returnValue = new GITuple<>(id, isValidPlayer);
     return Optional.of(returnValue);
   }
 
   @Override
   public Integer getCurrentPlayerId() {
-    return rules.getCurrentPlayerId();
+    return gameFlow.getCurrentPlayerId();
   }
 
   @Override
   public Optional<Integer> getNextPlayerId() {
     if (hasRegisteredPlayers) {
-      return Optional.of(rules.getNextPlayerID());
+      return Optional.of(gameFlow.getNextPlayerID());
     } else {
       return Optional.empty();
     }
@@ -84,34 +88,34 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   // TODO !!! REMOVE AFTER TESTS !!!
   @Override
   public List<Integer> getAllPlayerIds() {
-    return new ArrayList<>(rules.getAllPlayers().keySet());
+    return new ArrayList<>(gameFlow.getPlayers().keySet());
   }
 
   @Override
   public Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id) {
-    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
+    Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (!optionalPlayer.isPresent()) {
       return Optional.empty();
     }
 
-    if (!rules.isValidPlayerBy(id)) {
+    if (!gameFlow.isValidPlayerBy(id)) {
       // it is not the players turn.
       return Optional.of(new GITuple<>(id, new ArrayList<>()));
     }
 
     GITuple<Integer, List<GITile>> returnValue;
 
-    if (rules.isDistributing()) {
-      rules.addDistribution();
-      rules.nextPlayersTurn();
+    if (gameFlow.isDistributing()) {
+      gameFlow.addDistribution();
+      gameFlow.nextPlayersTurn();
       returnValue = new GITuple<>(id, getStackFor(id));
       return Optional.of(returnValue);
     } else {
       GITile tile = getTileFor(id);
       List<GITile> tiles = new ArrayList<>();
       tiles.add(tile);
-      rules.nextPlayersTurn();
+      gameFlow.nextPlayersTurn();
       returnValue = new GITuple<>(id, tiles);
       return Optional.of(returnValue);
     }
@@ -119,32 +123,33 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   //testing purpose only
   //either one or fourteen tiles !!
+  // TODO REMOVE TEST PURPPOSE ONLY
  @Override
   public Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id,
                                                          List<GITile> customTiles) {
-    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
+    Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (!optionalPlayer.isPresent()) {
       return Optional.empty();
     }
 
-    if (!rules.isValidPlayerBy(id)) {
+    if (!gameFlow.isValidPlayerBy(id)) {
       // it is not the players turn.
       return Optional.of(new GITuple<>(id, new ArrayList<>()));
     }
 
     GITuple<Integer, List<GITile>> returnValue;
 
-    if (rules.isDistributing()) {
-      rules.addDistribution();
-      rules.nextPlayersTurn();
+    if (gameFlow.isDistributing()) {
+      gameFlow.addDistribution();
+      gameFlow.nextPlayersTurn();
       returnValue = new GITuple<>(id, getStackFor(id,customTiles));
       return Optional.of(returnValue);
     } else {
       GITile tile = getTileFor(id,customTiles.get(0));
       List<GITile> tiles = new ArrayList<>();
       tiles.add(tile);
-      rules.nextPlayersTurn();
+      gameFlow.nextPlayersTurn();
       returnValue = new GITuple<>(id, tiles);
       return Optional.of(returnValue);
     }
@@ -152,7 +157,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   private List<GITile> getStackFor(Integer id, List<GITile> customTiles) {
     // .get() is allowed here because it is always called after isPresent check !!!
-    Player player = rules.getPlayerBy(id).get();
+    Player player = gameFlow.getPlayerBy(id).get();
     List<GITile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK,customTiles);
     player.put(stack);
     return stack;
@@ -160,7 +165,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   private GITile getTileFor(Integer id, GITile customTile) {
     // .get() is allowed here because it is always called after isPresent check !!!
-    Player player = rules.getPlayerBy(id).get();
+    Player player = gameFlow.getPlayerBy(id).get();
 
     if (board.getTileFromBag(customTile).isPresent()) {
       GITile tile = board.getTileFromBag(customTile).get();
@@ -174,7 +179,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   @Override
   public Optional<GITuple<Integer, List<GITile>>> getAllTilesBy(Integer id) {
-    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
+    Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
       Player player = optionalPlayer.get();
@@ -187,20 +192,20 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   @Override
   public Optional<GITuple<Integer, Boolean>> play(List<List<GITile>> combinations, Integer id) {
-    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
+    Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
       Player player = optionalPlayer.get();
 
-      if (!rules.isValidPlayerBy(id)) {
+      if (!gameFlow.isValidPlayerBy(id)) {
         // it is not the players turn.
         return Optional.of(new GITuple<>(id, false));
       }
 
-      if (player.isFirstMove() && rules.isValid(combinations, MINIMUM_POINTS_ON_FIRST_MOVE)) {
+      if (player.isFirstMove() && combRules.isValid(combinations, MINIMUM_POINTS_ON_FIRST_MOVE)) {
         putComboOnBoard(combinations, player);
         return Optional.of(new GITuple<>(id, true));
-      } else if (!player.isFirstMove() && rules.isValid(combinations)) {
+      } else if (!player.isFirstMove() && combRules.isValid(combinations)) {
         putComboOnBoard(combinations, player);
         return Optional.of(new GITuple<>(id, true));
       } else {
@@ -218,18 +223,18 @@ class GameInfoImpl extends Thread implements GIGameInfo {
           List<GITile> oldCombination,
           List<List<GITile>> combinationsOnBoard,
           Integer id) {
-    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
+    Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
 
       Player player = optionalPlayer.get();
 
-      if (!rules.isValidPlayerBy(id) || player.isFirstMove()) {
+      if (!gameFlow.isValidPlayerBy(id) || player.isFirstMove()) {
         // it is not the players turn or it is his first move.
         return Optional.of(new GITuple<>(id, false));
       }
 
-      boolean allValid = rules.isValid(combinationsOnBoard);
+      boolean allValid = combRules.isValid(combinationsOnBoard);
 
       if (allValid) {
         player.remove(tilesFromHand);
@@ -247,7 +252,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   @Override
   public Optional<GITuple<Integer, GIPoints>> calculatePointsBy(Integer id) {
 
-    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
+    Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (!optionalPlayer.isPresent()) {
       return Optional.empty();
@@ -260,17 +265,17 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   @Override
   public Optional<Integer> getNumberOfPlayers() {
-    return Optional.of(rules.getNumberOfPlayers());
+    return Optional.of(gameFlow.getNumberOfPlayers());
   }
 
   @Override
   public Optional<GITuple<Integer, List<List<GITile>>>> finishedTurnBy(Integer id) {
-    if (!rules.isPlayerExistingBy(id)) {
+    if (!gameFlow.isPlayerExistingBy(id)) {
       return Optional.empty();
     }
 
-    if (rules.isValidPlayerBy(id)) {
-      rules.nextPlayersTurn();
+    if (gameFlow.isValidPlayerBy(id)) {
+      gameFlow.nextPlayersTurn();
       return Optional.of(new GITuple<>(id, board.getActiveCombos()));
     } else {
       // it is not the players turn.
@@ -282,7 +287,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   @Override
   public Optional<GITuple<Integer, Boolean>> isFirstTurnBy(Integer id) {
-    Optional<Player> optionalPlayer = rules.getPlayerBy(id);
+    Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
       return Optional.of(new GITuple<>(id, optionalPlayer.get().isFirstMove()));
@@ -293,12 +298,12 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   @Override
   public Optional<List<GITuple<Integer, GIPoints>>> calculatePointsForRegisteredPlayers() {
-    return rules.getPlayerPoints();
+    return gameFlow.getPlayerPoints();
   }
 
   private List<GITile> getStackFor(Integer id) {
     // .get() is allowed here because it is always called after isPresent check !!!
-    Player player = rules.getPlayerBy(id).get();
+    Player player = gameFlow.getPlayerBy(id).get();
 
     List<GITile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK);
     player.put(stack);
@@ -307,7 +312,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   private GITile getTileFor(Integer id) {
     // .get() is allowed here because it is always called after isPresent check !!!
-    Player player = rules.getPlayerBy(id).get();
+    Player player = gameFlow.getPlayerBy(id).get();
 
     GITile tile = board.getTileFromBag();
     player.put(tile);

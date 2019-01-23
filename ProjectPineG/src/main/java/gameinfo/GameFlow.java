@@ -22,17 +22,17 @@ class GameFlow {
     this.currentPlayerIndex = 0;
   }
 
-  void registerPlayerBy(Integer id) {
+  void registerBy(Integer id) {
     players.put(id, new Player(id, calculator));
     playerSequence.add(id);
   }
 
-  void deregisterPlayerBy(Integer id) {
+  void deregisterBy(Integer id) {
     players.remove(id);
     playerSequence.remove(id);
   }
 
-  boolean playerExists(Integer id) {
+  boolean isPlayerExistingBy(Integer id) {
     return getPlayerBy(id).isPresent();
   }
 
@@ -40,7 +40,7 @@ class GameFlow {
     this.state = GameState.distributing;
   }
 
-  boolean isValidPlayer(Integer id) {
+  boolean isValidPlayerBy(Integer id) {
     return players.get(id).getId().equals(id);
   }
 
