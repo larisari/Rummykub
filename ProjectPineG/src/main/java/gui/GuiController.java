@@ -2,7 +2,6 @@ package gui;
 
 //TODO Buttons per default disablen und enablen wenn player am zug ist.
 
-//TODO sachen die für alle angezeigt werden muss im MainThread ausgeführt werden.
 
 import gui.util.Image;
 
@@ -190,7 +189,7 @@ public class GuiController {
    * @param event - onMouseClicked event if user presses "Enter new Selection" button.
    */
   @FXML
-  protected void handleEnterComb(MouseEvent event) {
+  protected void handleEnterComb(MouseEvent event) throws IOException {
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView tile = selectedTiles.get(i);
       if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren()
@@ -278,7 +277,8 @@ public class GuiController {
    * @throws IOException if some error occurs while loading fxml file.
    */
   public void openWinScreen() throws IOException {
-    FXMLLoader loader = FXMLLoader.load(getClass().getResource("winnerScreen.fxml"));
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation((getClass().getResource("/winnerScreen.fxml")));
     Parent root = loader.load();
     Scene scene = new Scene(root);
     Stage stage = new Stage();
@@ -287,6 +287,7 @@ public class GuiController {
     stage.show();
     EndScreenController eController = loader.getController();
     eController.setNumberOfPlayers(numberOfPlayers);
+    eController.setPointsNamesVisible();
   }
 
   /**
@@ -295,7 +296,8 @@ public class GuiController {
    * @throws IOException if some error occurs while loading fxml file.
    */
   public void openLoserScreen() throws IOException {
-    FXMLLoader loader = FXMLLoader.load(getClass().getResource("loserScreen.fxml"));
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation((getClass().getResource("/loserScreen.fxml")));
     Parent root = loader.load();
     Scene scene = new Scene(root);
     Stage stage = new Stage();
@@ -304,7 +306,9 @@ public class GuiController {
     stage.show();
     EndScreenController eController = loader.getController();
     eController.setNumberOfPlayers(numberOfPlayers);
+    eController.setPointsNamesVisible();
   }
+
 
 
   /**

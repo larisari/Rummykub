@@ -46,9 +46,6 @@ public class EndScreenController {
     parser = new ClientParser(this);
   }
 
-  private void getPlayerPoints() {
-    parser.getPlayerPoints();
-  }
 
   public void setNumberOfPlayers(Integer numberOfPlayers){
     this.numberOfPlayers = numberOfPlayers;
@@ -81,6 +78,9 @@ public class EndScreenController {
    */
   @FXML
   private void initialize() {
+
+  }
+    public void setPointsNamesVisible(){
     switch (numberOfPlayers) {
       case 2:
         Loserp3Points.setVisible(false);
