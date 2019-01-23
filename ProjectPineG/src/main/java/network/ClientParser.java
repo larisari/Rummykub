@@ -68,6 +68,19 @@ public class ClientParser {
     Client.sendMessageToServer(builder.toString());
   }
 
+  public void playHandWithBoard(List<ImageView> selectedTiles, List<List<ImageView>> board) {
+    StringBuilder builder = new StringBuilder();
+    builder.append("playHandWithBoard|");
+
+    builder.append(GuiParser.parseToString(selectedTiles));
+
+    builder.append("|");
+
+    builder.append(GuiParser.parseListToString(board));
+
+    Client.sendMessageToServer(builder.toString());
+  }
+
   public void playL(
           List<ImageView> tilesFromHand,
           List<List<ImageView>> CombinationsOnBoard) {
@@ -189,6 +202,21 @@ public class ClientParser {
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.cancelSelEffect());
         }
+        break;
+
+      case "responseForPlayHandWithBoard":
+        if(messageAsArray[1].equals("true")){
+          Platform.runLater(() -> {
+            try {
+              guiController.moveTiles();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          });
+        } else if (messageAsArray[1].equals("false")){
+          Platform.runLater(() -> guiController.cancelSelEffect());
+        }
+
         break;
 
       case "responseForPlaySwapJoker":
