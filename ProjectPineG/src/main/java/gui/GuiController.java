@@ -55,8 +55,6 @@ public class GuiController {
   @FXML
   private ImageView bag;
   @FXML
-  private Group topBoard;
-  @FXML
   private Group rightBoard;
   @FXML
   private Group leftBoard;
@@ -314,7 +312,7 @@ public void setPlayerBoards(){
   @FXML
   protected void handleDrawTile(MouseEvent event) {
     parser.draw();
-    parser.getNextPlayerID();
+   // parser.getNextPlayerID();
   }
 
   /**
@@ -336,11 +334,11 @@ public void setPlayerBoards(){
    *
    * @param ID of the next player.
    */
-  //TODO passt!
   public void updateNextPlayerName(Integer ID) {
     if (playerID == ID) {
       playerTurn.setText("Your turn.");
     } else {
+      ID += 1;
       playerTurn.setText("Player " + ID + "'s turn.");
     }
   }
@@ -395,8 +393,9 @@ public void setPlayerBoards(){
     }
     disableControl();
     cancelSelection();
-    parser.getNextPlayerID();
     parser.finishedTurn();
+  //  parser.getNextPlayerID();
+
   }
 
   /**

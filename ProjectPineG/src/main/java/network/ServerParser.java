@@ -36,19 +36,13 @@ public class ServerParser {
 
           clients.get(id).sendMessageToClient("responseForDraw|" + parseTileToString(result.get().getSecond()));
           clients.get(Server.gameInfo.getCurrentPlayerId()).sendMessageToClient("itsYourTurn");
+          Server.broadcastToAllClients("UpdateCurrentPlayerTurn|" + Server.gameInfo.getCurrentPlayerId());
+
           System.out.println("SERVER: pressed draw by " + id + " next player " + Server.gameInfo.getCurrentPlayerId());
         } else {
           // id is not registered in model.
           log.info("There is no " + id + " registered in the model.");
         }
-        break;
-
-      case "startGame":
-        Server.gameInfo.startGame();
-        for (ServerClientCommunication client : clients) {
-            client.sendMessageToClient("responseStartGame|" + clients.size() + "|" + client.getClientID());
-        }
-        Server.broadcastToAllClients("closeStartScreen");
         break;
 
       case "finishedTurn":
@@ -57,14 +51,22 @@ public class ServerParser {
         if (resultOfTurn.isPresent()){
           Server.broadcastToAllClients("responseForFinishedTurn|" + parseCombinationsToString(resultOfTurn.get().getSecond()));
           clients.get(Server.gameInfo.getCurrentPlayerId()).sendMessageToClient("itsYourTurn");
+          Server.broadcastToAllClients("UpdateCurrentPlayerTurn|" + Server.gameInfo.getCurrentPlayerId());
+
         } else {log.info("There is no " + id + " registered in the model.");}
         break;
 
       case "getNextPlayerID":
         Integer resultID = Server.gameInfo.getCurrentPlayerId();
-
         Server.broadcastToAllClients("responseForGetNextPlayerID|" + resultID);
+        break;
 
+      case "startGame":
+        Server.gameInfo.startGame();
+        for (ServerClientCommunication client : clients) {
+            client.sendMessageToClient("responseStartGame|" + clients.size() + "|" + client.getClientID());
+        }
+        Server.broadcastToAllClients("closeStartScreen");
         break;
 
       case "play":
