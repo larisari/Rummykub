@@ -30,7 +30,6 @@ public class Client extends Thread {
       this.startListening();
 
 
-      //System.out.println("[Host-Client] wurde erstellt. In-/Outputstreams geöffnet. ");
       log.info("[Host-Client] wurde erstellt. In-/Outputstreams geöffnet. ");
     } catch (IOException e) {
       e.printStackTrace();
@@ -45,7 +44,6 @@ public class Client extends Thread {
 
       in = new DataInputStream(socket.getInputStream());
       out = new DataOutputStream(socket.getOutputStream());
-      //System.out.println("[Client] wurde erstellt. In-/Outputstreams geöffnet.");
       log.info("[Client] wurde erstellt. In-/Outputstreams geöffnet.");
       this.startListening();
 
@@ -74,7 +72,6 @@ public class Client extends Thread {
               DataInputStream in = new DataInputStream(socket.getInputStream());
               String msg = in.readUTF();
 
-              //System.out.println("[Client] Incoming message from Server: " + msg);
               log.info("[Client] Incoming message from Server: " + msg);
               ClientParser.parseForController(msg);
 
@@ -90,3 +87,5 @@ public class Client extends Thread {
     listeningThread.start();
   }
 }
+
+
