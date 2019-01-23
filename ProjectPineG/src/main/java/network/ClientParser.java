@@ -216,7 +216,6 @@ public class ClientParser {
         } else if (messageAsArray[1].equals("false")){
           Platform.runLater(() -> guiController.cancelSelEffect());
         }
-
         break;
 
       case "responseForPlaySwapJoker":
