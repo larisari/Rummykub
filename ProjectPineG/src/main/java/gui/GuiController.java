@@ -197,18 +197,16 @@ public class GuiController {
         FlowPane tempBoard = new FlowPane(board);
         HBox tempBox = new HBox();
         tempBox.prefHeight(MAX_BOXHEIGHT);
-        tempBox.prefWidth(selectedTiles.size()*MAX_BOXWIDTH);
-        for (int j = 0; j < selectedTiles.size(); j++){
+        tempBox.prefWidth(selectedTiles.size() * MAX_BOXWIDTH);
+        for (int j = 0; j < selectedTiles.size(); j++) {
           tempBox.getChildren().add(selectedTiles.get(i));
         }
         tempBoard.getChildren().add(tempBox);
-parser.play(selectedTiles, boardToList(tempBoard));
-       // moveTiles(selectedTiles);
+        parser.playHandWithBoard(selectedTiles, boardToList(tempBoard));
         return;
       }
       updateBoard();
     }
-    //TODO tiles auf hand und tiles auf board zu neuer kombi kombinieren können nach manipulate drücken.
     if (!selectedTiles.isEmpty()) {
       List<ImageView> sTiles = new ArrayList<>();
       HBox comb = new HBox();
@@ -227,9 +225,13 @@ parser.play(selectedTiles, boardToList(tempBoard));
 
   /**
    * Creates a new combination on the main board with the selected tiles.
-   *
    */
   public void moveTiles() throws IOException {
+    moveTilesAux(selectedTiles);
+
+  }
+
+  private void moveTilesAux(List<ImageView> combination) throws IOException {
     HBox comb = new HBox();
     for (int j = 0; j < selectedTiles.size(); j++) {
       ImageView tile = selectedTiles.get(j);
@@ -239,7 +241,7 @@ parser.play(selectedTiles, boardToList(tempBoard));
       comb.getChildren().add(tile);
     }
 
-  //  placedCombinations.add(comb);
+    //  placedCombinations.add(comb);
     board.getChildren().add(comb);
     disableTiles(selectedTiles); //löscht auch tiles aus selectedTiles
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
@@ -247,6 +249,7 @@ parser.play(selectedTiles, boardToList(tempBoard));
       parser.notifyWin();
     }
   }
+
 
   /**
    * Checks if tile combinations on the selection board are valid.
@@ -268,7 +271,7 @@ parser.play(selectedTiles, boardToList(tempBoard));
   public void placeTiles() throws IOException {
     for (int i = 0; i < selectedCombinations.size(); i++) {
       List<ImageView> combination = selectedCombinations.get(i);
-      moveTiles(combination);
+      moveTilesAux(combination);
     }
     bag.setDisable(true);
     endTurn.setDisable(false);
@@ -318,7 +321,6 @@ parser.play(selectedTiles, boardToList(tempBoard));
     eController.setNumberOfPlayers(numberOfPlayers);
     eController.setPointsNamesVisible();
   }
-
 
 
   /**
@@ -398,6 +400,7 @@ parser.play(selectedTiles, boardToList(tempBoard));
     disableControl();
     cancelSelection();
   }
+
   /**
    * Opens alert window if non valid combinations are still on the main board.
    */
@@ -589,10 +592,10 @@ parser.play(selectedTiles, boardToList(tempBoard));
     }
   }
 
-  private List<List<ImageView>> boardToList(FlowPane pane){
+  private List<List<ImageView>> boardToList(FlowPane pane) {
     List<List<ImageView>> allCombinations = new ArrayList<>();
-   for (int i = 0; i < pane.getChildren().size(); i++){
-     HBox box = (HBox)pane.getChildren().get(i);
+    for (int i = 0; i < pane.getChildren().size(); i++) {
+      HBox box = (HBox) pane.getChildren().get(i);
       if (box.getChildren().isEmpty()) {
         pane.getChildren().remove(box);
       } else {
@@ -604,7 +607,7 @@ parser.play(selectedTiles, boardToList(tempBoard));
         allCombinations.add(comb);
       }
     }
-   return allCombinations;
+    return allCombinations;
   }
 
   /**
@@ -620,12 +623,11 @@ parser.play(selectedTiles, boardToList(tempBoard));
     }
     FlowPane tempBoard = new FlowPane(board);
     HBox tempBox = new HBox(boardComb);
-    for (int i = 0; i < tempBoard.getChildren().size(); i++){
-      if (tempBoard.getChildren().get(i) == tempBox){
-        tempBox.getChildren().addAll(1,selectedTiles);
+    for (int i = 0; i < tempBoard.getChildren().size(); i++) {
+      if (tempBoard.getChildren().get(i) == tempBox) {
+        tempBox.getChildren().addAll(1, selectedTiles);
       }
     }
-
 
     parser.playL(selectedTiles, boardToList(tempBoard));
   }
@@ -679,12 +681,12 @@ parser.play(selectedTiles, boardToList(tempBoard));
     }
     FlowPane tempBoard = new FlowPane(board);
     HBox tempBox = new HBox(boardComb);
-    for (int i = 0; i < tempBoard.getChildren().size(); i++){
-      if (tempBoard.getChildren().get(i) == tempBox){
-        tempBox.getChildren().addAll(tempBox.getChildren().size()-1,selectedTiles);
+    for (int i = 0; i < tempBoard.getChildren().size(); i++) {
+      if (tempBoard.getChildren().get(i) == tempBox) {
+        tempBox.getChildren().addAll(tempBox.getChildren().size() - 1, selectedTiles);
       }
     }
-  //  parser.playR(selectedTiles, boardToList(tempBoard));
+    //  parser.playR(selectedTiles, boardToList(tempBoard));
   }
 
   /**
