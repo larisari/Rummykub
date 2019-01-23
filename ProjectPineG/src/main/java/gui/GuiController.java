@@ -623,9 +623,10 @@ public class GuiController {
     }
     FlowPane tempBoard = new FlowPane(board);
     HBox tempBox = new HBox(boardComb);
+    deleteAddToButtons(tempBoard);
     for (int i = 0; i < tempBoard.getChildren().size(); i++) {
       if (tempBoard.getChildren().get(i) == tempBox) {
-        tempBox.getChildren().addAll(1, selectedTiles);
+        tempBox.getChildren().addAll(0, selectedTiles);
       }
     }
 
@@ -638,7 +639,7 @@ public class GuiController {
    */
   public void allowAddFront() throws IOException {
     System.out.println("added to front");
-    deleteAddToButtons();
+    deleteAddToButtons(board);
     for (int j = 0; j < selectedTiles.size();
         j++) {    //hinzufügen in selber kombination soll nicht gehn.
       if (boardComb.getChildren().contains(selectedTiles.get(j))) {
@@ -663,7 +664,7 @@ public class GuiController {
    * Gets called if selected tiles may not be added to existing combination.
    */
   public void disallowAddTo() {
-    deleteAddToButtons();
+    deleteAddToButtons(board);
     cancelSelEffect();
 
   }
@@ -694,7 +695,7 @@ public class GuiController {
    * selected tiles should be added to the same combination they are already contained in.
    */
   public void allowAddBack() throws IOException {
-    deleteAddToButtons();
+    deleteAddToButtons(board);
     for (int j = 0; j < selectedTiles.size(); j++) {
       if (boardComb.getChildren().contains(selectedTiles.get(j))) {
         return;
@@ -782,9 +783,9 @@ public class GuiController {
   /**
    * Deletes all "add here" buttons on the main board.
    */
-  private void deleteAddToButtons() {
-    for (int i = 0; i < board.getChildren().size(); i++) {
-      HBox box = (HBox) board.getChildren().get(i);
+  private void deleteAddToButtons(FlowPane pane) {
+    for (int i = 0; i < pane.getChildren().size(); i++) {
+      HBox box = (HBox) pane.getChildren().get(i);
       box.getChildren().remove(box.getChildren().get(box.getChildren().size() - 1));
       box.getChildren().remove(box.getChildren().get(0));
 
