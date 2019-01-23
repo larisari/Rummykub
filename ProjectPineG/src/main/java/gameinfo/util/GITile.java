@@ -11,7 +11,7 @@ public class GITile {
   public GITile(GINumber number, GIColor color) throws IllegalArgumentException {
     this.number = number;
     this.color = color;
-    checkForJoker();
+//    checkForJoker();
   }
 
   private void checkForJoker() throws IllegalArgumentException {
