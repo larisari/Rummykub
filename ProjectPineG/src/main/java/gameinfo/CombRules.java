@@ -33,14 +33,11 @@ class CombRules {
       if (isGroup(combination)) {
         points += calculator.calculatePointsForGroup(combination);
         log.info("The passed combination is a group and is worth " + points + " points.");
-      } else if (isStreet(combination)) {
+      } else {
         // At this point I know that the combination has to be a street,
         // because otherwise the guard from before would have returned false.
         points += calculator.calculatePointsForStreet(combination);
         log.info("The passed combination is a street and is worth " + points + " points.");
-      } else {
-        log.info("The combination is neither a group nor a street.");
-        throw new IllegalStateException("The combination " + combination + "is not legal.");
       }
     }
 

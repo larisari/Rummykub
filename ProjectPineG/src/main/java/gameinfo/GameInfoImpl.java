@@ -40,18 +40,17 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     if (canModifyRegisteredPlayers) {
       gameFlow.registerBy(id);
       hasRegisteredPlayers = true;
-
-      log.info("Registered Player " + id + ".");
     } else {
-      log.info("Registering of Player " + id + " has failed.");
+      log.info(
+          "Registration of Player "
+              + id
+              + " has failed. No more players can be registered in the model.");
     }
   }
 
   @Override
   public void deregisterBy(Integer id) {
     gameFlow.deregisterBy(id);
-
-    log.info("Deregistered Player " + id + ".");
 
     if (gameFlow.getPlayers().isEmpty()) {
       hasRegisteredPlayers = false;
@@ -122,12 +121,11 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     }
   }
 
-  //testing purpose only
-  //either one or fourteen tiles !!
+  // testing purpose only
+  // either one or fourteen tiles !!
   // TODO REMOVE TEST PURPPOSE ONLY
- @Override
-  public Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id,
-                                                         List<GITile> customTiles) {
+  @Override
+  public Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id, List<GITile> customTiles) {
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (!optionalPlayer.isPresent()) {
@@ -144,10 +142,10 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     if (gameFlow.isDistributing()) {
       gameFlow.addDistribution();
       gameFlow.nextPlayersTurn();
-      returnValue = new GITuple<>(id, getStackFor(id,customTiles));
+      returnValue = new GITuple<>(id, getStackFor(id, customTiles));
       return Optional.of(returnValue);
     } else {
-      GITile tile = getTileFor(id,customTiles.get(0));
+      GITile tile = getTileFor(id, customTiles.get(0));
       List<GITile> tiles = new ArrayList<>();
       tiles.add(tile);
       gameFlow.nextPlayersTurn();
@@ -159,7 +157,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   private List<GITile> getStackFor(Integer id, List<GITile> customTiles) {
     // .get() is allowed here because it is always called after isPresent check !!!
     Player player = gameFlow.getPlayerBy(id).get();
-    List<GITile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK,customTiles);
+    List<GITile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK, customTiles);
     player.put(stack);
     return stack;
   }
@@ -172,8 +170,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       GITile tile = board.getTileFromBag(customTile).get();
       player.put(tile);
       return tile;
-    }
-    else {
+    } else {
       throw new IllegalArgumentException("Tile is not in stack anymore.");
     }
   }
@@ -222,9 +219,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   @Override
   public Optional<GITuple<Integer, Boolean>> play(
-          List<GITile> tilesFromHand,
-          List<List<GITile>> combinationsOnBoard,
-          Integer id) {
+      List<GITile> tilesFromHand, List<List<GITile>> combinationsOnBoard, Integer id) {
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
@@ -239,8 +234,8 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       boolean allValid = combRules.isValid(combinationsOnBoard);
 
       if (allValid) {
-        player.remove(tilesFromHand);
         player.madeMove();
+        player.remove(tilesFromHand);
         board.clear();
         combinationsOnBoard.forEach(combination -> board.addCombo(combination));
         return Optional.of(new GITuple<>(id, true));
@@ -262,7 +257,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     }
 
     GITuple<Integer, GIPoints> returnValue =
-            new GITuple<>(id, optionalPlayer.get().calculatePointsOfHand());
+        new GITuple<>(id, optionalPlayer.get().calculatePointsOfHand());
     return Optional.of(returnValue);
   }
 
@@ -325,10 +320,9 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   private void putComboOnBoard(List<List<GITile>> combinations, Player player) {
     combinations.forEach(
-            combination -> {
-              board.addCombo(combination);
-              player.remove(combination);
-            });
+        combination -> {
+          board.addCombo(combination);
+          player.remove(combination);
+        });
   }
-
 }
