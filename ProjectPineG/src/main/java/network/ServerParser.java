@@ -56,7 +56,7 @@ public class ServerParser {
 
         if (resultOfTurn.isPresent()){
           Server.broadcastToAllClients("responseForFinishedTurn|" + parseCombinationsToString(resultOfTurn.get().getSecond()));
-          clients.get(Server.gameInfo.getCurrentPlayerId()).sendMessageToClient("itsYourTurn");
+          clients.get(Server.gameInfo.getNextPlayerId().get()).sendMessageToClient("itsYourTurn");
         } else {log.info("There is no " + id + " registered in the model.");}
         break;
 
