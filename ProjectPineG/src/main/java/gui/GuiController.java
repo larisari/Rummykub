@@ -233,8 +233,8 @@ public class GuiController {
 
   private void moveTilesAux(List<ImageView> combination) throws IOException {
     HBox comb = new HBox();
-    for (int j = 0; j < selectedTiles.size(); j++) {
-      ImageView tile = selectedTiles.get(j);
+    for (int j = 0; j < combination.size(); j++) {
+      ImageView tile = combination.get(j);
       tile.setStyle("-fx-translate-y: 0");
       tile.setEffect(null);
       tile.setDisable(true);
@@ -243,7 +243,7 @@ public class GuiController {
 
     //  placedCombinations.add(comb);
     board.getChildren().add(comb);
-    disableTiles(selectedTiles); //löscht auch tiles aus selectedTiles
+    disableTiles(combination); //löscht auch tiles aus selectedTiles
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();
       parser.notifyWin();
@@ -637,7 +637,7 @@ public class GuiController {
    * selected tiles should be added to the same combination they are already contained in.
    */
   public void allowAddFront() throws IOException {
-
+    System.out.println("added to front");
     deleteAddToButtons();
     for (int j = 0; j < selectedTiles.size();
         j++) {    //hinzufügen in selber kombination soll nicht gehn.
