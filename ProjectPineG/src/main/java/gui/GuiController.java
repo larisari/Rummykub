@@ -69,7 +69,7 @@ public class GuiController {
   private Button placeOnBoard;
   @FXML
   private Button swapJoker;
-
+private FlowPane tempBoard = new FlowPane();
   private List<ImageView> selectedTiles = new ArrayList<>();
   private List<List<ImageView>> selectedCombinations = new ArrayList<>();
   private List<HBox> placedCombinations = new ArrayList<>(); //wird an Server geschickt.
@@ -615,31 +615,13 @@ public class GuiController {
    * to existing combination.
    */
   void addToFront(HBox comb) {
+    deleteAddToButtons(board);
+    tempBoard = new FlowPane(board);
     boardComb = comb;
     List<ImageView> boardTiles = new ArrayList<>();   //erstellt liste mit gewünschter neuer kombination.
-    for (int i = 1; i < comb.getChildren().size() - 1;
-        i++) {   //1 und size-1 weil an diesen Stellen Buttons sind.
+    for (int i = 0; i < comb.getChildren().size(); i++) {   //1 und size-1 weil an diesen Stellen Buttons sind.
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
-    FlowPane tempBoard = new FlowPane(board);
-    HBox tempBox = new HBox(boardComb);
-    deleteAddToButtons(tempBoard);
-    for (int i = 0; i < tempBoard.getChildren().size(); i++) {
-      if (tempBoard.getChildren().get(i) == tempBox) {
-        tempBox.getChildren().addAll(0, selectedTiles);
-      }
-    }
-    System.out.println(board.getChildren().size() + " boardsize");
-    parser.playL(selectedTiles, boardToList(tempBoard));
-  }
-
-  /**
-   * Adds selected tiles to the front of a cached combination on the main board. Exits method, if
-   * selected tiles should be added to the same combination they are already contained in.
-   */
-  public void allowAddFront() throws IOException {
-    System.out.println("added to front");
-    deleteAddToButtons(board);
     for (int j = 0; j < selectedTiles.size();
         j++) {    //hinzufügen in selber kombination soll nicht gehn.
       if (boardComb.getChildren().contains(selectedTiles.get(j))) {
@@ -654,6 +636,24 @@ public class GuiController {
 
     disableTiles(selectedTiles); //cleart auch selectedTiles
     updateBoard();
+
+ //   FlowPane tempBoard = new FlowPane();
+ //   HBox tempBox = new HBox(boardComb);
+ //   deleteAddToButtons(tempBoard);
+ //   for (int i = 0; i < tempBoard.getChildren().size(); i++) {
+ //     if (tempBoard.getChildren().get(i) == tempBox) {
+ //       tempBox.getChildren().addAll(0, selectedTiles);
+ //     }
+ //   }
+    System.out.println(board.getChildren().size() + " boardsize");
+    parser.playL(selectedTiles, boardToList(board));
+  }
+
+  /**
+   * Adds selected tiles to the front of a cached combination on the main board. Exits method, if
+   * selected tiles should be added to the same combination they are already contained in.
+   */
+  public void allowAddFront() throws IOException {
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();
       parser.notifyWin();
@@ -664,7 +664,7 @@ public class GuiController {
    * Gets called if selected tiles may not be added to existing combination.
    */
   public void disallowAddTo() {
-    deleteAddToButtons(board);
+  board = new FlowPane(tempBoard);
     cancelSelEffect();
 
   }
