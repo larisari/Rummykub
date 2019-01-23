@@ -236,7 +236,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       if (allValid) {
         player.madeMove();
         player.remove(tilesFromHand);
-        board.clear();
+      //  board.clear();
         combinationsOnBoard.forEach(combination -> board.addCombo(combination));
         return Optional.of(new GITuple<>(id, true));
       } else {
