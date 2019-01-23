@@ -202,7 +202,7 @@ public class GuiController {
           tempBox.getChildren().add(selectedTiles.get(i));
         }
         tempBoard.getChildren().add(tempBox);
-//parser.play(selectedTiles, boardToList(tempBoard));
+parser.play(selectedTiles, boardToList(tempBoard));
        // moveTiles(selectedTiles);
         return;
       }
@@ -226,20 +226,19 @@ public class GuiController {
   }
 
   /**
-   * Creates a new combination on the main board with the given List of tiles.
+   * Creates a new combination on the main board with the selected tiles.
    *
-   * @param combination to be added to the board.
    */
-  private void moveTiles(List<ImageView> combination) throws IOException {
+  public void moveTiles() throws IOException {
     HBox comb = new HBox();
-    for (int j = 0; j < combination.size(); j++) {
-      ImageView tile = combination.get(j);
+    for (int j = 0; j < selectedTiles.size(); j++) {
+      ImageView tile = selectedTiles.get(j);
       tile.setStyle("-fx-translate-y: 0");
       tile.setEffect(null);
       tile.setDisable(true);
       comb.getChildren().add(tile);
     }
-    //TODO tiles an model zum validieren schicken
+
   //  placedCombinations.add(comb);
     board.getChildren().add(comb);
     disableTiles(selectedTiles); //löscht auch tiles aus selectedTiles
@@ -685,7 +684,7 @@ public class GuiController {
         tempBox.getChildren().addAll(tempBox.getChildren().size()-1,selectedTiles);
       }
     }
-    parser.playR(selectedTiles, boardToList(tempBoard));
+  //  parser.playR(selectedTiles, boardToList(tempBoard));
   }
 
   /**
