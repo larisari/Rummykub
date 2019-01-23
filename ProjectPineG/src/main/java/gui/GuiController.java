@@ -128,17 +128,17 @@ public class GuiController {
   }
 
 
-public void setPlayerBoards(){
-  switch (numberOfPlayers) {
-    case 2:
-      rightBoard.setVisible(false);
-      leftBoard.setVisible(false);
-      break;
-    case 3:
-      leftBoard.setVisible(false);
-      break;
+  public void setPlayerBoards() {
+    switch (numberOfPlayers) {
+      case 2:
+        rightBoard.setVisible(false);
+        leftBoard.setVisible(false);
+        break;
+      case 3:
+        leftBoard.setVisible(false);
+        break;
+    }
   }
-}
 
   /**
    * Sets player names on player boards, according to each player.
@@ -148,19 +148,19 @@ public void setPlayerBoards(){
       case 0:
         break; //bleibt auf default
       case 1:
-        playerTopName.setText("Player 1");
-        playerRightName.setText("Player 4");
-        playerLeftName.setText("Player 3");
+        playerTopName.setText("PLAYER 1");
+        playerRightName.setText("PLAYER 4");
+        playerLeftName.setText("PLAYER 3");
         break;
       case 2:
-        playerTopName.setText("Player 4");
-        playerRightName.setText("Player 2");
-        playerLeftName.setText("Player 1");
+        playerTopName.setText("PLAYER 4");
+        playerRightName.setText("PLAYER 2");
+        playerLeftName.setText("PLAYER 1");
         break;
       case 3:
-        playerTopName.setText("Player 3");
-        playerRightName.setText("Player 1");
-        playerLeftName.setText("Player 2");
+        playerTopName.setText("PLAYER 3");
+        playerRightName.setText("PLAYER 1");
+        playerLeftName.setText("PLAYER 2");
         break;
     }
   }
@@ -311,7 +311,7 @@ public void setPlayerBoards(){
   @FXML
   protected void handleDrawTile(MouseEvent event) {
     parser.draw();
-   // parser.getNextPlayerID();
+    // parser.getNextPlayerID();
   }
 
   /**
@@ -395,7 +395,7 @@ public void setPlayerBoards(){
     disableControl();
     cancelSelection();
     parser.finishedTurn();
-  //  parser.getNextPlayerID();
+    //  parser.getNextPlayerID();
 
   }
 
@@ -606,7 +606,6 @@ public void setPlayerBoards(){
     newCombination.addAll(selectedTiles);
     newCombination.addAll(boardTiles);
     newComb.add(newCombination);
-    //TODO newComb soll alle combinationen am board enthalten -> schmarrn weil ja nur die eine kombination verändert werden kann.
     parser.playL(selectedTiles, boardTiles, newComb);
   }
 
