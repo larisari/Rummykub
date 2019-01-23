@@ -17,26 +17,30 @@ public class Client extends Thread {
   private static Logger log = Logger.getLogger(Client.class.getName());
 
 
-  /**
-   * Client-constructor for Hoster
-   */
-  public Client() {
+//  /**
+//   * Client-constructor for Hoster
+//   */
+//  public Client() {
+//
+//    try {
+//      this.socket = new Socket("127.0.0.1", PORT);
+//
+//      in = new DataInputStream(socket.getInputStream());
+//      out = new DataOutputStream(socket.getOutputStream());
+//      this.startListening();
+//
+//
+//      log.info("[Host-Client] wurde erstellt. In-/Outputstreams geöffnet. ");
+//    } catch (IOException e) {
+//      e.printStackTrace();
+//    }
+//  }
 
-    try {
-      this.socket = new Socket("127.0.0.1", PORT);
+    /**
+     * Constructor to generate a Client, which connects to the Server.
+     * @param ip address of the server, a client wants to connect to.
+     */
 
-      in = new DataInputStream(socket.getInputStream());
-      out = new DataOutputStream(socket.getOutputStream());
-      this.startListening();
-
-
-      log.info("[Host-Client] wurde erstellt. In-/Outputstreams geöffnet. ");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-
-  }
 
   public Client(String ip) {
     try {
@@ -52,6 +56,10 @@ public class Client extends Thread {
     }
   }
 
+    /**
+     * Sends a message to the server.
+     * @param message message to send to the server.
+     */
   public static void sendMessageToServer(String message) {
     String messageToServer = message;
     try {
@@ -61,6 +69,9 @@ public class Client extends Thread {
     }
   }
 
+    /**
+     * Opens a Thread, which listens to incoming messages from the Server and hands over to the Client Parser.
+     */
   public void startListening() {
     listeningThread = new Thread(new Runnable() {
       @Override
