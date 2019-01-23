@@ -170,7 +170,7 @@
                   <Image url="@images/bag.png" />
                </image>
             </ImageView>
-            <FlowPane fx:id="board" hgap="30.0" layoutX="133.0" layoutY="106.0" prefHeight="473.0" prefWidth="723.0" vgap="30.0" AnchorPane.bottomAnchor="217.0" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="106.0" />
+            <FlowPane fx:id="board" hgap="30.0" layoutX="133.0" layoutY="106.0" prefHeight="473.0" prefWidth="723.0" vgap="10.0" AnchorPane.bottomAnchor="217.0" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="106.0" />
             <Button fx:id="addToExisting" accessibleRole="PARENT" alignment="CENTER" layoutX="857.0" layoutY="660.0" mnemonicParsing="false" onMouseClicked="#handleAddTo" prefHeight="66.0" prefWidth="200.0" styleClass="addTo" text="Add to existing Combination" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="70.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />

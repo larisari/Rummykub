@@ -5,11 +5,13 @@ import gui.GuiController;
 import gui.LoadingScreenController;
 import gui.StartingScreenController;
 import gui.util.Image;
+import java.sql.SQLOutput;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.util.List;
+import org.graalvm.compiler.code.SourceStackTraceBailoutException;
 
 public class ClientParser {
 
@@ -85,6 +87,8 @@ public class ClientParser {
 
     builder.append(GuiParser.parseListToString(newCombinations));
 
+    System.out.println(builder.toString());
+
     Client.sendMessageToServer(builder.toString());
   }
 
@@ -106,6 +110,8 @@ public class ClientParser {
     builder.append("|");
 
     builder.append(GuiParser.parseListToString(newCombinations));
+
+    System.out.println(builder.toString());
 
     Client.sendMessageToServer(builder.toString());
   }
@@ -149,6 +155,7 @@ public class ClientParser {
       case "responseStartGame":
           Platform.runLater(() -> {
             try {
+              System.out.println(loadingScreenController);
               loadingScreenController.openGameWindow(Integer.parseInt(messageAsArray[1]), Integer.parseInt(messageAsArray[2]));
             } catch (IOException e) {
               e.printStackTrace();
@@ -159,20 +166,23 @@ public class ClientParser {
       case "closeStartScreen":
 //        Platform.runLater(() -> startingScreenController.closeStartScreen());
         break;
+
       case "responseForDraw":
         Platform.runLater(() -> guiController.loadTiles(guiParser.parseStringToImgsForOneComb(messageAsArray[1])));
-
         break;
 
       case "responseForFinishedTurn":
-        Platform.runLater(() -> guiController.reloadBoard(guiParser.parseStringToWholeBoard(messageAsArray[1])));
+        if (!messageAsArray[1].equals("list<")) {
+          Platform.runLater(() -> guiController
+              .reloadBoard(guiParser.parseStringToWholeBoard(messageAsArray[1])));
+        }
         break;
 
       case "itsYourTurn":
         Platform.runLater(() -> guiController.enableControl());
         break;
 
-      case "responseForGetNextPlayerId":
+      case "UpdateCurrentPlayerTurn":
         Platform.runLater(() -> guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
         break;
 
@@ -212,10 +222,6 @@ public class ClientParser {
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.disallowAddTo());
         }
-        break;
-
-      case "responseForGetNextPlayerID":
-        Platform.runLater(() -> guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
         break;
 
       case "responseForNumberOfPlayers":
