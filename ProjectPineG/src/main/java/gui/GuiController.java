@@ -254,7 +254,6 @@ public void setPlayerBoards(){
    * now empty.
    */
   public void placeTiles() throws IOException {
-    System.out.println("placing tiles");
     for (int i = 0; i < selectedCombinations.size(); i++) {
       List<ImageView> combination = selectedCombinations.get(i);
       moveTiles(combination);
@@ -312,7 +311,7 @@ public void setPlayerBoards(){
   @FXML
   protected void handleDrawTile(MouseEvent event) {
     parser.draw();
-    parser.getNextPlayerID();
+   // parser.getNextPlayerID();
   }
 
   /**
@@ -334,11 +333,11 @@ public void setPlayerBoards(){
    *
    * @param ID of the next player.
    */
-  //TODO passt!
   public void updateNextPlayerName(Integer ID) {
     if (playerID == ID) {
       playerTurn.setText("Your turn.");
     } else {
+      ID += 1;
       playerTurn.setText("Player " + ID + "'s turn.");
     }
   }
@@ -377,6 +376,7 @@ public void setPlayerBoards(){
    */
   @FXML
   protected void handleEndTurn(MouseEvent event) {
+    /*
     List<List<ImageView>> allCombinations = new ArrayList<>();
     for (int i = placedCombinations.size() - 1; i >= 0; i--) {
       HBox box = placedCombinations.get(i);
@@ -391,10 +391,11 @@ public void setPlayerBoards(){
         allCombinations.add(comb);
       }
     }
+    */
     disableControl();
     cancelSelection();
     parser.finishedTurn();
-    parser.getNextPlayerID();
+  //  parser.getNextPlayerID();
 
   }
 
@@ -601,8 +602,10 @@ public void setPlayerBoards(){
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
     List<List<ImageView>> newComb = new ArrayList<>();
-    selectedTiles.addAll(boardTiles);
-    newComb.add(selectedTiles);
+    List<ImageView> newCombination = new ArrayList<>();
+    newCombination.addAll(selectedTiles);
+    newCombination.addAll(boardTiles);
+    newComb.add(newCombination);
     //TODO newComb soll alle combinationen am board enthalten -> schmarrn weil ja nur die eine kombination verändert werden kann.
     parser.playL(selectedTiles, boardTiles, newComb);
   }
@@ -651,8 +654,10 @@ public void setPlayerBoards(){
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
     List<List<ImageView>> newComb = new ArrayList<>();
-    boardTiles.addAll(selectedTiles);
-    newComb.add(boardTiles);
+    List<ImageView> newCombination = new ArrayList<>();
+    newCombination.addAll(boardTiles);
+    newCombination.addAll(selectedTiles);
+    newComb.add(newCombination);
     parser.playR(selectedTiles, boardTiles, newComb);
   }
 
