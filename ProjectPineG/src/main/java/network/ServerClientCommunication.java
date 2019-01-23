@@ -26,7 +26,9 @@ public class ServerClientCommunication extends Thread {
     return this.clientID;
   }
 
-  // Startet Thread und "lauscht" innerhalb der while-Schleife ununterbrochen auf eingehende Nachricht vom Client.
+  /**
+   * starts Thread, which listens for incoming messages of all connected clients.
+   */
   @Override
   public void run() {
 
@@ -50,6 +52,10 @@ public class ServerClientCommunication extends Thread {
     }
   }
 
+  /**
+   * Server sends message to Client.
+   * @param message server-message to client.
+   */
   public void sendMessageToClient(String message) {
     String messageToClient = message;
     try {
@@ -62,6 +68,9 @@ public class ServerClientCommunication extends Thread {
     }
   }
 
+  /**
+   * Disconnection with a client.
+   */
   public void disconnectClient() {
     try {
       in.close();
