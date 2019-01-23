@@ -55,8 +55,6 @@ public class GuiController {
   @FXML
   private ImageView bag;
   @FXML
-  private Group topBoard;
-  @FXML
   private Group rightBoard;
   @FXML
   private Group leftBoard;
@@ -395,8 +393,9 @@ public void setPlayerBoards(){
     }
     disableControl();
     cancelSelection();
-    parser.getNextPlayerID();
     parser.finishedTurn();
+    parser.getNextPlayerID();
+
   }
 
   /**
