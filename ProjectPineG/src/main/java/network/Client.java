@@ -70,20 +70,17 @@ public class Client extends Thread {
         boolean running = true;
         while (running) {
           try {
-            if (!socket.isConnected()) {
+            if (socket.isConnected()) {
+              DataInputStream in = new DataInputStream(socket.getInputStream());
+              String msg = in.readUTF();
+
+              //System.out.println("[Client] Incoming message from Server: " + msg);
+              log.info("[Client] Incoming message from Server: " + msg);
+              ClientParser.parseForController(msg);
+
+            } else {
               running = false;
             }
-
-            DataInputStream in = new DataInputStream(socket.getInputStream());
-            String msg = in.readUTF();
-
-            //System.out.println("[Client] Incoming message from Server: " + msg);
-            log.info("[Client] Incoming message from Server: " + msg);
-
-            ClientParser.parseForController(msg);
-
-//              //an Parser weitergeben...
-//            }
           } catch (IOException e) {
             e.printStackTrace();
           }
