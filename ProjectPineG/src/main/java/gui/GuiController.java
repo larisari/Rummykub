@@ -69,7 +69,6 @@ public class GuiController {
   private Button placeOnBoard;
   @FXML
   private Button swapJoker;
-private FlowPane tempBoard = new FlowPane();
   private List<ImageView> selectedTiles = new ArrayList<>();
   private List<List<ImageView>> selectedCombinations = new ArrayList<>();
   private List<HBox> placedCombinations = new ArrayList<>(); //wird an Server geschickt.
@@ -193,8 +192,8 @@ private FlowPane tempBoard = new FlowPane();
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView tile = selectedTiles.get(i);
       if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren()
-          .contains(tile)) { //wenn irgendeine tile am board liegt
-        parser.playHandWithBoard(selectedTiles, boardToList(tempBoard));
+          .contains(tile)) {
+        parser.playHandWithBoard(selectedTiles, boardToList(board));
         return;
       }
       updateBoard();

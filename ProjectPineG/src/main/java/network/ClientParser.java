@@ -68,15 +68,11 @@ public class ClientParser {
     Client.sendMessageToServer(builder.toString());
   }
 
-  public void playHandWithBoard(List<ImageView> selectedTiles, List<ImageView> tilesFromBoard, List<List<ImageView>> board) {
+  public void playHandWithBoard(List<ImageView> selectedTiles, List<List<ImageView>> board) {
     StringBuilder builder = new StringBuilder();
     builder.append("playHandWithBoard|");
 
     builder.append(GuiParser.parseToString(selectedTiles));
-
-    builder.append("|");
-
-    builder.append(GuiParser.parseToString(tilesFromBoard));
 
     builder.append("|");
 
