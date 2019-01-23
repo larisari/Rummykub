@@ -199,11 +199,9 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
       if (player.isFirstMove() && rules.isValid(combinations, MINIMUM_POINTS_ON_FIRST_MOVE)) {
         putComboOnBoard(combinations, player);
-        rules.nextPlayersTurn();
         return Optional.of(new GITuple<>(id, true));
       } else if (!player.isFirstMove() && rules.isValid(combinations)) {
         putComboOnBoard(combinations, player);
-        rules.nextPlayersTurn();
         return Optional.of(new GITuple<>(id, true));
       } else {
         // not a valid combination.
@@ -217,8 +215,8 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   @Override
   public Optional<GITuple<Integer, Boolean>> play(
           List<GITile> tilesFromHand,
-          List<GITile> tilesFromBoard,
-          List<List<GITile>> newCombinations,
+          List<GITile> oldCombination,
+          List<List<GITile>> combinationsOnBoard,
           Integer id) {
     Optional<Player> optionalPlayer = rules.getPlayerBy(id);
 
@@ -231,13 +229,12 @@ class GameInfoImpl extends Thread implements GIGameInfo {
         return Optional.of(new GITuple<>(id, false));
       }
 
-      boolean allValid = rules.isValid(newCombinations);
+      boolean allValid = rules.isValid(combinationsOnBoard);
 
       if (allValid) {
         player.remove(tilesFromHand);
-        board.remove(tilesFromBoard);
-        newCombinations.forEach(combination -> board.addCombo(combination));
-        rules.nextPlayersTurn();
+        board.clear();
+        combinationsOnBoard.forEach(combination -> board.addCombo(combination));
         return Optional.of(new GITuple<>(id, true));
       } else {
         return Optional.of(new GITuple<>(id, false));
@@ -295,7 +292,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   }
 
   @Override
-  public Optional<List<GITuple<Integer, GIPoints>>> getPlayerPoints() {
+  public Optional<List<GITuple<Integer, GIPoints>>> calculatePointsForRegisteredPlayers() {
     return rules.getPlayerPoints();
   }
 

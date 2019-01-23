@@ -6,11 +6,9 @@ import gameinfo.util.GITile;
 //import org.junit.jupiter.api.BeforeAll;
 //import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 class GameInfo_Test {
 
@@ -108,7 +106,7 @@ class GameInfo_Test {
   }
 
   void getAllPlayersHands() {
-    System.out.println(gameInfo.getPlayerPoints());
+    System.out.println(gameInfo.calculatePointsForRegisteredPlayers());
   }
 
   void showhands() {

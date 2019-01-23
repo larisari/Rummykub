@@ -15,10 +15,8 @@ class Board {
     this.combos = new ArrayList<>();
   }
 
-  void remove(List<GITile> combo) {
-    if (combos.contains(combo)) {
-      this.combos.remove(combo);
-    }
+  void clear() {
+    this.combos = new ArrayList<>();
   }
 
   List<List<GITile>> getActiveCombos() {

@@ -129,7 +129,7 @@ public class ClientParser {
   //public void getPlayerID() { Client.sendMessageToServer("getPlayerID"); }
 
   public void getPlayerPoints() {
-    Client.sendMessageToServer("getPlayerPoints");
+    Client.sendMessageToServer("calculatePointsForRegisteredPlayers");
   }
 
   public void notifyWin() {
