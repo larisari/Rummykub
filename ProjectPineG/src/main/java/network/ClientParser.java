@@ -215,10 +215,6 @@ public class ClientParser {
         }
         break;
 
-      case "responseForGetNextPlayerID":
-        Platform.runLater(() -> guiController.updateNextPlayerName(Integer.parseInt(messageAsArray[1])));
-        break;
-
       case "responseForNumberOfPlayers":
         Platform.runLater(() -> guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1])));
         break;

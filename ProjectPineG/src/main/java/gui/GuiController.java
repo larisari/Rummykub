@@ -328,6 +328,7 @@ public void setPlayerBoards(){
       createTile(hand.get(i));
     }
     bag.setDisable(true);
+    disableControl();
   }
 
   /**
@@ -415,6 +416,7 @@ public void setPlayerBoards(){
    * Gets called when turn is finished, reloads board for all players
    */
   public void reloadBoard(List<List<Image>> boardTiles) {
+    board.getChildren().clear();
     for (int i = 0; i < boardTiles.size(); i++) {
       HBox box = new HBox();
       List<Image> tiles = boardTiles.get(i);
@@ -425,6 +427,7 @@ public void setPlayerBoards(){
         imageView.setImage(image);
         box.getChildren().add(imageView);
         onTileClicked(imageView);
+        imageView.setDisable(true);
       }
       board.getChildren().add(box);
 
