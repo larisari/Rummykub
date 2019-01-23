@@ -193,7 +193,7 @@ public class GuiController {
       ImageView tile = selectedTiles.get(i);
       if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren()
           .contains(tile)) {
-        parser.playHandWithBoard(selectedTiles, boardToList(board));
+        moveTilesAux(selectedTiles);
         return;
       }
       updateBoard();
@@ -240,6 +240,7 @@ public class GuiController {
       parser.notifyWin();
     }
   }
+
 
 
   /**
