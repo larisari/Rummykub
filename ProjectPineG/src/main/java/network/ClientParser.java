@@ -210,7 +210,13 @@ public class ClientParser {
 
       case "responseForPlayWithBoardTilesR":
         if (messageAsArray[1].equals("true")) {
-          Platform.runLater(() -> guiController.allowAddBack());
+          Platform.runLater(() -> {
+            try {
+              guiController.allowAddBack();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          });
           } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.disallowAddTo());
         }
@@ -218,7 +224,13 @@ public class ClientParser {
 
       case "responseForPlayWithBoardTilesL":
         if (messageAsArray[1].equals("true")) {
-          Platform.runLater(() -> guiController.allowAddFront());
+          Platform.runLater(() -> {
+            try {
+              guiController.allowAddFront();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          });
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.disallowAddTo());
         }
