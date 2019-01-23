@@ -1,10 +1,10 @@
 package gameinfo;
 
 import gameinfo.util.GIPoints;
-import gameinfo.util.GITile;
 import gameinfo.util.GITuple;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 class GameFlow {
   private Map<Integer, Player> players;
@@ -13,6 +13,8 @@ class GameFlow {
   private List<Integer> playerSequence;
   private Integer currentPlayerIndex;
   private PointsCalculator calculator;
+
+  private static Logger log = Logger.getLogger(GameFlow.class.getName());
 
   GameFlow(PointsCalculator calculator) {
     this.players = new HashMap<>();
@@ -23,23 +25,28 @@ class GameFlow {
     this.currentPlayerIndex = 0;
   }
 
-  void registerPlayerBy(Integer id) {
+  void registerBy(Integer id) {
     players.put(id, new Player(id, calculator));
+    playerSequence.add(id);
+    log.info("Registered Player with id " + id + ".");
   }
 
-  boolean playerExists(Integer id) {
-    return getPlayerBy(id).isPresent();
-  }
-
-  void deregisterPlayerBy(Integer id) {
+  void deregisterBy(Integer id) {
     players.remove(id);
+    playerSequence.remove(id);
+    log.info("Deregistered Player with id " + id + ".");
+  }
+
+  boolean isPlayerExistingBy(Integer id) {
+    return getPlayerBy(id).isPresent();
   }
 
   void startGame() {
     this.state = GameState.distributing;
+    log.info("Game started.");
   }
 
-  boolean isValidPlayer(Integer id) {
+  boolean isValidPlayerBy(Integer id) {
     return players.get(id).getId().equals(id);
   }
 
@@ -51,20 +58,13 @@ class GameFlow {
     if (players.containsKey(id)) {
       return Optional.of(players.get(id));
     } else {
+      log.info("ID " + id + " is not registered in the model.");
       return Optional.empty();
     }
   }
 
-  void removePlayerFromSequence(Integer id) {
-    playerSequence.removeIf(i -> i.equals(id));
-  }
-
-  void addPlayerToSequence(Integer id) {
-    //current order: time of registration
-    //TODO modify the order according to will
-    if (players.containsKey(id)) {
-      playerSequence.add(id);
-    }
+  Integer getCurrentPlayerId() {
+    return playerSequence.get(currentPlayerIndex);
   }
 
   Integer getNextPlayerID() {
@@ -81,6 +81,11 @@ class GameFlow {
     } else {
       currentPlayerIndex = 0;
     }
+
+    Integer currentPlayerId = playerSequence.get(currentPlayerIndex);
+    players.get(currentPlayerId).resetMadeMove();
+
+    log.info("Next Players turn. Now its Player " + currentPlayerId + "s turn.");
   }
 
   boolean isDistributing() {
@@ -98,7 +103,7 @@ class GameFlow {
     }
   }
 
-  Optional<List<GITuple<Integer,GIPoints>>> getPlayerPoints() {
+  Optional<List<GITuple<Integer, GIPoints>>> getPlayerPoints() {
     if (!players.isEmpty()) {
       List<GITuple<Integer, GIPoints>> allPlayersHands = new ArrayList<>();
       for (Map.Entry<Integer, Player> player : players.entrySet()) {
@@ -107,13 +112,27 @@ class GameFlow {
         allPlayersHands.add(playersHand);
       }
       return Optional.of(allPlayersHands);
-    }
-    else {
+    } else {
       return Optional.empty();
     }
   }
 
-  Integer getCurrentPlayerId() {
-    return playerSequence.get(currentPlayerIndex);
+  boolean hasMadeMoveBy(Integer id) {
+    log.info("Player with the id " + id + " has made a move.");
+    return players.get(id).hasMadeMove();
   }
+
+  //  private void removePlayerFromSequence(Integer id) {
+  //    //    playerSequence.removeIf(i -> i.equals(id));
+  //  }
+  //
+  //  private void addPlayerToSequence(Integer id) {
+  //    // current order: time of registration
+  //
+  //    // TODO modify the order according to will
+  //
+  //    //    if (players.containsKey(id)) {
+  //    //      playerSequence.add(id);
+  //    //    }
+  //  }
 }

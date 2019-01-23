@@ -2,7 +2,6 @@ package gui;
 
 //TODO Buttons per default disablen und enablen wenn player am zug ist.
 
-//TODO sachen die für alle angezeigt werden muss im MainThread ausgeführt werden.
 
 import gui.util.Image;
 
@@ -128,17 +127,17 @@ public class GuiController {
   }
 
 
-public void setPlayerBoards(){
-  switch (numberOfPlayers) {
-    case 2:
-      rightBoard.setVisible(false);
-      leftBoard.setVisible(false);
-      break;
-    case 3:
-      leftBoard.setVisible(false);
-      break;
+  public void setPlayerBoards() {
+    switch (numberOfPlayers) {
+      case 2:
+        rightBoard.setVisible(false);
+        leftBoard.setVisible(false);
+        break;
+      case 3:
+        leftBoard.setVisible(false);
+        break;
+    }
   }
-}
 
   /**
    * Sets player names on player boards, according to each player.
@@ -148,19 +147,19 @@ public void setPlayerBoards(){
       case 0:
         break; //bleibt auf default
       case 1:
-        playerTopName.setText("Player 1");
-        playerRightName.setText("Player 4");
-        playerLeftName.setText("Player 3");
+        playerTopName.setText("PLAYER 1");
+        playerRightName.setText("PLAYER 4");
+        playerLeftName.setText("PLAYER 3");
         break;
       case 2:
-        playerTopName.setText("Player 4");
-        playerRightName.setText("Player 2");
-        playerLeftName.setText("Player 1");
+        playerTopName.setText("PLAYER 4");
+        playerRightName.setText("PLAYER 2");
+        playerLeftName.setText("PLAYER 1");
         break;
       case 3:
-        playerTopName.setText("Player 3");
-        playerRightName.setText("Player 1");
-        playerLeftName.setText("Player 2");
+        playerTopName.setText("PLAYER 3");
+        playerRightName.setText("PLAYER 1");
+        playerLeftName.setText("PLAYER 2");
         break;
     }
   }
@@ -190,17 +189,24 @@ public void setPlayerBoards(){
    * @param event - onMouseClicked event if user presses "Enter new Selection" button.
    */
   @FXML
-  protected void handleEnterComb(MouseEvent event) {
+  protected void handleEnterComb(MouseEvent event) throws IOException {
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView tile = selectedTiles.get(i);
       if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren()
-          .contains(tile)) { //wenn tiles auf dem board liegen.
-        moveTiles(selectedTiles);
+          .contains(tile)) { //wenn irgendeine tile am board liegt
+        FlowPane tempBoard = new FlowPane(board);
+        HBox tempBox = new HBox();
+        tempBox.prefHeight(MAX_BOXHEIGHT);
+        tempBox.prefWidth(selectedTiles.size() * MAX_BOXWIDTH);
+        for (int j = 0; j < selectedTiles.size(); j++) {
+          tempBox.getChildren().add(selectedTiles.get(i));
+        }
+        tempBoard.getChildren().add(tempBox);
+        parser.playHandWithBoard(selectedTiles, boardToList(tempBoard));
         return;
       }
       updateBoard();
     }
-    //TODO tiles auf hand und tiles auf board zu neuer kombi kombinieren können nach manipulate drücken.
     if (!selectedTiles.isEmpty()) {
       List<ImageView> sTiles = new ArrayList<>();
       HBox comb = new HBox();
@@ -218,11 +224,14 @@ public void setPlayerBoards(){
   }
 
   /**
-   * Creates a new combination on the main board with the given List of tiles.
-   *
-   * @param combination to be added to the board.
+   * Creates a new combination on the main board with the selected tiles.
    */
-  private void moveTiles(List<ImageView> combination) {
+  public void moveTiles() throws IOException {
+    moveTilesAux(selectedTiles);
+
+  }
+
+  private void moveTilesAux(List<ImageView> combination) throws IOException {
     HBox comb = new HBox();
     for (int j = 0; j < combination.size(); j++) {
       ImageView tile = combination.get(j);
@@ -231,10 +240,16 @@ public void setPlayerBoards(){
       tile.setDisable(true);
       comb.getChildren().add(tile);
     }
-    placedCombinations.add(comb);
+
+    //  placedCombinations.add(comb);
     board.getChildren().add(comb);
-    deselectTiles(selectedTiles); //löscht auch tiles aus selectedTiles
+    disableTiles(combination); //löscht auch tiles aus selectedTiles
+    if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
+      openWinScreen();
+      parser.notifyWin();
+    }
   }
+
 
   /**
    * Checks if tile combinations on the selection board are valid.
@@ -256,10 +271,11 @@ public void setPlayerBoards(){
   public void placeTiles() throws IOException {
     for (int i = 0; i < selectedCombinations.size(); i++) {
       List<ImageView> combination = selectedCombinations.get(i);
-      moveTiles(combination);
+      moveTilesAux(combination);
     }
     bag.setDisable(true);
-    cancelSelection();
+    endTurn.setDisable(false);
+    disableTiles(selectedTiles);
     updateBoard();
 
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
@@ -274,7 +290,8 @@ public void setPlayerBoards(){
    * @throws IOException if some error occurs while loading fxml file.
    */
   public void openWinScreen() throws IOException {
-    FXMLLoader loader = FXMLLoader.load(getClass().getResource("winnerScreen.fxml"));
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation((getClass().getResource("/winnerScreen.fxml")));
     Parent root = loader.load();
     Scene scene = new Scene(root);
     Stage stage = new Stage();
@@ -283,6 +300,7 @@ public void setPlayerBoards(){
     stage.show();
     EndScreenController eController = loader.getController();
     eController.setNumberOfPlayers(numberOfPlayers);
+    eController.setPointsNamesVisible();
   }
 
   /**
@@ -291,7 +309,8 @@ public void setPlayerBoards(){
    * @throws IOException if some error occurs while loading fxml file.
    */
   public void openLoserScreen() throws IOException {
-    FXMLLoader loader = FXMLLoader.load(getClass().getResource("loserScreen.fxml"));
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation((getClass().getResource("/loserScreen.fxml")));
     Parent root = loader.load();
     Scene scene = new Scene(root);
     Stage stage = new Stage();
@@ -300,6 +319,7 @@ public void setPlayerBoards(){
     stage.show();
     EndScreenController eController = loader.getController();
     eController.setNumberOfPlayers(numberOfPlayers);
+    eController.setPointsNamesVisible();
   }
 
 
@@ -311,7 +331,7 @@ public void setPlayerBoards(){
   @FXML
   protected void handleDrawTile(MouseEvent event) {
     parser.draw();
-   // parser.getNextPlayerID();
+
   }
 
   /**
@@ -376,27 +396,9 @@ public void setPlayerBoards(){
    */
   @FXML
   protected void handleEndTurn(MouseEvent event) {
-    /*
-    List<List<ImageView>> allCombinations = new ArrayList<>();
-    for (int i = placedCombinations.size() - 1; i >= 0; i--) {
-      HBox box = placedCombinations.get(i);
-      if (box.getChildren().isEmpty()) {
-        placedCombinations.remove(box);
-      } else {
-        List<ImageView> comb = new ArrayList<>();
-        for (int j = 0; j < box.getChildren().size(); j++) {
-          ImageView iView = (ImageView) box.getChildren().get(j);
-          comb.add(iView);
-        }
-        allCombinations.add(comb);
-      }
-    }
-    */
+    parser.finishedTurn();
     disableControl();
     cancelSelection();
-    parser.finishedTurn();
-  //  parser.getNextPlayerID();
-
   }
 
   /**
@@ -439,7 +441,6 @@ public void setPlayerBoards(){
    */
   public void enableControl() {
     enter.setDisable(false); //TODO alle buttons in liste packen -> enablen disablen durchiterieren.
-    endTurn.setDisable(false);
     cancelSelection.setDisable(false);
     addToExisting.setDisable(false);
     manipulate.setDisable(false);
@@ -520,13 +521,13 @@ public void setPlayerBoards(){
   @FXML
   protected void handleManipulate(MouseEvent event) {
 //if first turn do not allow
-    disableTilesOnBoard();
+    enableTilesOnBoard();
   }
 
   /**
    * Disables all tiles on the main board.
    */
-  private void disableTilesOnBoard() {
+  private void enableTilesOnBoard() {
     for (int i = 0; i < board.getChildren().size(); i++) {
       HBox box = (HBox) board.getChildren().get(i);
       for (int j = 0; j < box.getChildren().size(); j++) {
@@ -548,10 +549,12 @@ public void setPlayerBoards(){
             tile.setStyle("-fx-translate-y: -15;");
             TileView.highlightTile(tile);
             selectedTiles.add(tile);
+            tile.setDisable(false);
           } else {
             tile.setStyle("-fx-translate-y: 0");
             tile.setEffect(null);
             selectedTiles.remove(tile);
+            tile.setDisable(false);
           }
         });
   }
@@ -589,6 +592,23 @@ public void setPlayerBoards(){
     }
   }
 
+  private List<List<ImageView>> boardToList(FlowPane pane) {
+    List<List<ImageView>> allCombinations = new ArrayList<>();
+    for (int i = 0; i < pane.getChildren().size(); i++) {
+      HBox box = (HBox) pane.getChildren().get(i);
+      if (box.getChildren().isEmpty()) {
+        pane.getChildren().remove(box);
+      } else {
+        List<ImageView> comb = new ArrayList<>();
+        for (int j = 0; j < box.getChildren().size(); j++) {
+          ImageView iView = (ImageView) box.getChildren().get(j);
+          comb.add(iView);
+        }
+        allCombinations.add(comb);
+      }
+    }
+    return allCombinations;
+  }
 
   /**
    * For placing tiles to existing combinations on main board. Checks if selected tiles may be added
@@ -601,22 +621,25 @@ public void setPlayerBoards(){
         i++) {   //1 und size-1 weil an diesen Stellen Buttons sind.
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
-    List<List<ImageView>> newComb = new ArrayList<>();
-    List<ImageView> newCombination = new ArrayList<>();
-    newCombination.addAll(selectedTiles);
-    newCombination.addAll(boardTiles);
-    newComb.add(newCombination);
-    //TODO newComb soll alle combinationen am board enthalten -> schmarrn weil ja nur die eine kombination verändert werden kann.
-    parser.playL(selectedTiles, boardTiles, newComb);
+    FlowPane tempBoard = new FlowPane(board);
+    HBox tempBox = new HBox(boardComb);
+    deleteAddToButtons(tempBoard);
+    for (int i = 0; i < tempBoard.getChildren().size(); i++) {
+      if (tempBoard.getChildren().get(i) == tempBox) {
+        tempBox.getChildren().addAll(0, selectedTiles);
+      }
+    }
+
+    parser.playL(selectedTiles, boardToList(tempBoard));
   }
 
   /**
    * Adds selected tiles to the front of a cached combination on the main board. Exits method, if
    * selected tiles should be added to the same combination they are already contained in.
    */
-  public void allowAddFront() {
-
-    deleteAddToButtons();
+  public void allowAddFront() throws IOException {
+    System.out.println("added to front");
+    deleteAddToButtons(board);
     for (int j = 0; j < selectedTiles.size();
         j++) {    //hinzufügen in selber kombination soll nicht gehn.
       if (boardComb.getChildren().contains(selectedTiles.get(j))) {
@@ -629,15 +652,19 @@ public void setPlayerBoards(){
       boardComb.getChildren().add(0, tile); //added tile vorne in hbox
     }
 
-    deselectTiles(selectedTiles); //cleart auch selectedTiles
+    disableTiles(selectedTiles); //cleart auch selectedTiles
     updateBoard();
+    if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
+      openWinScreen();
+      parser.notifyWin();
+    }
   }
 
   /**
    * Gets called if selected tiles may not be added to existing combination.
    */
   public void disallowAddTo() {
-    deleteAddToButtons();
+    deleteAddToButtons(board);
     cancelSelEffect();
 
   }
@@ -653,20 +680,22 @@ public void setPlayerBoards(){
     for (int i = 1; i < comb.getChildren().size() - 1; i++) {
       boardTiles.add((ImageView) comb.getChildren().get(i));
     }
-    List<List<ImageView>> newComb = new ArrayList<>();
-    List<ImageView> newCombination = new ArrayList<>();
-    newCombination.addAll(boardTiles);
-    newCombination.addAll(selectedTiles);
-    newComb.add(newCombination);
-    parser.playR(selectedTiles, boardTiles, newComb);
+    FlowPane tempBoard = new FlowPane(board);
+    HBox tempBox = new HBox(boardComb);
+    for (int i = 0; i < tempBoard.getChildren().size(); i++) {
+      if (tempBoard.getChildren().get(i) == tempBox) {
+        tempBox.getChildren().addAll(tempBox.getChildren().size() - 1, selectedTiles);
+      }
+    }
+    //  parser.playR(selectedTiles, boardToList(tempBoard));
   }
 
   /**
    * Adds selected tiles to the front of cached combination on the main board. Exits method if
    * selected tiles should be added to the same combination they are already contained in.
    */
-  public void allowAddBack() {
-    deleteAddToButtons();
+  public void allowAddBack() throws IOException {
+    deleteAddToButtons(board);
     for (int j = 0; j < selectedTiles.size(); j++) {
       if (boardComb.getChildren().contains(selectedTiles.get(j))) {
         return;
@@ -677,9 +706,13 @@ public void setPlayerBoards(){
       boardComb.getChildren().add(boardComb.getChildren().size(), tile);
     }
 
-    deselectTiles(selectedTiles);
+    disableTiles(selectedTiles);
     selectedTiles.clear();
     updateBoard();
+    if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
+      openWinScreen();
+      parser.notifyWin();
+    }
   }
 
   /**
@@ -746,16 +779,13 @@ public void setPlayerBoards(){
     cancelSelEffect();
   }
 
-  private void swapEverything() {
-    //TODO selected tiles zu neuer kombination auf board.
-  }
 
   /**
    * Deletes all "add here" buttons on the main board.
    */
-  private void deleteAddToButtons() {
-    for (int i = 0; i < board.getChildren().size(); i++) {
-      HBox box = (HBox) board.getChildren().get(i);
+  private void deleteAddToButtons(FlowPane pane) {
+    for (int i = 0; i < pane.getChildren().size(); i++) {
+      HBox box = (HBox) pane.getChildren().get(i);
       box.getChildren().remove(box.getChildren().get(box.getChildren().size() - 1));
       box.getChildren().remove(box.getChildren().get(0));
 
@@ -773,8 +803,6 @@ public void setPlayerBoards(){
       }
     }
   }
-
-  //TODO reload Board für andere clients
 
   /**
    * Disables control for the user. All buttons and tiles are set to disabled.
@@ -803,13 +831,13 @@ public void setPlayerBoards(){
         handTiles.add(iView);
       }
     }
-    deselectTiles(handTiles);
+    disableTiles(handTiles);
   }
 
   /**
    * Deselects and disables a list of tiles.
    */
-  private void deselectTiles(List<ImageView> tiles) {
+  private void disableTiles(List<ImageView> tiles) {
     for (int i = tiles.size() - 1; i >= 0; i--) {
       ImageView tile = tiles.get(i);
       tile.setStyle("-fx-translate-y: 0");

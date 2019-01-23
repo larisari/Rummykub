@@ -5,11 +5,13 @@ import gui.GuiController;
 import gui.LoadingScreenController;
 import gui.StartingScreenController;
 import gui.util.Image;
+import java.sql.SQLOutput;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.util.List;
+import org.graalvm.compiler.code.SourceStackTraceBailoutException;
 
 public class ClientParser {
 
@@ -66,10 +68,22 @@ public class ClientParser {
     Client.sendMessageToServer(builder.toString());
   }
 
+  public void playHandWithBoard(List<ImageView> selectedTiles, List<List<ImageView>> board) {
+    StringBuilder builder = new StringBuilder();
+    builder.append("playHandWithBoard|");
+
+    builder.append(GuiParser.parseToString(selectedTiles));
+
+    builder.append("|");
+
+    builder.append(GuiParser.parseListToString(board));
+
+    Client.sendMessageToServer(builder.toString());
+  }
+
   public void playL(
           List<ImageView> tilesFromHand,
-          List<ImageView> tilesFromBoard,
-          List<List<ImageView>> newCombinations) {
+          List<List<ImageView>> CombinationsOnBoard) {
 
     StringBuilder builder = new StringBuilder();
 
@@ -79,11 +93,7 @@ public class ClientParser {
 
     builder.append("|");
 
-    builder.append(GuiParser.parseToString(tilesFromBoard));
-
-    builder.append("|");
-
-    builder.append(GuiParser.parseListToString(newCombinations));
+    builder.append(GuiParser.parseListToString(CombinationsOnBoard));
 
     Client.sendMessageToServer(builder.toString());
   }
@@ -129,7 +139,7 @@ public class ClientParser {
   //public void getPlayerID() { Client.sendMessageToServer("getPlayerID"); }
 
   public void getPlayerPoints() {
-    Client.sendMessageToServer("getPlayerPoints");
+    Client.sendMessageToServer("calculatePointsForRegisteredPlayers");
   }
 
   public void notifyWin() {
@@ -166,7 +176,10 @@ public class ClientParser {
         break;
 
       case "responseForFinishedTurn":
-        Platform.runLater(() -> guiController.reloadBoard(guiParser.parseStringToWholeBoard(messageAsArray[1])));
+        if (!messageAsArray[1].equals("list<")) {
+          Platform.runLater(() -> guiController
+              .reloadBoard(guiParser.parseStringToWholeBoard(messageAsArray[1])));
+        }
         break;
 
       case "itsYourTurn":
@@ -191,6 +204,20 @@ public class ClientParser {
         }
         break;
 
+      case "responseForPlayHandWithBoard":
+        if(messageAsArray[1].equals("true")){
+          Platform.runLater(() -> {
+            try {
+              guiController.moveTiles();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          });
+        } else if (messageAsArray[1].equals("false")){
+          Platform.runLater(() -> guiController.cancelSelEffect());
+        }
+        break;
+
       case "responseForPlaySwapJoker":
         if (messageAsArray[1].equals("true")) {
           Platform.runLater(() -> guiController.swapWithJoker());
@@ -201,7 +228,13 @@ public class ClientParser {
 
       case "responseForPlayWithBoardTilesR":
         if (messageAsArray[1].equals("true")) {
-          Platform.runLater(() -> guiController.allowAddBack());
+          Platform.runLater(() -> {
+            try {
+              guiController.allowAddBack();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          });
           } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.disallowAddTo());
         }
@@ -209,7 +242,13 @@ public class ClientParser {
 
       case "responseForPlayWithBoardTilesL":
         if (messageAsArray[1].equals("true")) {
-          Platform.runLater(() -> guiController.allowAddFront());
+          Platform.runLater(() -> {
+            try {
+              guiController.allowAddFront();
+            } catch (IOException e) {
+              e.printStackTrace();
+            }
+          });
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.disallowAddTo());
         }

@@ -7,8 +7,7 @@ import java.util.List;
 
 class PointsCalculator {
 
-  PointsCalculator() {
-  }
+  PointsCalculator() {}
 
   int calculatePointsForStreet(List<GITile> street) {
     int points = 0;
@@ -55,13 +54,13 @@ class PointsCalculator {
 
     for (GITile tile : hand) {
       points += tile.getNumber().value();
-//      GINumber numberOfTile = tile.getNumber();
-//
-//      if (numberOfTile.equals(GINumber.JOKER)) {
-//        points += 20;
-//      } else {
-//        points += numberOfTile.value();
-//      }
+      //      GINumber numberOfTile = tile.getNumber();
+      //
+      //      if (numberOfTile.equals(GINumber.JOKER)) {
+      //        points += 20;
+      //      } else {
+      //        points += numberOfTile.value();
+      //      }
     }
 
     return points;

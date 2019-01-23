@@ -10,11 +10,13 @@ class Player {
   private Hand hand;
   private Integer id;
   private boolean isFirstMove;
+  private boolean moved;
 
   Player(Integer id, PointsCalculator calculator) {
     this.hand = new Hand(calculator);
     this.id = id;
     isFirstMove = true;
+    moved = false;
   }
 
   boolean isFirstMove() {
@@ -45,6 +47,18 @@ class Player {
     for (GITile tile : tiles) {
       hand.removeTile(tile);
     }
+  }
+
+  void resetMadeMove() {
+    moved = false;
+  }
+
+  void madeMove() {
+    moved = true;
+  }
+
+  boolean hasMadeMove() {
+    return moved;
   }
 
   GIPoints calculatePointsOfHand() {

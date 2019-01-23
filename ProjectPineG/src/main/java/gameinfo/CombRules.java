@@ -5,17 +5,23 @@ import gameinfo.util.GINumber;
 import gameinfo.util.GITile;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 class CombRules {
 
   private PointsCalculator calculator;
+  private static Logger log = Logger.getLogger(CombRules.class.getName());
 
   CombRules(PointsCalculator calculator) {
     this.calculator = calculator;
   }
 
   boolean isValid(List<List<GITile>> combinations, int minimumPoints) {
+    log.info("Entered Method isValid(combinations, minimumPoints)");
+
     boolean allValid = combinations.stream().allMatch(this::isValidInternal);
+
+    log.info("The combinations are all " + allValid + ".");
 
     if (!allValid) {
       return false;
@@ -26,18 +32,31 @@ class CombRules {
     for (List<GITile> combination : combinations) {
       if (isGroup(combination)) {
         points += calculator.calculatePointsForGroup(combination);
+        log.info("The passed combination is a group and is worth " + points + " points.");
       } else {
         // At this point I know that the combination has to be a street,
         // because otherwise the guard from before would have returned false.
         points += calculator.calculatePointsForStreet(combination);
+        log.info("The passed combination is a street and is worth " + points + " points.");
       }
     }
 
-    return points >= minimumPoints;
+    boolean greaterThanMin = points >= minimumPoints;
+    log.info(
+        "The points of the combination are greater or equal than "
+            + minimumPoints
+            + " "
+            + greaterThanMin
+            + ".");
+
+    return greaterThanMin;
   }
 
   boolean isValid(List<List<GITile>> combinations) {
-    return combinations.stream().allMatch(this::isValidInternal);
+    log.info("Entered Method isValid(combinations).");
+    boolean allValid = combinations.stream().allMatch(this::isValidInternal);
+    log.info("All the combinations are " + allValid + ".");
+    return allValid;
   }
 
   private boolean isValidInternal(List<GITile> combination) {
@@ -82,7 +101,7 @@ class CombRules {
         GITile current = combination.get(i);
 
         if (previous.getNumber().equals(GINumber.JOKER)
-                || current.getNumber().equals(GINumber.JOKER)) {
+            || current.getNumber().equals(GINumber.JOKER)) {
           break;
         }
 
@@ -114,8 +133,8 @@ class CombRules {
     GINumber number = tempNum;
 
     return combination.stream()
-            .allMatch(
-                    tile -> tile.getNumber().equals(number) || tile.getNumber().equals(GINumber.JOKER));
+        .allMatch(
+            tile -> tile.getNumber().equals(number) || tile.getNumber().equals(GINumber.JOKER));
   }
 
   private boolean haveSameColor(List<GITile> combination) {
@@ -135,6 +154,6 @@ class CombRules {
     GIColor color = tempColor;
 
     return combination.stream()
-            .allMatch(tile -> tile.getColor().equals(color) || tile.getColor().equals(GIColor.JOKER));
+        .allMatch(tile -> tile.getColor().equals(color) || tile.getColor().equals(GIColor.JOKER));
   }
 }
