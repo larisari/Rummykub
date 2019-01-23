@@ -160,9 +160,9 @@ public class ClientParser {
       case "closeStartScreen":
 //        Platform.runLater(() -> startingScreenController.closeStartScreen());
         break;
+
       case "responseForDraw":
         Platform.runLater(() -> guiController.loadTiles(guiParser.parseStringToImgsForOneComb(messageAsArray[1])));
-
         break;
 
       case "responseForFinishedTurn":
