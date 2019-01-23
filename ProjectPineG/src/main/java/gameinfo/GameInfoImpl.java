@@ -26,6 +26,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   GameInfoImpl() {
     board = new Board();
+    calculator = new PointsCalculator();
     gameFlow = new GameFlow(calculator);
     combRules = new CombRules(calculator);
 
