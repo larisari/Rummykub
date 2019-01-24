@@ -184,34 +184,44 @@ public class GuiController {
   }
 
   /**
-   * Moves selected tiles to selection board.
+   * Checks if tiles from the main board and the hand should be combined and checks if the altered
+   * combinations on the board are valid.
+   * If only tiles from the hand should form a combination, the tiles are moved to the selection board.
    *
    * @param event - onMouseClicked event if user presses "Enter new Selection" button.
    */
   @FXML
   protected void handleEnterComb(MouseEvent event) throws IOException {
-    for (int i = 0; i < selectedTiles.size(); i++) {
-      ImageView tile = selectedTiles.get(i);
-      if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren()
-          .contains(tile)) {
-        moveTilesAux(selectedTiles);
-        return;
-      }
-      updateBoard();
-    }
+    List<List<ImageView>> boardSelectedCombs = new ArrayList<>();
+    List<ImageView> sTiles = new ArrayList<>();
+    HBox comb = new HBox();
+    comb.prefHeight(MAX_BOXHEIGHT);
+    comb.prefWidth(selectedTiles.size() * MAX_BOXWIDTH);
     if (!selectedTiles.isEmpty()) {
-      List<ImageView> sTiles = new ArrayList<>();
-      HBox comb = new HBox();
-      comb.prefHeight(MAX_BOXHEIGHT);
-      comb.prefWidth(selectedTiles.size() * MAX_BOXWIDTH);
-      for (int i = 0; i < selectedTiles.size(); i++) {
-        sTiles.add(selectedTiles.get(i));
-        comb.getChildren().add(sTiles.get(i));
-      }
-      selectionBoard.getChildren().add(comb);
-      selectedCombinations.add(sTiles);
-      cancelSelEffect();
+      for (ImageView tile : selectedTiles) {
+        if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren()
+            .contains(tile)) {
+          List<ImageView> combination = new ArrayList<>();
+          HBox parent = (HBox) tile.getParent();
+          for (int i = 0; i < parent.getChildren().size(); i++) {
+            if (parent.getChildren().get(i) != tile) {
+              combination.add((ImageView) parent.getChildren().get(i));
+            }
+          }
+          boardSelectedCombs.add(combination);
+          parser.playHandWithBoard(boardSelectedCombs);
 
+        } else if (topHand.getChildren().contains(tile) || bottomHand.getChildren()
+            .contains(tile)) {
+          sTiles.add(tile);
+          comb.getChildren().add(tile);
+        }
+      }
+      if (!comb.getChildren().isEmpty() && !sTiles.isEmpty()) {
+        selectionBoard.getChildren().add(comb);
+        selectedCombinations.add(sTiles);
+        cancelSelEffect();
+      }
     }
   }
 
@@ -233,8 +243,8 @@ public class GuiController {
       comb.getChildren().add(tile);
     }
 
-    //  placedCombinations.add(comb);
     board.getChildren().add(comb);
+    updateBoard();
     disableTiles(combination); //löscht auch tiles aus selectedTiles
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();

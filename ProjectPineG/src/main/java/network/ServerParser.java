@@ -81,11 +81,9 @@ public class ServerParser {
         break;
 
       case "playHandWithBoard":
-        List<GITile> selectedTiles = parseStringToTile(receivedMessage[1]);
-        List<List<GITile>> wholeBoard = parseStringToListListTileComb(receivedMessage[2]);
-
-    //    String answer5 = Server.gameInfo.play(selectedTiles, wholeBoard, id).get().getSecond().toString();
-    //    clients.get(id).sendMessageToClient("responseForPlayHandWithBoard|" + answer5);
+        List<List<GITile>> boardCombs = parseStringToListListTileComb(receivedMessage[1]);
+        String answer5 = Server.gameInfo.play(boardCombs, id).get().getSecond().toString();
+        clients.get(id).sendMessageToClient("responseForPlayHandWithBoard|" + answer5);
         break;
 
       case "playWithBoardTilesL":

@@ -261,19 +261,15 @@ public class ClientParser {
 
   /**
    * Request to the server, if selectedTiles can be combined with combination on board.
-   * @param selectedTiles  List of tiles on players hand.
-   * @param board List of comination-Tiles.
+   * @param boardCombs List of board combinations that should be altered.
    */
-  public void playHandWithBoard(List<ImageView> selectedTiles, List<List<ImageView>> board) {
+  public void playHandWithBoard(List<List<ImageView>> boardCombs) {
     StringBuilder builder = new StringBuilder();
     builder.append("playHandWithBoard|");
 
-    builder.append(GuiParser.parseToString(selectedTiles));
-
-    builder.append("|");
-
-    builder.append(GuiParser.parseListToString(board));
-
+    builder.append(GuiParser.parseListToString(boardCombs));
+    //TODO sout weg
+    System.out.println(builder.toString() +" gesendete boardcombis");
     Client.sendMessageToServer(builder.toString());
   }
 
