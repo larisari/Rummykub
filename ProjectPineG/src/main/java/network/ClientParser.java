@@ -143,10 +143,13 @@ public class ClientParser {
         break;
 
       case "responseForPlayWithBoardTilesR":
+        System.out.println("ENTERED RESPONSE IN CLIENTPARSER");
         if (messageAsArray[1].equals("true")) {
+          System.out.println("RESPONSE ADD BACK TRUE!");
           Platform.runLater(
               () -> {
                 try {
+                  System.out.println("RESPONSE ADD BACK LAMBDA!");
                   guiController.allowAddBack();
                 } catch (IOException e) {
                   e.printStackTrace();
@@ -154,6 +157,7 @@ public class ClientParser {
               });
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.disallowAddTo());
+          System.out.println("RESPONSE ADD BACK FALSE!");
         }
         break;
 
