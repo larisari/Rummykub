@@ -23,27 +23,29 @@ public class GuiParser {
   }
 
   public static String parseToString(List<ImageView> tiles) {
-    if (!tiles.isEmpty()) {
-      String selectedT = "comb:";
-      for (int i = 0; i < tiles.size(); i++) {
-        ImageView iView = tiles.get(i);
-        Image tile = (Image) iView.getImage();
-        String url = tile.getURL(); //kann url nicht finden.
-        String[] urlArray = url.split("/");
-        String color = urlArray[urlArray.length - 2];
-        String[] numberArray = urlArray[urlArray.length - 1].split("[.]");
-        String number = numberArray[0];
-        if (number.equals("20")) {
-          selectedT += "tile." + color + "/joker";
-        } else {
-          selectedT += "tile." + color + "/" + number;
-        }
-        if (i != tiles.size() - 1) {
-          selectedT += ",";
-        }
+
+    if (tiles.isEmpty()) { return "";}
+
+    String selectedT = "comb:";
+    for (int i = 0; i < tiles.size(); i++) {
+      ImageView iView = tiles.get(i);
+      Image tile = (Image) iView.getImage();
+      String url = tile.getURL(); //kann url nicht finden.
+      System.out.println(url);
+      String[] urlArray = url.split("/");
+      String color = urlArray[urlArray.length - 2];
+      String[] numberArray = urlArray[urlArray.length - 1].split("[.]");
+      String number = numberArray[0];
+      if (number.equals("20")){
+        selectedT += "tile." + color + "/joker";
+      } else {
+        selectedT += "tile." + color + "/" + number;
       }
-      return selectedT + ";";
+      if (i != tiles.size() - 1) {
+        selectedT += ",";
+      }
     }
+    return selectedT + ";";
   }
 
   public static List<Integer> parseStringToIntegerList(String pointsFromServer){
