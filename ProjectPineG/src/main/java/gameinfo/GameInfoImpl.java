@@ -252,7 +252,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   }
 
   @Override
-  public Optional<GITuple<Integer, Boolean>> manipulateWith(List<GITile> tilesFromHand, List<List<GITile>> oldCombinations, List<List<GITile>> newCombinations, Integer id) {
+  public Optional<GITuple<Integer, Boolean>> manipulateBoardWith(List<GITile> tilesFromHand, List<List<GITile>> oldCombinations, List<List<GITile>> newCombinations, Integer id) {
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (!optionalPlayer.isPresent()) {

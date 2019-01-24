@@ -101,7 +101,7 @@ public interface GIGameInfo {
       Integer id);
 
   // TODO IS NEW
-  Optional<GITuple<Integer, Boolean>> manipulateWith(
+  Optional<GITuple<Integer, Boolean>> manipulateBoardWith(
       List<GITile> tilesFromHand,
       List<List<GITile>> oldCombinations,
       List<List<GITile>> newCombinations,
