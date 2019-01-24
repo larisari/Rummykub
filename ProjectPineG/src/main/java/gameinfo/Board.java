@@ -19,9 +19,12 @@ class Board {
   }
 
   void remove(List<GITile> combo) {
+    System.out.println("BOARD: REMOVE");
     for (List<GITile> combination : combos) {
       if (combination.size() == combo.size()) {
+        System.out.println("BOARD: HAVE SAME SIZE");
         if (containSameElements(combo, combination)) {
+          System.out.println("BOARD: CONTAINS SAME ELEMENTS");
           combos.remove(combination);
           return;
         }
@@ -31,11 +34,10 @@ class Board {
 
   private boolean containSameElements(List<GITile> lhs, List<GITile> rhs) {
     for (int i = 0; i < lhs.size(); i++) {
-      if (!lhs.get(i).isEquals(rhs.get(i))) {
+      if (!lhs.get(i).toString().equals(rhs.get(i).toString())) {
         return false;
       }
     }
-
     return true;
   }
 
