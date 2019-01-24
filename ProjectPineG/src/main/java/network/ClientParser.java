@@ -261,25 +261,35 @@ public class ClientParser {
 
   /**
    * Request to the server, if selectedTiles can be combined with combination on board.
-   * @param boardCombs List of board combinations that should be altered.
+   * @param tilesFromHand List of tiles from hand.
+   * @param oldBoardCombs List of board combinations before alteration.
+   * @param newBoardCombs List of board combinations that should be altered.
    */
-  public void playHandWithBoard(List<List<ImageView>> boardCombs) {
+  public void playHandWithBoard(List<ImageView> tilesFromHand, List<List<ImageView>> oldBoardCombs, List<List<ImageView>> newBoardCombs) {
     StringBuilder builder = new StringBuilder();
     builder.append("playHandWithBoard|");
 
-    builder.append(GuiParser.parseListToString(boardCombs));
-    //TODO sout weg
-    System.out.println(builder.toString() +" gesendete boardcombis");
+    builder.append(GuiParser.parseToString(tilesFromHand));
+
+    builder.append("|");
+
+    builder.append(GuiParser.parseListToString(oldBoardCombs));
+
+    builder.append("|");
+
+    builder.append(GuiParser.parseListToString(newBoardCombs));
+
+
     Client.sendMessageToServer(builder.toString());
   }
 
   /**
    *Request to server to add tiles to an existing comb on the left.
    * @param tilesFromHand tiles on the hand, we want to add on the left site.
-   * @param tilesFromBoard TODO
-   * @param CombinationsOnBoard List of existing tile-combination.
+   * @param tilesFromBoard combination on the board where tiles from hand should be added.
+   * @param newCombination new combination that should be created.
    */
-  public void playL(List<ImageView> tilesFromHand, List<ImageView> tilesFromBoard,  List<List<ImageView>> CombinationsOnBoard) {
+  public void playL(List<ImageView> tilesFromHand, List<ImageView> tilesFromBoard,  List<List<ImageView>> newCombination) {
 
     StringBuilder builder = new StringBuilder();
 
@@ -293,7 +303,7 @@ public class ClientParser {
 
     builder.append("|");
 
-    builder.append(GuiParser.parseListToString(CombinationsOnBoard));
+    builder.append(GuiParser.parseListToString(newCombination));
 
     Client.sendMessageToServer(builder.toString());
   }
@@ -303,7 +313,7 @@ public class ClientParser {
    *Request to server to add tiles to an existing comb on the right.
    * @param tilesFromHand List of tiles on the hand, client wants to add on the right site.
    * @param tilesFromBoard List of tiles on the board.
-   * @param newCombinations new comb.
+   * @param newCombinations new combination that should be created.
    */
   public void playR(
       List<ImageView> tilesFromHand,
