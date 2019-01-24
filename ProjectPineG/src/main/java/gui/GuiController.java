@@ -642,6 +642,7 @@ public class GuiController {
     }
 
     endTurn.setDisable(false);
+    bag.setDisable(true);
     disableTiles(selectedTiles); //cleart auch selectedTiles
     updateBoard();
 
@@ -700,6 +701,7 @@ public class GuiController {
     selectedTiles.clear();
     updateBoard();
     endTurn.setDisable(false);
+    bag.setDisable(true);
 
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();
