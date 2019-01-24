@@ -698,7 +698,6 @@ public class GuiController {
     }
 
     disableTiles(selectedTiles);
-    selectedTiles.clear();
     updateBoard();
     endTurn.setDisable(false);
     bag.setDisable(true);
