@@ -18,6 +18,12 @@ class Board {
     this.combos = new ArrayList<>();
   }
 
+  void removeMultiple(List<List<GITile>> combinations) {
+    for (List<GITile> combination : combinations) {
+      remove(combination);
+    }
+  }
+
   void remove(List<GITile> combo) {
     log.info("Remove the combination " + combo + "from the board.");
     for (List<GITile> combination : combos) {
