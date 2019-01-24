@@ -13,6 +13,7 @@ public class Image extends javafx.scene.image.Image {
 
   public Image(String url, String id) {
     super(url);
+    this.url = url;
     this.id = id;
   }
 

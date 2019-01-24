@@ -15,12 +15,6 @@ public class TileView {
 
   private static final int TILE_WIDTH = 45;
   private static final int TILE_HEIGHT = 65;
-  @FXML
-  private HBox topHand;
-  @FXML
-  private HBox bottomHand;
-
-
 
 
   public static void highlightTile(Node node) {

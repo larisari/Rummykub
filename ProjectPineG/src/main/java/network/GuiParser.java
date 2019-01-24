@@ -30,13 +30,13 @@ public class GuiParser {
     for (int i = 0; i < tiles.size(); i++) {
       ImageView iView = tiles.get(i);
       Image tile = (Image) iView.getImage();
-      String url = tile.getURL(); //kann url nicht finden.
+      String url = tile.getURL(); //kann url von joker nicht finden.
       System.out.println(url);
       String[] urlArray = url.split("/");
       String color = urlArray[urlArray.length - 2];
       String[] numberArray = urlArray[urlArray.length - 1].split("[.]");
       String number = numberArray[0];
-      if (number.equals("20")){
+      if (number.equals("joker")){
         selectedT += "tile." + color + "/joker";
       } else {
         selectedT += "tile." + color + "/" + number;
