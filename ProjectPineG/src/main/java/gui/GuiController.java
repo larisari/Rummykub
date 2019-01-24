@@ -207,7 +207,9 @@ public class GuiController {
         selectedCombinations.add(sTiles);
         cancelSelEffect();
       } else {
+        List<ImageView> selectedTilesHand = new ArrayList<>();
         for (ImageView tile : selectedTiles) {
+
           if (tile.getParent().getParent() == board) { //nur wenn die selected tile am board liegt.
             List<ImageView> combination = new ArrayList<>();
             List<ImageView> oldCombination = new ArrayList<>();
@@ -220,12 +222,14 @@ public class GuiController {
             }
             newBoardCombs.add(combination);
             oldBoardCombs.add(oldCombination);
+          } else {
+            selectedTilesHand.add(tile);
           }
         }
         eraseDuplicate(newBoardCombs);
         eraseDuplicate(oldBoardCombs);
         newBoardCombs.add(selectedTiles);
-        parser.playHandWithBoard(getTilesFromHand(), oldBoardCombs, newBoardCombs);
+        parser.playHandWithBoard(selectedTilesHand, oldBoardCombs, newBoardCombs);
       }
     }
 
