@@ -763,21 +763,25 @@ public class GuiController {
   @FXML
   protected void handleSwapJoker(MouseEvent event) {
     if (selectedTiles.size() == 2) {
-      Image image = (Image) selectedTiles.get(1).getImage();
+      Image jokerImage = (Image) selectedTiles.get(1).getImage();
       tile = selectedTiles.get(0);
-      if (image.getId() != null && (tile.getParent() == topHand
+      if (jokerImage.getId() != null && (tile.getParent() == topHand
           || tile.getParent() == bottomHand)) {
         joker = selectedTiles.get(1);
         HBox box = (HBox) joker.getParent();
-        int jokerIndex = getIndexOf(box, joker);
-        List<List<ImageView>> combination = new ArrayList<>();
-        List<ImageView> comb = new ArrayList<>();
-        for (int j = 0; j < box.getChildren().size(); j++) {
-          comb.add((ImageView) box.getChildren().get(j));
+        if (getIndexOf(box, joker) != null) {
+          int jokerIndex = getIndexOf(box, joker);
+          List<List<ImageView>> combination = new ArrayList<>();
+          List<ImageView> comb = new ArrayList<>();
+          for (int j = 0; j < box.getChildren().size(); j++) {
+            comb.add((ImageView) box.getChildren().get(j));
+
+          }
           comb.set(jokerIndex, tile);
+
+          combination.add(comb);
+          parser.playSwapJoker(combination);
         }
-        combination.add(comb);
-        parser.playSwapJoker(combination);
       }
     }
 
@@ -790,16 +794,13 @@ public class GuiController {
    * @param tile - Tile to be found
    * @return index of tile
    */
-  private int getIndexOf(HBox box, ImageView tile) {
-    int counter = 0;
-    int noIndexFound = -1;
+  private Integer getIndexOf(HBox box, ImageView tile) {
     for (int i = 0; i < box.getChildren().size(); i++) {
       if (box.getChildren().get(i).equals(tile)) {
-        return counter;
+        return i;
       }
-      counter++;
     }
-    return noIndexFound;
+    return null;
   }
 
   /**
