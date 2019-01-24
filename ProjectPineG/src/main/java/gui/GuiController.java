@@ -618,11 +618,11 @@ public class GuiController {
             return;
           }
         }
-        Button front = new Button("add here");
+        Button front = new Button("+");
         front.setOnMousePressed(event1 -> {
           addToFront(box);
         });
-        Button back = new Button("add here");
+        Button back = new Button("+");
         back.setOnMousePressed(event2 -> {
           addToBack(box);
         });
