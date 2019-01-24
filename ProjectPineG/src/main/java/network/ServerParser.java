@@ -76,7 +76,10 @@ public class ServerParser {
         break;
 
       case "playSwapJoker":
-        String answer3 = Server.gameInfo.play(parseStringToListListTileComb(receivedMessage[1]), id).get().getSecond().toString();
+        List<GITile> tileFromHandJ = parseStringToTile(receivedMessage[1]);
+        List<List<GITile>> oldCombinationJ = parseStringToListListTileComb(receivedMessage[2]);
+        List<List<GITile>> newCombinationJ = parseStringToListListTileComb(receivedMessage[3]);
+        String answer3 = Server.gameInfo.manipulateBoardWith(tileFromHandJ, oldCombinationJ, newCombinationJ, id).get().getSecond().toString();
         clients.get(id).sendMessageToClient("responseForPlaySwapJoker|" + answer3);
         break;
 

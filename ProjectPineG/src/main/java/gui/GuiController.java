@@ -773,14 +773,20 @@ public class GuiController {
           int jokerIndex = getIndexOf(box, joker);
           List<List<ImageView>> combination = new ArrayList<>();
           List<ImageView> comb = new ArrayList<>();
+
           for (int j = 0; j < box.getChildren().size(); j++) {
             comb.add((ImageView) box.getChildren().get(j));
 
           }
+          List<ImageView> oldComb = new ArrayList<>(comb);
+          List<List<ImageView>> oldCombList = new ArrayList<>();
+          oldCombList.add(oldComb);
           comb.set(jokerIndex, tile);
 
           combination.add(comb);
-          parser.playSwapJoker(combination);
+          List<ImageView> tileFromHand = new ArrayList<>();
+          tileFromHand.add(tile);
+          parser.playSwapJoker(tileFromHand, oldCombList, combination);
         }
       }
     }

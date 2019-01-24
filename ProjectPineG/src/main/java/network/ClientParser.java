@@ -251,11 +251,21 @@ public class ClientParser {
 
   /**
    * Sends a message to server with a combination, Client wants to play within a joker.
+   * //TODO javadoc
    */
-  public void playSwapJoker(List<List<ImageView>> combinations) {
+  public void playSwapJoker(List<ImageView> tilesFromHand, List<List<ImageView>> oldComb, List<List<ImageView>> newComb) {
     StringBuilder builder = new StringBuilder();
     builder.append("playSwapJoker|");
-    builder.append(GuiParser.parseListToString(combinations));
+    builder.append(GuiParser.parseToString(tilesFromHand));
+
+    builder.append("|");
+
+    builder.append(GuiParser.parseListToString(oldComb));
+
+    builder.append("|");
+
+    builder.append(GuiParser.parseListToString(newComb));
+
     Client.sendMessageToServer(builder.toString());
   }
 
