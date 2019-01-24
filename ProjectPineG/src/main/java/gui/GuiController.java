@@ -73,8 +73,6 @@ public class GuiController {
   private Button swapJoker;
   private List<ImageView> selectedTiles = new ArrayList<>();
   private List<List<ImageView>> selectedCombinations = new ArrayList<>();
-  private List<HBox> placedCombinations = new ArrayList<>(); //wird an Server geschickt.
-  private List<Image> hand = new ArrayList<>();
   public int numberOfPlayers;
   private final static int HAND_SPACE = 13;
   private int turn = 0;
@@ -193,8 +191,8 @@ public class GuiController {
    */
   @FXML
   protected void handleEnterComb(MouseEvent event) throws IOException {
-    List<List<ImageView>> boardSelectedCombs = new ArrayList<>();
-
+    List<List<ImageView>> newBoardCombs = new ArrayList<>();
+    List<List<ImageView>> oldBoardCombs = new ArrayList<>();
     if (!selectedTiles.isEmpty()) {
       if (areOnlyTilesFromHand(selectedTiles)) {
         List<ImageView> sTiles = new ArrayList<>();
@@ -212,20 +210,50 @@ public class GuiController {
         for (ImageView tile : selectedTiles) {
           if (tile.getParent().getParent() == board) { //nur wenn die selected tile am board liegt.
             List<ImageView> combination = new ArrayList<>();
+            List<ImageView> oldCombination = new ArrayList<>();
             HBox parent = (HBox) tile.getParent();
             for (int i = 0; i < parent.getChildren().size(); i++) {
+              oldCombination.add((ImageView)parent.getChildren().get(i));
               if (!selectedTiles.contains(parent.getChildren().get(i))) { //wenn eine oder mehrere selected tiles in der kombination sind füge sie nicht hinzu.
                 combination.add((ImageView) parent.getChildren().get(i));
               }
             }
-            boardSelectedCombs.add(combination);
-            boardSelectedCombs.add(selectedTiles);
-            parser.playHandWithBoard(boardSelectedCombs);
+            newBoardCombs.add(combination);
+            oldBoardCombs.add(oldCombination);
           }
         }
+        eraseDuplicate(newBoardCombs);
+        eraseDuplicate(oldBoardCombs);
+        newBoardCombs.add(selectedTiles);
+        parser.playHandWithBoard(getTilesFromHand(), oldBoardCombs, newBoardCombs);
       }
     }
 
+  }
+
+  /**
+   * Deletes duplicate combinations.
+   * @param combinations from which duplicates should be deleted.
+   */
+  private void eraseDuplicate(List<List<ImageView>> combinations){
+    for (int i = combinations.size()-1; i > 0; i--){
+      if (haveSameChildren(combinations.get(i), combinations.get(i-1))){
+        combinations.remove(i);
+      }
+    }
+  }
+
+  private boolean haveSameChildren(List<ImageView> comb, List<ImageView> otherComb){
+   if (comb.size() == otherComb.size()){
+     for (ImageView tile : comb){
+       if (!otherComb.contains(tile)){
+         return false;
+       }
+     }
+     return true;
+   } else {
+     return false;
+   }
   }
 
 
@@ -350,9 +378,8 @@ public class GuiController {
    * @param tiles to be loaded.
    */
   public void loadTiles(List<Image> tiles) {
-    hand = tiles;
-    for (int i = 0; i < hand.size(); i++) {
-      createTile(hand.get(i));
+    for (int i = 0; i < tiles.size(); i++) {
+      createTile(tiles.get(i));
     }
     bag.setDisable(true);
     disableControl();
@@ -813,6 +840,23 @@ public class GuiController {
   }
 
   /**
+   * Returns all tiles from the player's hand.
+   * @return all tiles from the player's hand.
+   */
+  private List<ImageView> getTilesFromHand(){
+    List<ImageView> handTiles = new ArrayList<>();
+    for (int i = 0; i < topHand.getChildren().size(); i++) {
+      ImageView iView = (ImageView) topHand.getChildren().get(i);
+      handTiles.add(iView);
+    }
+    for (int i = 0; i < bottomHand.getChildren().size(); i++) {
+      ImageView iView = (ImageView) bottomHand.getChildren().get(i);
+      handTiles.add(iView);
+    }
+    return handTiles;
+  }
+
+  /**
    * Disables control for the user. All buttons and tiles are set to disabled.
    */
   private void disableControl() {
@@ -824,14 +868,7 @@ public class GuiController {
     placeOnBoard.setDisable(true);
     swapJoker.setDisable(true);
     List<ImageView> handTiles = new ArrayList<>();
-    for (int i = 0; i < topHand.getChildren().size(); i++) {
-      ImageView iView = (ImageView) topHand.getChildren().get(i);
-      handTiles.add(iView);
-    }
-    for (int i = 0; i < bottomHand.getChildren().size(); i++) {
-      ImageView iView = (ImageView) bottomHand.getChildren().get(i);
-      handTiles.add(iView);
-    }
+    handTiles.addAll(getTilesFromHand());
     for (int i = 0; i < board.getChildren().size(); i++) {
       HBox box = (HBox) board.getChildren().get(i);
       for (int j = 0; j < box.getChildren().size(); j++) {
