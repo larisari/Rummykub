@@ -641,6 +641,7 @@ public class GuiController {
       boardComb.getChildren().add(0, tile); //added tile vorne in hbox
     }
 
+    endTurn.setDisable(false);
     disableTiles(selectedTiles); //cleart auch selectedTiles
     updateBoard();
 
@@ -698,6 +699,7 @@ public class GuiController {
     disableTiles(selectedTiles);
     selectedTiles.clear();
     updateBoard();
+    endTurn.setDisable(false);
 
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();
