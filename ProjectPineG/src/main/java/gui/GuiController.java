@@ -822,7 +822,7 @@ public class GuiController {
       bottomHand.getChildren().add(joker);
     }
     box.getChildren().add(jokerIndex, tile);
-
+    endTurn.setDisable(false);
     cancelSelEffect();
   }
 
