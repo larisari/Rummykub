@@ -100,6 +100,13 @@ public interface GIGameInfo {
       List<List<GITile>> newCombinations,
       Integer id);
 
+  // TODO IS NEW
+  Optional<GITuple<Integer, Boolean>> manipulateWith(
+      List<GITile> tilesFromHand,
+      List<List<GITile>> oldCombinations,
+      List<List<GITile>> newCombinations,
+      Integer id);
+
   /**
    * Use this method to get all the tiles on the hand by an id.
    *

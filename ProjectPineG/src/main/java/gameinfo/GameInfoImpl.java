@@ -7,6 +7,7 @@ import gameinfo.util.GITuple;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 import java.util.logging.Logger;
 
 class GameInfoImpl extends Thread implements GIGameInfo {
@@ -245,6 +246,34 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       } else {
         return Optional.of(new GITuple<>(id, false));
       }
+    } else {
+      return Optional.empty();
+    }
+  }
+
+  @Override
+  public Optional<GITuple<Integer, Boolean>> manipulateWith(List<GITile> tilesFromHand, List<List<GITile>> oldCombinations, List<List<GITile>> newCombinations, Integer id) {
+    Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
+
+    if (!optionalPlayer.isPresent()) {
+      return Optional.empty();
+    }
+
+    Player player = optionalPlayer.get();
+
+    if (!gameFlow.isValidPlayerBy(id) || player.isFirstMove()) {
+      // it is not the players turn or it is his first move.
+      return Optional.of(new GITuple<>(id, false));
+    }
+
+    boolean allValid = combRules.isValid(newCombinations);
+
+    if (allValid) {
+      player.madeMove();
+      player.remove(tilesFromHand);
+      board.remove(oldCombinations);
+      newCombinations.forEach(combination -> board.addCombo(combination));
+      return Optional.of(new GITuple<>(id, true));
     } else {
       return Optional.empty();
     }
