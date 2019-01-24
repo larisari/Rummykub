@@ -169,7 +169,7 @@ public class ServerParser {
 
   static List<List<GITile>> parseStringToListListTileComb(String s){
     List<List<GITile>> result = new ArrayList<>();
-    s = s.substring(0,s.length()-1);
+//    s = s.substring(0,s.length()-1);
     String[] split1 = s.split("<");
     String[] split2 = split1[1].split(";");
 
@@ -183,6 +183,9 @@ public class ServerParser {
   public static List<GITile> parseStringToTile(String tiles) {
     List<GITile> tileList = new ArrayList<>();
     tiles = tiles.substring(0, tiles.length() - 1);
+
+    System.out.println("ALL TILES " + tiles);
+
     String[] comb = tiles.split(":");
     String[] tileS = comb[1].split(",");
     for (int i = 0; i < tileS.length; i++) {
