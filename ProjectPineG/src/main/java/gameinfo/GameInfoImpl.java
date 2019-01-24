@@ -234,6 +234,10 @@ class GameInfoImpl extends Thread implements GIGameInfo {
         return Optional.of(new GITuple<>(id, false));
       }
 
+      for (GITile tile : tilesFromBoard) {
+        System.out.println("TILES IN BOARD TILES" + tile);
+      }
+
       boolean allValid = combRules.isValid(newCombinations);
 
       if (allValid) {

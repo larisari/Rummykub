@@ -19,7 +19,7 @@ class Board {
   }
 
   void remove(List<GITile> combo) {
-    System.out.println("BOARD: REMOVE");
+    System.out.println("BOARD: REMOVE " + combo);
     for (List<GITile> combination : combos) {
       if (combination.size() == combo.size()) {
         System.out.println("BOARD: HAVE SAME SIZE");

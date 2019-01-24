@@ -182,6 +182,7 @@ public class ServerParser {
   //ergebnis in liste packen -> List<List<GITile>>
   public static List<GITile> parseStringToTile(String tiles) {
     List<GITile> tileList = new ArrayList<>();
+    tiles = tiles.substring(0, tiles.length() - 1);
     String[] comb = tiles.split(":");
     String[] tileS = comb[1].split(",");
     for (int i = 0; i < tileS.length; i++) {
@@ -189,8 +190,13 @@ public class ServerParser {
       String[] attributes = attributeswS[1].split("/");
       String color = attributes[0];
       String number = attributes[1];
+
+      System.out.println("COLOR ATTRIBUTE " + color);
+      System.out.println("NUMBER ATTRIBUTE " + number);
+
       GIColor tileColor = null;
       GINumber tileNumber = null;
+
       switch (color) {
         case "blue":
           tileColor = GIColor.BLUE;
@@ -208,6 +214,7 @@ public class ServerParser {
           tileColor = GIColor.JOKER;
           break;
         default:
+          System.out.println("SOMETHING ELSE " + tileColor);
           break;
       }
 
@@ -255,6 +262,7 @@ public class ServerParser {
           tileNumber = GINumber.JOKER;
           break;
         default:
+          System.out.println("SOMETHING ELSE " + tileNumber);
           break;
       }
       GITile tile = new GITile(tileNumber, tileColor);
