@@ -76,9 +76,10 @@ public class Client extends Thread {
     listeningThread =
         new Thread(
             new Runnable() {
+              boolean running = true;
+
               @Override
               public void run() {
-                boolean running = true;
                 while (running) {
                   try {
                     if (socket.isConnected()) {
@@ -90,6 +91,7 @@ public class Client extends Thread {
 
                     } else {
                       running = false;
+
                     }
                   } catch (IOException e) {
                     e.printStackTrace();
