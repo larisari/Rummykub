@@ -33,7 +33,7 @@ public class GITile {
   //for internal model testing only
   @Override
   public String toString() {
-    return "{" + getNumber().toString() + "," + getColor().toString() + "}";
+    return "{" + number + "," + color + "}";
   }
 
   public boolean isEquals(GITile tile) {
