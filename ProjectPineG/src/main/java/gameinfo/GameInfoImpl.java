@@ -42,9 +42,9 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       hasRegisteredPlayers = true;
     } else {
       log.info(
-          "Registration of Player "
-              + id
-              + " has failed. No more players can be registered in the model.");
+              "Registration of Player "
+                      + id
+                      + " has failed. No more players can be registered in the model.");
     }
   }
 
@@ -219,10 +219,10 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   @Override
   public Optional<GITuple<Integer, Boolean>> play(
-      List<GITile> tilesFromHand,
-      List<GITile> tilesFromBoard,
-      List<List<GITile>> newCombinations,
-      Integer id) {
+          List<GITile> tilesFromHand,
+          List<GITile> tilesFromBoard,
+          List<List<GITile>> newCombinations,
+          Integer id) {
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
@@ -237,7 +237,6 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       boolean allValid = combRules.isValid(newCombinations);
 
       if (allValid) {
-        player.madeMove();
         player.remove(tilesFromHand);
         board.remove(tilesFromBoard);
         newCombinations.forEach(combination -> board.addCombo(combination));
@@ -260,7 +259,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     }
 
     GITuple<Integer, GIPoints> returnValue =
-        new GITuple<>(id, optionalPlayer.get().calculatePointsOfHand());
+            new GITuple<>(id, optionalPlayer.get().calculatePointsOfHand());
     return Optional.of(returnValue);
   }
 
@@ -323,9 +322,9 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   private void putComboOnBoard(List<List<GITile>> combinations, Player player) {
     combinations.forEach(
-        combination -> {
-          board.addCombo(combination);
-          player.remove(combination);
-        });
+            combination -> {
+              board.addCombo(combination);
+              player.remove(combination);
+            });
   }
 }

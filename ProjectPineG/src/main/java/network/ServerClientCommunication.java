@@ -50,6 +50,8 @@ public class ServerClientCommunication extends Thread {
         e.printStackTrace();
         log.info("No inputconnection to client: " + clientID);
         Thread.currentThread().interrupt();
+
+
         //TODO
         //was soll passieren, wenn Client-Verbindung trennt. -> Programm restart?
         //alle in startingScreen zurück, server "löschen"

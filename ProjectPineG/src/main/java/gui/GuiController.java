@@ -2,7 +2,8 @@ package gui;
 
 //TODO Buttons per default disablen und enablen wenn player am zug ist.
 
-
+//TODO bei Disconnect Alert window mit ok button zurück zu startbildschirm
+//TODO bei endscreen button zurück zum startbildschirm.
 import gui.util.Image;
 
 import java.io.IOException;

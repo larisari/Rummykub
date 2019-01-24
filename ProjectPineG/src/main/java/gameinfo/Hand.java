@@ -24,12 +24,12 @@ class Hand {
   }
 
   void put(GITile tile) {
-    log.info("Added the tile " + tile + " to the players hand.");
+//    log.info("Added the tile " + tile + " to the players hand.");
     tilesOnHand.add(tile);
   }
 
   void removeTile(GITile tile) {
-    log.info("Removed the tile " + tile + " from the players hand.");
+//    log.info("Removed the tile " + tile + " from the players hand.");
     tilesOnHand.remove(tile);
   }
 
@@ -41,10 +41,10 @@ class Hand {
   GIPoints calculatePoints() {
     Integer pointsAsInteger = calculator.calculatePointsForHand(tilesOnHand);
     Integer pointsAsNegative = 0 - pointsAsInteger;
-    log.info(
-        "Calculated the points of the players hand. The player has "
-            + pointsAsNegative
-            + " points on the hand.");
+//    log.info(
+//            "Calculated the points of the players hand. The player has "
+//                    + pointsAsNegative
+//                    + " points on the hand.");
     return new GIPoints(pointsAsNegative);
   }
 }

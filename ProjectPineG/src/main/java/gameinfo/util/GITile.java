@@ -35,4 +35,8 @@ public class GITile {
   public String toString() {
     return "{" + getNumber().toString() + "," + getColor().toString() + "}";
   }
+
+  public boolean isEquals(GITile tile) {
+    return color == (tile.color) && number == (tile.number);
+  }
 }

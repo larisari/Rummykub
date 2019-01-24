@@ -16,7 +16,6 @@ class Player {
     this.hand = new Hand(calculator);
     this.id = id;
     isFirstMove = true;
-    moved = false;
   }
 
   boolean isFirstMove() {

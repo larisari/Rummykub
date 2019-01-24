@@ -43,11 +43,11 @@ class CombRules {
 
     boolean greaterThanMin = points >= minimumPoints;
     log.info(
-        "The points of the combination are greater or equal than "
-            + minimumPoints
-            + " "
-            + greaterThanMin
-            + ".");
+            "The points of the combination are greater or equal than "
+                    + minimumPoints
+                    + " "
+                    + greaterThanMin
+                    + ".");
 
     return greaterThanMin;
   }
@@ -101,7 +101,7 @@ class CombRules {
         GITile current = combination.get(i);
 
         if (previous.getNumber().equals(GINumber.JOKER)
-            || current.getNumber().equals(GINumber.JOKER)) {
+                || current.getNumber().equals(GINumber.JOKER)) {
           break;
         }
 
@@ -133,8 +133,8 @@ class CombRules {
     GINumber number = tempNum;
 
     return combination.stream()
-        .allMatch(
-            tile -> tile.getNumber().equals(number) || tile.getNumber().equals(GINumber.JOKER));
+            .allMatch(
+                    tile -> tile.getNumber().equals(number) || tile.getNumber().equals(GINumber.JOKER));
   }
 
   private boolean haveSameColor(List<GITile> combination) {
@@ -154,6 +154,6 @@ class CombRules {
     GIColor color = tempColor;
 
     return combination.stream()
-        .allMatch(tile -> tile.getColor().equals(color) || tile.getColor().equals(GIColor.JOKER));
+            .allMatch(tile -> tile.getColor().equals(color) || tile.getColor().equals(GIColor.JOKER));
   }
 }

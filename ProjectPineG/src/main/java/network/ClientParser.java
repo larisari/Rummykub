@@ -276,15 +276,20 @@ public class ClientParser {
   /**
    *Request to server to add tiles to an existing comb on the left.
    * @param tilesFromHand tiles on the hand, we want to add on the left site.
+   * @param tilesFromBoard TODO
    * @param CombinationsOnBoard List of existing tile-combination.
    */
-  public void playL(List<ImageView> tilesFromHand, List<List<ImageView>> CombinationsOnBoard) {
+  public void playL(List<ImageView> tilesFromHand, List<ImageView> tilesFromBoard,  List<List<ImageView>> CombinationsOnBoard) {
 
     StringBuilder builder = new StringBuilder();
 
     builder.append("playWithBoardTilesL|");
 
     builder.append(GuiParser.parseToString(tilesFromHand));
+
+    builder.append("|");
+
+    builder.append(GuiParser.parseToString(tilesFromBoard));
 
     builder.append("|");
 

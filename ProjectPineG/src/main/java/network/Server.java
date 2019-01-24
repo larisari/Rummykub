@@ -28,8 +28,7 @@ public class Server {
       ServerListener listener = new ServerListener(listOfClients);
       listener.start();
 
-//      while (game.isAlive()) {
-//      }
+
     } catch (Exception e) {
       e.printStackTrace();
     }

@@ -35,6 +35,7 @@ public class ServerListener extends Thread {
 
       log.info("[Server] wird initialisiert...");
 
+      
 
       while (isRunning) {
         try {

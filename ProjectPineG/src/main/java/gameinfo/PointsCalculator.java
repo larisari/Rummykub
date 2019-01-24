@@ -54,13 +54,6 @@ class PointsCalculator {
 
     for (GITile tile : hand) {
       points += tile.getNumber().value();
-      //      GINumber numberOfTile = tile.getNumber();
-      //
-      //      if (numberOfTile.equals(GINumber.JOKER)) {
-      //        points += 20;
-      //      } else {
-      //        points += numberOfTile.value();
-      //      }
     }
 
     return points;

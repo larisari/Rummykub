@@ -18,13 +18,25 @@ class Board {
     this.combos = new ArrayList<>();
   }
 
-  void remove(List<GITile> combination) {
-    this.combos.remove(combination);
+  void remove(List<GITile> combo) {
+    for (List<GITile> combination : combos) {
+      if (combination.size() == combo.size()) {
+        if (containSameElements(combo, combination)) {
+          combos.remove(combination);
+          return;
+        }
+      }
+    }
   }
 
-  void clear() {
-    log.info("Cleared Board.");
-    this.combos = new ArrayList<>();
+  private boolean containSameElements(List<GITile> lhs, List<GITile> rhs) {
+    for (int i = 0; i < lhs.size(); i++) {
+      if (!lhs.get(i).isEquals(rhs.get(i))) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   List<List<GITile>> getActiveCombos() {
@@ -56,3 +68,4 @@ class Board {
     return this.bag.takeStack(numberOfTiles, customStack);
   }
 }
+

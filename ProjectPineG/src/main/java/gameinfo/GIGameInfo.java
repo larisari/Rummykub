@@ -88,7 +88,8 @@ public interface GIGameInfo {
    * is returned.
    *
    * @param tilesFromHand the tiles that where played from the players hand.
-   * @param newCombinations all the combinations that are currently on the board.
+   * @param tilesFromHand the combination to which the tilesFromHand were added
+   * @param tilesFromBoard all the combinations that are currently on the board.
    * @param id by which the combination is played.
    * @return the id by which the combination was played, and whether the combination was valid or
    *     not. If the player id is not registered in the model an Optional.empty() is returned.
@@ -107,8 +108,6 @@ public interface GIGameInfo {
    *     not registered in the model an Optional.empty() is returned.
    */
   Optional<GITuple<Integer, List<GITile>>> getAllTilesBy(Integer id);
-
-  // is negative
 
   /**
    * Use this method to get all the points for a player by its id. It returns its points as a
@@ -153,5 +152,5 @@ public interface GIGameInfo {
   Integer getCurrentPlayerId();
 
   // TODO REMOVE -> testing purpose only
-  public Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id, List<GITile> customTiles);
+  Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id, List<GITile> customTiles);
 }

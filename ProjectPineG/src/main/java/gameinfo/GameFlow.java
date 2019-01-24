@@ -4,7 +4,6 @@ import gameinfo.util.GIPoints;
 import gameinfo.util.GITuple;
 
 import java.util.*;
-import java.util.logging.Logger;
 
 class GameFlow {
   private Map<Integer, Player> players;
@@ -13,8 +12,6 @@ class GameFlow {
   private List<Integer> playerSequence;
   private Integer currentPlayerIndex;
   private PointsCalculator calculator;
-
-  private static Logger log = Logger.getLogger(GameFlow.class.getName());
 
   GameFlow(PointsCalculator calculator) {
     this.players = new HashMap<>();
@@ -28,13 +25,11 @@ class GameFlow {
   void registerBy(Integer id) {
     players.put(id, new Player(id, calculator));
     playerSequence.add(id);
-    log.info("Registered Player with id " + id + ".");
   }
 
   void deregisterBy(Integer id) {
     players.remove(id);
     playerSequence.remove(id);
-    log.info("Deregistered Player with id " + id + ".");
   }
 
   boolean isPlayerExistingBy(Integer id) {
@@ -43,7 +38,6 @@ class GameFlow {
 
   void startGame() {
     this.state = GameState.distributing;
-    log.info("Game started.");
   }
 
   boolean isValidPlayerBy(Integer id) {
@@ -58,7 +52,6 @@ class GameFlow {
     if (players.containsKey(id)) {
       return Optional.of(players.get(id));
     } else {
-      log.info("ID " + id + " is not registered in the model.");
       return Optional.empty();
     }
   }
@@ -81,11 +74,8 @@ class GameFlow {
     } else {
       currentPlayerIndex = 0;
     }
-
-    Integer currentPlayerId = playerSequence.get(currentPlayerIndex);
+    Integer currentPlayerId  = playerSequence.get(currentPlayerIndex);
     players.get(currentPlayerId).resetMadeMove();
-
-    log.info("Next Players turn. Now its Player " + currentPlayerId + "s turn.");
   }
 
   boolean isDistributing() {
@@ -118,21 +108,6 @@ class GameFlow {
   }
 
   boolean hasMadeMoveBy(Integer id) {
-    log.info("Player with the id " + id + " has made a move.");
     return players.get(id).hasMadeMove();
   }
-
-  //  private void removePlayerFromSequence(Integer id) {
-  //    //    playerSequence.removeIf(i -> i.equals(id));
-  //  }
-  //
-  //  private void addPlayerToSequence(Integer id) {
-  //    // current order: time of registration
-  //
-  //    // TODO modify the order according to will
-  //
-  //    //    if (players.containsKey(id)) {
-  //    //      playerSequence.add(id);
-  //    //    }
-  //  }
 }
