@@ -210,6 +210,7 @@ public class ServerParser {
         default:
           break;
       }
+
       switch (number) {
         case "1":
           tileNumber = GINumber.ONE;
@@ -252,11 +253,15 @@ public class ServerParser {
           break;
         case "joker":
           tileNumber = GINumber.JOKER;
+          break;
         default:
           break;
       }
       GITile tile = new GITile(tileNumber, tileColor);
       tileList.add(tile);
+    }
+    for (GITile tile : tileList) {
+      System.out.println(tile);
     }
     return tileList;
   }
