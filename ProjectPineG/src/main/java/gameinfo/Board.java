@@ -19,12 +19,12 @@ class Board {
   }
 
   void remove(List<GITile> combo) {
-    System.out.println("BOARD: REMOVE " + combo);
+    log.info("Remove the combination " + combo + "from the board.");
     for (List<GITile> combination : combos) {
       if (combination.size() == combo.size()) {
-        System.out.println("BOARD: HAVE SAME SIZE");
+        log.info("Combinations have the same size.");
         if (containSameElements(combo, combination)) {
-          System.out.println("BOARD: CONTAINS SAME ELEMENTS");
+          log.info("Combinations contains the same elements.");
           combos.remove(combination);
           return;
         }

@@ -1,5 +1,6 @@
 package network;
 
+import com.sun.tools.javac.util.FatalError;
 import gameinfo.util.GIColor;
 import gameinfo.util.GINumber;
 import gameinfo.util.GIPoints;
@@ -170,8 +171,8 @@ public class ServerParser {
   static List<List<GITile>> parseStringToListListTileComb(String s){
     List<List<GITile>> result = new ArrayList<>();
 //    s = s.substring(0,s.length()-1);
-    String[] split1 = s.split("<");
-    String[] split2 = split1[1].split(";");
+    String[] split1 = s.split("[<]");
+    String[] split2 = split1[1].split("[;]");
 
     for (int i = 0; i < split2.length; i++){
       result.add(parseStringToTile(split2[i]));
@@ -182,20 +183,23 @@ public class ServerParser {
   //ergebnis in liste packen -> List<List<GITile>>
   public static List<GITile> parseStringToTile(String tiles) {
     List<GITile> tileList = new ArrayList<>();
-    tiles = tiles.substring(0, tiles.length() - 1);
 
-    System.out.println("ALL TILES " + tiles);
+    if (tiles.charAt(tiles.length() - 1) == ';') {
+      tiles = tiles.substring(0, tiles.length() - 1);
+    }
 
-    String[] comb = tiles.split(":");
-    String[] tileS = comb[1].split(",");
+    log.info("All tiles that were passed " + tiles);
+
+    String[] comb = tiles.split("[:]");
+    String[] tileS = comb[1].split("[,]");
     for (int i = 0; i < tileS.length; i++) {
       String[] attributeswS = tileS[i].split("[.]");
-      String[] attributes = attributeswS[1].split("/");
+      String[] attributes = attributeswS[1].split("[/]");
       String color = attributes[0];
       String number = attributes[1];
 
-      System.out.println("COLOR ATTRIBUTE " + color);
-      System.out.println("NUMBER ATTRIBUTE " + number);
+      log.info("COLOR ATTRIBUTE " + color);
+      log.info("NUMBER ATTRIBUTE " + number);
 
       GIColor tileColor = null;
       GINumber tileNumber = null;
@@ -217,8 +221,7 @@ public class ServerParser {
           tileColor = GIColor.JOKER;
           break;
         default:
-          System.out.println("SOMETHING ELSE " + tileColor);
-          break;
+          throw new FatalError("SOMETHING WENT DEEPLY WRONG " + tileColor);
       }
 
       switch (number) {
@@ -265,8 +268,7 @@ public class ServerParser {
           tileNumber = GINumber.JOKER;
           break;
         default:
-          System.out.println("SOMETHING ELSE " + tileNumber);
-          break;
+          throw new FatalError("SOMETHING WENT DEEPLY WRONG " + tileColor);
       }
       GITile tile = new GITile(tileNumber, tileColor);
       tileList.add(tile);
