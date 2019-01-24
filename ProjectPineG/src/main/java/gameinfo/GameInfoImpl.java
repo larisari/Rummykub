@@ -271,7 +271,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     if (allValid) {
       player.madeMove();
       player.remove(tilesFromHand);
-      board.remove(oldCombinations);
+      board.removeMultiple(oldCombinations);
       newCombinations.forEach(combination -> board.addCombo(combination));
       return Optional.of(new GITuple<>(id, true));
     } else {
