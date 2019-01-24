@@ -4,6 +4,7 @@ package gui;
 
 //TODO bei Disconnect Alert window mit ok button zurück zu startbildschirm
 //TODO bei endscreen button zurück zum startbildschirm.
+
 import gui.util.Image;
 
 import java.io.IOException;
@@ -185,44 +186,56 @@ public class GuiController {
 
   /**
    * Checks if tiles from the main board and the hand should be combined and checks if the altered
-   * combinations on the board are valid.
-   * If only tiles from the hand should form a combination, the tiles are moved to the selection board.
+   * combinations on the board are valid. If only tiles from the hand should form a combination, the
+   * tiles are moved to the selection board.
    *
    * @param event - onMouseClicked event if user presses "Enter new Selection" button.
    */
   @FXML
   protected void handleEnterComb(MouseEvent event) throws IOException {
     List<List<ImageView>> boardSelectedCombs = new ArrayList<>();
-    List<ImageView> sTiles = new ArrayList<>();
-    HBox comb = new HBox();
-    comb.prefHeight(MAX_BOXHEIGHT);
-    comb.prefWidth(selectedTiles.size() * MAX_BOXWIDTH);
-    if (!selectedTiles.isEmpty()) {
-      for (ImageView tile : selectedTiles) {
-        if (!topHand.getChildren().contains(tile) && !bottomHand.getChildren()
-            .contains(tile)) {
-          List<ImageView> combination = new ArrayList<>();
-          HBox parent = (HBox) tile.getParent();
-          for (int i = 0; i < parent.getChildren().size(); i++) {
-            if (parent.getChildren().get(i) != tile) {
-              combination.add((ImageView) parent.getChildren().get(i));
-            }
-          }
-          boardSelectedCombs.add(combination);
-          parser.playHandWithBoard(boardSelectedCombs);
 
-        } else if (topHand.getChildren().contains(tile) || bottomHand.getChildren()
-            .contains(tile)) {
+    if (!selectedTiles.isEmpty()) {
+      if (areOnlyTilesFromHand(selectedTiles)) {
+        List<ImageView> sTiles = new ArrayList<>();
+        HBox comb = new HBox();
+        comb.prefHeight(MAX_BOXHEIGHT);
+        comb.prefWidth(selectedTiles.size() * MAX_BOXWIDTH);
+        for (ImageView tile : selectedTiles) {
           sTiles.add(tile);
           comb.getChildren().add(tile);
         }
-      }
-      if (!comb.getChildren().isEmpty() && !sTiles.isEmpty()) {
         selectionBoard.getChildren().add(comb);
         selectedCombinations.add(sTiles);
         cancelSelEffect();
+      } else {
+        for (ImageView tile : selectedTiles) {
+          if (tile.getParent().getParent() == board) { //nur wenn die selected tile am board liegt.
+            List<ImageView> combination = new ArrayList<>();
+            HBox parent = (HBox) tile.getParent();
+            for (int i = 0; i < parent.getChildren().size(); i++) {
+              if (!selectedTiles.contains(parent.getChildren().get(i))) { //wenn eine oder mehrere selected tiles in der kombination sind füge sie nicht hinzu.
+                combination.add((ImageView) parent.getChildren().get(i));
+              }
+            }
+            boardSelectedCombs.add(combination);
+            boardSelectedCombs.add(selectedTiles);
+            parser.playHandWithBoard(boardSelectedCombs);
+          }
+        }
       }
     }
+
+  }
+
+
+  private boolean areOnlyTilesFromHand(List<ImageView> tiles) {
+    for (ImageView tile : tiles) {
+      if (tile.getParent().getParent() == board) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**
@@ -244,6 +257,8 @@ public class GuiController {
     }
 
     board.getChildren().add(comb);
+    bag.setDisable(true);
+    endTurn.setDisable(false);
     updateBoard();
     disableTiles(combination); //löscht auch tiles aus selectedTiles
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
@@ -251,8 +266,6 @@ public class GuiController {
       parser.notifyWin();
     }
   }
-
-
 
   /**
    * Checks if tile combinations on the selection board are valid.
@@ -266,7 +279,6 @@ public class GuiController {
     }
   }
 
-
   /**
    * Places tiles combination on the main board. Disables the bag. Checks if the player's hand is
    * now empty.
@@ -276,10 +288,6 @@ public class GuiController {
       List<ImageView> combination = selectedCombinations.get(i);
       moveTilesAux(combination);
     }
-    bag.setDisable(true);
-    endTurn.setDisable(false);
-    disableTiles(selectedTiles);
-    updateBoard();
 
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();
@@ -324,7 +332,6 @@ public class GuiController {
     eController.setNumberOfPlayers(numberOfPlayers);
     eController.setPointsNamesVisible();
   }
-
 
   /**
    * Requests tiles to be drawn from the bag. Requests the next player's ID.
@@ -562,7 +569,6 @@ public class GuiController {
         });
   }
 
-
   /**
    * For adding to existing combinations. Creates button in front of and at the back of each
    * combination on the main board.
@@ -712,7 +718,6 @@ public class GuiController {
     endTurn.setDisable(false);
     bag.setDisable(true);
 
-
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();
       parser.notifyWin();
@@ -783,13 +788,12 @@ public class GuiController {
     cancelSelEffect();
   }
 
-
   /**
    * Deletes all "add here" buttons on the main board.
    */
   private void deleteAddToButtons() {
     for (int i = 0; i < board.getChildren().size(); i++) {
-      HBox box = (HBox)board.getChildren().get(i);
+      HBox box = (HBox) board.getChildren().get(i);
       box.getChildren().remove(box.getChildren().get(box.getChildren().size() - 1));
       box.getChildren().remove(box.getChildren().get(0));
 
