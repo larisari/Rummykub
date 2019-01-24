@@ -1,5 +1,5 @@
 package gui;
-
+//TODO bottomhand begrenzen!!!
 //TODO Buttons per default disablen und enablen wenn player am zug ist.
 
 //TODO bei Disconnect Alert window mit ok button zurück zu startbildschirm
@@ -701,6 +701,7 @@ public class GuiController {
     updateBoard();
     endTurn.setDisable(false);
     bag.setDisable(true);
+
 
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();
