@@ -55,6 +55,7 @@ public class GuiController {
   private FlowPane board;
   @FXML
   private ImageView bag;
+  @FXML private Group topBoard;
   @FXML
   private Group rightBoard;
   @FXML
@@ -127,14 +128,23 @@ public class GuiController {
 
 
   public void setPlayerBoards() {
-    switch (numberOfPlayers) {
+    switch (numberOfPlayers){
       case 2:
         rightBoard.setVisible(false);
         leftBoard.setVisible(false);
         break;
       case 3:
-        leftBoard.setVisible(false);
-        break;
+        switch (playerID){
+          case 0: //Player 1
+            leftBoard.setVisible(false);
+            break;
+          case 1: //Player 2
+            rightBoard.setVisible(false);
+            break;
+          case 2: //Player 3
+            topBoard.setVisible(false);
+            break;
+        }
     }
   }
 
@@ -143,25 +153,26 @@ public class GuiController {
    */
   public void setPlayerNames() {
     switch (playerID) {
-      case 0:
-        break; //bleibt auf default
-      case 1:
+      case 0: //Player 1
+        break;
+      case 1: //Player 2
         playerTopName.setText("PLAYER 1");
         playerRightName.setText("PLAYER 4");
         playerLeftName.setText("PLAYER 3");
         break;
-      case 2:
+      case 2: //Player 3
         playerTopName.setText("PLAYER 4");
         playerRightName.setText("PLAYER 2");
         playerLeftName.setText("PLAYER 1");
         break;
-      case 3:
+      case 3: //Player 4
         playerTopName.setText("PLAYER 3");
         playerRightName.setText("PLAYER 1");
         playerLeftName.setText("PLAYER 2");
         break;
     }
   }
+
 
   /**
    * Opens confirmation alert window if user presses "Quit" button.
