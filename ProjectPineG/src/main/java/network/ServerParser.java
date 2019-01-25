@@ -188,7 +188,7 @@ public class ServerParser {
   public static List<GITile> parseStringToTile(String tiles) {
     List<GITile> tileList = new ArrayList<>();
 
-    if (tiles.charAt(tiles.length() - 1) == ';') {
+    if (tiles.length() > 0 && tiles.charAt(tiles.length() - 1) == ';') {
       tiles = tiles.substring(0, tiles.length() - 1);
     }
 
