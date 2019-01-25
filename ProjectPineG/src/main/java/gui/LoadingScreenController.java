@@ -3,17 +3,23 @@ package gui;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import network.ClientParser;
 
 public class LoadingScreenController {
@@ -125,11 +131,28 @@ public class LoadingScreenController {
     stage.setResizable(false);
     stage.setTitle("RUMMYKUB");
     stage.setScene(scene);
+    stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     stage.show();
     loadingScreen.getScene().getWindow().hide();
     this.startingStage.close();
 
 
 
+  }
+  /**
+   * Opens confirmation alert if user tries to exit application by pressing "x".
+   * @param event - WindowEvent if user presses "x" icon.
+   */
+  private void closeWindowEvent(WindowEvent event){
+    ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+    ButtonType no = new ButtonType("No",
+        ButtonBar.ButtonData.CANCEL_CLOSE);
+    Alert alert = new Alert(AlertType.CONFIRMATION, "bla", yes, no);
+    alert.setContentText("Do you really want to quit?");
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.isPresent() && result.get() == no) {
+      event.consume();
+    }
   }
 }

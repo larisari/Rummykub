@@ -913,7 +913,6 @@ public class GuiController {
     endTurn.setDisable(true);
     cancelSelection.setDisable(true);
     addToExisting.setDisable(true);
-    manipulate.setDisable(true);
     placeOnBoard.setDisable(true);
     swapJoker.setDisable(true);
     List<ImageView> handTiles = new ArrayList<>();
