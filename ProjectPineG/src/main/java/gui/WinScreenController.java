@@ -22,7 +22,7 @@ public class WinScreenController {
   private Label player4;
 
   //noch ändern:
-  private int p1Points;
+  private int p1Points; //ev noch initialisieren? oder reicht setter?
   private int p2Points;
   private int p3Points;
   private int p4Points;

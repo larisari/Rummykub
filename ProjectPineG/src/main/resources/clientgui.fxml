@@ -42,11 +42,6 @@
             <Font name="Franklin Gothic Medium" size="23.0" />
           </font>
         </Label>
-        <Button accessibleRole="PARENT" alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="27.0" prefWidth="110.0" text="Surrender" textAlignment="CENTER" VBox.vgrow="NEVER">
-          <font>
-            <Font name="Franklin Gothic Medium" size="14.0" />
-          </font>
-        </Button>
         <Button accessibleRole="PARENT" alignment="BOTTOM_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onMouseClicked="#handleQuit" prefHeight="27.0" prefWidth="110.0" text="Quit" textAlignment="CENTER">
           <font>
             <Font name="Franklin Gothic Medium" size="14.0" />
@@ -55,15 +50,35 @@
             <Insets bottom="30.0" top="10.0" />
           </VBox.margin>
         </Button>
+            <Label text="Controls">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="17.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <ScrollPane prefHeight="194.0" prefWidth="174.0">
+               <content>
+                  <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click on the bag to draw tiles.&#10;Click on tiles to select them and press &quot;Enter new Selection&quot; to place a new combination on your selection board. You can place multiple combinations on your selection board before placing them on the main board by clicking &quot;Place Selection&quot;. You can add tiles to an existing combination on the main board by selecting the tiles you want to add and then clicking &quot;Add to existing combination&quot;. For swapping a tile from the hand with a joker on the board, first click on the tile on your hand, then on the joker and then press &quot;Swap Joker&quot;. You can cancel your selected tiles on your hand as well as on your selection board by pressing &quot;Cancel Selection&quot;. If you wish to end your turn, press &quot;End Turn&quot;. If you draw a tile, your turn ends automatically. You may only end your turn if you played tiles or drew from the bag. You can also hover over a button to learn more about its function." wrappingWidth="145.0">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Text>
+               </content>
+               <padding>
+                  <Insets bottom="5.0" left="7.0" right="4.0" top="5.0" />
+               </padding>
+            </ScrollPane>
             <Label text="Rules">
                <font>
                   <Font name="Franklin Gothic Medium" size="17.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="10.0" />
+                  <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </Label>
-            <ScrollPane prefHeight="584.0" prefWidth="174.0">
+            <ScrollPane prefHeight="401.0" prefWidth="174.0">
                <content>
                   <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The youngest player starts. Each player receives 14 random tiles by clicking on the bag. Each turn a player can choose to draw a tile or to place tiles on the board. &#10;Tiles may only be placed in certain combinations: &#10;1. Tiles with the same number (max. 4 tiles).&#10;2. tiles in acending order but in the same colour (starts again at 1 after 13), no max. limit. &#10;Each combination must consist of at least 3 tiles. At the first turn each player must place a combination worth at least 30 points. Each tile is worth its number. A joker has the worth of the number it should represent. &#10;At the end of the game the joker is worth 20 points. Tiles on the board may be rearranged. Players may add tiles to existing combinations on the board. At the end of a turn, only valid combinations of 3 tiles may lay on the board. &#10;The object of the game is to get rid of ones tiles as fast as possible. Once someone achieves that, the player can proclaim &quot;Rummykub&quot; and thus ends the game. The losers add up the value of their remaining tiles. The player with the highest score loses." wrappingWidth="145.0">
                      <font>
@@ -153,7 +168,7 @@
                   </Tooltip>
                </tooltip>
             </Button>
-            <Button fx:id="cancelSelection" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="726.0" mnemonicParsing="false" onMouseClicked="#handleCancelSel" prefHeight="67.0" prefWidth="110.0" styleClass="cancelBtn" text="Cancel Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="3.0">
+            <Button fx:id="cancelSelection" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="727.0" mnemonicParsing="false" onMouseClicked="#handleCancelSel" prefHeight="67.0" prefWidth="110.0" styleClass="cancelBtn" text="Cancel Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="2.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>
@@ -170,25 +185,13 @@
                   <Image url="@images/bag.png" />
                </image>
             </ImageView>
-            <FlowPane fx:id="board" hgap="30.0" layoutX="133.0" layoutY="106.0" maxHeight="475.0" prefWidth="723.0" prefWrapLength="700.0" vgap="10.0" AnchorPane.bottomAnchor="217.0" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="106.0" />
+            <FlowPane fx:id="board" hgap="30.0" layoutX="133.0" layoutY="106.0" prefWrapLength="723.0" vgap="10.0" AnchorPane.bottomAnchor="217.0" AnchorPane.leftAnchor="133.0" AnchorPane.rightAnchor="202.0" AnchorPane.topAnchor="106.0" />
             <Button fx:id="addToExisting" accessibleRole="PARENT" alignment="CENTER" layoutX="857.0" layoutY="660.0" mnemonicParsing="false" onMouseClicked="#handleAddTo" prefHeight="66.0" prefWidth="200.0" styleClass="addTo" text="Add to existing Combination" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="70.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>
                <tooltip>
                   <Tooltip prefHeight="100.0" prefWidth="130.0" text="Click here to add selected tiles to an existing combination on the board." wrapText="true">
-                     <font>
-                        <Font name="Franklin Gothic Medium" size="13.0" />
-                     </font>
-                  </Tooltip>
-               </tooltip>
-            </Button>
-            <Button fx:id="manipulate" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="660.0" mnemonicParsing="false" onMouseClicked="#handleManipulate" prefHeight="65.0" prefWidth="110.0" styleClass="manipulate" text="Manipulate Tiles" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="71.0">
-               <font>
-                  <Font name="Franklin Gothic Medium" size="16.0" />
-               </font>
-               <tooltip>
-                  <Tooltip prefHeight="120.0" prefWidth="130.0" text="Click here to manipulate tiles on the board after you finished placing tiles from your hand." wrapText="true">
                      <font>
                         <Font name="Franklin Gothic Medium" size="13.0" />
                      </font>
@@ -207,7 +210,7 @@
                   </Tooltip>
                </tooltip>
             </Button>
-            <Button fx:id="swapJoker" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="594.0" mnemonicParsing="false" onMouseClicked="#handleSwapJoker" prefHeight="65.0" prefWidth="110.0" styleClass="manipulate" text="Swap Joker" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="137.0">
+            <Button fx:id="swapJoker" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="659.0" mnemonicParsing="false" onMouseClicked="#handleSwapJoker" prefHeight="65.0" prefWidth="110.0" styleClass="jokerBtn" text="Swap Joker" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="72.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>
