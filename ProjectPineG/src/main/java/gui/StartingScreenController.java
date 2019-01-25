@@ -4,15 +4,21 @@ import java.io.IOException;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import network.Client;
 import network.ClientParser;
 import network.Server;
@@ -56,17 +62,35 @@ public class StartingScreenController {
   protected void handleJoinGame(MouseEvent event) {
     //TODO abfrage nach alter.
     String ipAdress = "";
-    TextInputDialog dialog = new TextInputDialog();
+    String ageP = "";
+    Dialog<Pair<String,String>> dialog = new Dialog<>();
     dialog.setTitle("Login");
-    dialog.setHeaderText("Please enter your IP Adress!");
-    Button ok = (Button) dialog.getDialogPane().lookupButton(ButtonType.OK);
-    Optional<String> result = dialog.showAndWait();
+    dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+    GridPane gridPane = new GridPane();
+    gridPane.setHgap(10);
+    gridPane.setVgap(10);
+    gridPane.setPadding(new Insets(20, 150, 10, 10));
+
+    TextField adress = new TextField();
+    adress.setPromptText("Enter your IP adress.");
+    TextField age = new TextField();
+    age.setPromptText("Enter your age.");
+
+    gridPane.add(adress, 0, 0);
+    gridPane.add(age, 2, 0);
+
+    dialog.getDialogPane().setContent(gridPane);
+    dialog.setHeaderText("Please enter your IP adress and your age!");
+
+    Optional<Pair<String,String>> result = dialog.showAndWait();
     if (result.isPresent()) {
-      ipAdress = result.get();
+      ipAdress = adress.getText();
+      ageP = age.getText();
       try {
         Client c = new Client(ipAdress);
       } catch (Exception e) {
 //DialogError: Error! Please enter valid IP adress!
+        //Error wenn kein Host da ist.
         return;
       }
     }
