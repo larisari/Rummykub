@@ -7,6 +7,7 @@ package gui;
 
 import gui.util.Image;
 
+import java.awt.Point;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +80,8 @@ public class GuiController {
   private int turn = 0;
   private final static int MAX_BOXHEIGHT = 68;
   private final static int MAX_BOXWIDTH = 45;
+  private final static int DRAW_HEIGHT = 65;
+  private final static int DRAW_WIDTH = 45;
  private double tileHeight = 65;
  private double tileWidth = 45;
   private Integer nextPlayerID = 0;
@@ -86,6 +89,7 @@ public class GuiController {
   private ImageView joker = new ImageView();
   private HBox boardComb = new HBox();
   private int playerID = 0;
+  private Stage stage = new Stage();
 
   private ClientParser parser;
 
@@ -104,20 +108,7 @@ public class GuiController {
     this.playerID = playerID;
   }
 
-  /**
-   * Requests the next player's ID from the network.
-   */
-  private void getNextPlayerID() {
-    parser.getNextPlayerID();
-  }
-
-  /**
-   * Gets called by network. Sets the next player's ID.
-   */
-  public void setNextPlayerID(Integer ID) {
-    this.nextPlayerID = ID;
-  }
-
+  public void setStage(Stage stage){ this.stage = stage;}
   /**
    * Initializes FXML file. Sets player boards invisible according to the number of players.
    */
@@ -296,7 +287,8 @@ public class GuiController {
       ImageView tile = combination.get(j);
       tile.setStyle("-fx-translate-y: 0");
       tile.setEffect(null);
-      //tile.setDisable(true);
+      tile.setFitHeight(tileHeight);
+      tile.setFitWidth(tileWidth);
       comb.getChildren().add(tile);
     }
 
@@ -305,8 +297,6 @@ public class GuiController {
     endTurn.setDisable(false);
     updateBoard();
     disableTiles(combination); //löscht auch tiles aus selectedTiles
-    System.out.println(board.getHeight() + "BOARD HEIGHT");
-    System.out.println(board.getBoundsInParent().getHeight() + " getBoundsinParent HEIGHT");
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();
       parser.notifyWin();
@@ -321,7 +311,7 @@ public class GuiController {
   @FXML
   protected void handleplaceOnBoard(MouseEvent event){
     if (!selectionBoard.getChildren().isEmpty()) {
- parser.play(selectedCombinations);
+      parser.play(selectedCombinations);
 
     }
   }
@@ -359,6 +349,7 @@ public class GuiController {
     WinScreenController winScreenController = loader.getController();
     winScreenController.setNumberOfPlayers(numberOfPlayers);
     winScreenController.setPointsNamesVisible();
+    this.stage.close();
   }
 
   /**
@@ -378,6 +369,7 @@ public class GuiController {
     LoseScreenController loController = loader.getController();
     loController.setNumberOfPlayers(numberOfPlayers);
     loController.setPointsNamesVisible();
+    this.stage.close();
   }
 
   /**
@@ -428,8 +420,8 @@ public class GuiController {
   void createTile(Image tile) {
     for (int i = topHand.getChildren().size(); i < HAND_SPACE; i++) {
       ImageView imageView = new ImageView();
-      imageView.setFitHeight(tileHeight);
-      imageView.setFitWidth(tileWidth);
+      imageView.setFitHeight(DRAW_HEIGHT);
+      imageView.setFitWidth(DRAW_WIDTH);
       imageView.setPreserveRatio(true);
       imageView.setImage(tile);
       topHand.getChildren().add(imageView);
@@ -438,8 +430,8 @@ public class GuiController {
     }
     for (int i = bottomHand.getChildren().size(); i < HAND_SPACE; i++) {
       ImageView imageView = new ImageView();
-      imageView.setFitHeight(tileHeight);
-      imageView.setFitWidth(tileWidth);
+      imageView.setFitHeight(DRAW_HEIGHT);
+      imageView.setFitWidth(DRAW_WIDTH);
       imageView.setPreserveRatio(true);
       imageView.setImage(tile);
       bottomHand.getChildren().add(imageView);
@@ -507,7 +499,6 @@ public class GuiController {
     enter.setDisable(false); //TODO alle buttons in liste packen -> enablen disablen durchiterieren.
     cancelSelection.setDisable(false);
     addToExisting.setDisable(false);
-    manipulate.setDisable(false);
     placeOnBoard.setDisable(false);
     swapJoker.setDisable(false);
     bag.setDisable(false);
@@ -709,6 +700,8 @@ public class GuiController {
     for (int i = selectedTiles.size() - 1; i >= 0;
         i--) {    //soll ja in richtiger reihenfolge eingefügt werden, bei einer Tile ist index get(0)
       ImageView tile = selectedTiles.get(i);
+      tile.setFitWidth(tileWidth);
+      tile.setFitHeight(tileHeight);
       boardComb.getChildren().add(0, tile); //added tile vorne in hbox
     }
 
@@ -765,6 +758,8 @@ public class GuiController {
     }
     for (int i = 0; i < selectedTiles.size(); i++) {
       ImageView tile = selectedTiles.get(i);
+      tile.setFitHeight(tileHeight);
+      tile.setFitWidth(tileWidth);
       boardComb.getChildren().add(boardComb.getChildren().size(), tile);
     }
 
@@ -839,6 +834,10 @@ public class GuiController {
    */
   public void swapWithJoker() {
     HBox box = (HBox) joker.getParent();
+    joker.setFitHeight(DRAW_HEIGHT);
+    joker.setFitWidth(DRAW_WIDTH);
+    tile.setFitWidth(tileWidth);
+    tile.setFitHeight(tileHeight);
     int jokerIndex = getIndexOf(box, joker);
     if (topHand.getChildren().size() <= HAND_SPACE) {
       topHand.getChildren().add(joker);
@@ -872,11 +871,10 @@ public class GuiController {
         board.getChildren().remove(box);
       }
     }
-    //TODO FUNKTIONIERT NICHT
-    if (board.getBoundsInParent().getHeight() > 10000){ //funktioniert nicht.
-      System.out.println(board.getHeight() + " flowpane zu groß!");
-      tileHeight *= (0.8);
-      tileWidth *= (0.8);
+    if (board.intersects(board.sceneToLocal(selectionBoard.localToScene(selectionBoard.getBoundsInLocal())))){
+      double reduce = 0.9;
+      tileHeight *= reduce;
+      tileWidth *= reduce;
       for (int i = 0; i < board.getChildren().size(); i++){
         HBox box = (HBox) board.getChildren().get(i);
         for (int j = 0; j < box.getChildren().size(); j++){

@@ -2,19 +2,16 @@ package gui;
 
 import java.io.IOException;
 import java.util.Optional;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -25,8 +22,7 @@ import network.Server;
 
 public class StartingScreenController {
 
-  @FXML
-  private AnchorPane startingS;
+
   private ClientParser parser;
   private Stage stage = new Stage();
 
@@ -34,6 +30,7 @@ public class StartingScreenController {
     parser = new ClientParser(this);
 
   }
+
 
   public void setStage(Stage stage){
     this.stage = stage;
@@ -81,6 +78,8 @@ public class StartingScreenController {
 
     dialog.getDialogPane().setContent(gridPane);
     dialog.setHeaderText("Please enter your IP adress and your age!");
+
+    Platform.runLater(() -> adress.requestFocus());
 
     Optional<Pair<String,String>> result = dialog.showAndWait();
     if (result.isPresent()) {

@@ -34,6 +34,8 @@ public class LoseScreenController {
   }
 
   public void setPlayerPoints(List<Integer> points) {
+    //TODO sout weg
+    System.out.println(points.toString());
     switch (points.size()) {
       case 2:
         p1Points = points.get(0);

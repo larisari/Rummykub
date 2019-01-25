@@ -121,11 +121,6 @@ public class LoadingScreenController {
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation((getClass().getResource("/clientgui.fxml")));
     Parent root = loader.load();
-    GuiController controller = loader.getController();
-    controller.setNumberOfPlayers(numberOfPlayers);
-    controller.setPlayerID(playerID);
-    controller.setPlayerNames();
-    controller.setPlayerBoards();
     Scene scene = new Scene(root);
     Stage stage = new Stage(); //new Stage
     stage.setResizable(false);
@@ -133,6 +128,12 @@ public class LoadingScreenController {
     stage.setScene(scene);
     stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     stage.show();
+    GuiController controller = loader.getController();
+    controller.setNumberOfPlayers(numberOfPlayers);
+    controller.setPlayerID(playerID);
+    controller.setPlayerNames();
+    controller.setPlayerBoards();
+    controller.setStage(stage);
     loadingScreen.getScene().getWindow().hide();
     this.startingStage.close();
 
