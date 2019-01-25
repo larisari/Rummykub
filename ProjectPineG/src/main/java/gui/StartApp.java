@@ -24,6 +24,7 @@ public StartApp(){
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/startingScreen.fxml"));
         Parent root = loader.load();
+        StartingScreenController controller = loader.getController();
         Scene scene = new Scene(root);
         scene.getStylesheets().add("/button.css");
         primaryStage.setResizable(false);
@@ -31,6 +32,7 @@ public StartApp(){
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
+        controller.setStage(primaryStage);
     }
 
     /**

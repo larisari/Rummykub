@@ -27,6 +27,7 @@ public class LoadingScreenController {
   @FXML private Text player4Joined;
   private ClientParser parser = new ClientParser(this);
   private int playerID = 0;
+  private Stage startingStage = new Stage();
 
   public LoadingScreenController(){
     parser = new ClientParser(this);
@@ -57,6 +58,10 @@ public class LoadingScreenController {
     if (playerID == 0) {
       startGame.setDisable(false);
     }
+  }
+
+  public void setStartingStage(Stage stage){
+    this.startingStage = stage;
   }
 
   /**
@@ -121,6 +126,8 @@ public class LoadingScreenController {
     stage.setTitle("RUMMYKUB");
     stage.setScene(scene);
     stage.show();
+    loadingScreen.getScene().getWindow().hide();
+    this.startingStage.close();
 
 
 

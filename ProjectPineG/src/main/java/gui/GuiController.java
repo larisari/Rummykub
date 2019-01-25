@@ -376,18 +376,7 @@ public class GuiController {
 
   }
 
-  /**
-   * Gets called if user may draw from the bag. Loads the tiles and disables the bag.
-   *
-   * @param tiles to be loaded.
-   */
-  public void loadTiles(List<Image> tiles) {
-    for (int i = 0; i < tiles.size(); i++) {
-      createTile(tiles.get(i));
-    }
-    bag.setDisable(true);
-    disableControl();
-  }
+
 
   /**
    * Updates the text of the next player label.
@@ -404,6 +393,19 @@ public class GuiController {
   }
 
   /**
+   * Gets called if user may draw from the bag. Loads the tiles and disables the bag.
+   *
+   * @param tiles to be loaded.
+   */
+  public void loadTiles(List<Image> tiles) {
+    for (int i = 0; i < tiles.size(); i++) {
+      createTile(tiles.get(i));
+    }
+    bag.setDisable(true);
+    disableControl();
+  }
+
+  /**
    * Add a tile to the player's hand.
    *
    * @param tile to be added to the player's hand.
@@ -413,6 +415,7 @@ public class GuiController {
       ImageView imageView = new ImageView();
       imageView.setFitHeight(MAX_IVIEW_HEIGHT);
       imageView.setFitWidth(MAX_BOXWIDTH);
+      imageView.setPreserveRatio(true);
       imageView.setImage(tile);
       topHand.getChildren().add(imageView);
       onTileClicked(imageView);
@@ -422,6 +425,7 @@ public class GuiController {
       ImageView imageView = new ImageView();
       imageView.setFitHeight(MAX_IVIEW_HEIGHT);
       imageView.setFitWidth(MAX_BOXWIDTH);
+      imageView.setPreserveRatio(true);
       imageView.setImage(tile);
       bottomHand.getChildren().add(imageView);
       onTileClicked(imageView);
@@ -429,6 +433,10 @@ public class GuiController {
     }
 
   }
+
+ // private void resizeTiles(){
+ //   if (board.get)
+ // }
 
   /**
    * Checks if all combinations on the main board are valid.

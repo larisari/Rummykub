@@ -22,11 +22,15 @@ public class StartingScreenController {
   @FXML
   private AnchorPane startingS;
   private ClientParser parser;
-  private int playerID;
+  private Stage stage = new Stage();
 
   public StartingScreenController() {
     parser = new ClientParser(this);
 
+  }
+
+  public void setStage(Stage stage){
+    this.stage = stage;
   }
 
   /**
@@ -87,11 +91,9 @@ public class StartingScreenController {
     stage.show();
     LoadingScreenController lController = loader.getController();
     lController.setPlayerID(playerID);
+    lController.setStartingStage(this.stage);
   }
 
- // public void closeStartScreen(){
- // startingS.getScene().getWindow().hide();
- //  }
 }
 
 
