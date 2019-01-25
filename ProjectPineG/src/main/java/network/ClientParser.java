@@ -1,17 +1,15 @@
 package network;
 
-import gui.EndScreenController;
+import gui.LoseScreenController;
+import gui.WinScreenController;
 import gui.GuiController;
 import gui.LoadingScreenController;
 import gui.StartingScreenController;
-import gui.util.Image;
-import java.sql.SQLOutput;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
 import java.io.IOException;
 import java.util.List;
-import org.graalvm.compiler.code.SourceStackTraceBailoutException;
 
 /**
  * Clients Parser connects the controller with the Client-Server architecture and translates in
@@ -26,8 +24,9 @@ public class ClientParser {
 
   private static GuiController guiController;
   private static LoadingScreenController loadingScreenController;
-  private static EndScreenController endScreenController;
+  private static WinScreenController winScreenController;
   private static StartingScreenController startingScreenController;
+  private static LoseScreenController loseScreenController;
 
   private static GuiParser guiParser = new GuiParser();
 
@@ -39,8 +38,12 @@ public class ClientParser {
     loadingScreenController = controller;
   }
 
-  public ClientParser(EndScreenController controller) {
-    endScreenController = controller;
+  public ClientParser(WinScreenController controller) {
+    winScreenController = controller;
+  }
+
+  public ClientParser(LoseScreenController controller) {
+    loseScreenController = controller;
   }
 
   public ClientParser(StartingScreenController controller) {
@@ -57,6 +60,7 @@ public class ClientParser {
 
   /**
    * Parses and incoming String from the server and initialize controllers reaction.
+   *
    * @param message Incoming String-message from server.
    */
   static void parseForController(String message) {
@@ -189,8 +193,11 @@ public class ClientParser {
       case "responseForGetPlayerPoints":
         Platform.runLater(
             () ->
-                endScreenController.setPlayerPoints(
+                winScreenController.setPlayerPoints(
                     GuiParser.parseStringToIntegerList(messageAsArray[1])));
+        loseScreenController.setPlayerPoints(
+            GuiParser.parseStringToIntegerList(messageAsArray[1]));
+
         break;
 
       case "possibleToStart":
@@ -250,10 +257,11 @@ public class ClientParser {
   }
 
   /**
-   * Sends a message to server with a combination, Client wants to play within a joker.
-   * //TODO javadoc
+   * Sends a message to server with a combination, Client wants to play within a joker. //TODO
+   * javadoc
    */
-  public void playSwapJoker(List<ImageView> tilesFromHand, List<List<ImageView>> oldComb, List<List<ImageView>> newComb) {
+  public void playSwapJoker(List<ImageView> tilesFromHand, List<List<ImageView>> oldComb,
+      List<List<ImageView>> newComb) {
     StringBuilder builder = new StringBuilder();
     builder.append("playSwapJoker|");
     builder.append(GuiParser.parseToString(tilesFromHand));
@@ -271,11 +279,13 @@ public class ClientParser {
 
   /**
    * Request to the server, if selectedTiles can be combined with combination on board.
+   *
    * @param tilesFromHand List of tiles from hand.
    * @param oldBoardCombs List of board combinations before alteration.
    * @param newBoardCombs List of board combinations that should be altered.
    */
-  public void playHandWithBoard(List<ImageView> tilesFromHand, List<List<ImageView>> oldBoardCombs, List<List<ImageView>> newBoardCombs) {
+  public void playHandWithBoard(List<ImageView> tilesFromHand, List<List<ImageView>> oldBoardCombs,
+      List<List<ImageView>> newBoardCombs) {
     StringBuilder builder = new StringBuilder();
     builder.append("playHandWithBoard|");
 
@@ -289,17 +299,18 @@ public class ClientParser {
 
     builder.append(GuiParser.parseListToString(newBoardCombs));
 
-
     Client.sendMessageToServer(builder.toString());
   }
 
   /**
-   *Request to server to add tiles to an existing comb on the left.
+   * Request to server to add tiles to an existing comb on the left.
+   *
    * @param tilesFromHand tiles on the hand, we want to add on the left site.
    * @param tilesFromBoard combination on the board where tiles from hand should be added.
    * @param newCombination new combination that should be created.
    */
-  public void playL(List<ImageView> tilesFromHand, List<ImageView> tilesFromBoard,  List<List<ImageView>> newCombination) {
+  public void playL(List<ImageView> tilesFromHand, List<ImageView> tilesFromBoard,
+      List<List<ImageView>> newCombination) {
 
     StringBuilder builder = new StringBuilder();
 
@@ -320,7 +331,8 @@ public class ClientParser {
 
 
   /**
-   *Request to server to add tiles to an existing comb on the right.
+   * Request to server to add tiles to an existing comb on the right.
+   *
    * @param tilesFromHand List of tiles on the hand, client wants to add on the right site.
    * @param tilesFromBoard List of tiles on the board.
    * @param newCombinations new combination that should be created.

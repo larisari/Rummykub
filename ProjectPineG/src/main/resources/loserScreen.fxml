@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #6BDCF3#6BDCF3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EndScreenController">
+<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #6BDCF3#6BDCF3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.LoseScreenController">
    <children>
       <Label layoutX="327.0" layoutY="79.0" text="You have lost!" AnchorPane.leftAnchor="327.0" AnchorPane.rightAnchor="327.0">
          <font>

@@ -79,7 +79,8 @@ public class GuiController {
   private int turn = 0;
   private final static int MAX_BOXHEIGHT = 68;
   private final static int MAX_BOXWIDTH = 45;
-  private final static int MAX_IVIEW_HEIGHT = 65;
+ private double tileHeight = 65;
+ private double tileWidth = 45;
   private Integer nextPlayerID = 0;
   private ImageView tile = new ImageView();
   private ImageView joker = new ImageView();
@@ -295,7 +296,7 @@ public class GuiController {
       ImageView tile = combination.get(j);
       tile.setStyle("-fx-translate-y: 0");
       tile.setEffect(null);
-      tile.setDisable(true);
+      //tile.setDisable(true);
       comb.getChildren().add(tile);
     }
 
@@ -304,6 +305,8 @@ public class GuiController {
     endTurn.setDisable(false);
     updateBoard();
     disableTiles(combination); //löscht auch tiles aus selectedTiles
+    System.out.println(board.getHeight() + "BOARD HEIGHT");
+    System.out.println(board.getBoundsInParent().getHeight() + " getBoundsinParent HEIGHT");
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       openWinScreen();
       parser.notifyWin();
@@ -316,9 +319,10 @@ public class GuiController {
    * @param event - onMouseClicked event if user presses "Place Selection" button
    */
   @FXML
-  protected void handleplaceOnBoard(MouseEvent event) {
+  protected void handleplaceOnBoard(MouseEvent event){
     if (!selectionBoard.getChildren().isEmpty()) {
-      parser.play(selectedCombinations);
+ parser.play(selectedCombinations);
+
     }
   }
 
@@ -352,9 +356,9 @@ public class GuiController {
     stage.setScene(scene);
     stage.setResizable(false);
     stage.show();
-    EndScreenController eController = loader.getController();
-    eController.setNumberOfPlayers(numberOfPlayers);
-    eController.setPointsNamesVisible();
+    WinScreenController winScreenController = loader.getController();
+    winScreenController.setNumberOfPlayers(numberOfPlayers);
+    winScreenController.setPointsNamesVisible();
   }
 
   /**
@@ -371,9 +375,9 @@ public class GuiController {
     stage.setScene(scene);
     stage.setResizable(false);
     stage.show();
-    EndScreenController eController = loader.getController();
-    eController.setNumberOfPlayers(numberOfPlayers);
-    eController.setPointsNamesVisible();
+    LoseScreenController loController = loader.getController();
+    loController.setNumberOfPlayers(numberOfPlayers);
+    loController.setPointsNamesVisible();
   }
 
   /**
@@ -424,8 +428,8 @@ public class GuiController {
   void createTile(Image tile) {
     for (int i = topHand.getChildren().size(); i < HAND_SPACE; i++) {
       ImageView imageView = new ImageView();
-      imageView.setFitHeight(MAX_IVIEW_HEIGHT);
-      imageView.setFitWidth(MAX_BOXWIDTH);
+      imageView.setFitHeight(tileHeight);
+      imageView.setFitWidth(tileWidth);
       imageView.setPreserveRatio(true);
       imageView.setImage(tile);
       topHand.getChildren().add(imageView);
@@ -434,8 +438,8 @@ public class GuiController {
     }
     for (int i = bottomHand.getChildren().size(); i < HAND_SPACE; i++) {
       ImageView imageView = new ImageView();
-      imageView.setFitHeight(MAX_IVIEW_HEIGHT);
-      imageView.setFitWidth(MAX_BOXWIDTH);
+      imageView.setFitHeight(tileHeight);
+      imageView.setFitWidth(tileWidth);
       imageView.setPreserveRatio(true);
       imageView.setImage(tile);
       bottomHand.getChildren().add(imageView);
@@ -484,8 +488,8 @@ public class GuiController {
       List<Image> tiles = boardTiles.get(i);
       for (Image image : tiles) {
         ImageView imageView = new ImageView();
-        imageView.setFitHeight(MAX_IVIEW_HEIGHT);
-        imageView.setFitWidth(MAX_BOXWIDTH);
+        imageView.setFitHeight(tileHeight);
+        imageView.setFitWidth(tileWidth);
         imageView.setImage(image);
         box.getChildren().add(imageView);
         onTileClicked(imageView);
@@ -549,8 +553,9 @@ public class GuiController {
 
           if (topHand.getChildren().size() <= HAND_SPACE) {
             topHand.getChildren().add(tile);
-          } else {
+          } else if (bottomHand.getChildren().size() <= HAND_SPACE){
             bottomHand.getChildren().add(tile);
+
           }
         }
         selectionBoard.getChildren().remove(selectionBoard.getChildren().get(i));
@@ -865,6 +870,20 @@ public class GuiController {
       HBox box = (HBox) board.getChildren().get(i);
       if (box.getChildren().isEmpty()) {
         board.getChildren().remove(box);
+      }
+    }
+    //TODO FUNKTIONIERT NICHT
+    if (board.getBoundsInParent().getHeight() > 10000){ //funktioniert nicht.
+      System.out.println(board.getHeight() + " flowpane zu groß!");
+      tileHeight *= (0.8);
+      tileWidth *= (0.8);
+      for (int i = 0; i < board.getChildren().size(); i++){
+        HBox box = (HBox) board.getChildren().get(i);
+        for (int j = 0; j < box.getChildren().size(); j++){
+          ImageView tile = (ImageView)box.getChildren().get(j);
+          tile.setFitHeight(tileHeight);
+          tile.setFitWidth(tileWidth);
+        }
       }
     }
   }
