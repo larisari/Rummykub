@@ -1,6 +1,4 @@
 package gui;
-//TODO bottomhand begrenzen!!!
-//TODO Buttons per default disablen und enablen wenn player am zug ist.
 
 //TODO bei Disconnect Alert window mit ok button zurück zu startbildschirm
 //TODO bei endscreen button zurück zum startbildschirm.
@@ -996,6 +994,10 @@ public class GuiController {
   @FXML
   private void handleStopHoverBag(MouseEvent event){
     bag.setEffect(null);
+  }
+
+  public void closeGame(){
+    this.stage.close();
   }
 
 }

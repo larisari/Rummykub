@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,6 +22,10 @@ public StartApp(){
 }
     @Override
     public void start(Stage primaryStage) throws Exception {
+    loadStartingScreen(primaryStage);
+    }
+
+    public void loadStartingScreen(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("/startingScreen.fxml"));
         Parent root = loader.load();
