@@ -30,6 +30,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import network.ClientParser;
 
@@ -996,8 +997,34 @@ public class GuiController {
     bag.setEffect(null);
   }
 
-  public void closeGame(){
+  public void closeGame() throws IOException {
     this.stage.close();
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation(getClass().getResource("/startingScreen.fxml"));
+    Parent root = loader.load();
+    StartingScreenController controller = loader.getController();
+    Scene scene = new Scene(root);
+    Stage primaryStage = new Stage();
+    scene.getStylesheets().add("/button.css");
+    primaryStage.setResizable(false);
+    primaryStage.setTitle("RUMMYKUB");
+    primaryStage.setScene(scene);
+    primaryStage.show();
+    primaryStage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
+    controller.setStage(primaryStage);
+  }
+
+  private void closeWindowEvent(WindowEvent event){
+    ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+    ButtonType no = new ButtonType("No",
+        ButtonBar.ButtonData.CANCEL_CLOSE);
+    Alert alert = new Alert(AlertType.CONFIRMATION, "bla", yes, no);
+    alert.setContentText("Do you really want to quit?");
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.isPresent() && result.get() == no) {
+      event.consume();
+    }
   }
 
 }
