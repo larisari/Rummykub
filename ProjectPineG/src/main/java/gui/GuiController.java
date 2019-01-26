@@ -9,6 +9,7 @@ package gui;
 import gui.util.Image;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -272,7 +273,6 @@ public class GuiController {
       return false;
     }
   }
-
 
 
   private boolean areOnlyTilesFromHand(List<ImageView> tiles) {
@@ -954,17 +954,38 @@ public class GuiController {
       tiles.remove(tile);
     }
   }
-public void playMusic(){
-  Media media = null;
-  try {
-    media = new Media(getClass().getResource("/audio/Light-People.mp3").toURI().toString());
-  } catch (URISyntaxException e) {
-    e.printStackTrace();
+
+  public void playMusic() {
+    Media media = null;
+    try {
+      media = new Media(getClass().getResource("/audio/Light-People.mp3").toURI().toString());
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    mediaPlayer = new MediaPlayer(media);
+    mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+    mediaPlayer.play();
   }
-  mediaPlayer = new MediaPlayer(media);
-  mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
-  mediaPlayer.play();
-}
+
+  @FXML
+  private void handleMute(MouseEvent event) {
+    if (!mediaPlayer.isMute()) {
+      mediaPlayer.setMute(true);
+      ImageView iView = (ImageView) event.getSource();
+      URL url = this.getClass().getResource("/images/unmute.png");
+      String urlString = url.toString();
+      Image unmute = new Image(urlString);
+      iView.setImage(unmute);
+    } else {
+      mediaPlayer.setMute(false);
+      ImageView iView = (ImageView) event.getSource();
+      URL url = this.getClass().getResource("/images/mute.png");
+      String urlString = url.toString();
+      Image unmute = new Image(urlString);
+      iView.setImage(unmute);
+    }
+
+  }
 }
 
 // TODO Anzeige für wenn ein Player aussteigt.

@@ -222,6 +222,11 @@
                   </Tooltip>
                </tooltip>
             </Button>
+            <ImageView fx:id="muteBtn" fitHeight="33.0" fitWidth="52.0" layoutY="52.0" onMouseClicked="#handleMute" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/mute.png" />
+               </image>
+            </ImageView>
          </children>
          <GridPane.margin>
             <Insets />

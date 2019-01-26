@@ -35,7 +35,7 @@ public class StartingScreenController {
   }
 
 
-  public void setStage(Stage stage){
+  public void setStage(Stage stage) {
     this.stage = stage;
   }
 
@@ -47,9 +47,10 @@ public class StartingScreenController {
    */
   @FXML
   protected void handleCreateGame(MouseEvent event) throws IOException {
-    Server server = new Server();
-    Client host = new Client("localhost");
-// TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
+
+      Server server = new Server();
+      Client host = new Client("localhost");
+
   }
 
   /**
@@ -60,37 +61,37 @@ public class StartingScreenController {
    */
   @FXML
   protected void handleJoinGame(MouseEvent event) {
-      //TODO abfrage nach alter.
-      String ipAdress;
-      String ageP;
-      Dialog<Pair<String, String>> dialog = new Dialog<>();
-      dialog.setTitle("Login");
-      dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-      GridPane gridPane = new GridPane();
-      gridPane.setHgap(10);
-      gridPane.setVgap(10);
-      gridPane.setPadding(new Insets(20, 150, 10, 10));
+    //TODO abfrage nach alter.
+    String ipAdress;
+    String ageP;
+    Dialog<Pair<String, String>> dialog = new Dialog<>();
+    dialog.setTitle("Login");
+    dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+    GridPane gridPane = new GridPane();
+    gridPane.setHgap(10);
+    gridPane.setVgap(10);
+    gridPane.setPadding(new Insets(20, 150, 10, 10));
 
-      TextField adress = new TextField();
-      TextField age = new TextField();
+    TextField adress = new TextField();
+    TextField age = new TextField();
 
-      gridPane.add(adress, 0, 0);
-      gridPane.add(age, 2, 0);
+    gridPane.add(adress, 0, 0);
+    gridPane.add(age, 2, 0);
 
-      dialog.getDialogPane().setContent(gridPane);
-      dialog.setHeaderText("Please enter your IP adress and your age!");
+    dialog.getDialogPane().setContent(gridPane);
+    dialog.setHeaderText("Please enter your IP adress and your age!");
 
-      Platform.runLater(() -> adress.requestFocus());
+    Platform.runLater(() -> adress.requestFocus());
 
-      Optional<Pair<String, String>> result = dialog.showAndWait();
-      if (result.isPresent()) {
-        ipAdress = adress.getText();
-        ageP = age.getText();
-
+    Optional<Pair<String, String>> result = dialog.showAndWait();
+    if (result.isPresent()) {
+      ipAdress = adress.getText();
+      ageP = age.getText();
+      if (validAge(ageP)) {
         if (!ipAdress.isEmpty() && !ageP.isEmpty()) {
           try {
-            parser.setAgeFor(ageP);
             Client c = new Client(ipAdress);
+            parser.setAgeFor(ageP);
           } catch (ConnectException e) {
             Alert alert = new Alert(AlertType.CONFIRMATION,
                 "No host found! Need to create a new game first!", ButtonType.OK);
@@ -111,18 +112,11 @@ public class StartingScreenController {
           } catch (IOException e) {
             return;
 
-          } catch (NumberFormatException e){
-            Alert alert = new Alert(AlertType.CONFIRMATION,
-                "Please enter your age!", ButtonType.OK);
-            alert.showAndWait();
-
-            if (alert.getResult() == ButtonType.YES) {
-              return;
-            }
           }
         }
       }
     }
+  }
 
 
   /**
@@ -146,6 +140,15 @@ public class StartingScreenController {
     lController.setStartingStage(this.stage);
   }
 
+  private boolean validAge(String age) {
+    try {
+      Integer.parseInt(age);
+      return true;
+    } catch (NumberFormatException e) {
+      return false;
+    }
+
+  }
 }
 
 
