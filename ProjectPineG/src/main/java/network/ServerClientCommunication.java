@@ -1,6 +1,7 @@
 package network;
 
 import gui.Main;
+import gui.StartingScreenController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -50,6 +51,7 @@ public class ServerClientCommunication extends Thread {
         e.printStackTrace();
         log.info("No inputconnection to client: " + clientID);
         Thread.currentThread().interrupt();
+
 
         //TODO
         //was soll passieren, wenn Client-Verbindung trennt. -> Programm restart?

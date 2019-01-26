@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
 public class Client extends Thread {
@@ -15,25 +16,6 @@ public class Client extends Thread {
   Thread listeningThread;
   Socket socket;
   private String ip;
-
-  //  /**
-  //   * Client-constructor for Hoster
-  //   */
-  //  public Client() {
-  //
-  //    try {
-  //      this.socket = new Socket("127.0.0.1", PORT);
-  //
-  //      in = new DataInputStream(socket.getInputStream());
-  //      out = new DataOutputStream(socket.getOutputStream());
-  //      this.startListening();
-  //
-  //
-  //      log.info("[Host-Client] wurde erstellt. In-/Outputstreams geöffnet. ");
-  //    } catch (IOException e) {
-  //      e.printStackTrace();
-  //    }
-  //  }
 
   /**
    * Constructor to generate a Client, which connects to the Server.
@@ -49,7 +31,13 @@ public class Client extends Thread {
       log.info("[Client] wurde erstellt. In-/Outputstreams geöffnet.");
       this.startListening();
 
+    } catch (UnknownHostException e) {
+      //e.printStackTrace();
+      log.info("[Client] Falsche IP-Adresse eingegeben. Verbindung zum Server fehlgeschlagen.");
+      // TODO
+      // zurück zum "Einlogg-Screen lenken
     } catch (IOException e) {
+      log.info("[Client] IO-Exception");
       e.printStackTrace();
     }
   }
@@ -91,7 +79,8 @@ public class Client extends Thread {
 
                     } else {
                       running = false;
-
+                      in.close();
+                      out.close();
                     }
                   } catch (IOException e) {
                     e.printStackTrace();
