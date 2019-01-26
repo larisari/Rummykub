@@ -47,9 +47,10 @@ public class StartingScreenController {
    */
   @FXML
   protected void handleCreateGame(MouseEvent event) throws IOException {
-    Server server = new Server();
-    Client host = new Client("localhost");
-// TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
+
+      Server server = new Server();
+      Client host = new Client("localhost");
+
   }
 
   /**
@@ -110,8 +111,6 @@ public class StartingScreenController {
 
           } catch (IOException e) {
             return;
-
-          } catch (NumberFormatException e) {
 
           }
         }
