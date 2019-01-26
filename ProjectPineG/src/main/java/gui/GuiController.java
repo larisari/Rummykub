@@ -124,7 +124,6 @@ public class GuiController {
   @FXML
   private void initialize() {
     disableControl();
-//while is first turn: manipulate.setDisable(true);
   }
 
 
@@ -974,14 +973,14 @@ public class GuiController {
     if (!mediaPlayer.isMute()) {
       mediaPlayer.setMute(true);
       ImageView iView = (ImageView) event.getSource();
-      URL url = this.getClass().getResource("/images/unmute.png");
+      URL url = this.getClass().getResource("/images/mute.png");
       String urlString = url.toString();
       Image unmute = new Image(urlString);
       iView.setImage(unmute);
     } else {
       mediaPlayer.setMute(false);
       ImageView iView = (ImageView) event.getSource();
-      URL url = this.getClass().getResource("/images/mute.png");
+      URL url = this.getClass().getResource("/images/unmute.png");
       String urlString = url.toString();
       Image unmute = new Image(urlString);
       iView.setImage(unmute);

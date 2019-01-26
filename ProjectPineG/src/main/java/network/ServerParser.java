@@ -67,7 +67,9 @@ public class ServerParser {
         for (ServerClientCommunication client : clients) {
             client.sendMessageToClient("responseStartGame|" + clients.size() + "|" + client.getClientID());
         }
-        Server.broadcastToAllClients("closeStartScreen");
+        int clientID = Server.gameInfo.getStartingPlayerId();
+        clients.get(clientID).sendMessageToClient("itsYourTurn");
+
         break;
 
       case "play":
@@ -87,7 +89,6 @@ public class ServerParser {
         List<GITile> tilesFromHandB = parseStringToTile(receivedMessage[1]);
         List<List<GITile>> oldCombinationsB = parseStringToListListTileComb(receivedMessage[2]);
         List<List<GITile>> newCombinationsB = parseStringToListListTileComb(receivedMessage[3]);
-//TODO wirft NoSuchElementException wenn bei get() empty zurückkommt!
         String answer5 = Server.gameInfo.manipulateBoardWith(tilesFromHandB, oldCombinationsB, newCombinationsB, id).get().getSecond().toString();
         clients.get(id).sendMessageToClient("responseForPlayHandWithBoard|" + answer5);
         break;
