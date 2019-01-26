@@ -23,24 +23,12 @@ public class Client extends Thread {
    *
    * @param ip address of the server, a client wants to connect to.
    */
-  public Client(String ip) {
-    try {
-
+  public Client(String ip) throws IOException {
       this.socket = new Socket(ip, PORT);
       in = new DataInputStream(socket.getInputStream());
       out = new DataOutputStream(socket.getOutputStream());
       log.info("[Client] wurde erstellt. In-/Outputstreams geöffnet.");
       this.startListening();
-
-    } catch (UnknownHostException e) {
-
-      log.info("[Client] Falsche IP-Adresse eingegeben. Verbindung zum Server fehlgeschlagen.");
-
-    } catch (ConnectException e) {
-      log.info("[Client] Server existiert noch nicht.");
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
   }
 
   /**

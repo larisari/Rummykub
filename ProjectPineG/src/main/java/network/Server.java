@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class Server {
-
   static GIGameInfo gameInfo;
   private static Logger log = Logger.getLogger(Server.class.getName());
 
@@ -44,4 +43,5 @@ public class Server {
       client.sendMessageToClient(message);
     }
   }
+
 }

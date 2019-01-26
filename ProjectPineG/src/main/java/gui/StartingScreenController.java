@@ -1,6 +1,8 @@
 package gui;
 
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.Optional;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -8,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
@@ -22,7 +26,7 @@ import network.Server;
 
 public class StartingScreenController {
 
-
+private Server server;
   private ClientParser parser;
   private Stage stage = new Stage();
 
@@ -44,7 +48,7 @@ public class StartingScreenController {
    */
   @FXML
   protected void handleCreateGame(MouseEvent event) throws IOException {
-    Server server = new Server();
+    server = new Server();
     Client host = new Client("localhost");
 // TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
   }
@@ -57,43 +61,59 @@ public class StartingScreenController {
    */
   @FXML
   protected void handleJoinGame(MouseEvent event) {
-    //TODO abfrage nach alter.
-    String ipAdress = "";
-    String ageP = "";
-    Dialog<Pair<String,String>> dialog = new Dialog<>();
-    dialog.setTitle("Login");
-    dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
-    GridPane gridPane = new GridPane();
-    gridPane.setHgap(10);
-    gridPane.setVgap(10);
-    gridPane.setPadding(new Insets(20, 150, 10, 10));
+      //TODO abfrage nach alter.
+      String ipAdress = "";
+      String ageP = "";
+      Dialog<Pair<String, String>> dialog = new Dialog<>();
+      dialog.setTitle("Login");
+      dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+      GridPane gridPane = new GridPane();
+      gridPane.setHgap(10);
+      gridPane.setVgap(10);
+      gridPane.setPadding(new Insets(20, 150, 10, 10));
 
-    TextField adress = new TextField();
-    adress.setPromptText("Enter your IP adress.");
-    TextField age = new TextField();
-    age.setPromptText("Enter your age.");
+      TextField adress = new TextField();
+      adress.setPromptText("Enter your IP adress.");
+      TextField age = new TextField();
+      age.setPromptText("Enter your age.");
 
-    gridPane.add(adress, 0, 0);
-    gridPane.add(age, 2, 0);
+      gridPane.add(adress, 0, 0);
+      gridPane.add(age, 2, 0);
 
-    dialog.getDialogPane().setContent(gridPane);
-    dialog.setHeaderText("Please enter your IP adress and your age!");
+      dialog.getDialogPane().setContent(gridPane);
+      dialog.setHeaderText("Please enter your IP adress and your age!");
 
-    Platform.runLater(() -> adress.requestFocus());
+      Platform.runLater(() -> adress.requestFocus());
 
-    Optional<Pair<String,String>> result = dialog.showAndWait();
-    if (result.isPresent()) {
-      ipAdress = adress.getText();
-      ageP = age.getText();
-      try {
-        Client c = new Client(ipAdress);
-      } catch (Exception e) {
-//DialogError: Error! Please enter valid IP adress!
-        //Error wenn kein Host da ist.
-        return;
+      Optional<Pair<String, String>> result = dialog.showAndWait();
+      if (result.isPresent()) {
+        ipAdress = adress.getText();
+        ageP = age.getText();
+        try {
+          Client c = new Client(ipAdress);
+        }  catch (ConnectException e) {
+          Alert alert = new Alert(AlertType.CONFIRMATION,
+              "No host found! Need to create a new game first!", ButtonType.OK);
+          alert.showAndWait();
+
+          if (alert.getResult() == ButtonType.YES) {
+            return;
+          }
+        }catch (UnknownHostException e) {
+          Alert alert = new Alert(AlertType.CONFIRMATION,
+              "Wrong ip adress!", ButtonType.OK);
+          alert.showAndWait();
+
+          if (alert.getResult() == ButtonType.YES) {
+            return;
+          }
+
+          } catch (IOException e){
+          return;
+
+        }
       }
     }
-  }
 
 
   /**
