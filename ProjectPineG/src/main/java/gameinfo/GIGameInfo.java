@@ -161,5 +161,10 @@ public interface GIGameInfo {
   // TODO REMOVE -> testing purpose only
   Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id, List<GITile> customTiles);
 
+  /**
+   * Use this method to assign a player with given id its age.
+   * @param id of the player whose age is being set.
+   * @param age of the player to be set.
+   */
   void setAgeFor(Integer id, int age);
 }
