@@ -32,6 +32,10 @@ class GameFlow {
     this.currentPlayerIndex = 0;
   }
 
+  Integer getStartingPlayerId() {
+    return playerSequence.get(0);
+  }
+
   /**
    * Method for signing in players according to their age. Each player is
    * assigned a unique ID, which is given as parameter to this method. On the
