@@ -1,10 +1,6 @@
 package network;
 
-import gui.LoseScreenController;
-import gui.WinScreenController;
-import gui.GuiController;
-import gui.LoadingScreenController;
-import gui.StartingScreenController;
+import gui.*;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 
@@ -68,6 +64,17 @@ public class ClientParser {
     String[] messageAsArray = message.split("[|]");
 
     switch (messageAsArray[0]) {
+      case "Restart":
+        Platform.runLater(
+                () -> {
+                  try {
+                    guiController.closeGame();
+                  } catch (IOException e) {
+                    e.printStackTrace();
+                  }
+                });
+
+        break;
       case "responseStartGame":
         Platform.runLater(
             () -> {

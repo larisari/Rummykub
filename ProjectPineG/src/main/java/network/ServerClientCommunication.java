@@ -51,13 +51,14 @@ public class ServerClientCommunication extends Thread {
       } catch (IOException e) {
         e.printStackTrace();
         log.info("No inputconnection to client: " + clientID);
+
         Thread.currentThread().interrupt();
-
-
-        //TODO
-        //was soll passieren, wenn Client-Verbindung trennt. -> Programm restart?
-        //alle in startingScreen zurück, server "löschen"
-
+        Server.broadcastToAllClients("Restart");
+        try{
+          ServerListener.ss.close();
+        }catch (IOException ex) {
+          log.info("[Server] Server kann nicht gekillt werden...");
+        }
       }
     }
   }

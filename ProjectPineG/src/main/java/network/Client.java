@@ -67,9 +67,11 @@ public class Client extends Thread {
                       ClientParser.parseForController(msg);
 
                     } else {
-                      running = false;
+                      socket.close();
                       in.close();
                       out.close();
+                      running = false;
+
                     }
                   } catch (IOException e) {
                     currentThread().interrupt();

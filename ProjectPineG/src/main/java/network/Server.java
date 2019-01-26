@@ -3,6 +3,7 @@ package network;
 import gameinfo.GIFactory;
 import gameinfo.GIGameInfo;
 
+import javax.sound.sampled.Clip;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -16,6 +17,8 @@ public class Server {
    * Constructor which initialize the gameInfo from our game model ands start the Server Listener Thread.
    */
   public Server() {
+
+
 
     try {
       List<ServerClientCommunication> listOfClients = new ArrayList<ServerClientCommunication>();
