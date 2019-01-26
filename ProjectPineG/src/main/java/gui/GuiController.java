@@ -630,7 +630,7 @@ public class GuiController {
         for (int j = 0; j < box.getChildren().size(); j++) {
 
           if (box.getChildren().get(j) instanceof Button) {
-            return;
+            deleteAddToButtons(); //TODO geht nicht?
           }
         }
         Button front = new Button("+");

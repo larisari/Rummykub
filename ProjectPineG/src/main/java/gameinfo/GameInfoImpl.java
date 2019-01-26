@@ -275,7 +275,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       newCombinations.forEach(combination -> board.addCombo(combination));
       return Optional.of(new GITuple<>(id, true));
     } else {
-      return Optional.empty();
+      return Optional.of(new GITuple<>(id, false));
     }
   }
 
