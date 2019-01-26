@@ -22,6 +22,7 @@ dependencies {
     compile 'org.openjfx:javafx-controls'
     compile 'org.openjfx:javafx-fxml'
     compile 'org.openjfx:javafx-graphics'
+    compile 'org.openjfx:javafx-media'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
@@ -32,7 +33,7 @@ test {
 }
 
 javafx {
-    modules = [ 'javafx.controls', 'javafx.fxml' ]
+    modules = [ 'javafx.controls', 'javafx.fxml', 'javafx.media' ]
 }
 
 mainClassName = 'gui.Main'
