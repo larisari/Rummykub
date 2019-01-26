@@ -43,6 +43,7 @@ public class ServerClientCommunication extends Thread {
         //System.out.println("[Server] Nachricht von " + clientID + "erhalten:" + received);
         log.info("[Server] Nachricht von " + clientID + "erhalten:" + received);
 
+
         ServerParser.getStringIntoServerParser(received, clientID);
         log.info("[Server] Habe die Nachricht an den Serverparser übergeben....");
 
@@ -70,7 +71,6 @@ public class ServerClientCommunication extends Thread {
     try {
 
       out.writeUTF(messageToClient);
-      //System.out.println("[Server] Nachricht an Client " + clientID + " geschickt.");
       log.info("[Server] Nachricht an Client " + clientID + " geschickt.");
     } catch (IOException e) {
       e.printStackTrace();

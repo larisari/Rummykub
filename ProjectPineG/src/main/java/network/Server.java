@@ -22,7 +22,6 @@ public class Server {
       List<ServerClientCommunication> listOfClients = new ArrayList<ServerClientCommunication>();
 
       gameInfo = GIFactory.make();
-      //System.out.println("Spiel wird geladen....");
       log.info("Spiel wird geladen....");
 
       ServerListener listener = new ServerListener(listOfClients);

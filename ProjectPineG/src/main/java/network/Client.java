@@ -3,6 +3,7 @@ package network;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.logging.Logger;
@@ -24,20 +25,20 @@ public class Client extends Thread {
    */
   public Client(String ip) {
     try {
-      this.socket = new Socket(ip, PORT);
 
+      this.socket = new Socket(ip, PORT);
       in = new DataInputStream(socket.getInputStream());
       out = new DataOutputStream(socket.getOutputStream());
       log.info("[Client] wurde erstellt. In-/Outputstreams geöffnet.");
       this.startListening();
 
     } catch (UnknownHostException e) {
-      //e.printStackTrace();
+
       log.info("[Client] Falsche IP-Adresse eingegeben. Verbindung zum Server fehlgeschlagen.");
-      // TODO
-      // zurück zum "Einlogg-Screen lenken
+
+    } catch (ConnectException e) {
+      log.info("[Client] Server existiert noch nicht.");
     } catch (IOException e) {
-      log.info("[Client] IO-Exception");
       e.printStackTrace();
     }
   }
@@ -83,6 +84,7 @@ public class Client extends Thread {
                       out.close();
                     }
                   } catch (IOException e) {
+                    currentThread().interrupt();
                     e.printStackTrace();
                   }
                 }

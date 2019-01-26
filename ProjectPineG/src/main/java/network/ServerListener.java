@@ -60,7 +60,7 @@ public class ServerListener extends Thread {
 
             clients.add(t);
             Server.gameInfo.registerBy(clientID);
-            //Nachricht an Host Client, um Start Button zu aktivieren
+
             if(clients.size() == 2) {
               clients.get(0).sendMessageToClient("possibleToStart");
             }
