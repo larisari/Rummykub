@@ -340,6 +340,13 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     return stack;
   }
 
+  @Override
+  public void setAgeFor(Integer id, int age) {
+    if (gameFlow.getPlayerBy(id).isPresent()) {
+      gameFlow.getPlayerBy(id).get().setAge(age);
+    }
+  }
+
   private GITile getTileFor(Integer id) {
     // .get() is allowed here because it is always called after isPresent check !!!
     Player player = gameFlow.getPlayerBy(id).get();

@@ -160,4 +160,6 @@ public interface GIGameInfo {
 
   // TODO REMOVE -> testing purpose only
   Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id, List<GITile> customTiles);
+
+  void setAgeFor(Integer id, int age);
 }

@@ -24,7 +24,9 @@ class GameFlow {
 
   void registerBy(Integer id) {
     players.put(id, new Player(id, calculator));
+    //order by age
     playerSequence.add(id);
+    Collections.sort(playerSequence);
   }
 
   void deregisterBy(Integer id) {
