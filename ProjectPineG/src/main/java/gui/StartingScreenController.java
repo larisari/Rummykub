@@ -26,7 +26,6 @@ import network.Server;
 
 public class StartingScreenController {
 
-private Server server;
   private ClientParser parser;
   private Stage stage = new Stage();
 
@@ -48,7 +47,7 @@ private Server server;
    */
   @FXML
   protected void handleCreateGame(MouseEvent event) throws IOException {
-    server = new Server();
+    Server server = new Server();
     Client host = new Client("localhost");
 // TODO wenn Fenster geschlossen wird -> Abbruch für alle gejointen clients.
   }

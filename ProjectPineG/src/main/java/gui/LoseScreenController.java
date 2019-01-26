@@ -1,8 +1,11 @@
 package gui;
 
+import java.net.URISyntaxException;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import network.ClientParser;
 
 public class LoseScreenController {
@@ -24,6 +27,7 @@ public class LoseScreenController {
   private int p4Points;
   private int numberOfPlayers = 0;
   private ClientParser parser;
+  private MediaPlayer mediaPlayer;
 
   public LoseScreenController() {
     parser = new ClientParser(this);
@@ -92,6 +96,16 @@ public class LoseScreenController {
     Loserp2Points.setText(p2Points + "");
     Loserp3Points.setText(p3Points + "");
     Loserp4Points.setText(p4Points + "");
+  }
+  public void playMusic(){
+    Media media = null;
+    try {
+      media = new Media(getClass().getResource("/audio/wahwahfail.mp3").toURI().toString());
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    mediaPlayer = new MediaPlayer(media);
+    mediaPlayer.play();
   }
 }
 

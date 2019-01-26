@@ -5,10 +5,10 @@ package gui;
 //TODO bei Disconnect Alert window mit ok button zurück zu startbildschirm
 //TODO bei endscreen button zurück zum startbildschirm.
 
-import gui.util.Image;
 
-import java.awt.Point;
+import gui.util.Image;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,10 +28,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import network.ClientParser;
-
-import javax.print.attribute.standard.Media;
 
 //test: mousepressed besser als mouseclicked?
 //Alle anfragen an Server.
@@ -58,7 +59,8 @@ public class GuiController {
   private FlowPane board;
   @FXML
   private ImageView bag;
-  @FXML private Group topBoard;
+  @FXML
+  private Group topBoard;
   @FXML
   private Group rightBoard;
   @FXML
@@ -84,14 +86,15 @@ public class GuiController {
   private final static int MAX_BOXWIDTH = 45;
   private final static int DRAW_HEIGHT = 65;
   private final static int DRAW_WIDTH = 45;
- private double tileHeight = 65;
- private double tileWidth = 45;
+  private double tileHeight = 65;
+  private double tileWidth = 45;
   private Integer nextPlayerID = 0;
   private ImageView tile = new ImageView();
   private ImageView joker = new ImageView();
   private HBox boardComb = new HBox();
   private int playerID = 0;
   private Stage stage = new Stage();
+  private MediaPlayer mediaPlayer;
 
   private ClientParser parser;
 
@@ -110,7 +113,10 @@ public class GuiController {
     this.playerID = playerID;
   }
 
-  public void setStage(Stage stage){ this.stage = stage;}
+  public void setStage(Stage stage) {
+    this.stage = stage;
+  }
+
   /**
    * Initializes FXML file. Sets player boards invisible according to the number of players.
    */
@@ -122,13 +128,13 @@ public class GuiController {
 
 
   public void setPlayerBoards() {
-    switch (numberOfPlayers){
+    switch (numberOfPlayers) {
       case 2:
         rightBoard.setVisible(false);
         leftBoard.setVisible(false);
         break;
       case 3:
-        switch (playerID){
+        switch (playerID) {
           case 0: //Player 1
             leftBoard.setVisible(false);
             break;
@@ -220,8 +226,9 @@ public class GuiController {
             List<ImageView> oldCombination = new ArrayList<>();
             HBox parent = (HBox) tile.getParent();
             for (int i = 0; i < parent.getChildren().size(); i++) {
-              oldCombination.add((ImageView)parent.getChildren().get(i));
-              if (!selectedTiles.contains(parent.getChildren().get(i))) { //wenn eine oder mehrere selected tiles in der kombination sind füge sie nicht hinzu.
+              oldCombination.add((ImageView) parent.getChildren().get(i));
+              if (!selectedTiles.contains(parent.getChildren().get(
+                  i))) { //wenn eine oder mehrere selected tiles in der kombination sind füge sie nicht hinzu.
                 combination.add((ImageView) parent.getChildren().get(i));
               }
             }
@@ -242,27 +249,28 @@ public class GuiController {
 
   /**
    * Deletes duplicate combinations.
+   *
    * @param combinations from which duplicates should be deleted.
    */
-  private void eraseDuplicate(List<List<ImageView>> combinations){
-    for (int i = combinations.size()-1; i > 0; i--){
-      if (haveSameChildren(combinations.get(i), combinations.get(i-1))){
+  private void eraseDuplicate(List<List<ImageView>> combinations) {
+    for (int i = combinations.size() - 1; i > 0; i--) {
+      if (haveSameChildren(combinations.get(i), combinations.get(i - 1))) {
         combinations.remove(i);
       }
     }
   }
 
-  private boolean haveSameChildren(List<ImageView> comb, List<ImageView> otherComb){
-   if (comb.size() == otherComb.size()){
-     for (ImageView tile : comb){
-       if (!otherComb.contains(tile)){
-         return false;
-       }
-     }
-     return true;
-   } else {
-     return false;
-   }
+  private boolean haveSameChildren(List<ImageView> comb, List<ImageView> otherComb) {
+    if (comb.size() == otherComb.size()) {
+      for (ImageView tile : comb) {
+        if (!otherComb.contains(tile)) {
+          return false;
+        }
+      }
+      return true;
+    } else {
+      return false;
+    }
   }
 
 
@@ -312,7 +320,7 @@ public class GuiController {
    * @param event - onMouseClicked event if user presses "Place Selection" button
    */
   @FXML
-  protected void handleplaceOnBoard(MouseEvent event){
+  protected void handleplaceOnBoard(MouseEvent event) {
     if (!selectionBoard.getChildren().isEmpty()) {
       parser.play(selectedCombinations);
 
@@ -352,6 +360,7 @@ public class GuiController {
     WinScreenController winScreenController = loader.getController();
     winScreenController.setNumberOfPlayers(numberOfPlayers);
     winScreenController.setPointsNamesVisible();
+    winScreenController.playMusic();
     this.stage.close();
   }
 
@@ -372,6 +381,7 @@ public class GuiController {
     LoseScreenController loController = loader.getController();
     loController.setNumberOfPlayers(numberOfPlayers);
     loController.setPointsNamesVisible();
+    loController.playMusic();
     this.stage.close();
   }
 
@@ -385,7 +395,6 @@ public class GuiController {
     parser.draw();
 
   }
-
 
 
   /**
@@ -444,9 +453,9 @@ public class GuiController {
 
   }
 
- // private void resizeTiles(){
- //   if (board.get)
- // }
+  // private void resizeTiles(){
+  //   if (board.get)
+  // }
 
   /**
    * Checks if all combinations on the main board are valid.
@@ -547,7 +556,7 @@ public class GuiController {
 
           if (topHand.getChildren().size() <= HAND_SPACE) {
             topHand.getChildren().add(tile);
-          } else if (bottomHand.getChildren().size() <= HAND_SPACE){
+          } else if (bottomHand.getChildren().size() <= HAND_SPACE) {
             bottomHand.getChildren().add(tile);
 
           }
@@ -874,14 +883,15 @@ public class GuiController {
         board.getChildren().remove(box);
       }
     }
-    if (board.intersects(board.sceneToLocal(selectionBoard.localToScene(selectionBoard.getBoundsInLocal())))){
+    if (board.intersects(
+        board.sceneToLocal(selectionBoard.localToScene(selectionBoard.getBoundsInLocal())))) {
       double reduce = 0.9;
       tileHeight *= reduce;
       tileWidth *= reduce;
-      for (int i = 0; i < board.getChildren().size(); i++){
+      for (int i = 0; i < board.getChildren().size(); i++) {
         HBox box = (HBox) board.getChildren().get(i);
-        for (int j = 0; j < box.getChildren().size(); j++){
-          ImageView tile = (ImageView)box.getChildren().get(j);
+        for (int j = 0; j < box.getChildren().size(); j++) {
+          ImageView tile = (ImageView) box.getChildren().get(j);
           tile.setFitHeight(tileHeight);
           tile.setFitWidth(tileWidth);
         }
@@ -891,9 +901,10 @@ public class GuiController {
 
   /**
    * Returns all tiles from the player's hand.
+   *
    * @return all tiles from the player's hand.
    */
-  private List<ImageView> getTilesFromHand(){
+  private List<ImageView> getTilesFromHand() {
     List<ImageView> handTiles = new ArrayList<>();
     for (int i = 0; i < topHand.getChildren().size(); i++) {
       ImageView iView = (ImageView) topHand.getChildren().get(i);
@@ -940,7 +951,17 @@ public class GuiController {
       tiles.remove(tile);
     }
   }
-
+public void playMusic(){
+  Media media = null;
+  try {
+    media = new Media(getClass().getResource("/audio/Light-People.mp3").toURI().toString());
+  } catch (URISyntaxException e) {
+    e.printStackTrace();
+  }
+  mediaPlayer = new MediaPlayer(media);
+  mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
+  mediaPlayer.play();
+}
 }
 
 // TODO Anzeige für wenn ein Player aussteigt.

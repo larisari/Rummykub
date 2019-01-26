@@ -1,8 +1,11 @@
 package gui;
 
+import java.net.URISyntaxException;
 import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import network.ClientParser;
 
 public class WinScreenController {
@@ -28,6 +31,7 @@ public class WinScreenController {
   private int p4Points;
   private ClientParser parser;
   private int numberOfPlayers = 0;
+  private MediaPlayer mediaPlayer;
 
   public WinScreenController() {
     parser = new ClientParser(this);
@@ -141,6 +145,16 @@ public class WinScreenController {
       player4Points.setText(p3Points + "");
     }
 
+  }
+  public void playMusic(){
+    Media media = null;
+    try {
+      media = new Media(getClass().getResource("/audio/fanfare.mp3").toURI().toString());
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    mediaPlayer = new MediaPlayer(media);
+    mediaPlayer.play();
   }
 }
 
