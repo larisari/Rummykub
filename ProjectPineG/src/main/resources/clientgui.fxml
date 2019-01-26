@@ -180,7 +180,7 @@
                   </Tooltip>
                </tooltip>
             </Button>
-            <ImageView fx:id="bag" fitHeight="170.0" fitWidth="184.0" layoutX="848.0" layoutY="25.0" onMouseClicked="#handleDrawTile" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="bag" fitHeight="170.0" fitWidth="184.0" layoutX="848.0" layoutY="25.0" onMouseClicked="#handleDrawTile" onMouseEntered="#handleStartHoverBag" onMouseExited="#handleStopHoverBag" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/bag.png" />
                </image>

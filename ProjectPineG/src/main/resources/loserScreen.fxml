@@ -31,17 +31,17 @@
             <Font name="Franklin Gothic Medium" size="23.0" />
          </font>
       </Label>
-      <Label fx:id="Loserp2Points" layoutX="814.0" layoutY="390.0" text="xy Points">
+      <Label fx:id="Loserp2Points" layoutX="814.0" layoutY="390.0" text="xy Points" AnchorPane.rightAnchor="336.0">
          <font>
             <Font name="Franklin Gothic Medium" size="23.0" />
          </font>
       </Label>
-      <Label fx:id="Loserp3Points" layoutX="814.0" layoutY="470.0" text="xy Points">
+      <Label fx:id="Loserp3Points" layoutX="814.0" layoutY="470.0" text="xy Points" AnchorPane.rightAnchor="336.0">
          <font>
             <Font name="Franklin Gothic Medium" size="23.0" />
          </font>
       </Label>
-      <Label fx:id="Loserp4Points" layoutX="814.0" layoutY="550.0" text="xy Points">
+      <Label fx:id="Loserp4Points" layoutX="814.0" layoutY="550.0" text="xy Points" AnchorPane.rightAnchor="336.0">
          <font>
             <Font name="Franklin Gothic Medium" size="23.0" />
          </font>

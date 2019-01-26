@@ -99,9 +99,9 @@ public class WinScreenController {
   void setPoints2Players() {
     if (p2Points < p1Points) {
       player2.setText("Player 1");
-      player2Points.setText(p1Points + "");
+      player2Points.setText(p1Points + " Points");
     } else { //Name ist ja default
-      player2Points.setText(p2Points + "");
+      player2Points.setText(p2Points + " Points");
     }
   }
 
@@ -109,44 +109,44 @@ public class WinScreenController {
     if (p3Points == 0) {
       player2.setText("Player 1");
       player3.setText("Player 2");
-      player2Points.setText(p1Points + "");
-      player3Points.setText(p2Points + "");
+      player2Points.setText(p1Points + " Points");
+      player3Points.setText(p2Points + " Points");
     }
     if (p2Points == 0) {
       player2.setText("Player 1");
       //player3 default
-      player2Points.setText(p1Points + "");
-      player3Points.setText(p3Points + "");
+      player2Points.setText(p1Points + " Points");
+      player3Points.setText(p3Points + " Points");
     }
     if (p1Points == 0) {
-      player2Points.setText(p2Points + "");
-      player3Points.setText(p3Points + "");
+      player2Points.setText(p2Points + " Points");
+      player3Points.setText(p3Points + " Points");
     }
   }
 
   void setPoints4Players() {
     if (p4Points == 0) {
-      player2Points.setText(p2Points + "");
-      player3Points.setText(p3Points + "");
-      player4Points.setText(p4Points + "");
+      player2Points.setText(p2Points + " Points");
+      player3Points.setText(p3Points + " Points");
+      player4Points.setText(p4Points + " Points");
     } else if (p2Points == 0) {
       player2.setText("Player 1");
-      player2Points.setText(p1Points + "");
-      player3Points.setText(p3Points + "");
-      player4Points.setText(p4Points + "");
+      player2Points.setText(p1Points + " Points");
+      player3Points.setText(p3Points + " Points");
+      player4Points.setText(p4Points + " Points");
     } else if (p3Points == 0) {
       player2.setText("Player 1");
       player3.setText("Player 2");
-      player2Points.setText(p1Points + "");
-      player3Points.setText(p2Points + "");
-      player4Points.setText(p4Points + "");
+      player2Points.setText(p1Points + " Points");
+      player3Points.setText(p2Points + " Points");
+      player4Points.setText(p4Points + " Points");
     } else if (p4Points == 0) {
       player2.setText("Player 1");
       player3.setText("Player 2");
       player4.setText("Player 3");
-      player2Points.setText(p1Points + "");
-      player3Points.setText(p2Points + "");
-      player4Points.setText(p3Points + "");
+      player2Points.setText(p1Points + " Points");
+      player3Points.setText(p2Points + " Points");
+      player4Points.setText(p3Points + " Points");
     }
 
   }
@@ -160,5 +160,6 @@ public class WinScreenController {
     mediaPlayer = new MediaPlayer(media);
     mediaPlayer.play();
   }
+
 }
 

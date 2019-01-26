@@ -359,9 +359,9 @@ public class GuiController {
     stage.show();
     WinScreenController winScreenController = loader.getController();
     winScreenController.setNumberOfPlayers(numberOfPlayers);
-    winScreenController.setPointsNamesVisible();
     winScreenController.playMusic();
     winScreenController.setPlayerPoints(points);
+    winScreenController.setPointsNamesVisible();
     this.stage.close();
   }
 
@@ -930,6 +930,8 @@ public class GuiController {
     addToExisting.setDisable(true);
     placeOnBoard.setDisable(true);
     swapJoker.setDisable(true);
+    bag.setEffect(null);
+    bag.setDisable(true);
     List<ImageView> handTiles = new ArrayList<>();
     handTiles.addAll(getTilesFromHand());
     for (int i = 0; i < board.getChildren().size(); i++) {
@@ -986,6 +988,17 @@ public class GuiController {
     }
 
   }
+
+  @FXML
+  private void handleStartHoverBag(MouseEvent event){
+    TileView.highlightTile(bag);
+  }
+
+  @FXML
+  private void handleStopHoverBag(MouseEvent event){
+    bag.setEffect(null);
+  }
+
 }
 
 // TODO Anzeige für wenn ein Player aussteigt.
