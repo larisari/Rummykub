@@ -1,3 +1,8 @@
+/**
+ * This Class serves as a validator for combinations a player wants to put on
+ * the board. It is a pure calculating class that mainly checks whether a
+ * move makes sense according to the game's rules or not.
+ */
 package gameinfo;
 
 import gameinfo.util.GIColor;
@@ -16,6 +21,13 @@ class CombRules {
     this.calculator = calculator;
   }
 
+  /**
+   * Method to check whether given combinations exceed the minimum of a given
+   * amount of points.
+   * @param combinations to be put on board.
+   * @param minimumPoints for a valid move.
+   * @return true, if move is valid, and false otherwise.
+   */
   boolean isValid(List<List<GITile>> combinations, int minimumPoints) {
     log.info("Entered Method isValid(combinations, minimumPoints)");
 
@@ -52,6 +64,12 @@ class CombRules {
     return greaterThanMin;
   }
 
+  /**
+   * Method to check whether one or several combinations are valid according
+   * to the game's rules.
+   * @param combinations to be set on the board.
+   * @return true, if move is possible, and false otherwise.
+   */
   boolean isValid(List<List<GITile>> combinations) {
     log.info("Entered Method isValid(combinations).");
     boolean allValid = combinations.stream().allMatch(this::isValidInternal);

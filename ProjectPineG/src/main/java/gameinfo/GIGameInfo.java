@@ -167,4 +167,10 @@ public interface GIGameInfo {
    * @param age of the player to be set.
    */
   void setAgeFor(Integer id, int age);
+
+  /**
+   * Use this method to identify the starting player's id.
+   * @return id of the first player.
+   */
+  Integer getStartingPlayerId();
 }

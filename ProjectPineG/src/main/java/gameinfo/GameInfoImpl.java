@@ -347,6 +347,11 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     }
   }
 
+  @Override
+  public Integer getStartingPlayerId() {
+    return gameFlow.getStartingPlayerId();
+  }
+
   private GITile getTileFor(Integer id) {
     // .get() is allowed here because it is always called after isPresent check !!!
     Player player = gameFlow.getPlayerBy(id).get();
