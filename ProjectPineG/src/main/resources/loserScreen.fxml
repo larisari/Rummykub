@@ -46,7 +46,7 @@
             <Font name="Franklin Gothic Medium" size="23.0" />
          </font>
       </Label>
-      <Label layoutX="286.0" layoutY="310.0" prefHeight="26.0" prefWidth="88.0" text="Player 1">
+      <Label fx:id="player1LoserName" layoutX="286.0" layoutY="310.0" prefHeight="26.0" prefWidth="88.0" text="Player 1">
          <font>
             <Font name="Franklin Gothic Medium" size="23.0" />
          </font>

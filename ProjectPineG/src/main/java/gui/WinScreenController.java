@@ -25,12 +25,12 @@ public class WinScreenController {
   private Label player4;
 
   //noch ändern:
-  private int p1Points; //ev noch initialisieren? oder reicht setter?
-  private int p2Points;
-  private int p3Points;
-  private int p4Points;
+  private int p1Points = 0; //ev noch initialisieren? oder reicht setter?
+  private int p2Points = 0;
+  private int p3Points = 0;
+  private int p4Points = 0;
   private ClientParser parser;
-  private int numberOfPlayers = 0;
+  private int numberOfPlayers;
   private MediaPlayer mediaPlayer;
 
   public WinScreenController() {
@@ -43,6 +43,10 @@ public class WinScreenController {
   }
 
   public void setPlayerPoints(List<Integer> points) {
+    //TODO sout weg.
+    for (Integer i : points){
+      System.out.println(i);
+    }
     switch (points.size()) {
       case 2:
         p1Points = points.get(0);

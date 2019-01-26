@@ -9,6 +9,8 @@ import javafx.scene.media.MediaPlayer;
 import network.ClientParser;
 
 public class LoseScreenController {
+  @FXML private Label player1LoserName;
+  @FXML private Label player2LoserName;
   @FXML
   private Label player3LoserName;
   @FXML
@@ -21,13 +23,15 @@ public class LoseScreenController {
   private Label Loserp3Points;
   @FXML
   private Label Loserp4Points;
-  private int p1Points;
-  private int p2Points;
-  private int p3Points;
-  private int p4Points;
+  private int p1Points = 0;
+  private int p2Points = 0;
+  private int p3Points = 0;
+  private int p4Points = 0;
   private int numberOfPlayers = 0;
+  private int playerID;
   private ClientParser parser;
   private MediaPlayer mediaPlayer;
+
 
   public LoseScreenController() {
     parser = new ClientParser(this);
@@ -37,9 +41,16 @@ public class LoseScreenController {
     this.numberOfPlayers = numberOfPlayers;
   }
 
+  public void setID(Integer ID){
+    this.playerID = ID;
+  }
+
+  //wird nie gecalled?
   public void setPlayerPoints(List<Integer> points) {
     //TODO sout weg
-    System.out.println(points.toString());
+    for (Integer i : points){
+      System.out.println(i);
+    }
     switch (points.size()) {
       case 2:
         p1Points = points.get(0);
@@ -60,6 +71,7 @@ public class LoseScreenController {
     }
   }
   public void setPointsNamesVisible(){
+    //klappt noch nicht ganz
     switch (numberOfPlayers) {
       case 2:
         Loserp3Points.setVisible(false);
@@ -81,21 +93,21 @@ public class LoseScreenController {
   }
 
   void setPoints2Players() {
-    Loserp1Points.setText(p1Points + "");
-    Loserp2Points.setText(p2Points + "");
+    Loserp1Points.setText(p1Points + " Points");
+    Loserp2Points.setText(p2Points + " Points");
   }
 
   void setPoints3Players() {
-    Loserp1Points.setText(p1Points + "");
-    Loserp2Points.setText(p2Points + "");
-    Loserp3Points.setText(p3Points + "");
+    Loserp1Points.setText(p1Points + " Points");
+    Loserp2Points.setText(p2Points + " Points");
+    Loserp3Points.setText(p3Points + " Points");
   }
 
   void setPoints4Players() {
-    Loserp1Points.setText(p1Points + "");
-    Loserp2Points.setText(p2Points + "");
-    Loserp3Points.setText(p3Points + "");
-    Loserp4Points.setText(p4Points + "");
+    Loserp1Points.setText(p1Points + " Points");
+    Loserp2Points.setText(p2Points + " Points");
+    Loserp3Points.setText(p3Points + " Points");
+    Loserp4Points.setText(p4Points + " Points");
   }
   public void playMusic(){
     Media media = null;

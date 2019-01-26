@@ -309,7 +309,7 @@ public class GuiController {
     updateBoard();
     disableTiles(combination); //löscht auch tiles aus selectedTiles
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
-      openWinScreen();
+      parser.getPlayerPoints();
       parser.notifyWin();
     }
   }
@@ -338,7 +338,7 @@ public class GuiController {
     }
 
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
-      openWinScreen();
+      parser.getPlayerPoints();
       parser.notifyWin();
     }
   }
@@ -348,7 +348,7 @@ public class GuiController {
    *
    * @throws IOException if some error occurs while loading fxml file.
    */
-  public void openWinScreen() throws IOException {
+  public void openWinScreen(List<Integer> points) throws IOException {
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation((getClass().getResource("/winnerScreen.fxml")));
     Parent root = loader.load();
@@ -361,6 +361,7 @@ public class GuiController {
     winScreenController.setNumberOfPlayers(numberOfPlayers);
     winScreenController.setPointsNamesVisible();
     winScreenController.playMusic();
+    winScreenController.setPlayerPoints(points);
     this.stage.close();
   }
 
@@ -369,7 +370,7 @@ public class GuiController {
    *
    * @throws IOException if some error occurs while loading fxml file.
    */
-  public void openLoserScreen() throws IOException {
+  public void openLoserScreen(List<Integer> points) throws IOException {
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation((getClass().getResource("/loserScreen.fxml")));
     Parent root = loader.load();
@@ -380,8 +381,10 @@ public class GuiController {
     stage.show();
     LoseScreenController loController = loader.getController();
     loController.setNumberOfPlayers(numberOfPlayers);
-    loController.setPointsNamesVisible();
     loController.playMusic();
+    loController.setID(playerID);
+    loController.setPlayerPoints(points);
+    loController.setPointsNamesVisible();
     this.stage.close();
   }
 
@@ -723,7 +726,7 @@ public class GuiController {
     updateBoard();
 
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
-      openWinScreen();
+      parser.getPlayerPoints();
       parser.notifyWin();
     }
   }
@@ -781,7 +784,7 @@ public class GuiController {
     bag.setDisable(true);
 
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
-      openWinScreen();
+      parser.getPlayerPoints();
       parser.notifyWin();
     }
   }

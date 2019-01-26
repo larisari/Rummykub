@@ -116,7 +116,7 @@ public class ServerParser {
         break;*/
 
       case "calculatePointsForRegisteredPlayers":
-        Server.broadcastToAllClients("responseForGetPlayerPoints|" + parsePointsToString(Server.gameInfo.calculatePointsForRegisteredPlayers()));
+        clients.get(id).sendMessageToClient("responseForGetPlayerPoints|" + parsePointsToString(Server.gameInfo.calculatePointsForRegisteredPlayers()));
         break;
 
       case "numberOfPlayers":
@@ -132,9 +132,13 @@ public class ServerParser {
       case "notifyWin":
         for(int i = 0; i < clients.size(); i++){
           if(i != id){
-            clients.get(i).sendMessageToClient("responseToNotifyWin");
+            clients.get(i).sendMessageToClient("responseToNotifyWin|" + parsePointsToString(Server.gameInfo.calculatePointsForRegisteredPlayers()));
           }
         }
+        break;
+      case "setAge":
+        int age = Integer.parseInt(receivedMessage[1]);
+        Server.gameInfo.setAgeFor(id, age);
         break;
     }
   }
@@ -143,7 +147,7 @@ public class ServerParser {
     String points = "";
     List<GITuple<Integer, GIPoints>> tempList = list.get();
     for(int i = 0; i < tempList.size(); i++){
-      points += tempList.get(i).getSecond();
+      points += tempList.get(i).getSecond().value();
       if(i != tempList.size()-1) {
         points += ",";
       }

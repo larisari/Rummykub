@@ -19,7 +19,7 @@ public class ClientParser {
 
   // TODO CALL ALL METHODS OF CONTROLLER IN ITS THREAD (POSSIBLE MAIN)
 
-  private static String recievedMessageFromServer;
+  private static String receivedMessageFromServer;
   private static String sendMessage;
 
   private static GuiController guiController;
@@ -51,7 +51,7 @@ public class ClientParser {
   }
 
   public static void getStringIntoClientParser(String receivedMessageFromServer) {
-    receivedMessageFromServer = recievedMessageFromServer;
+    receivedMessageFromServer = receivedMessageFromServer;
   }
 
   // Messages to send to Server.
@@ -79,10 +79,6 @@ public class ClientParser {
                 e.printStackTrace();
               }
             });
-        break;
-
-      case "closeStartScreen":
-        //        Platform.runLater(() -> startingScreenController.closeStartScreen());
         break;
 
       case "responseForDraw":
@@ -193,10 +189,14 @@ public class ClientParser {
       case "responseForGetPlayerPoints":
         Platform.runLater(
             () ->
-                winScreenController.setPlayerPoints(
-                    GuiParser.parseStringToIntegerList(messageAsArray[1])));
-        loseScreenController.setPlayerPoints(
-            GuiParser.parseStringToIntegerList(messageAsArray[1]));
+            {
+              try {
+                guiController.openWinScreen(
+                    GuiParser.parseStringToIntegerList(messageAsArray[1]));
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            });
 
         break;
 
@@ -223,7 +223,7 @@ public class ClientParser {
         Platform.runLater(
             () -> {
               try {
-                guiController.openLoserScreen();
+                guiController.openLoserScreen(GuiParser.parseStringToIntegerList(messageAsArray[1]));
               } catch (IOException e) {
                 e.printStackTrace();
               }
@@ -393,4 +393,8 @@ public class ClientParser {
   public void notifyWin() {
     Client.sendMessageToServer("notifyWin");
   }
+
+  public void setAgeFor(String age) {
+      Integer.parseInt(age);
+    Client.sendMessageToServer("setAge|" + age);}
 }

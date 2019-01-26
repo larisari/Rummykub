@@ -61,8 +61,8 @@ public class StartingScreenController {
   @FXML
   protected void handleJoinGame(MouseEvent event) {
       //TODO abfrage nach alter.
-      String ipAdress = "";
-      String ageP = "";
+      String ipAdress;
+      String ageP;
       Dialog<Pair<String, String>> dialog = new Dialog<>();
       dialog.setTitle("Login");
       dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
@@ -72,9 +72,7 @@ public class StartingScreenController {
       gridPane.setPadding(new Insets(20, 150, 10, 10));
 
       TextField adress = new TextField();
-      adress.setPromptText("Enter your IP adress.");
       TextField age = new TextField();
-      age.setPromptText("Enter your age.");
 
       gridPane.add(adress, 0, 0);
       gridPane.add(age, 2, 0);
@@ -88,28 +86,40 @@ public class StartingScreenController {
       if (result.isPresent()) {
         ipAdress = adress.getText();
         ageP = age.getText();
-        try {
-          Client c = new Client(ipAdress);
-        }  catch (ConnectException e) {
-          Alert alert = new Alert(AlertType.CONFIRMATION,
-              "No host found! Need to create a new game first!", ButtonType.OK);
-          alert.showAndWait();
 
-          if (alert.getResult() == ButtonType.YES) {
+        if (!ipAdress.isEmpty() && !ageP.isEmpty()) {
+          try {
+            parser.setAgeFor(ageP);
+            Client c = new Client(ipAdress);
+          } catch (ConnectException e) {
+            Alert alert = new Alert(AlertType.CONFIRMATION,
+                "No host found! Need to create a new game first!", ButtonType.OK);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+              return;
+            }
+          } catch (UnknownHostException e) {
+            Alert alert = new Alert(AlertType.CONFIRMATION,
+                "Wrong ip adress!", ButtonType.OK);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+              return;
+            }
+
+          } catch (IOException e) {
             return;
+
+          } catch (NumberFormatException e){
+            Alert alert = new Alert(AlertType.CONFIRMATION,
+                "Please enter your age!", ButtonType.OK);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+              return;
+            }
           }
-        }catch (UnknownHostException e) {
-          Alert alert = new Alert(AlertType.CONFIRMATION,
-              "Wrong ip adress!", ButtonType.OK);
-          alert.showAndWait();
-
-          if (alert.getResult() == ButtonType.YES) {
-            return;
-          }
-
-          } catch (IOException e){
-          return;
-
         }
       }
     }
