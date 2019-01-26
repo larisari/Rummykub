@@ -360,6 +360,7 @@ public class GuiController {
     WinScreenController winScreenController = loader.getController();
     winScreenController.setNumberOfPlayers(numberOfPlayers);
     winScreenController.setPointsNamesVisible();
+    winScreenController.playMusic();
     this.stage.close();
   }
 
@@ -380,6 +381,7 @@ public class GuiController {
     LoseScreenController loController = loader.getController();
     loController.setNumberOfPlayers(numberOfPlayers);
     loController.setPointsNamesVisible();
+    loController.playMusic();
     this.stage.close();
   }
 
