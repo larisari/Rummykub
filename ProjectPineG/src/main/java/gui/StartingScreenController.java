@@ -29,6 +29,9 @@ public class StartingScreenController {
 
   private ClientParser parser;
   private Stage stage = new Stage();
+  private Server server;
+  private Client host;
+  private Client client;
 
   public StartingScreenController() {
     parser = new ClientParser(this);
@@ -55,8 +58,8 @@ public class StartingScreenController {
     Optional<String> result = dialog.showAndWait();
     if (result.isPresent()) {
       if (validAge(result.get()) && !result.get().isEmpty()) {
-        Server server = new Server();
-        Client host = new Client("localhost");
+        server = new Server();
+        host = new Client("localhost");
         parser.setAgeFor(result.get());
 
 
@@ -102,7 +105,7 @@ public class StartingScreenController {
         if (validAge(ageP)) {
           if (!ipAdress.isEmpty() && !ageP.isEmpty()) {
             try {
-              Client c = new Client(ipAdress);
+              client = new Client(ipAdress);
               parser.setAgeFor(ageP);
             } catch (ConnectException e) {
               Alert alert = new Alert(AlertType.CONFIRMATION,
@@ -160,6 +163,7 @@ public class StartingScreenController {
       }
 
     }
+
   }
 
 

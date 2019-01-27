@@ -188,6 +188,7 @@ public class GuiController {
     Optional<ButtonType> result = alert.showAndWait();
 
     if (result.isPresent() && result.get() == yes) {
+      parser.clientExit();
       Platform.exit();
     }
   }
@@ -205,17 +206,7 @@ public class GuiController {
     List<List<ImageView>> oldBoardCombs = new ArrayList<>();
     if (!selectedTiles.isEmpty()) {
       if (areOnlyTilesFromHand(selectedTiles)) {
-        List<ImageView> sTiles = new ArrayList<>();
-        HBox comb = new HBox();
-        comb.prefHeight(MAX_BOXHEIGHT);
-        comb.prefWidth(selectedTiles.size() * MAX_BOXWIDTH);
-        for (ImageView tile : selectedTiles) {
-          sTiles.add(tile);
-          comb.getChildren().add(tile);
-        }
-        selectionBoard.getChildren().add(comb);
-        selectedCombinations.add(sTiles);
-        cancelSelEffect();
+        moveToSelectionBoard();
       } else {
         List<ImageView> selectedTilesHand = new ArrayList<>();
         for (ImageView tile : selectedTiles) {
@@ -244,6 +235,39 @@ public class GuiController {
       }
     }
 
+  }
+
+  private void moveToSelectionBoard(){
+    List<ImageView> sTiles = new ArrayList<>();
+    HBox comb = new HBox();
+    comb.prefHeight(MAX_BOXHEIGHT);
+    comb.prefWidth(selectedTiles.size() * MAX_BOXWIDTH);
+    for (ImageView tile : selectedTiles) {
+      sTiles.add(tile);
+      comb.getChildren().add(tile);
+    }
+    selectionBoard.getChildren().add(comb);
+    selectedCombinations.add(sTiles);
+    //TODO selection board intersecting with placeSelection button.
+    HBox lastComb = (HBox)selectionBoard.getChildren().get(selectionBoard.getChildren().size()-1);
+    System.out.println(selectionBoard.getBoundsInParent().getWidth()+ "parentwidth");
+    System.out.println(selectionBoard.getBoundsInLocal().getWidth() + "localwidth");
+    if (lastComb.intersects(lastComb.sceneToLocal(placeOnBoard.localToScene(placeOnBoard.getBoundsInLocal())))){
+
+      for (int i = lastComb.getChildren().size()-1; i >= 0; i--){
+        ImageView iView = (ImageView)lastComb.getChildren().get(i);
+        if (topHand.getChildren().size() <= HAND_SPACE) {
+          topHand.getChildren().add(tile);
+        } else if (bottomHand.getChildren().size() <= HAND_SPACE) {
+          bottomHand.getChildren().add(tile);
+
+        }
+        lastComb.getChildren().remove(iView);
+        selectionBoard.getChildren().remove(lastComb);
+        selectedCombinations.remove(sTiles);
+      }
+    }
+    cancelSelEffect();
   }
 
   /**
@@ -875,7 +899,7 @@ public class GuiController {
     }
     if (board.intersects(
         board.sceneToLocal(selectionBoard.localToScene(selectionBoard.getBoundsInLocal())))) {
-      double reduce = 0.9;
+      double reduce = 0.95;
       tileHeight *= reduce;
       tileWidth *= reduce;
       for (int i = 0; i < board.getChildren().size(); i++) {
@@ -986,8 +1010,11 @@ public class GuiController {
     bag.setEffect(null);
   }
 
-  public void closeGame() throws IOException {
+  public void closeGame() {
     this.stage.close();
+  }
+
+  public void openLobby() throws IOException{
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation(getClass().getResource("/startingScreen.fxml"));
     Parent root = loader.load();
