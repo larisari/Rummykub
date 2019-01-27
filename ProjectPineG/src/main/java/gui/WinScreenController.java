@@ -29,6 +29,7 @@ public class WinScreenController {
   private int p2Points = 0;
   private int p3Points = 0;
   private int p4Points = 0;
+  private int playerID;
   private ClientParser parser;
   private int numberOfPlayers;
   private MediaPlayer mediaPlayer;
@@ -42,11 +43,9 @@ public class WinScreenController {
     this.numberOfPlayers = numberOfPlayers;
   }
 
+
   public void setPlayerPoints(List<Integer> points) {
-    //TODO sout weg.
-    for (Integer i : points){
-      System.out.println(i);
-    }
+
     switch (points.size()) {
       case 2:
         p1Points = points.get(0);
@@ -97,7 +96,7 @@ public class WinScreenController {
   }
 
   void setPoints2Players() {
-    if (p2Points < p1Points) {
+    if (p2Points > p1Points) {
       player2.setText("Player 1");
       player2Points.setText(p1Points + " Points");
     } else { //Name ist ja default

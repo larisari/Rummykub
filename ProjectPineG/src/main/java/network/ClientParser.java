@@ -84,7 +84,6 @@ public class ClientParser {
         Platform.runLater(
             () -> {
               try {
-                System.out.println(loadingScreenController);
                 loadingScreenController.openGameWindow(
                     Integer.parseInt(messageAsArray[1]), Integer.parseInt(messageAsArray[2]));
               } catch (IOException e) {

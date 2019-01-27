@@ -94,7 +94,7 @@ public class StartingScreenController {
       gridPane.add(age, 2, 0);
 
       dialog.getDialogPane().setContent(gridPane);
-      dialog.setHeaderText("Please enter your IP adress and your age!");
+      dialog.setHeaderText("Please enter your hosts IP adress and your age!");
 
       Platform.runLater(() -> adress.requestFocus());
 

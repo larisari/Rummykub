@@ -95,12 +95,31 @@ public class LoseScreenController {
   void setPoints2Players() {
     Loserp1Points.setText(p1Points + " Points");
     Loserp2Points.setText(p2Points + " Points");
+    switch (playerID){
+      case 0:
+        player1LoserName.setText("You");
+        break;
+      case 1:
+        player2LoserName.setText("You");
+        break;
+    }
   }
 
   void setPoints3Players() {
     Loserp1Points.setText(p1Points + " Points");
     Loserp2Points.setText(p2Points + " Points");
     Loserp3Points.setText(p3Points + " Points");
+    switch (playerID){
+      case 0:
+        player1LoserName.setText("You");
+        break;
+      case 1:
+        player2LoserName.setText("You");
+        break;
+      case 2:
+        player3LoserName.setText("You");
+        break;
+    }
   }
 
   void setPoints4Players() {
@@ -108,6 +127,20 @@ public class LoseScreenController {
     Loserp2Points.setText(p2Points + " Points");
     Loserp3Points.setText(p3Points + " Points");
     Loserp4Points.setText(p4Points + " Points");
+    switch (playerID){
+      case 0:
+        player1LoserName.setText("You");
+        break;
+      case 1:
+        player2LoserName.setText("You");
+        break;
+      case 2:
+        player3LoserName.setText("You");
+        break;
+      case 3:
+        player4LoserName.setText("You");
+        break;
+    }
   }
   public void playMusic(){
     Media media = null;
