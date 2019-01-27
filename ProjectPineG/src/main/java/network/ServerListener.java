@@ -3,8 +3,10 @@ package network;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -15,18 +17,16 @@ public class ServerListener extends Thread {
 
   static List<ServerClientCommunication> clients;
   boolean isRunning = true;
-  private int clientID = 0;
+  private  static int clientID;
   private static Logger log = Logger.getLogger(ServerListener.class.getName());
-  static ServerSocket ss;
+  private static ServerSocket ss;
 
   public ServerListener(List<ServerClientCommunication> listOfClients) {
     clients = listOfClients;
+    clientID = clients.size();
     log.info("Listener Start...");
 
   }
-
-
-
 
 
   public static List<ServerClientCommunication> getClients() {
@@ -38,7 +38,9 @@ public class ServerListener extends Thread {
 
     try {
 
+
       ss = new ServerSocket(48410);
+
 
       log.info("[Server] wird initialisiert...");
 
@@ -50,9 +52,11 @@ public class ServerListener extends Thread {
             Socket s = ss.accept();
 
             log.info("[Server] neuer Client wurde aufgenommen " + s);
+            System.out.println("[Server] Connection aufgebaut  " + s.isConnected());
+
 
             DataInputStream in = new DataInputStream(s.getInputStream());
-            DataOutputStream out = new DataOutputStream(s.getOutputStream());
+            DataOutputStream out = new DataOutputStream(s.getOutputStream()); // hier ist Client-Objekt dann vollständig connected
 
             log.info("[Server] erstelle eigenen Thread für Client " + clientID);
             // create a new thread object
@@ -71,17 +75,44 @@ public class ServerListener extends Thread {
             Server.broadcastToAllClients("addJoined|" + clientID);
             clientID++;
 
-          } else {
-            isRunning = false;
           }
-        } catch (Exception e) {
-          // s.close();
-          log.info("[Server] Verbindung getrennt.");
-          e.printStackTrace();
+        } catch (SocketException e) {
+          log.info("[Server] Verbindung zu Client " + clientID + " verloren...");
+
+          getThreadGroup().destroy();
+          this.interrupt();
+          log.info("Alle Client Verbindungen wurden gekillt.");
+          restartListener();
         }
       }
-    } catch (Exception e) {
+    } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  public static void killServer() {
+    try{
+      log.info("[Server] Thread wird unterbrochen.");
+      currentThread().interrupt();
+      log.info("[Server] Serversocket wird geschlossen.");
+      ss.close();
+      ss.setReuseAddress(true);
+
+
+      log.info("[Server] Server wurde geschlossen.");
+    }catch (IOException e) {
+      log.info("[Server] kann nicht geclosed werden.");
+      e.printStackTrace();
+
+    }
+
+  }
+
+
+  public static void restartListener() {
+    for(int i = clients.size()-1; i >= 0; i--) {
+      clients.remove(i);
+    }
+    killServer();
   }
 }

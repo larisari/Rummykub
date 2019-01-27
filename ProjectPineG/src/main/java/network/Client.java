@@ -71,11 +71,13 @@ public class Client extends Thread {
                       in.close();
                       out.close();
                       running = false;
+                      log.info("Thread running false gesetzt.");
 
                     }
                   } catch (IOException e) {
-                    currentThread().interrupt();
-                    e.printStackTrace();
+                    log.info("[Client] Habe Verbindung zum Server verloren....");
+                    running = false;
+                    System.exit(0);
                   }
                 }
               }

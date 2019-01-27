@@ -42,6 +42,7 @@ public class Server {
   public static void broadcastToAllClients(String message) {
     List<ServerClientCommunication> clients = ServerListener.getClients();
 
+
     for (ServerClientCommunication client : clients) {
       client.sendMessageToClient(message);
     }
