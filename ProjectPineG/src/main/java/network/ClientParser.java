@@ -230,12 +230,27 @@ public class ClientParser {
         Platform.runLater(
             () -> {
               try {
-                guiController.openLoserScreen(GuiParser.parseStringToIntegerList(messageAsArray[1]));
+                guiController
+                    .openLoserScreen(GuiParser.parseStringToIntegerList(messageAsArray[1]));
               } catch (IOException e) {
                 e.printStackTrace();
               }
             });
         break;
+      case "closeGame":
+        Platform.runLater(() -> {
+            guiController.closeGame();
+
+        });
+        break;
+      case "openLobby":
+        Platform.runLater(() -> {
+          try {
+            guiController.openLobby();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
     }
   }
 
@@ -404,4 +419,8 @@ public class ClientParser {
   public void setAgeFor(String age) {
       Integer.parseInt(age);
     Client.sendMessageToServer("setAge|" + age);}
+
+    public void clientExit(){
+    Client.sendMessageToServer("closeGame");
+    }
 }

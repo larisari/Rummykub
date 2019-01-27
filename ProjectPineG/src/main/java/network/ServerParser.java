@@ -141,6 +141,11 @@ public class ServerParser {
         int age = Integer.parseInt(receivedMessage[1]);
         Server.gameInfo.setAgeFor(id, age);
         break;
+      case "closeGame":
+        Server.broadcastToAllClients("closeGame");
+        Server.broadcastToAllClients("openLobby");
+        ServerListener.interrupted();
+        break;
     }
   }
 
