@@ -204,12 +204,10 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       if (player.isFirstMove() && combRules.isValid(combinations, MINIMUM_POINTS_ON_FIRST_MOVE)) {
         putComboOnBoard(combinations, player);
         player.madeMove();
-        log.info("Players Hand: " + gameFlow.getPlayerBy(id).get().calculatePointsOfHand().value());
         return Optional.of(new GITuple<>(id, true));
       } else if (!player.isFirstMove() && combRules.isValid(combinations)) {
         putComboOnBoard(combinations, player);
         player.madeMove();
-        log.info("Players Hand: " + gameFlow.getPlayerBy(id).get().calculatePointsOfHand().value());
         return Optional.of(new GITuple<>(id, true));
       } else {
         // not a valid combination.
@@ -244,7 +242,6 @@ class GameInfoImpl extends Thread implements GIGameInfo {
         player.madeMove();
         board.remove(tilesFromBoard);
         newCombinations.forEach(combination -> board.addCombo(combination));
-        log.info("Players Hand: " + gameFlow.getPlayerBy(id).get().calculatePointsOfHand().value());
         return Optional.of(new GITuple<>(id, true));
       } else {
         return Optional.of(new GITuple<>(id, false));
