@@ -120,6 +120,7 @@ public class GuiController {
   @FXML
   private void initialize() {
     disableControl();
+
   }
 
 
@@ -246,16 +247,13 @@ public class GuiController {
     }
     selectionBoard.getChildren().add(comb);
     selectedCombinations.add(sTiles);
-    //TODO selection board intersecting with placeSelection button.
     int counter = 0;
 for (int i = 0; i < selectionBoard.getChildren().size(); i++){
   HBox box = (HBox)selectionBoard.getChildren().get(i);
   counter += box.getChildren().size()*DRAW_WIDTH + boxSpacing;
 }
-    System.out.println(counter + "totalwidth");
 if (counter >= maxSelBoardWidth) {
   HBox lastComb = (HBox)selectionBoard.getChildren().get(selectionBoard.getChildren().size()-1);
-    System.out.println("selectionboard full");
     for (int i = lastComb.getChildren().size() - 1; i >= 0; i--) {
       ImageView iView = (ImageView) lastComb.getChildren().get(i);
       if (topHand.getChildren().size() <= HAND_SPACE) {
@@ -406,9 +404,9 @@ if (counter >= maxSelBoardWidth) {
     stage.setResizable(false);
     stage.show();
     LoseScreenController loController = loader.getController();
+    loController.setID(playerID);
     loController.setNumberOfPlayers(numberOfPlayers);
     loController.playMusic();
-    loController.setID(playerID);
     loController.setPlayerPoints(points);
     loController.setPointsNamesVisible();
     this.stage.close();
@@ -421,8 +419,17 @@ if (counter >= maxSelBoardWidth) {
    */
   @FXML
   protected void handleDrawTile(MouseEvent event) {
-    parser.draw();
+    if (topHand.getChildren().size() == HAND_SPACE && bottomHand.getChildren().size() == HAND_SPACE){
+      Alert alert = new Alert(AlertType.CONFIRMATION, "Your hand is full, please place "
+          + "tiles on the board before drawing more tiles!", ButtonType.OK);
+      alert.showAndWait();
 
+      if (alert.getResult() == ButtonType.YES) {
+
+      }
+    } else {
+      parser.draw();
+    }
   }
 
 
@@ -592,6 +599,9 @@ if (counter >= maxSelBoardWidth) {
           } else if (bottomHand.getChildren().size() <= HAND_SPACE) {
             bottomHand.getChildren().add(tile);
 
+          } else {
+            cancelSelEffect();
+            return;
           }
         }
         selectionBoard.getChildren().remove(selectionBoard.getChildren().get(i));
@@ -663,7 +673,9 @@ if (counter >= maxSelBoardWidth) {
         for (int j = 0; j < box.getChildren().size(); j++) {
 
           if (box.getChildren().get(j) instanceof Button) {
-            deleteAddToButtons(); //TODO geht nicht?
+            deleteAddToButtons();
+            cancelSelEffect();
+            return;
           }
         }
         Button front = new Button("+");
@@ -906,7 +918,7 @@ if (counter >= maxSelBoardWidth) {
     }
     if (board.intersects(
         board.sceneToLocal(selectionBoard.localToScene(selectionBoard.getBoundsInLocal())))) {
-      double reduce = 0.95;
+      double reduce = 0.9;
       tileHeight *= reduce;
       tileWidth *= reduce;
       for (int i = 0; i < board.getChildren().size(); i++) {
