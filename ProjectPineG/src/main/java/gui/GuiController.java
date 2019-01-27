@@ -27,6 +27,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -51,8 +52,6 @@ public class GuiController {
   private Button endTurn;
   @FXML
   private Button cancelSelection;
-  @FXML
-  private Button manipulate;
   @FXML
   private Button addToExisting;
   @FXML
@@ -88,7 +87,6 @@ public class GuiController {
   private final static int DRAW_WIDTH = 45;
   private double tileHeight = 65;
   private double tileWidth = 45;
-  private Integer nextPlayerID = 0;
   private ImageView tile = new ImageView();
   private ImageView joker = new ImageView();
   private HBox boardComb = new HBox();
@@ -530,7 +528,8 @@ public class GuiController {
    * gets called if its this player's turn, enables Button control.
    */
   public void enableControl() {
-    enter.setDisable(false); //TODO alle buttons in liste packen -> enablen disablen durchiterieren.
+
+    enter.setDisable(false);
     cancelSelection.setDisable(false);
     addToExisting.setDisable(false);
     placeOnBoard.setDisable(false);
@@ -551,7 +550,14 @@ public class GuiController {
         iView.setDisable(false);
       }
     }
-
+    AudioClip notification = null;
+    try {
+      notification = new AudioClip(getClass().getResource("/audio/ding.mp3").toURI().toString());
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    notification.setVolume(0.3);
+    notification.play();
   }
 
   /**
@@ -976,6 +982,8 @@ public class GuiController {
     mediaPlayer.play();
   }
 
+
+
   @FXML
   private void handleMute(MouseEvent event) {
     if (!mediaPlayer.isMute()) {
@@ -1008,6 +1016,7 @@ public class GuiController {
 
   public void closeGame() {
     this.stage.close();
+    mediaPlayer.stop();
     Alert alert = new Alert(AlertType.CONFIRMATION,
         "Another Player quit the game!", ButtonType.OK);
     alert.showAndWait();
