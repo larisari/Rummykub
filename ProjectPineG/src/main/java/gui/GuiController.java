@@ -479,10 +479,6 @@ public class GuiController {
 
   }
 
-  // private void resizeTiles(){
-  //   if (board.get)
-  // }
-
   /**
    * Checks if all combinations on the main board are valid.
    *

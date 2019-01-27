@@ -67,13 +67,17 @@ public class Client extends Thread {
                       ClientParser.parseForController(msg);
 
                     } else {
-                      running = false;
+                      socket.close();
                       in.close();
                       out.close();
+                      running = false;
+                      log.info("Thread running false gesetzt.");
+
                     }
                   } catch (IOException e) {
-                    currentThread().interrupt();
-                    e.printStackTrace();
+                    log.info("[Client] Habe Verbindung zum Server verloren....");
+                    running = false;
+                    System.exit(0);
                   }
                 }
               }

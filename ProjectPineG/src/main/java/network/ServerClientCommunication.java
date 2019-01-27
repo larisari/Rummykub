@@ -7,56 +7,59 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.logging.Logger;
 
 public class ServerClientCommunication extends Thread {
 
+  private static Logger log = Logger.getLogger(ServerClientCommunication.class.getName());
   private final DataInputStream in;
   private final DataOutputStream out;
   private final Socket s;
   private final int clientID;
-  private static Logger log = Logger.getLogger(ServerClientCommunication.class.getName());
 
-
-  public ServerClientCommunication(Socket s, DataInputStream in, DataOutputStream out, int clientID) {
+  public ServerClientCommunication(
+      Socket s, DataInputStream in, DataOutputStream out, int clientID) {
     this.in = in;
     this.out = out;
     this.s = s;
     this.clientID = clientID;
   }
 
-  public int getClientID(){
+  public int getClientID() {
     return this.clientID;
   }
 
-  /**
-   * starts Thread, which listens for incoming messages of all connected clients.
-   */
+  /** starts Thread, which listens for incoming messages of all connected clients. */
   @Override
   public void run() {
 
-    while (true && s.isConnected()) {
+    while (!s.isClosed()) {
       String received = null;
+      log.info("[Server] Client " + clientID + " is connected: " + s.isConnected());
 
       try {
         received = in.readUTF();
-        //System.out.println("[Server] Nachricht von " + clientID + "erhalten:" + received);
-        log.info("[Server] Nachricht von " + clientID + "erhalten:" + received);
 
+        log.info("[Server] Nachricht von " + clientID + "erhalten:" + received);
 
         ServerParser.getStringIntoServerParser(received, clientID);
         log.info("[Server] Habe die Nachricht an den Serverparser übergeben....");
 
-
       } catch (IOException e) {
-        e.printStackTrace();
-        log.info("No inputconnection to client: " + clientID);
+        log.info("SEERVER CLIEEENT COMMUNICATIOOON ............");
+
+        // e.printStackTrace();
+        log.info("[Server] Client " + clientID + " hat die Verbindung getrennt");
+        disconnectClient();
+        log.info("[Server] Habe Client disconnected.");
         Thread.currentThread().interrupt();
+        log.info("Thread wurde gestoppt");
 
+        log.info("[Server] an alle noch verbundenen Clients RESTART Programm gefordert...........");
 
-        //TODO
-        //was soll passieren, wenn Client-Verbindung trennt. -> Programm restart?
-        //alle in startingScreen zurück, server "löschen"
+        Server.broadcastToAllClients("Restart");
+
 
       }
     }
@@ -64,27 +67,37 @@ public class ServerClientCommunication extends Thread {
 
   /**
    * Server sends message to Client.
+   *
    * @param message server-message to client.
    */
   public void sendMessageToClient(String message) {
     String messageToClient = message;
-    try {
-
-      out.writeUTF(messageToClient);
-      log.info("[Server] Nachricht an Client " + clientID + " geschickt.");
-    } catch (IOException e) {
-      e.printStackTrace();
+    if (s.isConnected()) {
+      try {
+        out.writeUTF(messageToClient);
+        log.info("[Server] Nachricht an Client " + clientID + " geschickt.");
+      } catch (SocketException e) {
+        log.info(
+            "[Server] Übermitteln der Nachricht an "
+                + clientID
+                + " klappt nicht, da Client bereits die Verbindung getrennt hat.");
+      } catch (IOException io) {
+        io.printStackTrace();
+      }
     }
   }
 
-  /**
-   * Disconnection with a client.
-   */
+  /** Disconnection with a client. */
   public void disconnectClient() {
     try {
-      in.close();
-      out.close();
-      s.close();
+      this.in.close();
+      log.info("CLient in InputStream geschlossen");
+      this.out.close();
+      log.info("CLient in OutputStream geschlossen");
+      this.s.close();
+      log.info("is Client Socket closed?!?  " + s.isClosed());
+
+
     } catch (IOException e) {
       e.printStackTrace();
     }
