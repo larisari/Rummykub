@@ -1,9 +1,6 @@
 package gui;
 
-import gui.util.Image;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,11 +11,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -36,7 +30,6 @@ public class LoadingScreenController {
   private ClientParser parser = new ClientParser(this);
   private int playerID = 0;
   private Stage startingStage = new Stage();
-  private MediaPlayer mediaPlayer;
 
   public LoadingScreenController(){
     parser = new ClientParser(this);
@@ -163,35 +156,6 @@ public class LoadingScreenController {
     }
   }
 
-  public void playMusic(){
-    Media media = null;
-    try {
-      media = new Media(getClass().getResource("/audio/lobbyMusic.mp3").toURI().toString());
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
-    mediaPlayer = new MediaPlayer(media);
-    mediaPlayer.play();
-  }
 
 
-  @FXML
-  private void handleMute(MouseEvent event) {
-    if (!mediaPlayer.isMute()) {
-      mediaPlayer.setMute(true);
-      ImageView iView = (ImageView) event.getSource();
-      URL url = this.getClass().getResource("/images/mute.png");
-      String urlString = url.toString();
-      Image unmute = new Image(urlString);
-      iView.setImage(unmute);
-    } else {
-      mediaPlayer.setMute(false);
-      ImageView iView = (ImageView) event.getSource();
-      URL url = this.getClass().getResource("/images/unmute.png");
-      String urlString = url.toString();
-      Image unmute = new Image(urlString);
-      iView.setImage(unmute);
-    }
-
-  }
 }
