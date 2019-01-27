@@ -67,11 +67,8 @@ public class ClientParser {
       case "Restart":
         Platform.runLater(
                 () -> {
-                  try {
                     guiController.closeGame();
-                  } catch (IOException e) {
-                    e.printStackTrace();
-                  }
+
                 });
 
         break;
