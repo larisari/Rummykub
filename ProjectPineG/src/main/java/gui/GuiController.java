@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -235,10 +234,12 @@ public class GuiController {
   }
 
   private void moveToSelectionBoard(){
+    int boxSpacing = 8;
+    int maxSelBoardWidth = 653;
     List<ImageView> sTiles = new ArrayList<>();
     HBox comb = new HBox();
-    comb.prefHeight(MAX_BOXHEIGHT);
-    comb.prefWidth(selectedTiles.size() * MAX_BOXWIDTH);
+    comb.setMaxWidth(MAX_BOXHEIGHT);
+    comb.setMaxWidth(selectedTiles.size() * MAX_BOXWIDTH);
     for (ImageView tile : selectedTiles) {
       sTiles.add(tile);
       comb.getChildren().add(tile);
@@ -246,24 +247,29 @@ public class GuiController {
     selectionBoard.getChildren().add(comb);
     selectedCombinations.add(sTiles);
     //TODO selection board intersecting with placeSelection button.
-    HBox lastComb = (HBox)selectionBoard.getChildren().get(selectionBoard.getChildren().size()-1);
-    Bounds lastCombBounds = lastComb.localToScene(lastComb.getBoundsInLocal());
-    Bounds placeBtn = placeOnBoard.localToScene(placeOnBoard.getBoundsInLocal());
+    int counter = 0;
+for (int i = 0; i < selectionBoard.getChildren().size(); i++){
+  HBox box = (HBox)selectionBoard.getChildren().get(i);
+  counter += box.getChildren().size()*DRAW_WIDTH + boxSpacing;
+}
+    System.out.println(counter + "totalwidth");
+if (counter >= maxSelBoardWidth) {
+  HBox lastComb = (HBox)selectionBoard.getChildren().get(selectionBoard.getChildren().size()-1);
+    System.out.println("selectionboard full");
+    for (int i = lastComb.getChildren().size() - 1; i >= 0; i--) {
+      ImageView iView = (ImageView) lastComb.getChildren().get(i);
+      if (topHand.getChildren().size() <= HAND_SPACE) {
+        topHand.getChildren().add(iView);
+      } else if (bottomHand.getChildren().size() <= HAND_SPACE) {
+        bottomHand.getChildren().add(iView);
 
-//if (lastCombBounds.getMaxX() > 580){
-      for (int i = lastComb.getChildren().size()-1; i >= 0; i--){
-        ImageView iView = (ImageView)lastComb.getChildren().get(i);
-        if (topHand.getChildren().size() <= HAND_SPACE) {
-          topHand.getChildren().add(iView);
-        } else if (bottomHand.getChildren().size() <= HAND_SPACE) {
-          bottomHand.getChildren().add(iView);
-
-        }
-        lastComb.getChildren().remove(iView);
-        selectionBoard.getChildren().remove(lastComb);
-        selectedCombinations.remove(sTiles);
       }
-  //  }
+      lastComb.getChildren().remove(iView);
+      selectionBoard.getChildren().remove(lastComb);
+      selectedCombinations.remove(sTiles);
+    }
+
+}
     cancelSelEffect();
   }
 
