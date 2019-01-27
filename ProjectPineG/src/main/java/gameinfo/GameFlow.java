@@ -9,12 +9,12 @@ import gameinfo.util.GITuple;
 import java.util.*;
 
 class GameFlow {
-  private Map<Integer, Player> players;
-  private GameState state;
-  private int distributionCounter;
-  private List<Integer> playerSequence;
-  private Integer currentPlayerIndex;
-  private PointsCalculator calculator;
+    private Map<Integer, Player> players;
+    private GameState state;
+    private int distributionCounter;
+    private List<Player> playerSequence;
+    private Integer currentPlayerIndex;
+    private PointsCalculator calculator;
 
   /**
    * The one and only constructor of an GameFlow object only gets a
@@ -33,7 +33,7 @@ class GameFlow {
   }
 
   Integer getStartingPlayerId() {
-    return playerSequence.get(0);
+    return playerSequence.get(currentPlayerIndex).getId();
   }
 
   /**
@@ -46,8 +46,7 @@ class GameFlow {
    */
   void registerBy(Integer id) {
     players.put(id, new Player(id, calculator));
-    playerSequence.add(id);
-    Collections.sort(playerSequence);
+    playerSequence.add(players.get(id));
   }
 
   /**
@@ -58,7 +57,7 @@ class GameFlow {
    */
   void deregisterBy(Integer id) {
     players.remove(id);
-    playerSequence.remove(id);
+    playerSequence.remove(players.get(id));
   }
 
   /**
@@ -76,6 +75,7 @@ class GameFlow {
    * state, each player can draw stacks from the bag.
    */
   void startGame() {
+    Collections.sort(playerSequence);
     this.state = GameState.distributing;
   }
 
@@ -117,7 +117,7 @@ class GameFlow {
    * @return the current player's id.
    */
   Integer getCurrentPlayerId() {
-    return playerSequence.get(currentPlayerIndex);
+    return playerSequence.get(currentPlayerIndex).getId();
   }
 
   /**
@@ -126,9 +126,9 @@ class GameFlow {
    */
   Integer getNextPlayerID() {
     if (currentPlayerIndex < playerSequence.size() - 1) {
-      return playerSequence.get(currentPlayerIndex + 1);
+      return playerSequence.get(currentPlayerIndex + 1).getId();
     } else {
-      return playerSequence.get(0);
+      return playerSequence.get(0).getId();
     }
   }
 
@@ -141,7 +141,7 @@ class GameFlow {
     } else {
       currentPlayerIndex = 0;
     }
-    Integer currentPlayerId = playerSequence.get(currentPlayerIndex);
+    Integer currentPlayerId = playerSequence.get(currentPlayerIndex).getId();
     players.get(currentPlayerId).resetMadeMove();
   }
 
