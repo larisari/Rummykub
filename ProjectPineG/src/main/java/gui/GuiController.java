@@ -1008,6 +1008,13 @@ public class GuiController {
 
   public void closeGame() {
     this.stage.close();
+    Alert alert = new Alert(AlertType.CONFIRMATION,
+        "Another Player quit the game!", ButtonType.OK);
+    alert.showAndWait();
+
+    if (alert.getResult() == ButtonType.YES) {
+      return;
+    }
   }
 
   public void openLobby() throws IOException{
