@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="800.0" prefWidth="1238.0" style="-fx-background-color: #6BDCF3#6BDCF3;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.EndScreenController">
+   <children>
+      <ImageView fitHeight="715.0" fitWidth="965.0" layoutX="116.0" layoutY="35.0" opacity="0.71">
+         <image>
+            <Image url="@../../../Downloads/a0a2a5a0e2fe3b453639738cea9ef0fd.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="327.0" layoutY="79.0" text="You have won!" AnchorPane.leftAnchor="327.0" AnchorPane.rightAnchor="327.0">
+         <font>
+            <Font name="Franklin Gothic Medium" size="94.0" />
+         </font>
+      </Label>
+      <Label layoutX="481.0" layoutY="197.0" text="Congratulations!" AnchorPane.leftAnchor="481.0" AnchorPane.rightAnchor="481.0">
+         <font>
+            <Font name="Franklin Gothic Medium" size="39.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2" layoutX="288.0" layoutY="320.0" text="Player 2" AnchorPane.leftAnchor="288.0" AnchorPane.rightAnchor="869.0">
+         <font>
+            <Font name="Franklin Gothic Medium" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="player3" layoutX="288.0" layoutY="400.0" text="Player 3">
+         <font>
+            <Font name="Franklin Gothic Medium" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="player4" layoutX="288.0" layoutY="480.0" text="Player 4">
+         <font>
+            <Font name="Franklin Gothic Medium" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="player2Points" layoutX="816.0" layoutY="320.0" text="xy Points">
+         <font>
+            <Font name="Franklin Gothic Medium" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="player3Points" layoutX="816.0" layoutY="400.0" text="xy Points">
+         <font>
+            <Font name="Franklin Gothic Medium" size="23.0" />
+         </font>
+      </Label>
+      <Label fx:id="player4Points" layoutX="816.0" layoutY="480.0" text="xy Points">
+         <font>
+            <Font name="Franklin Gothic Medium" size="23.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
