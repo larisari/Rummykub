@@ -11,7 +11,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -27,6 +26,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -51,8 +51,6 @@ public class GuiController {
   private Button endTurn;
   @FXML
   private Button cancelSelection;
-  @FXML
-  private Button manipulate;
   @FXML
   private Button addToExisting;
   @FXML
@@ -88,7 +86,6 @@ public class GuiController {
   private final static int DRAW_WIDTH = 45;
   private double tileHeight = 65;
   private double tileWidth = 45;
-  private Integer nextPlayerID = 0;
   private ImageView tile = new ImageView();
   private ImageView joker = new ImageView();
   private HBox boardComb = new HBox();
@@ -188,8 +185,7 @@ public class GuiController {
     Optional<ButtonType> result = alert.showAndWait();
 
     if (result.isPresent() && result.get() == yes) {
-      parser.clientExit();
-      Platform.exit();
+      System.exit(0);
     }
   }
 
@@ -238,10 +234,12 @@ public class GuiController {
   }
 
   private void moveToSelectionBoard(){
+    int boxSpacing = 8;
+    int maxSelBoardWidth = 653;
     List<ImageView> sTiles = new ArrayList<>();
     HBox comb = new HBox();
-    comb.prefHeight(MAX_BOXHEIGHT);
-    comb.prefWidth(selectedTiles.size() * MAX_BOXWIDTH);
+    comb.setMaxWidth(MAX_BOXHEIGHT);
+    comb.setMaxWidth(selectedTiles.size() * MAX_BOXWIDTH);
     for (ImageView tile : selectedTiles) {
       sTiles.add(tile);
       comb.getChildren().add(tile);
@@ -249,24 +247,29 @@ public class GuiController {
     selectionBoard.getChildren().add(comb);
     selectedCombinations.add(sTiles);
     //TODO selection board intersecting with placeSelection button.
-    HBox lastComb = (HBox)selectionBoard.getChildren().get(selectionBoard.getChildren().size()-1);
-    System.out.println(selectionBoard.getBoundsInParent().getWidth()+ "parentwidth");
-    System.out.println(selectionBoard.getBoundsInLocal().getWidth() + "localwidth");
-    if (lastComb.intersects(lastComb.sceneToLocal(placeOnBoard.localToScene(placeOnBoard.getBoundsInLocal())))){
+    int counter = 0;
+for (int i = 0; i < selectionBoard.getChildren().size(); i++){
+  HBox box = (HBox)selectionBoard.getChildren().get(i);
+  counter += box.getChildren().size()*DRAW_WIDTH + boxSpacing;
+}
+    System.out.println(counter + "totalwidth");
+if (counter >= maxSelBoardWidth) {
+  HBox lastComb = (HBox)selectionBoard.getChildren().get(selectionBoard.getChildren().size()-1);
+    System.out.println("selectionboard full");
+    for (int i = lastComb.getChildren().size() - 1; i >= 0; i--) {
+      ImageView iView = (ImageView) lastComb.getChildren().get(i);
+      if (topHand.getChildren().size() <= HAND_SPACE) {
+        topHand.getChildren().add(iView);
+      } else if (bottomHand.getChildren().size() <= HAND_SPACE) {
+        bottomHand.getChildren().add(iView);
 
-      for (int i = lastComb.getChildren().size()-1; i >= 0; i--){
-        ImageView iView = (ImageView)lastComb.getChildren().get(i);
-        if (topHand.getChildren().size() <= HAND_SPACE) {
-          topHand.getChildren().add(tile);
-        } else if (bottomHand.getChildren().size() <= HAND_SPACE) {
-          bottomHand.getChildren().add(tile);
-
-        }
-        lastComb.getChildren().remove(iView);
-        selectionBoard.getChildren().remove(lastComb);
-        selectedCombinations.remove(sTiles);
       }
+      lastComb.getChildren().remove(iView);
+      selectionBoard.getChildren().remove(lastComb);
+      selectedCombinations.remove(sTiles);
     }
+
+}
     cancelSelEffect();
   }
 
@@ -530,7 +533,8 @@ public class GuiController {
    * gets called if its this player's turn, enables Button control.
    */
   public void enableControl() {
-    enter.setDisable(false); //TODO alle buttons in liste packen -> enablen disablen durchiterieren.
+
+    enter.setDisable(false);
     cancelSelection.setDisable(false);
     addToExisting.setDisable(false);
     placeOnBoard.setDisable(false);
@@ -551,7 +555,14 @@ public class GuiController {
         iView.setDisable(false);
       }
     }
-
+    AudioClip notification = null;
+    try {
+      notification = new AudioClip(getClass().getResource("/audio/ding.mp3").toURI().toString());
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    notification.setVolume(0.3);
+    notification.play();
   }
 
   /**
@@ -976,6 +987,8 @@ public class GuiController {
     mediaPlayer.play();
   }
 
+
+
   @FXML
   private void handleMute(MouseEvent event) {
     if (!mediaPlayer.isMute()) {
@@ -1008,6 +1021,14 @@ public class GuiController {
 
   public void closeGame() {
     this.stage.close();
+    mediaPlayer.stop();
+    Alert alert = new Alert(AlertType.CONFIRMATION,
+        "Another Player quit the game!", ButtonType.OK);
+    alert.showAndWait();
+
+    if (alert.getResult() == ButtonType.YES) {
+      return;
+    }
   }
 
   public void openLobby() throws IOException{
@@ -1036,6 +1057,8 @@ public class GuiController {
 
     if (result.isPresent() && result.get() == no) {
       event.consume();
+    } else if (result.isPresent() && result.get() == yes){
+      System.exit(0);
     }
   }
 

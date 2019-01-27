@@ -152,7 +152,7 @@ public class LoadingScreenController {
     if (result.isPresent() && result.get() == no) {
       event.consume();
     } else if (result.isPresent() && result.get() == yes){
-      parser.clientExit();
+      System.exit(0);
     }
   }
 }

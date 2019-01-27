@@ -1,6 +1,6 @@
 package network;
 
-import com.sun.tools.javac.util.FatalError;
+//import com.sun.tools.javac.util.FatalError;
 import gameinfo.util.GIColor;
 import gameinfo.util.GINumber;
 import gameinfo.util.GIPoints;
@@ -153,11 +153,13 @@ public class ServerParser {
     String points = "";
     List<GITuple<Integer, GIPoints>> tempList = list.get();
     for(int i = 0; i < tempList.size(); i++){
+      System.out.println(tempList.get(i).getSecond().value());
       points += tempList.get(i).getSecond().value();
       if(i != tempList.size()-1) {
         points += ",";
       }
     }
+    System.out.println(points + "PARSED FROM GIPOINTS TO STRING");
     return points;
   }
 
@@ -235,7 +237,7 @@ public class ServerParser {
           tileColor = GIColor.JOKER;
           break;
         default:
-          throw new FatalError("SOMETHING WENT DEEPLY WRONG " + tileColor);
+        //  throw new FatalError("SOMETHING WENT DEEPLY WRONG " + tileColor);
       }
 
       switch (number) {
@@ -282,7 +284,7 @@ public class ServerParser {
           tileNumber = GINumber.JOKER;
           break;
         default:
-          throw new FatalError("SOMETHING WENT DEEPLY WRONG " + tileColor);
+      //    throw new FatalError("SOMETHING WENT DEEPLY WRONG " + tileColor);
       }
       GITile tile = new GITile(tileNumber, tileColor);
       tileList.add(tile);

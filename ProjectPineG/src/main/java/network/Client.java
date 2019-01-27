@@ -3,9 +3,7 @@ package network;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ConnectException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
 public class Client extends Thread {
@@ -24,11 +22,11 @@ public class Client extends Thread {
    * @param ip address of the server, a client wants to connect to.
    */
   public Client(String ip) throws IOException {
-      this.socket = new Socket(ip, PORT);
-      in = new DataInputStream(socket.getInputStream());
-      out = new DataOutputStream(socket.getOutputStream());
-      log.info("[Client] wurde erstellt. In-/Outputstreams geöffnet.");
-      this.startListening();
+    this.socket = new Socket(ip, PORT);
+    in = new DataInputStream(socket.getInputStream());
+    out = new DataOutputStream(socket.getOutputStream());
+    log.info("[Client] wurde erstellt. In-/Outputstreams geöffnet.");
+    this.startListening();
   }
 
   /**
@@ -72,12 +70,18 @@ public class Client extends Thread {
                       out.close();
                       running = false;
                       log.info("Thread running false gesetzt.");
-
                     }
                   } catch (IOException e) {
                     log.info("[Client] Habe Verbindung zum Server verloren....");
                     running = false;
-                    System.exit(0);
+                 //   GuiController tmp = new GuiController();
+                 //   tmp.closeGame();
+             //       try {
+                 //   tmp.openLobby();
+                  //  } catch (IOException ex) {
+                  //    ex.printStackTrace();
+                  //  }
+                    System.exit(0); //-> falls Lobby nicht funktioniert.
                   }
                 }
               }

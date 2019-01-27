@@ -58,7 +58,12 @@ public class ServerClientCommunication extends Thread {
 
         log.info("[Server] an alle noch verbundenen Clients RESTART Programm gefordert...........");
 
-        Server.broadcastToAllClients("Restart");
+        for (int i = 0; i < ServerListener.getClients().size(); i++) {
+          if (i != clientID) {
+            ServerListener.getClients().get(i).sendMessageToClient("Restart");
+          }
+        }
+
 
 
       }
