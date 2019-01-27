@@ -69,7 +69,7 @@ public class ServerParser {
         }
         int clientID = Server.gameInfo.getStartingPlayerId();
         clients.get(clientID).sendMessageToClient("itsYourTurn");
-        Server.broadcastToAllClients("UpdateCurrentPlayerTurn|" + Server.gameInfo.getCurrentPlayerId());
+        Server.broadcastToAllClients("UpdateCurrentPlayerTurn|" + Server.gameInfo.getStartingPlayerId());
 
         break;
 

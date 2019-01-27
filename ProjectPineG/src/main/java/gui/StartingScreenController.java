@@ -152,6 +152,7 @@ public class StartingScreenController {
       LoadingScreenController lController = loader.getController();
       lController.setPlayerID(playerID);
       lController.setStartingStage(this.stage);
+      lController.playMusic();
     }
 
     private boolean validAge (String age){
