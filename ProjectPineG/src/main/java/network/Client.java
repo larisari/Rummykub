@@ -1,13 +1,9 @@
 package network;
 
-import gui.GuiController;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.net.ConnectException;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.logging.Logger;
 
 public class Client extends Thread {
@@ -78,14 +74,14 @@ public class Client extends Thread {
                   } catch (IOException e) {
                     log.info("[Client] Habe Verbindung zum Server verloren....");
                     running = false;
-                    GuiController tmp = new GuiController();
-                    tmp.closeGame();
-                    try {
-                      tmp.openLobby();
-                    } catch (IOException ex) {
-                      ex.printStackTrace();
-                    }
-                    // System.exit(0); -> falls Lobby nicht funktioniert.
+                 //   GuiController tmp = new GuiController();
+                 //   tmp.closeGame();
+             //       try {
+                 //   tmp.openLobby();
+                  //  } catch (IOException ex) {
+                  //    ex.printStackTrace();
+                  //  }
+                    System.exit(0); //-> falls Lobby nicht funktioniert.
                   }
                 }
               }

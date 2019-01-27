@@ -11,9 +11,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -186,8 +186,7 @@ public class GuiController {
     Optional<ButtonType> result = alert.showAndWait();
 
     if (result.isPresent() && result.get() == yes) {
-      parser.clientExit();
-      Platform.exit();
+      System.exit(0);
     }
   }
 
@@ -248,23 +247,23 @@ public class GuiController {
     selectedCombinations.add(sTiles);
     //TODO selection board intersecting with placeSelection button.
     HBox lastComb = (HBox)selectionBoard.getChildren().get(selectionBoard.getChildren().size()-1);
-    System.out.println(selectionBoard.getBoundsInParent().getWidth()+ "parentwidth");
-    System.out.println(selectionBoard.getBoundsInLocal().getWidth() + "localwidth");
-    if (lastComb.intersects(lastComb.sceneToLocal(placeOnBoard.localToScene(placeOnBoard.getBoundsInLocal())))){
+    Bounds lastCombBounds = lastComb.localToScene(lastComb.getBoundsInLocal());
+    Bounds placeBtn = placeOnBoard.localToScene(placeOnBoard.getBoundsInLocal());
 
+//if (lastCombBounds.getMaxX() > 580){
       for (int i = lastComb.getChildren().size()-1; i >= 0; i--){
         ImageView iView = (ImageView)lastComb.getChildren().get(i);
         if (topHand.getChildren().size() <= HAND_SPACE) {
-          topHand.getChildren().add(tile);
+          topHand.getChildren().add(iView);
         } else if (bottomHand.getChildren().size() <= HAND_SPACE) {
-          bottomHand.getChildren().add(tile);
+          bottomHand.getChildren().add(iView);
 
         }
         lastComb.getChildren().remove(iView);
         selectionBoard.getChildren().remove(lastComb);
         selectedCombinations.remove(sTiles);
       }
-    }
+  //  }
     cancelSelEffect();
   }
 
@@ -1052,6 +1051,8 @@ public class GuiController {
 
     if (result.isPresent() && result.get() == no) {
       event.consume();
+    } else if (result.isPresent() && result.get() == yes){
+      System.exit(0);
     }
   }
 
