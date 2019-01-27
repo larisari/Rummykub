@@ -306,6 +306,7 @@ public class GuiController {
     endTurn.setDisable(false);
     updateBoard();
     disableTiles(combination); //löscht auch tiles aus selectedTiles
+    enableTilesOnBoard();
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       parser.getPlayerPoints();
       parser.notifyWin();
@@ -578,26 +579,16 @@ public class GuiController {
     selectedTiles.clear();
   }
 
-  /**
-   * Handles "Manipulate" event.
-   *
-   * @param event - onMouseClicked event if user presses "Manipulate Tiles" button.
-   */
-  @FXML
-  protected void handleManipulate(MouseEvent event) {
-//if first turn do not allow
-    enableTilesOnBoard();
-  }
 
   /**
-   * Disables all tiles on the main board.
+   * Enables all tiles on the main board.
    */
   private void enableTilesOnBoard() {
     for (int i = 0; i < board.getChildren().size(); i++) {
       HBox box = (HBox) board.getChildren().get(i);
       for (int j = 0; j < box.getChildren().size(); j++) {
         ImageView tile = (ImageView) box.getChildren().get(j);
-        onTileClicked(tile);
+        tile.setDisable(false);
       }
     }
   }
@@ -614,12 +605,10 @@ public class GuiController {
             tile.setStyle("-fx-translate-y: -15;");
             TileView.highlightTile(tile);
             selectedTiles.add(tile);
-            tile.setDisable(false);
           } else {
             tile.setStyle("-fx-translate-y: 0");
             tile.setEffect(null);
             selectedTiles.remove(tile);
-            tile.setDisable(false);
           }
         });
   }
@@ -716,7 +705,7 @@ public class GuiController {
 
     endTurn.setDisable(false);
     bag.setDisable(true);
-    disableTiles(selectedTiles); //cleart auch selectedTiles
+    cancelSelEffect();
     updateBoard();
 
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
@@ -772,7 +761,7 @@ public class GuiController {
       boardComb.getChildren().add(boardComb.getChildren().size(), tile);
     }
 
-    disableTiles(selectedTiles);
+    cancelSelEffect();
     updateBoard();
     endTurn.setDisable(false);
     bag.setDisable(true);
