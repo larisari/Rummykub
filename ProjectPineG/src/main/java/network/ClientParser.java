@@ -1,6 +1,7 @@
 package network;
 
 import gui.*;
+import gui.LoseScreenController;
 import javafx.application.Platform;
 import javafx.scene.image.ImageView;
 

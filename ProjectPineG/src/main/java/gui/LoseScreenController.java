@@ -8,9 +8,16 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import network.ClientParser;
 
-public class LoseScreenController {
-  @FXML private Label player1LoserName;
-  @FXML private Label player2LoserName;
+/**
+ * Controller for loserScreen.fxml, handles mouse events and other user input for this fxml file.
+ * Communicates with network via ClientParser.
+ */
+public class LoseScreenController extends EndScreen {
+
+  @FXML
+  private Label player1LoserName;
+  @FXML
+  private Label player2LoserName;
   @FXML
   private Label player3LoserName;
   @FXML
@@ -32,25 +39,30 @@ public class LoseScreenController {
   private ClientParser parser;
   private MediaPlayer mediaPlayer;
 
-
+  /**
+   * Initialises ClientParser for communication between network and gui.
+   */
   public LoseScreenController() {
     parser = new ClientParser(this);
   }
 
-  public void setNumberOfPlayers(Integer numberOfPlayers){
+
+  void setNumberOfPlayers(Integer numberOfPlayers) {
     this.numberOfPlayers = numberOfPlayers;
   }
 
-  public void setID(Integer ID){
+  /**
+   * Gets called from GuiController to forward playerID.
+   *
+   * @param ID - this gui's client id.
+   */
+  void setID(Integer ID) {
     this.playerID = ID;
   }
 
-  //wird nie gecalled?
-  public void setPlayerPoints(List<Integer> points) {
-    //TODO sout weg
-    for (Integer i : points){
-      System.out.println(i);
-    }
+
+  void setPlayerPoints(List<Integer> points) {
+
     switch (points.size()) {
       case 2:
         p1Points = points.get(0);
@@ -70,8 +82,10 @@ public class LoseScreenController {
 
     }
   }
-  public void setPointsNamesVisible(){
-    //klappt noch nicht ganz
+
+
+  void setPointsNamesVisible() {
+
     switch (numberOfPlayers) {
       case 2:
         Loserp3Points.setVisible(false);
@@ -92,10 +106,11 @@ public class LoseScreenController {
 
   }
 
+
   void setPoints2Players() {
     Loserp1Points.setText(p1Points + " Points");
     Loserp2Points.setText(p2Points + " Points");
-    switch (playerID){
+    switch (playerID) {
       case 0:
         player1LoserName.setText("You");
         break;
@@ -105,11 +120,12 @@ public class LoseScreenController {
     }
   }
 
+
   void setPoints3Players() {
     Loserp1Points.setText(p1Points + " Points");
     Loserp2Points.setText(p2Points + " Points");
     Loserp3Points.setText(p3Points + " Points");
-    switch (playerID){
+    switch (playerID) {
       case 0:
         player1LoserName.setText("You");
         break;
@@ -122,12 +138,13 @@ public class LoseScreenController {
     }
   }
 
+
   void setPoints4Players() {
     Loserp1Points.setText(p1Points + " Points");
     Loserp2Points.setText(p2Points + " Points");
     Loserp3Points.setText(p3Points + " Points");
     Loserp4Points.setText(p4Points + " Points");
-    switch (playerID){
+    switch (playerID) {
       case 0:
         player1LoserName.setText("You");
         break;
@@ -142,7 +159,9 @@ public class LoseScreenController {
         break;
     }
   }
-  public void playMusic(){
+
+
+  void playMusic() {
     Media media = null;
     try {
       media = new Media(getClass().getResource("/audio/wahwahfail.mp3").toURI().toString());
