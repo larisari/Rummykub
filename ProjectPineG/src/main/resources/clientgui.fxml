@@ -198,7 +198,7 @@
                   </Tooltip>
                </tooltip>
             </Button>
-            <Button fx:id="placeOnBoard" accessibleRole="PARENT" alignment="CENTER" layoutX="857.0" layoutY="592.0" mnemonicParsing="false" onMouseClicked="#handleplaceOnBoard" prefHeight="66.0" prefWidth="200.0" styleClass="placeSelection" text="Place Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="138.0">
+            <Button fx:id="placeOnBoard" accessibleRole="PARENT" alignment="CENTER" layoutX="857.0" layoutY="592.0" mnemonicParsing="false" onMouseClicked="#handlePlaceOnBoard" prefHeight="66.0" prefWidth="200.0" styleClass="placeSelection" text="Place Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="138.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>

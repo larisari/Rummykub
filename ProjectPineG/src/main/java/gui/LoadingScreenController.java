@@ -18,8 +18,8 @@ import javafx.stage.WindowEvent;
 import network.ClientParser;
 
 /**
- * Controller for loadingScreen.fxml, handles mouse events and other user input for this fxml file.
- * Communicates with network via ClientParser.
+ * Controller for loading screen, handles mouse events and other user input for loadingScreen.fxml
+ * file. Communicates with network via ClientParser.
  */
 public class LoadingScreenController {
 
@@ -160,14 +160,13 @@ public class LoadingScreenController {
 
 
   }
-
   /**
    * Opens confirmation alert if user tries to exit application by pressing "x". If user confirms
    * exit, the application is exited.
    *
    * @param event - WindowEvent if user presses "x" icon.
    */
-  private void closeWindowEvent(WindowEvent event) {
+  public void closeWindowEvent(WindowEvent event) {
     ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
     ButtonType no = new ButtonType("No",
         ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -181,6 +180,5 @@ public class LoadingScreenController {
       System.exit(0);
     }
   }
-
 
 }

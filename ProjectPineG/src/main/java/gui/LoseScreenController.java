@@ -9,7 +9,7 @@ import javafx.scene.media.MediaPlayer;
 import network.ClientParser;
 
 /**
- * Controller for loserScreen.fxml, handles mouse events and other user input for this fxml file.
+ * Controller for loser screen, handles mouse events and other user input for loserScreen.fxml file.
  * Communicates with network via ClientParser.
  */
 public class LoseScreenController extends EndScreen {

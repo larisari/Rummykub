@@ -1,12 +1,15 @@
 package network;
 
-import gui.*;
+import gui.GuiController;
+import gui.LoadingScreenController;
 import gui.LoseScreenController;
-import javafx.application.Platform;
-import javafx.scene.image.ImageView;
-
+import gui.StartingScreenController;
+import gui.WinScreenController;
+import gui.util.ControllerUtil;
 import java.io.IOException;
 import java.util.List;
+import javafx.application.Platform;
+import javafx.scene.image.ImageView;
 
 /**
  * Clients Parser connects the controller with the Client-Server architecture and translates in
@@ -120,14 +123,11 @@ public class ClientParser {
         if (messageAsArray[1].equals("true")) {
           Platform.runLater(
               () -> {
-                try {
                   guiController.placeTiles();
-                } catch (IOException e) {
-                  e.printStackTrace();
-                }
               });
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.cancelSelEffect());
+          Platform.runLater(() -> ControllerUtil.invalidCombinations());
         }
         break;
 
@@ -135,14 +135,12 @@ public class ClientParser {
         if (messageAsArray[1].equals("true")) {
           Platform.runLater(
               () -> {
-                try {
                   guiController.moveTiles();
-                } catch (IOException e) {
-                  e.printStackTrace();
-                }
               });
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.cancelSelEffect());
+          Platform.runLater(() -> ControllerUtil.invalidCombinations());
+
         }
         break;
 
@@ -160,15 +158,12 @@ public class ClientParser {
           System.out.println("RESPONSE ADD BACK TRUE!");
           Platform.runLater(
               () -> {
-                try {
                   System.out.println("RESPONSE ADD BACK LAMBDA!");
                   guiController.allowAddBack();
-                } catch (IOException e) {
-                  e.printStackTrace();
-                }
               });
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.disallowAddTo());
+          Platform.runLater(() -> ControllerUtil.invalidCombinations());
           System.out.println("RESPONSE ADD BACK FALSE!");
         }
         break;
@@ -177,14 +172,12 @@ public class ClientParser {
         if (messageAsArray[1].equals("true")) {
           Platform.runLater(
               () -> {
-                try {
+
                   guiController.allowAddFront();
-                } catch (IOException e) {
-                  e.printStackTrace();
-                }
               });
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.disallowAddTo());
+          Platform.runLater(() -> ControllerUtil.invalidCombinations());
         }
         break;
 

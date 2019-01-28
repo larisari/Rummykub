@@ -9,8 +9,8 @@ import javafx.scene.media.MediaPlayer;
 import network.ClientParser;
 
 /**
- * Controller for winnerScreen.fxml, handles mouse events and other user input for this fxml file.
- * Communicates with network via ClientParser.
+ * Controller for winner screen, handles mouse events and other user input for winnerScreen.fxml
+ * file. Communicates with network via ClientParser.
  */
 public class WinScreenController extends EndScreen {
 

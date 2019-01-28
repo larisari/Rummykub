@@ -1,6 +1,6 @@
 package gui;
 
-import java.io.IOException;
+import java.util.Optional;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,14 +12,13 @@ import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
-import java.util.Optional;
-
 /**
  * Starts Application.
  */
 public class StartApp extends Application {
 
-  public StartApp() {
+
+public StartApp(){
 
   }
 
@@ -27,10 +26,10 @@ public class StartApp extends Application {
    * Loads starting screen.
    *
    * @param primaryStage - stage for starting screen.
-   * @throws IOException if some error occurs while loading fxml file.
+   * @throws Exception if some error occurs while loading fxml file.
    */
   @Override
-  public void start(Stage primaryStage) throws IOException {
+  public void start(Stage primaryStage) throws Exception {
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation(getClass().getResource("/startingScreen.fxml"));
     Parent root = loader.load();
@@ -44,15 +43,16 @@ public class StartApp extends Application {
     primaryStage.getScene().getWindow()
         .addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     controller.setStage(primaryStage);
+
   }
 
   /**
-   * Opens confirmation alert if user tries to exit application by pressing "x". Exits application
-   * if user confirms.
+   * Opens confirmation alert if user tries to exit application by pressing "x". If user confirms
+   * exit, the application is exited.
    *
    * @param event - WindowEvent if user presses "x" icon.
    */
-  private void closeWindowEvent(WindowEvent event) {
+  public void closeWindowEvent(WindowEvent event) {
     ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
     ButtonType no = new ButtonType("No",
         ButtonBar.ButtonData.CANCEL_CLOSE);

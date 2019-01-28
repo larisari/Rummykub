@@ -20,13 +20,14 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Pair;
 import network.Client;
 import network.ClientParser;
 import network.Server;
 
 /**
- * Controller for startingScreen.fxml, handles mouse events and other user input for this fxml
+ * Controller for starting screen, handles mouse events and other user input for startingScreen.fxml
  * file. Communicates with network via ClientParser.
  */
 public class StartingScreenController {
@@ -47,7 +48,7 @@ public class StartingScreenController {
    *
    * @param stage of starting screen.
    */
-  void setStage(Stage stage) {
+  public void setStage(Stage stage) {
     this.stage = stage;
   }
 
@@ -69,7 +70,7 @@ public class StartingScreenController {
         try {
           Client host = new Client("localhost");
         } catch (IOException e) {
-          event.consume();
+          return;
         }
         parser.setAgeFor(result.get());
 
@@ -158,11 +159,23 @@ public class StartingScreenController {
     Stage stage = new Stage();
     stage.initModality(Modality.APPLICATION_MODAL);
     stage.setScene(scene);
+    stage.getScene().getWindow()
+        .addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     stage.setResizable(false);
     stage.show();
     LoadingScreenController lController = loader.getController();
     lController.setPlayerID(playerID);
     lController.setStartingStage(this.stage);
+  }
+
+  /**
+   * Opens confirmation alert if user tries to exit application by pressing "x". If user confirms
+   * exit, the application is exited.
+   *
+   * @param event - WindowEvent if user presses "x" icon.
+   */
+  private void closeWindowEvent(WindowEvent event) {
+//parser.quitLobby();
   }
 
   /**
