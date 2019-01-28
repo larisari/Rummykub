@@ -34,7 +34,7 @@ public class ServerParser {
         Optional<GITuple<Integer, List<GITile>>> result = Server.gameInfo.drawBy(id);
         Optional<GITuple<Integer, List<List<GITile>>>> boardTiles = Server.gameInfo.finishedTurnBy(id);
         System.out.println(result.get());
-        if (result.isPresent()) {
+        if (result.isPresent() && boardTiles.isPresent()) {
 
           clients.get(id).sendMessageToClient("responseForDraw|" + parseTileToString(result.get().getSecond()));
           Server.broadcastToAllClients("responseForFinishedTurn|" + parseCombinationsToString(boardTiles.get().getSecond()));
