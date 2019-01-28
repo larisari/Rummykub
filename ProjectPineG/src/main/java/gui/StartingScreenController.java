@@ -39,7 +39,7 @@ public class StartingScreenController {
   }
 
 
-  public void setStage(Stage stage) {
+  void setStage(Stage stage) {
     this.stage = stage;
   }
 
@@ -96,7 +96,7 @@ public class StartingScreenController {
       dialog.getDialogPane().setContent(gridPane);
       dialog.setHeaderText("Please enter your hosts IP adress and your age!");
 
-      Platform.runLater(() -> adress.requestFocus());
+      Platform.runLater(adress::requestFocus);
 
       Optional<Pair<String, String>> result = dialog.showAndWait();
       if (result.isPresent()) {
@@ -152,7 +152,6 @@ public class StartingScreenController {
       LoadingScreenController lController = loader.getController();
       lController.setPlayerID(playerID);
       lController.setStartingStage(this.stage);
-      lController.playMusic();
     }
 
     private boolean validAge (String age){

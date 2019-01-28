@@ -14,7 +14,6 @@ import javafx.stage.WindowEvent;
 import java.util.Optional;
 
 public class StartApp extends Application {
-//private Host host;
 
 public StartApp(){
 
