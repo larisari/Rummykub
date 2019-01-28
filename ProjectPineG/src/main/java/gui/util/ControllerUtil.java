@@ -26,7 +26,7 @@ public class ControllerUtil {
 
   /**
    * Creates highlight effect for given node.
-   * @param node
+   * @param node - to be highlighted.
    */
   public static void highlightTile(Node node) {
     DropShadow borderGlow = new DropShadow();
@@ -112,9 +112,6 @@ public class ControllerUtil {
         + " please check again!", ButtonType.OK);
     alert.showAndWait();
 
-    if (alert.getResult() == ButtonType.YES) {
-
-    }
   }
 
 

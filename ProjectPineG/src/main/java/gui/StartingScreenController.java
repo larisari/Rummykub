@@ -176,6 +176,7 @@ public class StartingScreenController {
    */
   private void closeWindowEvent(WindowEvent event) {
 //parser.quitLobby();
+    //TODO aksdjflkasjdf
   }
 
   /**

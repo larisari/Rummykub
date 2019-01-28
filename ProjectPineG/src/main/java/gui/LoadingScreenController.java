@@ -166,7 +166,7 @@ public class LoadingScreenController {
    *
    * @param event - WindowEvent if user presses "x" icon.
    */
-  public void closeWindowEvent(WindowEvent event) {
+  private void closeWindowEvent(WindowEvent event) {
     ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
     ButtonType no = new ButtonType("No",
         ButtonBar.ButtonData.CANCEL_CLOSE);
