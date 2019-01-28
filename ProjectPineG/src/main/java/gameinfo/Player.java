@@ -5,18 +5,26 @@ import gameinfo.util.GITile;
 
 import java.util.List;
 
-class Player {
+class Player implements Comparable<Player> {
 
   private Hand hand;
   private Integer id;
   private boolean isFirstMove;
   private boolean moved;
+  private int age;
 
   Player(Integer id, PointsCalculator calculator) {
     this.hand = new Hand(calculator);
     this.id = id;
+    this.age = 0;
     isFirstMove = true;
   }
+
+  void setAge(int age) {
+    this.age = age;
+  }
+
+  int getAge() { return age; }
 
   boolean isFirstMove() {
     return isFirstMove;
@@ -62,5 +70,10 @@ class Player {
 
   GIPoints calculatePointsOfHand() {
     return hand.calculatePoints();
+  }
+
+  @Override
+  public int compareTo(Player player) {
+    return this.getAge() - player.getAge();
   }
 }

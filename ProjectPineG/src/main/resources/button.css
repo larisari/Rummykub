@@ -31,13 +31,13 @@
   -fx-background-color: radial-gradient(radius 250%, #FEC146, derive(#FEC146, -30%), derive(#FEC146, 30%));
 }
 
-.manipulate {
+.jokerBtn {
   -fx-background-color: radial-gradient(radius 250%, #F0E68C, derive(#F0E68C, -30%), derive(#F0E68C, 30%));
   -fx-border-color: #BDB76B;
   -fx-border-radius: 3%;
 }
 
-.manipulate:hover {
+.jokerBtn:hover {
   -fx-background-color: radial-gradient(radius 250%, #F0F2BB, derive(#F0F2BB, -30%), derive(#F0F2BB, 30%));
 }
 
@@ -51,10 +51,17 @@
   -fx-background-color: radial-gradient(radius 250%, #66E1FA, derive(#66E1FA, -30%), derive(#66E1FA, 30%));
 }
 
+.placeSelection {
+  -fx-background-color: radial-gradient(radius 250%, #D166FE, derive(#D166FE, -30%), derive(#D166FE, 30%));
+  -fx-border-color: #B201FE;
+  -fx-border-radius: 3%;
+}
+
+.placeSelection:hover {
+  -fx-background-color: radial-gradient(radius 250%, #DF96FE, derive(#DF96FE, -30%), derive(#DF96FE, 30%));
+}
+
 .tooltip {
   -fx-show-delay: 0s;
 }
 
-.placeSelection {
-
-}

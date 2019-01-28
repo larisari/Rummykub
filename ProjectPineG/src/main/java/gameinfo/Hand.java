@@ -30,7 +30,7 @@ class Hand {
 
   void removeTile(GITile tile) {
 //    log.info("Removed the tile " + tile + " from the players hand.");
-    tilesOnHand.remove(tile);
+    tilesOnHand.removeIf(i -> i.isEquals(tile));
   }
 
   List<GITile> getTilesOnHand() {

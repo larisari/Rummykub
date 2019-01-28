@@ -16,42 +16,17 @@ public class Client extends Thread {
   Socket socket;
   private String ip;
 
-  //  /**
-  //   * Client-constructor for Hoster
-  //   */
-  //  public Client() {
-  //
-  //    try {
-  //      this.socket = new Socket("127.0.0.1", PORT);
-  //
-  //      in = new DataInputStream(socket.getInputStream());
-  //      out = new DataOutputStream(socket.getOutputStream());
-  //      this.startListening();
-  //
-  //
-  //      log.info("[Host-Client] wurde erstellt. In-/Outputstreams geöffnet. ");
-  //    } catch (IOException e) {
-  //      e.printStackTrace();
-  //    }
-  //  }
-
   /**
    * Constructor to generate a Client, which connects to the Server.
    *
    * @param ip address of the server, a client wants to connect to.
    */
-  public Client(String ip) {
-    try {
-      this.socket = new Socket(ip, PORT);
-
-      in = new DataInputStream(socket.getInputStream());
-      out = new DataOutputStream(socket.getOutputStream());
-      log.info("[Client] wurde erstellt. In-/Outputstreams geöffnet.");
-      this.startListening();
-
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+  public Client(String ip) throws IOException {
+    this.socket = new Socket(ip, PORT);
+    in = new DataInputStream(socket.getInputStream());
+    out = new DataOutputStream(socket.getOutputStream());
+    log.info("[Client] wurde erstellt. In-/Outputstreams geöffnet.");
+    this.startListening();
   }
 
   /**
@@ -90,11 +65,26 @@ public class Client extends Thread {
                       ClientParser.parseForController(msg);
 
                     } else {
+                      socket.close();
+                      in.close();
+                      out.close();
                       running = false;
+                      log.info("Thread running false gesetzt.");
 
                     }
                   } catch (IOException e) {
-                    e.printStackTrace();
+
+                    log.info("[Client] Habe Verbindung zum Server verloren....");
+                    running = false;
+
+                 //   GuiController tmp = new GuiController();
+                 //   tmp.closeGame();
+             //       try {
+                 //   tmp.openLobby();
+                  //  } catch (IOException ex) {
+                  //    ex.printStackTrace();
+                  //  }
+                    System.exit(0); //-> falls Lobby nicht funktioniert.
                   }
                 }
               }

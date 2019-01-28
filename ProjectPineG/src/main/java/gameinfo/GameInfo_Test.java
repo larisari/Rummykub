@@ -1,10 +1,12 @@
 package gameinfo;
 
+
 import gameinfo.util.GIColor;
 import gameinfo.util.GINumber;
 import gameinfo.util.GITile;
-//import org.junit.jupiter.api.BeforeAll;
-//import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -40,23 +42,25 @@ class GameInfo_Test {
               GIColor.JOKER
               ), new GITile(GINumber.JOKER,GIColor.JOKER)));
 
-//  @BeforeAll
+  @BeforeAll
   static void setup() {
     gameInfo = GIFactory.make();
     p1 = new Player(player_1_ID,new PointsCalculator());
     p2 = new Player(player_2_ID,new PointsCalculator());
     p3 = new Player(player_3_ID,new PointsCalculator());
     p4 = new Player(player_4_ID,new PointsCalculator());
+
   }
 
-//  @Test
+  @Test
   void orderedTestCase() {
     signInPlayers();
     start();
-    draw();
+    //draw();
     //lessThanMinPoints();
-    validCombo();
-    showhands();
+    //validCombo();
+    //showhands();
+    checkOrder();
     //makeFirstMove();
   }
 
@@ -69,6 +73,11 @@ class GameInfo_Test {
     gameInfo.registerBy(player_2_ID);
     gameInfo.registerBy(player_3_ID);
     gameInfo.registerBy(player_4_ID);
+
+    gameInfo.setAgeFor(player_1_ID,4);
+    gameInfo.setAgeFor(player_2_ID,3);
+    gameInfo.setAgeFor(player_3_ID,2);
+    gameInfo.setAgeFor(player_4_ID,1);
   }
 
   void draw() {
@@ -78,6 +87,11 @@ class GameInfo_Test {
     gameInfo.drawBy(player_4_ID);
   }
 
+  void checkOrder() {
+    assert gameInfo.getStartingPlayerId().equals(player_4_ID);
+    assert gameInfo.getCurrentPlayerId().equals(player_4_ID);
+    assert gameInfo.getNextPlayerId().get().equals(player_3_ID);
+  }
 
   void lessThanMinPoints() {
     List<GITile> playersGroup =
@@ -108,6 +122,7 @@ class GameInfo_Test {
   void getAllPlayersHands() {
     System.out.println(gameInfo.calculatePointsForRegisteredPlayers());
   }
+
 
   void showhands() {
     System.out.println(gameInfo.getAllTilesBy(player_1_ID).get());

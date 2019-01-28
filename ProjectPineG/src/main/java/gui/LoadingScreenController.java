@@ -1,39 +1,53 @@
 package gui;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import network.ClientParser;
 
+/**
+ * Controller for loading screen, handles mouse events and other user input for loadingScreen.fxml
+ * file. Communicates with network via ClientParser.
+ */
 public class LoadingScreenController {
 
   @FXML
   private Button startGame;
-  @FXML private AnchorPane loadingScreen;
-  @FXML private Text player1Joined;
-  @FXML private Text player2Joined;
-  @FXML private Text player3Joined;
-  @FXML private Text player4Joined;
-  private ClientParser parser = new ClientParser(this);
+  @FXML
+  private AnchorPane loadingScreen;
+  @FXML
+  private Text player1Joined;
+  @FXML
+  private Text player2Joined;
+  @FXML
+  private Text player3Joined;
+  @FXML
+  private Text player4Joined;
+  private Stage startingStage = new Stage();
+  private ClientParser parser;
   private int playerID = 0;
 
-  public LoadingScreenController(){
+  /**
+   * Initialises ClientParser for communication between network and gui.
+   */
+  public LoadingScreenController() {
     parser = new ClientParser(this);
   }
+
   /**
-   * Initializes loadingScreen FXML file.
-   * Disables the start button.
+   * Initializes loadingScreen FXML file. Sets "Joined" to invisible. Disables the start button.
    */
   @FXML
   private void initialize() {
@@ -44,31 +58,45 @@ public class LoadingScreenController {
     startGame.setDisable(true);
   }
 
-  public void setPlayerID(Integer playerID){
+  /**
+   * Gets called from starting screen to forward playerID.
+   *
+   * @param playerID of this gui's client.
+   */
+  void setPlayerID(Integer playerID) {
     this.playerID = playerID;
   }
 
-  //TODO benachrichtigung an server wenn client loadingscreen schließt.
-
   /**
-   * Gets called if at least two Players are present.
+   * Gets called if at least two Players are present. Disables the "Start Game" button for the
+   * host.
    */
-  public void enableStart(){
+  public void enableStart() {
     if (playerID == 0) {
       startGame.setDisable(false);
     }
   }
 
   /**
-   * Gets called if new player joined. Adds "Joined" on loading screen next to the newly joined
-   * player.
-   * muss checken der wievielte spieler das ist.
+   * Gets called from starting screen to forward starting screen stage.
+   *
+   * @param stage - starting screen stage.
    */
-  public void addJoined(Integer numberOfClients){
+  void setStartingStage(Stage stage) {
+    this.startingStage = stage;
+  }
+
+  /**
+   * Gets called everytime a new player joined. Adds "Joined" on loading screen next to the newly
+   * joined player.
+   *
+   * @param numberOfClients - number of clients who are currently registered.
+   */
+  public void addJoined(Integer numberOfClients) {
     if (playerID != 0) {
       startGame.setVisible(false);
     }
-    switch (numberOfClients){
+    switch (numberOfClients) {
       case 0:
         player1Joined.setVisible(true);
         break;
@@ -91,38 +119,66 @@ public class LoadingScreenController {
   }
 
   /**
-   * Notifies network of the game start. Closes loading screen and starting screen.
-   * @param event - onMouseClicked event if user presses "Start Game" button.
+   * Notifies network of game start. Closes loading screen and starting screen.
    */
   @FXML
-  protected void handleStartGamePressed(MouseEvent event) {
+  private void handleStartGamePressed() {
     parser.startGame();
     startGame.getScene().getWindow().hide();
   }
 
 
   /**
-   * Opens Game Window.
+   * Gets called when game is started. Opens game window, closes starting screen and loading
+   * screen.
+   *
+   * @param numberOfPlayers - number of players
+   * @param playerID - id of this gui's client.
    * @throws IOException if some error occurs while loading fxml file.
    */
-  //TODO braucht 2 parameter von Server.
-  public void openGameWindow(Integer numberOfPlayers, Integer playerID) throws IOException{
+  public void openGameWindow(Integer numberOfPlayers, Integer playerID) throws IOException {
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation((getClass().getResource("/clientgui.fxml")));
     Parent root = loader.load();
-    GuiController controller = loader.getController();
-    controller.setNumberOfPlayers(numberOfPlayers);
-    controller.setPlayerID(playerID);
-    controller.setPlayerNames();
-    controller.setPlayerBoards();
     Scene scene = new Scene(root);
     Stage stage = new Stage(); //new Stage
     stage.setResizable(false);
     stage.setTitle("RUMMYKUB");
     stage.setScene(scene);
+    stage.getScene().getWindow()
+        .addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     stage.show();
-
+    GuiController controller = loader.getController();
+    controller.setNumberOfPlayers(numberOfPlayers);
+    controller.setPlayerID(playerID);
+    controller.setPlayerNames();
+    controller.setPlayerBoards();
+    controller.setStage(stage);
+    controller.playMusic();
+    loadingScreen.getScene().getWindow().hide();
+    this.startingStage.close();
 
 
   }
+  /**
+   * Opens confirmation alert if user tries to exit application by pressing "x". If user confirms
+   * exit, the application is exited.
+   *
+   * @param event - WindowEvent if user presses "x" icon.
+   */
+  public void closeWindowEvent(WindowEvent event) {
+    ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
+    ButtonType no = new ButtonType("No",
+        ButtonBar.ButtonData.CANCEL_CLOSE);
+    Alert alert = new Alert(AlertType.CONFIRMATION, "bla", yes, no);
+    alert.setContentText("Do you really want to quit?");
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.isPresent() && result.get() == no) {
+      event.consume();
+    } else if (result.isPresent() && result.get() == yes) {
+      System.exit(0);
+    }
+  }
+
 }

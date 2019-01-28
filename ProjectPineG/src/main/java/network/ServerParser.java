@@ -1,6 +1,6 @@
 package network;
 
-import com.sun.tools.javac.util.FatalError;
+//import com.sun.tools.javac.util.FatalError;
 import gameinfo.util.GIColor;
 import gameinfo.util.GINumber;
 import gameinfo.util.GIPoints;
@@ -67,7 +67,10 @@ public class ServerParser {
         for (ServerClientCommunication client : clients) {
             client.sendMessageToClient("responseStartGame|" + clients.size() + "|" + client.getClientID());
         }
-        Server.broadcastToAllClients("closeStartScreen");
+        int clientID = Server.gameInfo.getStartingPlayerId();
+        clients.get(clientID).sendMessageToClient("itsYourTurn");
+        Server.broadcastToAllClients("UpdateCurrentPlayerTurn|" + Server.gameInfo.getStartingPlayerId());
+
         break;
 
       case "play":
@@ -87,7 +90,6 @@ public class ServerParser {
         List<GITile> tilesFromHandB = parseStringToTile(receivedMessage[1]);
         List<List<GITile>> oldCombinationsB = parseStringToListListTileComb(receivedMessage[2]);
         List<List<GITile>> newCombinationsB = parseStringToListListTileComb(receivedMessage[3]);
-
         String answer5 = Server.gameInfo.manipulateBoardWith(tilesFromHandB, oldCombinationsB, newCombinationsB, id).get().getSecond().toString();
         clients.get(id).sendMessageToClient("responseForPlayHandWithBoard|" + answer5);
         break;
@@ -116,7 +118,7 @@ public class ServerParser {
         break;*/
 
       case "calculatePointsForRegisteredPlayers":
-        Server.broadcastToAllClients("responseForGetPlayerPoints|" + parsePointsToString(Server.gameInfo.calculatePointsForRegisteredPlayers()));
+        clients.get(id).sendMessageToClient("responseForGetPlayerPoints|" + parsePointsToString(Server.gameInfo.calculatePointsForRegisteredPlayers()));
         break;
 
       case "numberOfPlayers":
@@ -132,9 +134,18 @@ public class ServerParser {
       case "notifyWin":
         for(int i = 0; i < clients.size(); i++){
           if(i != id){
-            clients.get(i).sendMessageToClient("responseToNotifyWin");
+            clients.get(i).sendMessageToClient("responseToNotifyWin|" + parsePointsToString(Server.gameInfo.calculatePointsForRegisteredPlayers()));
           }
         }
+        break;
+      case "setAge":
+        int age = Integer.parseInt(receivedMessage[1]);
+        Server.gameInfo.setAgeFor(id, age);
+        break;
+      case "closeGame":
+        Server.broadcastToAllClients("closeGame");
+        Server.broadcastToAllClients("openLobby");
+        ServerListener.interrupted();
         break;
     }
   }
@@ -143,11 +154,13 @@ public class ServerParser {
     String points = "";
     List<GITuple<Integer, GIPoints>> tempList = list.get();
     for(int i = 0; i < tempList.size(); i++){
-      points += tempList.get(i).getSecond();
+      System.out.println(tempList.get(i).getSecond().value());
+      points += tempList.get(i).getSecond().value();
       if(i != tempList.size()-1) {
         points += ",";
       }
     }
+    System.out.println(points + "PARSED FROM GIPOINTS TO STRING");
     return points;
   }
 
@@ -225,7 +238,7 @@ public class ServerParser {
           tileColor = GIColor.JOKER;
           break;
         default:
-          throw new FatalError("SOMETHING WENT DEEPLY WRONG " + tileColor);
+        //  throw new FatalError("SOMETHING WENT DEEPLY WRONG " + tileColor);
       }
 
       switch (number) {
@@ -272,7 +285,7 @@ public class ServerParser {
           tileNumber = GINumber.JOKER;
           break;
         default:
-          throw new FatalError("SOMETHING WENT DEEPLY WRONG " + tileColor);
+      //    throw new FatalError("SOMETHING WENT DEEPLY WRONG " + tileColor);
       }
       GITile tile = new GITile(tileNumber, tileColor);
       tileList.add(tile);

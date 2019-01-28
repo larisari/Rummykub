@@ -275,7 +275,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       newCombinations.forEach(combination -> board.addCombo(combination));
       return Optional.of(new GITuple<>(id, true));
     } else {
-      return Optional.empty();
+      return Optional.of(new GITuple<>(id, false));
     }
   }
 
@@ -338,6 +338,18 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     List<GITile> stack = board.drawRandomStackWith(NUMBER_OF_TILES_IN_STACK);
     player.put(stack);
     return stack;
+  }
+
+  @Override
+  public void setAgeFor(Integer id, int age) {
+    if (gameFlow.getPlayerBy(id).isPresent()) {
+      gameFlow.getPlayerBy(id).get().setAge(age);
+    }
+  }
+
+  @Override
+  public Integer getStartingPlayerId() {
+    return gameFlow.getStartingPlayerId();
   }
 
   private GITile getTileFor(Integer id) {
