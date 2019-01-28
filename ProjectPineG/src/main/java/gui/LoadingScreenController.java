@@ -11,7 +11,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -27,7 +26,7 @@ public class LoadingScreenController {
   @FXML private Text player2Joined;
   @FXML private Text player3Joined;
   @FXML private Text player4Joined;
-  private ClientParser parser = new ClientParser(this);
+  private ClientParser parser;
   private int playerID = 0;
   private Stage startingStage = new Stage();
 
@@ -47,11 +46,9 @@ public class LoadingScreenController {
     startGame.setDisable(true);
   }
 
-  public void setPlayerID(Integer playerID){
+  void setPlayerID(Integer playerID){
     this.playerID = playerID;
   }
-
-  //TODO benachrichtigung an server wenn client loadingscreen schließt.
 
   /**
    * Gets called if at least two Players are present.
@@ -62,7 +59,7 @@ public class LoadingScreenController {
     }
   }
 
-  public void setStartingStage(Stage stage){
+  void setStartingStage(Stage stage){
     this.startingStage = stage;
   }
 
@@ -99,10 +96,9 @@ public class LoadingScreenController {
 
   /**
    * Notifies network of the game start. Closes loading screen and starting screen.
-   * @param event - onMouseClicked event if user presses "Start Game" button.
    */
   @FXML
-  protected void handleStartGamePressed(MouseEvent event) {
+  protected void handleStartGamePressed() {
     parser.startGame();
     startGame.getScene().getWindow().hide();
   }
@@ -112,7 +108,6 @@ public class LoadingScreenController {
    * Opens Game Window.
    * @throws IOException if some error occurs while loading fxml file.
    */
-  //TODO braucht 2 parameter von Server.
   public void openGameWindow(Integer numberOfPlayers, Integer playerID) throws IOException{
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation((getClass().getResource("/clientgui.fxml")));
