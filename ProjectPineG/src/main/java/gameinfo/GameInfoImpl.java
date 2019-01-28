@@ -94,6 +94,12 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   @Override
   public Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id) {
+
+    if (bagIsEmpty()) {
+      log.info("Bag is empty, a new bag is being generated.");
+      board.generateNewBag();
+    }
+
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (!optionalPlayer.isPresent()) {
@@ -368,5 +374,9 @@ class GameInfoImpl extends Thread implements GIGameInfo {
               board.addCombo(combination);
               player.remove(combination);
             });
+  }
+
+  private boolean bagIsEmpty() {
+    return board.bagIsEmpty();
   }
 }

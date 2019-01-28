@@ -43,9 +43,7 @@ class Bag {
     int position = (int) (Math.random() * (this.tiles.size() - 1));
     GITile tile = this.tiles.get(position);
     this.tiles.remove(position);
-
     log.info("Drew random tile: " + tile + ".");
-
     return tile;
   }
 
@@ -66,26 +64,32 @@ class Bag {
     if (tiles.contains(tile)) {
       tiles.remove(tile);
       return Optional.of(tile);
-    }
-    else {
+    } else {
       return Optional.empty();
     }
   }
 
   List<GITile> takeStack(int numberOfTiles, List<GITile> customStack) {
 
-    if (customStack.size()!=numberOfTiles) {
-      throw new IllegalArgumentException("number of tiles are not equivalent " +
+    if (customStack.size() != numberOfTiles) {
+      throw new IllegalArgumentException(
+          "number of tiles are not equivalent " +
               "in custom drawRandomStackWith method()");
     }
 
     List<GITile> stack = new ArrayList<>();
-    for (int i = 0; i < customStack.size(); i++) {
-      stack.add(customStack.get(i));
-      this.tiles.remove(customStack.get(i));
+    for (GITile giTile : customStack) {
+      stack.add(giTile);
+      this.tiles.removeIf(i -> i.equals(giTile));
     }
     return stack;
   }
 
-}
+  boolean isEmpty() {
+    return tiles.isEmpty();
+  }
 
+  void setTiles(List<GITile> tiles) {
+    this.tiles = tiles;
+  }
+}

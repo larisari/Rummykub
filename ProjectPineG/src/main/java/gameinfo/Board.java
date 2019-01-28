@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 class Board {
   private Bag bag;
@@ -57,7 +58,7 @@ class Board {
   }
 
   GITile drawRandomTile() {
-    return this.bag.drawRandomTile();
+    return bag.drawRandomTile();
   }
 
   List<GITile> drawRandomStackWith(int numberOfTiles) {
@@ -75,5 +76,17 @@ class Board {
   List<GITile> getStackFromBag(int numberOfTiles, List<GITile> customStack) {
     return this.bag.takeStack(numberOfTiles, customStack);
   }
-}
 
+  boolean bagIsEmpty() {
+    return bag.isEmpty();
+  }
+
+  void generateNewBag() {
+    List<GITile> boardTiles = combos.stream()
+        .flatMap(List::stream)
+        .collect(Collectors.toList());
+
+    this.combos = new ArrayList<>();
+    bag.setTiles(boardTiles);
+  }
+}
