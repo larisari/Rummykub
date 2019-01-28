@@ -17,25 +17,37 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import network.ClientParser;
 
+/**
+ * Controller for loadingScreen.fxml, handles mouse events and other user input for this fxml file.
+ * Communicates with network via ClientParser.
+ */
 public class LoadingScreenController {
 
   @FXML
   private Button startGame;
-  @FXML private AnchorPane loadingScreen;
-  @FXML private Text player1Joined;
-  @FXML private Text player2Joined;
-  @FXML private Text player3Joined;
-  @FXML private Text player4Joined;
+  @FXML
+  private AnchorPane loadingScreen;
+  @FXML
+  private Text player1Joined;
+  @FXML
+  private Text player2Joined;
+  @FXML
+  private Text player3Joined;
+  @FXML
+  private Text player4Joined;
+  private Stage startingStage = new Stage();
   private ClientParser parser;
   private int playerID = 0;
-  private Stage startingStage = new Stage();
 
-  public LoadingScreenController(){
+  /**
+   * Initialises ClientParser for communication between network and gui.
+   */
+  public LoadingScreenController() {
     parser = new ClientParser(this);
   }
+
   /**
-   * Initializes loadingScreen FXML file.
-   * Disables the start button.
+   * Initializes loadingScreen FXML file. Sets "Joined" to invisible. Disables the start button.
    */
   @FXML
   private void initialize() {
@@ -46,33 +58,45 @@ public class LoadingScreenController {
     startGame.setDisable(true);
   }
 
-  void setPlayerID(Integer playerID){
+  /**
+   * Gets called from starting screen to forward playerID.
+   *
+   * @param playerID of this gui's client.
+   */
+  void setPlayerID(Integer playerID) {
     this.playerID = playerID;
   }
 
   /**
-   * Gets called if at least two Players are present.
+   * Gets called if at least two Players are present. Disables the "Start Game" button for the
+   * host.
    */
-  public void enableStart(){
+  public void enableStart() {
     if (playerID == 0) {
       startGame.setDisable(false);
     }
   }
 
-  void setStartingStage(Stage stage){
+  /**
+   * Gets called from starting screen to forward starting screen stage.
+   *
+   * @param stage - starting screen stage.
+   */
+  void setStartingStage(Stage stage) {
     this.startingStage = stage;
   }
 
   /**
-   * Gets called if new player joined. Adds "Joined" on loading screen next to the newly joined
-   * player.
-   * muss checken der wievielte spieler das ist.
+   * Gets called everytime a new player joined. Adds "Joined" on loading screen next to the newly
+   * joined player.
+   *
+   * @param numberOfClients - number of clients who are currently registered.
    */
-  public void addJoined(Integer numberOfClients){
+  public void addJoined(Integer numberOfClients) {
     if (playerID != 0) {
       startGame.setVisible(false);
     }
-    switch (numberOfClients){
+    switch (numberOfClients) {
       case 0:
         player1Joined.setVisible(true);
         break;
@@ -95,20 +119,24 @@ public class LoadingScreenController {
   }
 
   /**
-   * Notifies network of the game start. Closes loading screen and starting screen.
+   * Notifies network of game start. Closes loading screen and starting screen.
    */
   @FXML
-  protected void handleStartGamePressed() {
+  private void handleStartGamePressed() {
     parser.startGame();
     startGame.getScene().getWindow().hide();
   }
 
 
   /**
-   * Opens Game Window.
+   * Gets called when game is started. Opens game window, closes starting screen and loading
+   * screen.
+   *
+   * @param numberOfPlayers - number of players
+   * @param playerID - id of this gui's client.
    * @throws IOException if some error occurs while loading fxml file.
    */
-  public void openGameWindow(Integer numberOfPlayers, Integer playerID) throws IOException{
+  public void openGameWindow(Integer numberOfPlayers, Integer playerID) throws IOException {
     FXMLLoader loader = new FXMLLoader();
     loader.setLocation((getClass().getResource("/clientgui.fxml")));
     Parent root = loader.load();
@@ -117,9 +145,10 @@ public class LoadingScreenController {
     stage.setResizable(false);
     stage.setTitle("RUMMYKUB");
     stage.setScene(scene);
-    stage.getScene().getWindow().addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
+    stage.getScene().getWindow()
+        .addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
     stage.show();
-  GuiController controller = loader.getController();
+    GuiController controller = loader.getController();
     controller.setNumberOfPlayers(numberOfPlayers);
     controller.setPlayerID(playerID);
     controller.setPlayerNames();
@@ -130,13 +159,15 @@ public class LoadingScreenController {
     this.startingStage.close();
 
 
-
   }
+
   /**
-   * Opens confirmation alert if user tries to exit application by pressing "x".
+   * Opens confirmation alert if user tries to exit application by pressing "x". If user confirms
+   * exit, the application is exited.
+   *
    * @param event - WindowEvent if user presses "x" icon.
    */
-  private void closeWindowEvent(WindowEvent event){
+  private void closeWindowEvent(WindowEvent event) {
     ButtonType yes = new ButtonType("Yes", ButtonBar.ButtonData.OK_DONE);
     ButtonType no = new ButtonType("No",
         ButtonBar.ButtonData.CANCEL_CLOSE);
@@ -146,11 +177,10 @@ public class LoadingScreenController {
 
     if (result.isPresent() && result.get() == no) {
       event.consume();
-    } else if (result.isPresent() && result.get() == yes){
+    } else if (result.isPresent() && result.get() == yes) {
       System.exit(0);
     }
   }
-
 
 
 }

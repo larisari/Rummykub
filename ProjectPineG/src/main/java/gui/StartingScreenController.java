@@ -27,7 +27,7 @@ import network.Server;
 
 /**
  * Controller for startingScreen.fxml, handles mouse events and other user input for this fxml
- * file.
+ * file. Communicates with network via ClientParser.
  */
 public class StartingScreenController {
 
@@ -35,7 +35,7 @@ public class StartingScreenController {
   private Stage stage = new Stage();
 
   /**
-   * Initialises ClientParser.
+   * Initialises ClientParser for communication between network and gui.
    */
   public StartingScreenController() {
     parser = new ClientParser(this);
