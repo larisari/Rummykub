@@ -8,7 +8,11 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import network.ClientParser;
 
-public class WinScreenController {
+/**
+ * Controller for winner screen, handles mouse events and other user input for winnerScreen.fxml
+ * file. Communicates with network via ClientParser.
+ */
+public class WinScreenController extends EndScreen {
 
   @FXML
   private Label player2Points;
@@ -24,27 +28,28 @@ public class WinScreenController {
   @FXML
   private Label player4;
 
-  //noch ändern:
-  private int p1Points = 0; //ev noch initialisieren? oder reicht setter?
+  private int p1Points = 0;
   private int p2Points = 0;
   private int p3Points = 0;
   private int p4Points = 0;
-  private int playerID;
   private ClientParser parser;
   private int numberOfPlayers;
   private MediaPlayer mediaPlayer;
 
+  /**
+   * Initialises ClientParser for communication between network and gui.
+   */
   public WinScreenController() {
     parser = new ClientParser(this);
   }
 
 
-  public void setNumberOfPlayers(Integer numberOfPlayers){
+  void setNumberOfPlayers(Integer numberOfPlayers) {
     this.numberOfPlayers = numberOfPlayers;
   }
 
 
-  public void setPlayerPoints(List<Integer> points) {
+  void setPlayerPoints(List<Integer> points) {
 
     switch (points.size()) {
       case 2:
@@ -66,15 +71,7 @@ public class WinScreenController {
     }
   }
 
-  /**
-   * nach anz players label hiden bei winnerScreen: wer hat gewonnen -> namen anpassen bei beiden:
-   * wer hat wieviele punkte
-   */
-  @FXML
-  private void initialize() {
-
-  }
-    public void setPointsNamesVisible(){
+  public void setPointsNamesVisible() {
     switch (numberOfPlayers) {
       case 2:
         player3.setVisible(false);
@@ -99,7 +96,7 @@ public class WinScreenController {
     if (p2Points > p1Points) {
       player2.setText("Player 1");
       player2Points.setText(p1Points + " Points");
-    } else { //Name ist ja default
+    } else {
       player2Points.setText(p2Points + " Points");
     }
   }
@@ -113,7 +110,6 @@ public class WinScreenController {
     }
     if (p2Points == 0) {
       player2.setText("Player 1");
-      //player3 default
       player2Points.setText(p1Points + " Points");
       player3Points.setText(p3Points + " Points");
     }
@@ -149,7 +145,8 @@ public class WinScreenController {
     }
 
   }
-  public void playMusic(){
+
+  void playMusic() {
     Media media = null;
     try {
       media = new Media(getClass().getResource("/audio/fanfare.mp3").toURI().toString());

@@ -70,10 +70,13 @@ public class Client extends Thread {
                       out.close();
                       running = false;
                       log.info("Thread running false gesetzt.");
+
                     }
                   } catch (IOException e) {
+
                     log.info("[Client] Habe Verbindung zum Server verloren....");
                     running = false;
+
                  //   GuiController tmp = new GuiController();
                  //   tmp.closeGame();
              //       try {
