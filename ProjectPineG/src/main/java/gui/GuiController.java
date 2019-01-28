@@ -1,9 +1,5 @@
 package gui;
 
-//TODO bei Disconnect Alert window mit ok button zurück zu startbildschirm
-//TODO bei endscreen button zurück zum startbildschirm.
-
-
 import gui.util.Image;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -34,8 +30,6 @@ import javafx.stage.WindowEvent;
 import javafx.util.Duration;
 import network.ClientParser;
 
-//test: mousepressed besser als mouseclicked?
-//Alle anfragen an Server.
 
 public class GuiController {
 
