@@ -1,0 +1,72 @@
+--------------------
+PROTOTYP
+- der Prototyp für unser Projekt ist das IntelliJ Projekt PineappleProtoype im Abgaben Ordner.
+
+- der aktuelle Stand für das Model liegt auf dem branch 'development'. Steine ziehen, ablegen, Kombinationen auf richtigkeit prüfen,
+    spielablauf etc. funktionieren. Tests für die einzelnene Funktionen wurden im Verlauf der Entwicklung geschrieben.
+    TODOs stehen bei dem Arbeitsplan dabei.
+
+- der aktuelle Stand für das View liegt auf dem branch 'view'. Startbildschrim, Ladebildschrim und Spielbildschrim sind da.
+    Man kann Steine auswählen und sie auf das Spielfeld legen, man kann sie auch zu existierenden Steinen hinzufügen.
+    TODOs in Arbeitsplan.
+    
+- der aktuelle Stand für den Server liegt auf dem branch 'Server'. Server und Client aufsetzen, Spiel hosten sollte möglich sein.
+    Login funktion von Client zu Server. Verbindungsabfragen funktionieren.
+    TODOs in Arbeitsplan.
+
+-----Definition of Done----
+
+-	Tabellen und Diagramme sind fertiggestellt
+-	alle (unsere) Unit Tests wurden bestanden
+-	eine Partie wurde erfolgreich von objektiven Spielern gespielt
+-	ausführliche JavaDoc Dokumentation besteht
+-	keine unerwarteten Fehler während dem Spiel
+-	Code mit sinnvoller Paketstruktur im VCS hochgeladen
+
+
+-----Task/Feature gilt als erledigt-----
+
+-	alle Unit Tests bestanden
+-	erfolgreiche Code Review durch Teamkollegen
+
+
+-----Arbeitsplan-----
+
+Aufgabeneinteilung:
+Markus Franz, Philipp Greiner: Netzwerk
+Jonas Blenninger, Yousif Yacoub Yousif: Model 
+Sarita Sridharan: View/Controller
+
+
+TODO View:
+
+-	Spielanzeigen designen und implementieren (Schwierigkeit: leicht, Dauer 2h+)
+
+-	Manipulation der Tiles auf dem Brett (Schwierigkeit: mittel-schwer, Dauer 2h+)
+
+-	Tiles designen (Schwierigkeit: leicht-mittel, Dauer 1h)
+
+-	Verbesserungen/kleinere Probleme beheben
+
+-	Testen
+
+-	eventuell noch Features einbauen, Design verbessern
+
+TODO Model:
+-	Tests, die komplettes, bis jetzt implementiertes Model abdecken (Schwierigkeit: leicht, Dauer: 4h+)
+-	Fehler in der Implementierung, die durch die Tests angefallen sind, beheben und erneut testen (Schwierigkeit: mittel, Dauer: 3h+)
+
+-	Mit restlichem Team besprechen, was für weitere Informationen aus dem Model gebraucht werden (Schwierigkeit: mittel, Dauer: 2h+)
+
+-	Features implementieren (Absprache mit Team sowie abhängig von verbleibender Zeit)
+-	Erkennen, ob Spieler einen Zug getätigt hat (Schwierigkeit: mittel, Dauer 1h)
+-	Model an den Server anbinden (x Tage, in Zusammenarbeit mit Team Netzwerk)
+
+TODO Netzwerk: 
+-	Multithreaded Testserver anpassen für Rummykub mit bis zu 4 Leuten (Schwierigkeit: schwierig, Dauer: 3 Tage)
+
+-	Broadcast- Funktion einbauen um Messages an alle Clients zu schicken (Schwierigkeit: Mittel, Dauer: 1 Tag)
+
+-	Parser- Klassen für Client und Server schreiben (Schwierigkeit: leicht, Dauer: 4h)
+
+-	Testen (Schwierigkeit: einfach, Dauer: 1-2 Tage)
