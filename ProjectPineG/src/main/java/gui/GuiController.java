@@ -214,7 +214,6 @@ public class GuiController {
           + "tiles on the board before drawing more tiles!", ButtonType.OK);
       alert.showAndWait();
 
-      bag.setDisable(true);
     } else {
       parser.draw();
     }
