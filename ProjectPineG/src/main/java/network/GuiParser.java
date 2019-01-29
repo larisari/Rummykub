@@ -74,13 +74,19 @@ public class GuiParser {
 
 
   List<List<Image>> parseStringToWholeBoard(String message){
-    List<List<Image>> endList = new ArrayList<>();
-    String[] tempS = message.split("<");
-    String[] combs = tempS[1].split(";");
-    for (int i = 0; i < combs.length; i++){
-      endList.add(parseStringToImgsForOneComb(combs[i]));
+
+    if (message.equals("list<")) {
+      return new ArrayList<>();
+    } else {
+      List<List<Image>> endList = new ArrayList<>();
+
+      String[] tempS = message.split("<");
+      String[] combs = tempS[1].split(";");
+      for (int i = 0; i < combs.length; i++){
+        endList.add(parseStringToImgsForOneComb(combs[i]));
+      }
+      return endList;
     }
-    return endList;
   }
 
   List<Image> parseStringToImgsForOneComb(String hand) {
