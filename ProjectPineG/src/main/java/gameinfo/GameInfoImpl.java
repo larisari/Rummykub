@@ -1,6 +1,6 @@
 /**
- * This Class shows an exemplary implementation of the GIGameInfo interface. It
- * serves as a central management class for the model.
+ * This Class shows an exemplary implementation of the GIGameInfo interface. It serves as a central
+ * management class for the model.
  */
 package gameinfo;
 
@@ -37,7 +37,6 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     canModifyRegisteredPlayers = true;
     start();
   }
-
 
   @Override
   public void registerBy(Integer id) {
@@ -160,27 +159,6 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       gameFlow.nextPlayersTurn();
       returnValue = new GITuple<>(id, tiles);
       return Optional.of(returnValue);
-    }
-  }
-
-  private List<GITile> getStackFor(Integer id, List<GITile> customTiles) {
-    // .get() is allowed here because it is always called after isPresent check !!!
-    Player player = gameFlow.getPlayerBy(id).get();
-    List<GITile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK, customTiles);
-    player.put(stack);
-    return stack;
-  }
-
-  private GITile getTileFor(Integer id, GITile customTile) {
-    // .get() is allowed here because it is always called after isPresent check !!!
-    Player player = gameFlow.getPlayerBy(id).get();
-
-    if (board.getTileFromBag(customTile).isPresent()) {
-      GITile tile = board.getTileFromBag(customTile).get();
-      player.put(tile);
-      return tile;
-    } else {
-      throw new IllegalArgumentException("Tile is not in stack anymore.");
     }
   }
 
@@ -342,15 +320,6 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     return gameFlow.getPlayerPoints();
   }
 
-  private List<GITile> getStackFor(Integer id) {
-    // .get() is allowed here because it is always called after isPresent check !!!
-    Player player = gameFlow.getPlayerBy(id).get();
-
-    List<GITile> stack = board.drawRandomStackWith(NUMBER_OF_TILES_IN_STACK);
-    player.put(stack);
-    return stack;
-  }
-
   @Override
   public void setAgeFor(Integer id, int age) {
     if (gameFlow.getPlayerBy(id).isPresent()) {
@@ -405,5 +374,57 @@ class GameInfoImpl extends Thread implements GIGameInfo {
    */
   private boolean bagIsEmpty() {
     return board.bagIsEmpty();
+  }
+
+  /**
+   * This method distributes a random stack to the player whose given id matches.
+   *
+   * @param id of the player to get a stack.
+   * @return List of tiles to be distributed.
+   */
+  private List<GITile> getStackFor(Integer id) {
+    // .get() is allowed here because it is always called after isPresent check !!!
+    Player player = gameFlow.getPlayerBy(id).get();
+
+    List<GITile> stack = board.drawRandomStackWith(NUMBER_OF_TILES_IN_STACK);
+    player.put(stack);
+    return stack;
+  }
+
+  /**
+   * A method for testing purposes only. It helps obtaining a custom stack in form of a List of
+   * GITiles.
+   *
+   * @param id of the player to get a stack.
+   * @param customTiles to be passed to the player.
+   * @return List of tiles for the player.
+   */
+  private List<GITile> getStackFor(Integer id, List<GITile> customTiles) {
+    // .get() is allowed here because it is always called after isPresent check !!!
+    Player player = gameFlow.getPlayerBy(id).get();
+    List<GITile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK, customTiles);
+    player.put(stack);
+    return stack;
+  }
+
+  /**
+   * A method for testing purpose only. It distributes a determined tile for the player whose id
+   * matches with the passed one.
+   *
+   * @param id of the player to get a custom tile.
+   * @param customTile GITile to be distributed to the player.
+   * @return GITile that is distributed to the player.
+   */
+  private GITile getTileFor(Integer id, GITile customTile) {
+    // .get() is allowed here because it is always called after isPresent check !!!
+    Player player = gameFlow.getPlayerBy(id).get();
+
+    if (board.getTileFromBag(customTile).isPresent()) {
+      GITile tile = board.getTileFromBag(customTile).get();
+      player.put(tile);
+      return tile;
+    } else {
+      throw new IllegalArgumentException("Tile is not in stack anymore.");
+    }
   }
 }
