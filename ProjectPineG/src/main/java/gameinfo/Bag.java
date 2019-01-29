@@ -40,7 +40,6 @@ class Bag {
   }
 
   GITile drawRandomTile() {
-    //TODO (only if error is obvious): make drawRandomTile OPTIONAL
     int position = (int) (Math.random() * (this.tiles.size() - 1));
     GITile tile = this.tiles.get(position);
     this.tiles.remove(position);

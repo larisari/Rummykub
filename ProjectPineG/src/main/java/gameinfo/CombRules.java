@@ -166,34 +166,6 @@ class CombRules {
     return tempNum.previous();
   }
 
-  //  private boolean isStreet(List<GITile> combination) {
-  //
-  //    if (haveSameColor(combination) && !haveSameNumber(combination)) {
-  //
-  //      GINumber firstNumberOfStreet = calculateFirstRealNumberOf(combination);
-  //      List<GITile> street = makeStreetFor(firstNumberOfStreet, )
-  //
-  //      for (int i = 1; i < combination.size(); i++) {
-  //
-  //        GITile previous = combination.get(i - 1);
-  //        GITile current = combination.get(i);
-  //
-  //        if (previous.getNumber().equals(GINumber.JOKER)
-  //            || current.getNumber().equals(GINumber.JOKER)) {
-  //          continue;
-  //        }
-  //
-  //        if (!(current.getNumber() == (previous.getNumber().next()))) {
-  //          return false;
-  //        }
-  //      }
-  //    } else {
-  //      return false;
-  //    }
-  //
-  //    return true;
-  //  }
-
   private boolean haveSameNumber(List<GITile> combination) {
     GINumber number = calculateFirstRealNumberOf(combination);
 
