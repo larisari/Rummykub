@@ -68,7 +68,7 @@ public class ClientParser {
                     guiController.closeGame();
                   });
         } else {
-         // loadingScreenController.closeLoadingScreen();
+          loadingScreenController.closeLoadingScreen();
         }
 
         Platform.runLater(
