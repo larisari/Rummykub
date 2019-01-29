@@ -1,3 +1,11 @@
+/**
+ * The GIGameInfo interface provides all necessary functions for a basic
+ * playing experience. Implementing this interface, the user may obtain a
+ * central object for managing the whole model. From initializing the players
+ * to manipulating the game's progress until creating a valid turn, the
+ * GIGameInfo accompanies you through every changes you want to achieve in
+ * your model, with the characteristic of keeping the model invisible.
+ */
 package gameinfo;
 
 import gameinfo.util.GIPoints;
@@ -10,7 +18,7 @@ import java.util.Optional;
 public interface GIGameInfo {
 
   /**
-   * Registers a Player in the Model.
+   * Use this method, whenever you wish to sign in a player to the game.
    *
    * @param id for which the Player is registered in the model.
    */
@@ -22,6 +30,13 @@ public interface GIGameInfo {
    * @param id for which the player is deregistered.
    */
   void deregisterBy(Integer id);
+
+  /**
+   * Use this method to assign a player with given id its age.
+   * @param id of the player whose age is being set.
+   * @param age of the player to be set.
+   */
+  void setAgeFor(Integer id, int age);
 
   /** Starts the game. From now on no other Players can be registered. */
   void startGame();
@@ -41,6 +56,19 @@ public interface GIGameInfo {
   List<Integer> getAllPlayerIds();
 
   /**
+   * Use this method to identify the starting player's id.
+   * @return id of the first player.
+   */
+  Integer getStartingPlayerId();
+
+  /**
+   * Use this method to get the id for the player who is in the turn.
+   *
+   * @return the id of the player.
+   */
+  Integer getCurrentPlayerId();
+
+  /**
    * Use this method to get the Player id of the next valid Player.
    *
    * @return the id of the next valid Player as an Optional.
@@ -55,6 +83,15 @@ public interface GIGameInfo {
    *     Optional.empty() is returned.
    */
   Optional<GITuple<Integer, Boolean>> isValidPlayerBy(Integer id);
+
+  /**
+   * Use this method is check if its the first turn of a player.
+   *
+   * @param id for which is checked whether its the players first turn.
+   * @return the id for which this method was called and if its the first turn of the player. If the
+   *     player id is not registered in the model an Optional.empty() is returned.
+   */
+  Optional<GITuple<Integer, Boolean>> isFirstTurnBy(Integer id);
 
   /**
    * Use this method to draw a stack (containing 14 Tiles) for a Player id if its the players first
@@ -108,6 +145,15 @@ public interface GIGameInfo {
       Integer id);
 
   /**
+   * Use this method to signal the end of a players turn by its id.
+   *
+   * @param id the id for which the end of he turn is signaled.
+   * @return the id by for which the turn was ended and the whole board. If the player id is not
+   *     registered in the model an Optional.empty() is returned.
+   */
+  Optional<Integer> finishedTurnBy(Integer id);
+
+  /**
    * Use this method to get all the tiles on the hand by an id.
    *
    * @param id for which the hand is requested.
@@ -127,52 +173,14 @@ public interface GIGameInfo {
   Optional<GITuple<Integer, GIPoints>> calculatePointsBy(Integer id);
 
   /**
-   * Use this method to signal the end of a players turn by its id.
-   *
-   * @param id the id for which the end of he turn is signaled.
-   * @return the id by for which the turn was ended and the whole board. If the player id is not
-   *     registered in the model an Optional.empty() is returned.
-   */
-  Optional<Integer> finishedTurnBy(Integer id);
-
-  /**
-   * Use this method is check if its the first turn of a player.
-   *
-   * @param id for which is checked whether its the players first turn.
-   * @return the id for which this method was called and if its the first turn of the player. If the
-   *     player id is not registered in the model an Optional.empty() is returned.
-   */
-  Optional<GITuple<Integer, Boolean>> isFirstTurnBy(Integer id);
-
-  /**
    * Use this method to calculate the points of the hand for every player registered in the model.
    *
    * @return a tuple with the id and the corresponding points of the players hand.
    */
   Optional<List<GITuple<Integer, GIPoints>>> calculatePointsForRegisteredPlayers();
 
-  /**
-   * Use this method to get the id for the player who is in the turn.
-   *
-   * @return the id of the player.
-   */
-  Integer getCurrentPlayerId();
-
   // TODO REMOVE -> testing purpose only
   Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id, List<GITile> customTiles);
-
-  /**
-   * Use this method to assign a player with given id its age.
-   * @param id of the player whose age is being set.
-   * @param age of the player to be set.
-   */
-  void setAgeFor(Integer id, int age);
-
-  /**
-   * Use this method to identify the starting player's id.
-   * @return id of the first player.
-   */
-  Integer getStartingPlayerId();
 
   /**
    * Use this method to obtain the up to date board.
