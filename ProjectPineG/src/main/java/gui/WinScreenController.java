@@ -159,8 +159,8 @@ private Button newGame;
   }
 
   @FXML
-  private void handleNewGameL(){
-    //TODO
+  private void handleNewGame(){
+    parser.newGame();
   }
 
   void playMusic() {

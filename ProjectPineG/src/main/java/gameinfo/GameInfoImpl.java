@@ -94,12 +94,6 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   @Override
   public Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id) {
-
-    if (bagIsEmpty()) {
-      log.info("Bag is empty, a new bag is being generated.");
-      board.generateNewBag();
-    }
-
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (!optionalPlayer.isPresent()) {
@@ -109,6 +103,11 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     if (!gameFlow.isValidPlayerBy(id)) {
       // it is not the players turn.
       return Optional.of(new GITuple<>(id, new ArrayList<>()));
+    }
+
+    if (bagIsEmpty()) {
+      log.info("Bag is empty, a new bag is being generated.");
+      board.generateNewBag();
     }
 
     GITuple<Integer, List<GITile>> returnValue;
