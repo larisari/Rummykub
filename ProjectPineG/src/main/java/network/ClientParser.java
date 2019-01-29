@@ -103,15 +103,15 @@ public class ClientParser {
         break;
 
       case "responseForFinishedTurn":
-        if (!messageAsArray[1].equals("list<")) {
+//        if (!messageAsArray[1].equals("list<")) {
           Platform.runLater(
               () ->
                   guiController.reloadBoard(guiParser.parseStringToWholeBoard(messageAsArray[1])));
-        }
+//        }
         break;
 
       case "itsYourTurn":
-        Platform.runLater(() -> guiController.enableControl());
+          Platform.runLater(() -> guiController.enableControl());
         break;
 
       case "UpdateCurrentPlayerTurn":
@@ -418,7 +418,7 @@ public class ClientParser {
       Integer.parseInt(age);
     Client.sendMessageToServer("setAge|" + age);}
 
-    public void clientExit(){
-    Client.sendMessageToServer("closeGame");
+    public void newGame(){
+    Client.sendMessageToServer("newGame");
     }
 }
