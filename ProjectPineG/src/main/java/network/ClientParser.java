@@ -19,9 +19,6 @@ public class ClientParser {
 
   // TODO CALL ALL METHODS OF CONTROLLER IN ITS THREAD (POSSIBLE MAIN)
 
-  private static String receivedMessageFromServer;
-  private static String sendMessage;
-
   private static GuiController guiController;
   private static LoadingScreenController loadingScreenController;
   private static WinScreenController winScreenController;
@@ -50,11 +47,6 @@ public class ClientParser {
     startingScreenController = controller;
   }
 
-  public static void getStringIntoClientParser(String receivedMessageFromServer) {
-    receivedMessageFromServer = receivedMessageFromServer;
-  }
-
-  // Messages to send to Server.
 
   // TODO add null checks
 
@@ -70,18 +62,17 @@ public class ClientParser {
     switch (messageAsArray[0]) {
       case "Restart":
         Platform.runLater(
-                () -> {
-                    guiController.closeGame();
-
-
-                });
-        Platform.runLater(() -> {
-          try {
-            guiController.openLobby();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        });
+            () -> {
+              guiController.closeGame();
+            });
+        Platform.runLater(
+            () -> {
+              try {
+                guiController.openLobby();
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            });
 
         break;
       case "responseStartGame":
@@ -103,15 +94,14 @@ public class ClientParser {
         break;
 
       case "responseForFinishedTurn":
-//        if (!messageAsArray[1].equals("list<")) {
-          Platform.runLater(
-              () ->
-                  guiController.reloadBoard(guiParser.parseStringToWholeBoard(messageAsArray[1])));
-//        }
+        //        if (!messageAsArray[1].equals("list<")) {
+        Platform.runLater(
+            () -> guiController.reloadBoard(guiParser.parseStringToWholeBoard(messageAsArray[1])));
+        //        }
         break;
 
       case "itsYourTurn":
-          Platform.runLater(() -> guiController.enableControl());
+        Platform.runLater(() -> guiController.enableControl());
         break;
 
       case "UpdateCurrentPlayerTurn":
@@ -123,7 +113,7 @@ public class ClientParser {
         if (messageAsArray[1].equals("true")) {
           Platform.runLater(
               () -> {
-                  guiController.placeTiles();
+                guiController.placeTiles();
               });
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.cancelSelEffect());
@@ -135,12 +125,11 @@ public class ClientParser {
         if (messageAsArray[1].equals("true")) {
           Platform.runLater(
               () -> {
-                  guiController.moveTiles();
+                guiController.moveTiles();
               });
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.cancelSelEffect());
           Platform.runLater(() -> ControllerUtil.invalidCombinations());
-
         }
         break;
 
@@ -158,8 +147,8 @@ public class ClientParser {
           System.out.println("RESPONSE ADD BACK TRUE!");
           Platform.runLater(
               () -> {
-                  System.out.println("RESPONSE ADD BACK LAMBDA!");
-                  guiController.allowAddBack();
+                System.out.println("RESPONSE ADD BACK LAMBDA!");
+                guiController.allowAddBack();
               });
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.disallowAddTo());
@@ -172,8 +161,7 @@ public class ClientParser {
         if (messageAsArray[1].equals("true")) {
           Platform.runLater(
               () -> {
-
-                  guiController.allowAddFront();
+                guiController.allowAddFront();
               });
         } else if (messageAsArray[1].equals("false")) {
           Platform.runLater(() -> guiController.disallowAddTo());
@@ -186,18 +174,11 @@ public class ClientParser {
             () -> guiController.setNumberOfPlayers(Integer.parseInt(messageAsArray[1])));
         break;
 
-        /*
-        case "responseForGetPlayerID":
-          Platform.runLater(() -> loadingScreenController.setPlayerID(Integer.parseInt(messageAsArray[1])));
-          break;
-          */
       case "responseForGetPlayerPoints":
         Platform.runLater(
-            () ->
-            {
+            () -> {
               try {
-                guiController.openWinScreen(
-                    GuiParser.parseStringToIntegerList(messageAsArray[1]));
+                guiController.openWinScreen(GuiParser.parseStringToIntegerList(messageAsArray[1]));
               } catch (IOException e) {
                 e.printStackTrace();
               }
@@ -228,48 +209,41 @@ public class ClientParser {
         Platform.runLater(
             () -> {
               try {
-                guiController
-                    .openLoserScreen(GuiParser.parseStringToIntegerList(messageAsArray[1]));
+                guiController.openLoserScreen(
+                    GuiParser.parseStringToIntegerList(messageAsArray[1]));
               } catch (IOException e) {
                 e.printStackTrace();
               }
             });
         break;
       case "closeGame":
-        Platform.runLater(() -> {
-            guiController.closeGame();
-
-        });
+        Platform.runLater(
+            () -> guiController.closeGame());
         break;
       case "openLobby":
-        Platform.runLater(() -> {
-          try {
-            guiController.openLobby();
-          } catch (IOException e) {
-            e.printStackTrace();
-          }
-        });
+        Platform.runLater(
+            () -> {
+              try {
+                guiController.openLobby();
+              } catch (IOException e) {
+                e.printStackTrace();
+              }
+            });
         break;
     }
   }
 
-  /**
-   * Sends a message to server to initalize to start the game.
-   */
+  /** Sends a message to server to initalize to start the game. */
   public void startGame() {
     Client.sendMessageToServer("startGame");
   }
 
-  /**
-   * Sends a message to server to initalize the drawing function of the game.
-   */
+  /** Sends a message to server to initalize the drawing function of the game. */
   public void draw() {
     Client.sendMessageToServer("draw");
   }
 
-  /**
-   * Sends a message to server with a combination, Client wants to play.
-   */
+  /** Sends a message to server with a combination, Client wants to play. */
   public void play(List<List<ImageView>> combinations) {
     StringBuilder builder = new StringBuilder();
     builder.append("play|");
@@ -281,8 +255,8 @@ public class ClientParser {
    * Sends a message to server with a combination, Client wants to play within a joker. //TODO
    * javadoc
    */
-  public void playSwapJoker(List<ImageView> tilesFromHand, List<List<ImageView>> oldComb,
-      List<List<ImageView>> newComb) {
+  public void playSwapJoker(
+      List<ImageView> tilesFromHand, List<List<ImageView>> oldComb, List<List<ImageView>> newComb) {
     StringBuilder builder = new StringBuilder();
     builder.append("playSwapJoker|");
     builder.append(GuiParser.parseToString(tilesFromHand));
@@ -305,7 +279,9 @@ public class ClientParser {
    * @param oldBoardCombs List of board combinations before alteration.
    * @param newBoardCombs List of board combinations that should be altered.
    */
-  public void playHandWithBoard(List<ImageView> tilesFromHand, List<List<ImageView>> oldBoardCombs,
+  public void playHandWithBoard(
+      List<ImageView> tilesFromHand,
+      List<List<ImageView>> oldBoardCombs,
       List<List<ImageView>> newBoardCombs) {
     StringBuilder builder = new StringBuilder();
     builder.append("playHandWithBoard|");
@@ -330,7 +306,9 @@ public class ClientParser {
    * @param tilesFromBoard combination on the board where tiles from hand should be added.
    * @param newCombination new combination that should be created.
    */
-  public void playL(List<ImageView> tilesFromHand, List<ImageView> tilesFromBoard,
+  public void playL(
+      List<ImageView> tilesFromHand,
+      List<ImageView> tilesFromBoard,
       List<List<ImageView>> newCombination) {
 
     StringBuilder builder = new StringBuilder();
@@ -349,7 +327,6 @@ public class ClientParser {
 
     Client.sendMessageToServer(builder.toString());
   }
-
 
   /**
    * Request to server to add tiles to an existing comb on the right.
@@ -380,47 +357,27 @@ public class ClientParser {
     Client.sendMessageToServer(builder.toString());
   }
 
-  /**
-   * Signalizes the server, that client has finished his turn.
-   */
+  /** Signalizes the server, that client has finished his turn. */
   public void finishedTurn() {
     Client.sendMessageToServer("finishedTurn");
-  }
-
-
-  public void isFirstTurn() {
-    Client.sendMessageToServer("isFirstTurn");
-  }
-
-  /**
-   * Sends a message to server to get nextPLayersID.
-   */
-  public void getNextPlayerID() {
-    Client.sendMessageToServer("getNextPlayerID");
-  }
-
-  // public void getPlayerID() { Client.sendMessageToServer("getPlayerID"); }
-
-  public void numberOfPlayers() {
-    Client.sendMessageToServer("numberOfPlayers");
   }
 
   public void getPlayerPoints() {
     Client.sendMessageToServer("calculatePointsForRegisteredPlayers");
   }
 
-  // Received messages from Server.
 
   public void notifyWin() {
     Client.sendMessageToServer("notifyWin");
   }
 
   public void setAgeFor(String age) {
-      Integer.parseInt(age);
-    Client.sendMessageToServer("setAge|" + age);}
+    Integer.parseInt(age);
+    Client.sendMessageToServer("setAge|" + age);
+  }
 
-    public void newGame(){
+  public void newGame() {
     Client.sendMessageToServer("newGame");
     Client.sendMessageToServer("startGame");
-    }
+  }
 }
