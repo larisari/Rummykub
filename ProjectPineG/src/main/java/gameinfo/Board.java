@@ -49,7 +49,7 @@ class Board {
   }
 
   List<List<GITile>> getActiveCombos() {
-    return this.combos;
+    return combos;
   }
 
   void addCombo(List<GITile> combo) {
@@ -86,7 +86,7 @@ class Board {
         .flatMap(List::stream)
         .collect(Collectors.toList());
 
-    this.combos = new ArrayList<>();
+    combos = new ArrayList<>();
     bag.setTiles(boardTiles);
   }
 }
