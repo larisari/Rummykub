@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 import network.ClientParser;
 
 /**
@@ -41,6 +42,7 @@ public class LoseScreenController extends EndScreen {
   private int playerID;
   private ClientParser parser;
   private MediaPlayer mediaPlayer;
+  private Stage stage;
 
   /**
    * Initialises ClientParser for communication between network and gui.
@@ -59,6 +61,9 @@ public class LoseScreenController extends EndScreen {
     }
   }
 
+  void setStage(Stage thisStage){
+    this.stage = thisStage;
+  }
 
   void setNumberOfPlayers(Integer numberOfPlayers) {
     this.numberOfPlayers = numberOfPlayers;

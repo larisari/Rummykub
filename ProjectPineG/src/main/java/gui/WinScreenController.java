@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 import network.ClientParser;
 
 /**
@@ -37,6 +38,7 @@ public class WinScreenController extends EndScreen {
   private ClientParser parser;
   private int numberOfPlayers;
   private MediaPlayer mediaPlayer;
+  private Stage stage;
 
   /**
    * Initialises ClientParser for communication between network and gui.
@@ -55,6 +57,10 @@ public class WinScreenController extends EndScreen {
     if (playerID == 0) {
       newGame.setVisible(true);
     }
+  }
+
+  void setStage(Stage thisStage){
+    this.stage = thisStage;
   }
 
   void setNumberOfPlayers(Integer numberOfPlayers) {
@@ -161,6 +167,8 @@ public class WinScreenController extends EndScreen {
   @FXML
   private void handleNewGame() {
     parser.newGame();
+    stage.close();
+
   }
 
   void playMusic() {
