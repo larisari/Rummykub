@@ -174,5 +174,9 @@ public interface GIGameInfo {
    */
   Integer getStartingPlayerId();
 
+  /**
+   * Use this method to obtain the up to date board.
+   * @return current board.
+   */
   List<List<GITile>> getCurrentBoard();
 }
