@@ -74,11 +74,12 @@ public class GuiParser {
 
 
   List<List<Image>> parseStringToWholeBoard(String message){
-    List<List<Image>> endList = new ArrayList<>();
 
     if (message.equals("list<")) {
-      return endList;
+      return new ArrayList<>();
     } else {
+      List<List<Image>> endList = new ArrayList<>();
+
       String[] tempS = message.split("<");
       String[] combs = tempS[1].split(";");
       for (int i = 0; i < combs.length; i++){
