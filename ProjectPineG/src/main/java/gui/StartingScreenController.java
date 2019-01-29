@@ -170,8 +170,8 @@ public class StartingScreenController {
   }
 
   /**
-   * Opens confirmation alert if user tries to exit application by pressing "x". If user confirms
-   * exit, the application is exited.
+   * Opens confirmation alert if user tries to exit application by pressing "x". If user confirms,
+   * the application is exited.
    *
    * @param event - WindowEvent if user presses "x" icon.
    */
@@ -189,6 +189,7 @@ public class StartingScreenController {
       System.exit(0);
     }
   }
+
 
   /**
    * For validating age input.

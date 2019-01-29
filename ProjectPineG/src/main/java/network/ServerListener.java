@@ -9,27 +9,63 @@ import java.net.SocketException;
 import java.util.List;
 import java.util.logging.Logger;
 
-/**
- * The Server Listener starts the Server and handles incoming client-connection.
- */
+/** Server Thread, which opens the Server and handles incoming client connections. */
 public class ServerListener extends Thread {
 
-  static List<ServerClientCommunication> clients;
-  boolean isRunning = true;
-  private  static int clientID;
+  private static List<ServerClientCommunication> clients;
+  private static int clientID;
   private static Logger log = Logger.getLogger(ServerListener.class.getName());
   private static ServerSocket ss;
+  private boolean isRunning = true;
 
-  public ServerListener(List<ServerClientCommunication> listOfClients) {
+  /**
+   * Constructor, which safes all clients and sets an ID according to the number of registered
+   * clients.
+   *
+   * @param listOfClients List of all connected clients.
+   */
+  ServerListener(List<ServerClientCommunication> listOfClients) {
+    log.info("Größe der Liste " + listOfClients.size());
     clients = listOfClients;
     clientID = clients.size();
     log.info("Listener Start...");
-
   }
 
-
-  public static List<ServerClientCommunication> getClients() {
+  /**
+   * Getter of all registered clients.
+   *
+   * @return a list of all registered clients.
+   */
+  static List<ServerClientCommunication> getClients() {
     return clients;
+  }
+
+  /** Interrupts the running Server Thread and closes the serverSocket. */
+  private static void killServer() {
+    try {
+      log.info("[Server] Serversocket wird geschlossen.");
+      ss.close();
+      ss = null;
+      log.info("[Server] Server wurde geschlossen.");
+    } catch (IOException e) {
+      log.info("[Server] kann nicht geclosed werden.");
+      e.printStackTrace();
+    }
+  }
+
+  /** removes all clients and closes the server. */
+  private static void restartListener() {
+    killServer();
+    clients.forEach(
+        client -> {
+          try {
+            client.getS().close();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
+
+    clients.clear();
   }
 
   @Override
@@ -37,9 +73,7 @@ public class ServerListener extends Thread {
 
     try {
 
-
       ss = new ServerSocket(48410);
-
 
       log.info("[Server] wird initialisiert...");
 
@@ -53,15 +87,15 @@ public class ServerListener extends Thread {
             log.info("[Server] neuer Client wurde aufgenommen " + s);
             System.out.println("[Server] Connection aufgebaut  " + s.isConnected());
 
-
             DataInputStream in = new DataInputStream(s.getInputStream());
-            DataOutputStream out = new DataOutputStream(s.getOutputStream()); // hier ist Client-Objekt dann vollständig connected
+            DataOutputStream out =
+                new DataOutputStream(
+                    s.getOutputStream()); // hier ist Client-Objekt dann vollständig connected
 
             log.info("[Server] erstelle eigenen Thread für Client " + clientID);
             // create a new thread object
             ServerClientCommunication t = new ServerClientCommunication(s, in, out, clientID);
 
-            // Invoking the start() method
             t.start();
 
             clients.add(t);
@@ -73,7 +107,6 @@ public class ServerListener extends Thread {
             clients.get(clients.size() - 1).sendMessageToClient("loadLoadingScreen|" + clientID);
             Server.broadcastToAllClients("addJoined|" + clientID);
             clientID++;
-
           }
         } catch (SocketException e) {
           log.info("[Server] Verbindung zu Client " + clientID + " verloren...");
@@ -87,31 +120,5 @@ public class ServerListener extends Thread {
     } catch (IOException e) {
       e.printStackTrace();
     }
-  }
-
-  public static void killServer() {
-    try{
-      log.info("[Server] Thread wird unterbrochen.");
-      currentThread().interrupt();
-      log.info("[Server] Serversocket wird geschlossen.");
-      ss.close();
-      ss.setReuseAddress(true);
-
-
-      log.info("[Server] Server wurde geschlossen.");
-    }catch (IOException e) {
-      log.info("[Server] kann nicht geclosed werden.");
-      e.printStackTrace();
-
-    }
-
-  }
-
-
-  public static void restartListener() {
-    for(int i = clients.size()-1; i >= 0; i--) {
-      clients.remove(i);
-    }
-    killServer();
   }
 }

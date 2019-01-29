@@ -86,6 +86,7 @@ class Board {
         .flatMap(List::stream)
         .collect(Collectors.toList());
 
+    this.combos.clear();
     combos = new ArrayList<>();
     bag.setTiles(boardTiles);
   }

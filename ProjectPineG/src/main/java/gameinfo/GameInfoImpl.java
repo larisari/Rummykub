@@ -1,13 +1,15 @@
+/**
+ * This Class shows an exemplary implementation of the GIGameInfo interface. It serves as a central
+ * management class for the model.
+ */
 package gameinfo;
 
 import gameinfo.util.GIPoints;
 import gameinfo.util.GITile;
 import gameinfo.util.GITuple;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.logging.Logger;
 
 class GameInfoImpl extends Thread implements GIGameInfo {
@@ -43,9 +45,9 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       hasRegisteredPlayers = true;
     } else {
       log.info(
-              "Registration of Player "
-                      + id
-                      + " has failed. No more players can be registered in the model.");
+          "Registration of Player "
+              + id
+              + " has failed. No more players can be registered in the model.");
     }
   }
 
@@ -160,27 +162,6 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     }
   }
 
-  private List<GITile> getStackFor(Integer id, List<GITile> customTiles) {
-    // .get() is allowed here because it is always called after isPresent check !!!
-    Player player = gameFlow.getPlayerBy(id).get();
-    List<GITile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK, customTiles);
-    player.put(stack);
-    return stack;
-  }
-
-  private GITile getTileFor(Integer id, GITile customTile) {
-    // .get() is allowed here because it is always called after isPresent check !!!
-    Player player = gameFlow.getPlayerBy(id).get();
-
-    if (board.getTileFromBag(customTile).isPresent()) {
-      GITile tile = board.getTileFromBag(customTile).get();
-      player.put(tile);
-      return tile;
-    } else {
-      throw new IllegalArgumentException("Tile is not in stack anymore.");
-    }
-  }
-
   @Override
   public Optional<GITuple<Integer, List<GITile>>> getAllTilesBy(Integer id) {
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
@@ -225,10 +206,10 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   @Override
   public Optional<GITuple<Integer, Boolean>> play(
-          List<GITile> tilesFromHand,
-          List<GITile> tilesFromBoard,
-          List<List<GITile>> newCombinations,
-          Integer id) {
+      List<GITile> tilesFromHand,
+      List<GITile> tilesFromBoard,
+      List<List<GITile>> newCombinations,
+      Integer id) {
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
@@ -257,7 +238,11 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   }
 
   @Override
-  public Optional<GITuple<Integer, Boolean>> manipulateBoardWith(List<GITile> tilesFromHand, List<List<GITile>> oldCombinations, List<List<GITile>> newCombinations, Integer id) {
+  public Optional<GITuple<Integer, Boolean>> manipulateBoardWith(
+      List<GITile> tilesFromHand,
+      List<List<GITile>> oldCombinations,
+      List<List<GITile>> newCombinations,
+      Integer id) {
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (!optionalPlayer.isPresent()) {
@@ -294,7 +279,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     }
 
     GITuple<Integer, GIPoints> returnValue =
-            new GITuple<>(id, optionalPlayer.get().calculatePointsOfHand());
+        new GITuple<>(id, optionalPlayer.get().calculatePointsOfHand());
     return Optional.of(returnValue);
   }
 
@@ -335,15 +320,6 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     return gameFlow.getPlayerPoints();
   }
 
-  private List<GITile> getStackFor(Integer id) {
-    // .get() is allowed here because it is always called after isPresent check !!!
-    Player player = gameFlow.getPlayerBy(id).get();
-
-    List<GITile> stack = board.drawRandomStackWith(NUMBER_OF_TILES_IN_STACK);
-    player.put(stack);
-    return stack;
-  }
-
   @Override
   public void setAgeFor(Integer id, int age) {
     if (gameFlow.getPlayerBy(id).isPresent()) {
@@ -361,6 +337,12 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     return board.getActiveCombos();
   }
 
+  /**
+   * Method to draw a random tile for a player.
+   *
+   * @param id of the player who gets a tile.
+   * @return the randomly pulled GITile object.
+   */
   private GITile getTileFor(Integer id) {
     // .get() is allowed here because it is always called after isPresent check !!!
     Player player = gameFlow.getPlayerBy(id).get();
@@ -371,15 +353,78 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     return tile;
   }
 
+  /**
+   * Method to place one or several valid combinations on the game board.
+   *
+   * @param combinations to be put on the board.
+   * @param player to demand the move.
+   */
   private void putComboOnBoard(List<List<GITile>> combinations, Player player) {
     combinations.forEach(
-            combination -> {
-              board.addCombo(combination);
-              player.remove(combination);
-            });
+        combination -> {
+          board.addCombo(combination);
+          player.remove(combination);
+        });
   }
 
+  /**
+   * Method to check whether the game board's bag is empty.
+   *
+   * @return true, in case the bag is empty and false otherwise.
+   */
   private boolean bagIsEmpty() {
     return board.bagIsEmpty();
+  }
+
+  /**
+   * This method distributes a random stack to the player whose given id matches.
+   *
+   * @param id of the player to get a stack.
+   * @return List of tiles to be distributed.
+   */
+  private List<GITile> getStackFor(Integer id) {
+    // .get() is allowed here because it is always called after isPresent check !!!
+    Player player = gameFlow.getPlayerBy(id).get();
+
+    List<GITile> stack = board.drawRandomStackWith(NUMBER_OF_TILES_IN_STACK);
+    player.put(stack);
+    return stack;
+  }
+
+  /**
+   * A method for testing purposes only. It helps obtaining a custom stack in form of a List of
+   * GITiles.
+   *
+   * @param id of the player to get a stack.
+   * @param customTiles to be passed to the player.
+   * @return List of tiles for the player.
+   */
+  private List<GITile> getStackFor(Integer id, List<GITile> customTiles) {
+    // .get() is allowed here because it is always called after isPresent check !!!
+    Player player = gameFlow.getPlayerBy(id).get();
+    List<GITile> stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK, customTiles);
+    player.put(stack);
+    return stack;
+  }
+
+  /**
+   * A method for testing purpose only. It distributes a determined tile for the player whose id
+   * matches with the passed one.
+   *
+   * @param id of the player to get a custom tile.
+   * @param customTile GITile to be distributed to the player.
+   * @return GITile that is distributed to the player.
+   */
+  private GITile getTileFor(Integer id, GITile customTile) {
+    // .get() is allowed here because it is always called after isPresent check !!!
+    Player player = gameFlow.getPlayerBy(id).get();
+
+    if (board.getTileFromBag(customTile).isPresent()) {
+      GITile tile = board.getTileFromBag(customTile).get();
+      player.put(tile);
+      return tile;
+    } else {
+      throw new IllegalArgumentException("Tile is not in stack anymore.");
+    }
   }
 }

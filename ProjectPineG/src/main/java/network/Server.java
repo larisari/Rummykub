@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+
+/**
+ * Initalize a ServerListener and a new game.
+ */
 public class Server {
   static GIGameInfo gameInfo;
   private static Logger log = Logger.getLogger(Server.class.getName());
@@ -19,7 +23,7 @@ public class Server {
 
 
     try {
-      List<ServerClientCommunication> listOfClients = new ArrayList<ServerClientCommunication>();
+      List<ServerClientCommunication> listOfClients = new ArrayList<>();
 
       gameInfo = GIFactory.make();
       log.info("Spiel wird geladen....");
@@ -37,7 +41,7 @@ public class Server {
    * sends a message to all connected clients.
    * @param message message, server sends to clients.
    */
-  public static void broadcastToAllClients(String message) {
+  static void broadcastToAllClients(String message) {
     List<ServerClientCommunication> clients = ServerListener.getClients();
 
 

@@ -36,6 +36,7 @@ public class LoadingScreenController {
   @FXML
   private Text player4Joined;
   private Stage startingStage = new Stage();
+  private Stage guiStage = new Stage();
   private ClientParser parser;
   private int playerID = 0;
 
@@ -141,19 +142,19 @@ public class LoadingScreenController {
     loader.setLocation((getClass().getResource("/clientgui.fxml")));
     Parent root = loader.load();
     Scene scene = new Scene(root);
-    Stage stage = new Stage(); //new Stage
-    stage.setResizable(false);
-    stage.setTitle("RUMMYKUB");
-    stage.setScene(scene);
-    stage.getScene().getWindow()
+    guiStage = new Stage(); //new Stage
+    guiStage.setResizable(false);
+    guiStage.setTitle("RUMMYKUB");
+    guiStage.setScene(scene);
+    guiStage.getScene().getWindow()
         .addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, this::closeWindowEvent);
-    stage.show();
+    guiStage.show();
     GuiController controller = loader.getController();
     controller.setNumberOfPlayers(numberOfPlayers);
     controller.setPlayerID(playerID);
     controller.setPlayerNames();
     controller.setPlayerBoards();
-    controller.setStage(stage);
+    controller.setStage(guiStage);
     controller.playMusic();
     loadingScreen.getScene().getWindow().hide();
     this.startingStage.close();
@@ -161,8 +162,8 @@ public class LoadingScreenController {
 
   }
   /**
-   * Opens confirmation alert if user tries to exit application by pressing "x". If user confirms
-   * exit, the application is exited.
+   * Opens confirmation alert if user tries to exit application by pressing "x".
+   * If user confirms exit, the application is closed.
    *
    * @param event - WindowEvent if user presses "x" icon.
    */
@@ -171,6 +172,7 @@ public class LoadingScreenController {
     ButtonType no = new ButtonType("No",
         ButtonBar.ButtonData.CANCEL_CLOSE);
     Alert alert = new Alert(AlertType.CONFIRMATION, "bla", yes, no);
+    alert.initOwner(guiStage);
     alert.setContentText("Do you really want to quit?");
     Optional<ButtonType> result = alert.showAndWait();
 
@@ -179,6 +181,16 @@ public class LoadingScreenController {
     } else if (result.isPresent() && result.get() == yes) {
       System.exit(0);
     }
+  }
+
+  /**
+   * Closes the loading screen if another player has quit the application.
+   */
+  public void closeLoadingScreen(){
+    loadingScreen.getScene().getWindow().hide();
+  Alert alert = new Alert(AlertType.CONFIRMATION, "Another Player quit the game!", ButtonType.OK);
+  alert.initOwner(loadingScreen.getScene().getWindow());
+  alert.showAndWait();
   }
 
 }
