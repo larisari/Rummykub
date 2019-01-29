@@ -528,18 +528,22 @@ public class GuiController {
    * @param comb - combination on the main board where tiles should be added.
    */
   private void addToFront(HBox comb) {
-    boardComb = comb;
-    List<ImageView> boardTiles = new ArrayList<>();
-    for (int i = 1; i < comb.getChildren().size() - 1; i++) {
-      boardTiles.add((ImageView) comb.getChildren().get(i));
+    if (!selectedTiles.isEmpty()) {
+      boardComb = comb;
+      List<ImageView> boardTiles = new ArrayList<>();
+      for (int i = 1; i < comb.getChildren().size() - 1; i++) {
+        boardTiles.add((ImageView) comb.getChildren().get(i));
+      }
+      List<List<ImageView>> newComb = new ArrayList<>();
+      List<ImageView> newCombination = new ArrayList<>();
+      newCombination.addAll(selectedTiles);
+      newCombination.addAll(boardTiles);
+      newComb.add(newCombination);
+      parser.playL(selectedTiles, boardTiles, newComb);
+    } else {
+      deleteAddToButtons();
+      cancelSelEffect();
     }
-    List<List<ImageView>> newComb = new ArrayList<>();
-    List<ImageView> newCombination = new ArrayList<>();
-    newCombination.addAll(selectedTiles);
-    newCombination.addAll(boardTiles);
-    newComb.add(newCombination);
-    parser.playL(selectedTiles, boardTiles, newComb);
-
   }
 
   /**
@@ -580,18 +584,22 @@ public class GuiController {
    * @param comb - combination on the main board where tiles should be added.
    */
   private void addToBack(HBox comb) {
-    boardComb = comb;
-    List<ImageView> boardTiles = new ArrayList<>();
-    for (int i = 1; i < comb.getChildren().size() - 1; i++) {
-      boardTiles.add((ImageView) comb.getChildren().get(i));
+    if (!selectedTiles.isEmpty()) {
+      boardComb = comb;
+      List<ImageView> boardTiles = new ArrayList<>();
+      for (int i = 1; i < comb.getChildren().size() - 1; i++) {
+        boardTiles.add((ImageView) comb.getChildren().get(i));
+      }
+      List<List<ImageView>> newComb = new ArrayList<>();
+      List<ImageView> newCombination = new ArrayList<>();
+      newCombination.addAll(boardTiles);
+      newCombination.addAll(selectedTiles);
+      newComb.add(newCombination);
+      parser.playR(selectedTiles, boardTiles, newComb);
+    } else {
+      deleteAddToButtons();
+      cancelSelEffect();
     }
-    List<List<ImageView>> newComb = new ArrayList<>();
-    List<ImageView> newCombination = new ArrayList<>();
-    newCombination.addAll(boardTiles);
-    newCombination.addAll(selectedTiles);
-    newComb.add(newCombination);
-    parser.playR(selectedTiles, boardTiles, newComb);
-
   }
 
   /**
