@@ -210,6 +210,11 @@ public class ServerParser {
     return parsedCombs;
   }
 
+  /**
+   * Parses a string to a list of lists of tiles.
+   * @param s - string to be parsed.
+   * @return a list of lists of tiles.
+   */
   static List<List<GITile>> parseStringToListListTileComb(String s) {
     List<List<GITile>> result = new ArrayList<>();
 //    s = s.substring(0,s.length()-1);
