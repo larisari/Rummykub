@@ -900,7 +900,7 @@ public class GuiController {
   /**
    * Plays notification sound if it's this players turn.
    */
-  private void playNotification(){
+  private void playNotification() {
     AudioClip notification = null;
     try {
       notification = new AudioClip(getClass().getResource("/audio/ding.mp3").toURI().toString());

@@ -59,7 +59,7 @@ public class WinScreenController extends EndScreen {
     }
   }
 
-  void setStage(Stage thisStage){
+  void setStage(Stage thisStage) {
     this.stage = thisStage;
   }
 
@@ -164,6 +164,9 @@ public class WinScreenController extends EndScreen {
 
   }
 
+  /**
+   * Handles user pressing "new game" button. Requests new game to be opened. Closes winner screen.
+   */
   @FXML
   private void handleNewGame() {
     parser.newGame();

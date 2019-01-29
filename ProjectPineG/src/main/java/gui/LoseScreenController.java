@@ -54,14 +54,14 @@ public class LoseScreenController extends EndScreen {
   /**
    * Sets "new game" button visible for host.
    */
-  void setNewGameBtn(){
+  void setNewGameBtn() {
     System.out.println(playerID + " this playerID");
-    if (playerID == 0){
+    if (playerID == 0) {
       newGameL.setVisible(true);
     }
   }
 
-  void setStage(Stage thisStage){
+  void setStage(Stage thisStage) {
     this.stage = thisStage;
   }
 
@@ -178,9 +178,12 @@ public class LoseScreenController extends EndScreen {
     }
   }
 
+  /**
+   * Handles user pressing "new game". Requests new game to be started.
+   */
   @FXML
-  private void handleNewGameL(){
-  parser.newGame();
+  private void handleNewGameL() {
+    parser.newGame();
   }
 
 
