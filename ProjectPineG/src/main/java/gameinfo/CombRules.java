@@ -78,7 +78,7 @@ class CombRules {
   }
 
   private boolean isValidInternal(List<GITile> combination) {
-    if (combination.size() < 3) {
+    if (combination.size() < 3 || combination.size() > 13) {
       return false;
     }
 
