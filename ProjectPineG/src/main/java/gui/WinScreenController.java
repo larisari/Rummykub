@@ -28,15 +28,14 @@ public class WinScreenController extends EndScreen {
   private Label player3;
   @FXML
   private Label player4;
-@FXML
-private Button newGame;
+  @FXML
+  private Button newGame;
   private int p1Points = 0;
   private int p2Points = 0;
   private int p3Points = 0;
   private int p4Points = 0;
   private ClientParser parser;
   private int numberOfPlayers;
-  private int playerID;
   private MediaPlayer mediaPlayer;
 
   /**
@@ -46,19 +45,20 @@ private Button newGame;
     parser = new ClientParser(this);
   }
 
-  @FXML
-  private void initialize(){
-    if (playerID == 0){
+  /**
+   * sets "new game" button visible for host.
+   *
+   * @param playerID of this gui's player.
+   */
+  void setNewGame(int playerID) {
+    System.out.println(playerID + " this playerID");
+    if (playerID == 0) {
       newGame.setVisible(true);
     }
   }
 
   void setNumberOfPlayers(Integer numberOfPlayers) {
     this.numberOfPlayers = numberOfPlayers;
-  }
-
-  void setID(Integer ID) {
-    this.playerID = ID;
   }
 
   void setPlayerPoints(List<Integer> points) {
@@ -159,7 +159,7 @@ private Button newGame;
   }
 
   @FXML
-  private void handleNewGame(){
+  private void handleNewGame() {
     parser.newGame();
   }
 

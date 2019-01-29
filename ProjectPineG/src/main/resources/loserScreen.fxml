@@ -57,7 +57,7 @@
             <Font name="Franklin Gothic Medium" size="23.0" />
          </font>
       </Label>
-      <Button fx:id="newGameL" layoutX="552.0" layoutY="602.0" mnemonicParsing="false" onMouseClicked="#handleNewGameL" opacity="0.0" text="New Game">
+      <Button fx:id="newGameL" layoutX="552.0" layoutY="602.0" mnemonicParsing="false" onMouseClicked="#handleNewGameL" text="New Game" visible="false">
          <font>
             <Font name="Franklin Gothic Medium" size="22.0" />
          </font>

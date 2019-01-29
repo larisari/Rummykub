@@ -164,12 +164,12 @@ public class ServerParser {
         int age = Integer.parseInt(receivedMessage[1]);
         Server.gameInfo.setAgeFor(id, age);
         break;
+
       case "newGame":
         Server.gameInfo = GIFactory.make();
         for (ServerClientCommunication client : clients) {
           Server.gameInfo.registerBy(client.getClientID());
         }
-        Server.broadcastToAllClients("responseStartGame");
         break;
     }
   }

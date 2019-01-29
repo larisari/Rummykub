@@ -404,11 +404,6 @@ public class GuiController {
     for (List<ImageView> combination : selectedCombinations) {
       moveTilesAux(combination);
     }
-
-    if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
-      parser.getPlayerPoints();
-      parser.notifyWin();
-    }
   }
 
   /**
@@ -726,7 +721,7 @@ public class GuiController {
     }
     if (board.intersects(
         board.sceneToLocal(selectionBoard.localToScene(selectionBoard.getBoundsInLocal())))) {
-      double reduce = 0.85;
+      double reduce = 0.9;
       tileHeight *= reduce;
       tileWidth *= reduce;
       for (int i = 0; i < board.getChildren().size(); i++) {
@@ -781,6 +776,7 @@ public class GuiController {
         imageView.setDisable(true);
       }
       board.getChildren().add(box);
+      updateBoard();
 
     }
   }
@@ -998,8 +994,8 @@ public class GuiController {
     stage.setResizable(false);
     stage.show();
     WinScreenController winScreenController = loader.getController();
-    winScreenController.setID(playerID);
     winScreenController.setNumberOfPlayers(numberOfPlayers);
+    winScreenController.setNewGame(playerID);
     winScreenController.playMusic();
     winScreenController.setPlayerPoints(points);
     winScreenController.setPointsNamesVisible();
@@ -1023,6 +1019,7 @@ public class GuiController {
     LoseScreenController loController = loader.getController();
     loController.setID(playerID);
     loController.setNumberOfPlayers(numberOfPlayers);
+    loController.setNewGameBtn();
     loController.playMusic();
     loController.setPlayerPoints(points);
     loController.setPointsNamesVisible();
