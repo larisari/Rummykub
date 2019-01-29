@@ -87,10 +87,7 @@ class Board {
         .collect(Collectors.toList());
 
     this.combos.clear();
-    log.info("new board (should be empty): " + getActiveCombos());
-
     combos = new ArrayList<>();
-
     bag.setTiles(boardTiles);
   }
 }

@@ -40,6 +40,8 @@ class Bag {
   }
 
   GITile drawRandomTile() {
+    //TODO handle iob- exception, in case player draw until the bag is empty
+    // but no tiles were put on the board
     int position = (int) (Math.random() * (this.tiles.size() - 1));
     GITile tile = this.tiles.get(position);
     this.tiles.remove(position);
