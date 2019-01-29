@@ -803,9 +803,9 @@ public class GuiController {
   }
 
   /**
-   * Returns all tiles from the player's hand.
+   * Returns all tiles from the players hand.
    *
-   * @return all tiles from the player's hand.
+   * @return all tiles from the players hand.
    */
   private List<ImageView> getTilesFromHand() {
     List<ImageView> handTiles = new ArrayList<>();
@@ -834,7 +834,7 @@ public class GuiController {
   }
 
   /**
-   * Gets called if its this player's turn, enables button and tile control. Plays short
+   * Gets called if it's this players turn, enables button and tile control. Plays short
    * notification sound.
    */
   public void enableControl() {
@@ -847,17 +847,7 @@ public class GuiController {
     bag.setDisable(false);
     enableTilesOnHand();
     enableTilesOnBoard();
-
-    AudioClip notification = null;
-    try {
-      notification = new AudioClip(getClass().getResource("/audio/ding.mp3").toURI().toString());
-    } catch (URISyntaxException e) {
-      e.printStackTrace();
-    }
-    if (notification != null) {
-      notification.setVolume(0.3);
-      notification.play();
-    }
+    playNotification();
   }
 
   /**
@@ -874,7 +864,7 @@ public class GuiController {
   }
 
   /**
-   * Enables all tiles on the player's hand.
+   * Enables all tiles on the players hand.
    */
   private void enableTilesOnHand() {
     for (int i = 0; i < topHand.getChildren().size(); i++) {
@@ -901,6 +891,22 @@ public class GuiController {
       mediaPlayer = new MediaPlayer(media);
       mediaPlayer.setOnEndOfMedia(() -> mediaPlayer.seek(Duration.ZERO));
       mediaPlayer.play();
+    }
+  }
+
+  /**
+   * Plays notification sound if it's this players turn.
+   */
+  private void playNotification(){
+    AudioClip notification = null;
+    try {
+      notification = new AudioClip(getClass().getResource("/audio/ding.mp3").toURI().toString());
+    } catch (URISyntaxException e) {
+      e.printStackTrace();
+    }
+    if (notification != null) {
+      notification.setVolume(0.3);
+      notification.play();
     }
   }
 
