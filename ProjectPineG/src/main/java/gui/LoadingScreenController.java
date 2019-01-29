@@ -188,10 +188,9 @@ public class LoadingScreenController {
    */
   public void closeLoadingScreen(){
     loadingScreen.getScene().getWindow().hide();
-  //  Alert alert = new Alert(AlertType.CONFIRMATION,
-  //      "Another Player quit the game!", ButtonType.OK);
-  //  alert.initOwner(loadingScreen.getScene().getWindow());
-  //  alert.showAndWait();
+  Alert alert = new Alert(AlertType.CONFIRMATION, "Another Player quit the game!", ButtonType.OK);
+  alert.initOwner(loadingScreen.getScene().getWindow());
+  alert.showAndWait();
   }
 
 }
