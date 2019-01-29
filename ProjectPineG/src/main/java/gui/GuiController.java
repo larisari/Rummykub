@@ -944,11 +944,10 @@ public class GuiController {
   public void closeGame() {
     this.stage.close();
     mediaPlayer.stop();
-    connectionLost();
   }
 
   /**
-   * Loads starting screen.
+   * Loads starting screen if another user has quit the game.
    *
    * @throws IOException if some error occurs while loading fxml file.
    */
@@ -967,16 +966,12 @@ public class GuiController {
     primaryStage.getScene().getWindow()
         .addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, ControllerUtil::closeWindowEvent);
     controller.setStage(primaryStage);
-  }
-
-  /**
-   * Alerts player if another player has quit the game.
-   */
-  private void connectionLost() {
     Alert alert = new Alert(AlertType.CONFIRMATION,
         "Another Player quit the game!", ButtonType.OK);
+    alert.initOwner(primaryStage);
     alert.showAndWait();
   }
+
 
   /**
    * Gets called if user has won, loads winnerScreen and closes game window.

@@ -190,6 +190,7 @@ public class StartingScreenController {
     }
   }
 
+
   /**
    * For validating age input.
    *
