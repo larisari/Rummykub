@@ -995,6 +995,7 @@ public class GuiController {
     WinScreenController winScreenController = loader.getController();
     winScreenController.setNumberOfPlayers(numberOfPlayers);
     winScreenController.setNewGame(playerID);
+    winScreenController.setStage(stage);
     winScreenController.playMusic();
     winScreenController.setPlayerPoints(points);
     winScreenController.setPointsNamesVisible();
@@ -1018,6 +1019,7 @@ public class GuiController {
     LoseScreenController loController = loader.getController();
     loController.setID(playerID);
     loController.setNumberOfPlayers(numberOfPlayers);
+    loController.setStage(stage);
     loController.setNewGameBtn();
     loController.playMusic();
     loController.setPlayerPoints(points);

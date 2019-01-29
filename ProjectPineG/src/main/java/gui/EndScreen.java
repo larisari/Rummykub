@@ -1,6 +1,7 @@
 package gui;
 
 import java.util.List;
+import javafx.stage.Stage;
 
 /**
  * Wrapper class for end screens.
@@ -13,6 +14,12 @@ abstract class EndScreen {
    * @param numberOfPlayers - number of players.
    */
   abstract void setNumberOfPlayers(Integer numberOfPlayers);
+
+  /**
+   * For forwarding stage to its controller.
+   * @param stage - to be forwarded.
+   */
+  abstract void setStage(Stage stage);
 
   /**
    * Sets points for each player.
