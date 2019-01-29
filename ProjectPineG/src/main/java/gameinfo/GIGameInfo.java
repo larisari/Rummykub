@@ -39,8 +39,7 @@ public interface GIGameInfo {
   void setAgeFor(Integer id, int age);
 
   /**
-   * Use this method to start the game. Keep in mind, that from now on no
-   * other player can join the
+   * Use this method to start the game. Keep in mind, that from now on no other player can join the
    * game and sign in.
    */
   void startGame();
@@ -81,12 +80,11 @@ public interface GIGameInfo {
   Optional<Integer> getNextPlayerId();
 
   /**
-   * Use this method to check whether the passed id matches the current
-   * player's id.
+   * Use this method to check whether the passed id matches the current player's id.
    *
    * @param id to be checked.
-   * @return a GITuple<id,true> if the player is valid, a GITuple<id,false>
-   *   if the id does not match and an Optional.empty otherwise.
+   * @return a GITuple<id,true> if the player is valid, a GITuple<id,false> if the id does not match
+   *     and an Optional.empty otherwise.
    */
   Optional<GITuple<Integer, Boolean>> isValidPlayerBy(Integer id);
 
@@ -94,56 +92,47 @@ public interface GIGameInfo {
    * Use this method is check if it's the first turn of a player.
    *
    * @param id of the player to be checked for first turn.
-   * @return the parameter id if it's the first turn of the player. If the
-   * player's id is not registered in the model an Optional.empty() is returned.
+   * @return the parameter id if it's the first turn of the player. If the player's id is not
+   *     registered in the model an Optional.empty() is returned.
    */
   Optional<GITuple<Integer, Boolean>> isFirstTurnBy(Integer id);
 
   /**
-   * Use this method to draw a stack (containing 14 Tiles) for a Player id if
-   * it's the players first draw or else a single tile. It also automatically
-   * ends and calculates the next player's turn.
+   * Use this method to draw a stack (containing 14 Tiles) for a Player id if it's the players first
+   * draw or else a single tile. It also automatically ends and calculates the next player's turn.
    *
    * @param id for which the Stack/Tile is drawn for.
-   * @return the id for which the stack/tile was drawn fro and the tiles as a
-   * list. If an
+   * @return the id for which the stack/tile was drawn fro and the tiles as a list. If an
    *     Optional.empty() is returned the id is not registered in the model.
    */
   Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id);
 
   /**
-   * Use this method to validate a combination for a player by its id. If the
-   * combination is valid it is saved in the model and put on the board. If
-   * it is not valid nothing happens in the model but false is returned. More
-   * than just one combination can be played with this method. If one of these
-   * combinations is invalid it will change nothing in the model and return
-   * false.
+   * Use this method to validate a combination for a player by its id. If the combination is valid
+   * it is saved in the model and put on the board. If it is not valid nothing happens in the model
+   * but false is returned. More than just one combination can be played with this method. If one of
+   * these combinations is invalid it will change nothing in the model and return false.
    *
    * @param combinations to be checked for validity.
    * @param id of the player to play the combination.
-   * @return the id by which the combinations were played, and whether the
-   * combinations were valid
-   *     or not. If the player id is not registered in the model an Optional
-   *     .empty() is returned.
+   * @return the id by which the combinations were played, and whether the combinations were valid
+   *     or not. If the player id is not registered in the model an Optional .empty() is returned.
    */
-  Optional<GITuple<Integer, Boolean>> play(List<List<GITile>> combinations,
-                                           Integer id);
+  Optional<GITuple<Integer, Boolean>> play(List<List<GITile>> combinations, Integer id);
 
   /**
-   * Use this method to validate a combination for a player by its id, where
-   * tiles from the players hand are combined with tiles from the board. Only
-   * one new combination can be played with this method. Also the whole Board
-   * has to be checked for validity, because other combinations on the board
-   * can be manipulated. If the player id is not registered in the model an
-   * Optional.empty() is returned.
+   * Use this method to validate a combination for a player by its id, where tiles from the players
+   * hand are combined with tiles from the board. Only one new combination can be played with this
+   * method. Also the whole Board has to be checked for validity, because other combinations on the
+   * board can be manipulated. If the player id is not registered in the model an Optional.empty()
+   * is returned.
    *
    * @param tilesFromHand the tiles that where played from the players hand.
    * @param tilesFromBoard the combination to which the tilesFromHand were added
    * @param newCombinations all the combinations that are currently on the board.
    * @param id by which the combination is played.
-   * @return the id by which the combination was played, and whether the
-   * combination was valid or not. If the player id is not registered in the
-   * model an Optional.empty() is returned.
+   * @return the id by which the combination was played, and whether the combination was valid or
+   *     not. If the player id is not registered in the model an Optional.empty() is returned.
    */
   Optional<GITuple<Integer, Boolean>> play(
       List<GITile> tilesFromHand,
@@ -162,9 +151,8 @@ public interface GIGameInfo {
    * Use this method to signal the end of a players turn by its id.
    *
    * @param id the id for which the end of he turn is signaled.
-   * @return the id by for which the turn was ended and the whole board. If
-   * the player id is not registered in the model an Optional.empty() is
-   * returned.
+   * @return the id by for which the turn was ended and the whole board. If the player id is not
+   *     registered in the model an Optional.empty() is returned.
    */
   Optional<Integer> finishedTurnBy(Integer id);
 
@@ -172,20 +160,18 @@ public interface GIGameInfo {
    * Use this method to get all the tiles on the hand by an id.
    *
    * @param id for which the hand is requested.
-   * @return the id by which the hand was requested and all the tiles of the
-   * id. If the player id is not registered in the model an Optional.empty()
-   * is returned.
+   * @return the id by which the hand was requested and all the tiles of the id. If the player id is
+   *     not registered in the model an Optional.empty() is returned.
    */
   Optional<GITuple<Integer, List<GITile>>> getAllTilesBy(Integer id);
 
   /**
-   * Use this method to calculate the points for a player by its id. The
-   * winner has 0 points, thus all other points are negative integer.
+   * Use this method to calculate the points for a player by its id. The winner has 0 points, thus
+   * all other points are negative integer.
    *
    * @param id of the player whose points are wished.
-   * @return the id for which the points of the hand were requested and the
-   * points as negative GIPoints. If the player id is not registered in the
-   * model an Optional.empty() is returned.
+   * @return the id for which the points of the hand were requested and the points as negative
+   *     GIPoints. If the player id is not registered in the model an Optional.empty() is returned.
    */
   Optional<GITuple<Integer, GIPoints>> calculatePointsBy(Integer id);
 
@@ -197,8 +183,7 @@ public interface GIGameInfo {
   Optional<List<GITuple<Integer, GIPoints>>> calculatePointsForRegisteredPlayers();
 
   // TODO REMOVE -> testing purpose only
-  Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id,
-                                                  List<GITile> customTiles);
+  Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id, List<GITile> customTiles);
 
   /**
    * Use this method to obtain the up to date board.
