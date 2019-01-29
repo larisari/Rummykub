@@ -32,6 +32,15 @@ public class ServerClientCommunication extends Thread {
   }
 
   /**
+   * Getter for Socket.
+   *
+   * @return the socket.
+   */
+  public Socket getS() {
+    return s;
+  }
+
+  /**
    * Getter of client ID.
    *
    * @return the ID of this client.
@@ -59,20 +68,17 @@ public class ServerClientCommunication extends Thread {
       } catch (IOException e) {
         log.info("SEERVER CLIEEENT COMMUNICATIOOON ............");
 
-        // e.printStackTrace();
-        log.info("[Server] Client " + clientID + " hat die Verbindung getrennt");
-        disconnectClient();
-        log.info("[Server] Habe Client disconnected.");
-        Thread.currentThread().interrupt();
-        log.info("Thread wurde gestoppt");
-
-        log.info("[Server] an alle noch verbundenen Clients RESTART Programm gefordert...........");
-
         for (int i = 0; i < ServerListener.getClients().size(); i++) {
           if (i != clientID) {
             ServerListener.getClients().get(i).sendMessageToClient("Restart");
           }
         }
+        log.info("[Server] an alle noch verbundenen Clients RESTART Programm gefordert.");
+        log.info("[Server] Client " + clientID + " hat die Verbindung getrennt");
+        disconnectClient();
+        log.info("[Server] Habe Client disconnected.");
+        Thread.currentThread().interrupt();
+        log.info("Thread wurde gestoppt");
       }
     }
   }
@@ -83,10 +89,10 @@ public class ServerClientCommunication extends Thread {
    * @param message server-message to client.
    */
   void sendMessageToClient(String message) {
-    String messageToClient = message;
+
     if (s.isConnected()) {
       try {
-        out.writeUTF(messageToClient);
+        out.writeUTF(message);
         log.info("[Server] Nachricht an Client " + clientID + " geschickt.");
       } catch (SocketException e) {
         log.info(
@@ -100,7 +106,7 @@ public class ServerClientCommunication extends Thread {
   }
 
   /** Closes all streams and socket to a client. */
-  void disconnectClient() {
+  private void disconnectClient() {
     try {
       this.in.close();
       log.info("CLient in InputStream geschlossen");

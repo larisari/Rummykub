@@ -60,7 +60,7 @@
             </Label>
             <ScrollPane prefHeight="194.0" prefWidth="174.0">
                <content>
-                  <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click on the bag to draw tiles.&#10;Click on tiles to select them and press &quot;Enter new Selection&quot; to place a new combination on your selection board. You can place multiple combinations on your selection board before placing them on the main board by clicking &quot;Place Selection&quot;. You can add tiles to an existing combination on the main board by selecting the tiles you want to add and then clicking &quot;Add to existing combination&quot;. For swapping a tile from the hand with a joker on the board, first click on the tile on your hand, then on the joker and then press &quot;Swap Joker&quot;. You can cancel your selected tiles on your hand as well as on your selection board by pressing &quot;Cancel Selection&quot;. If you wish to end your turn, press &quot;End Turn&quot;. If you draw a tile, your turn ends automatically. You may only end your turn if you played tiles or drew from the bag. You can also hover over a button to learn more about its function." wrappingWidth="145.0">
+                  <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click on the bag to draw tiles.&#10;Click on multiple tiles to select a combination and press &quot;Enter new Selection&quot; to place a new combination on your selection board.&#10;You can place multiple combinations on your selection board before placing them on the main board by clicking &quot;Place Selection&quot;.&#10;You can add tiles to an existing combination on the main board by selecting the tiles you want to add and then clicking &quot;Add to existing combination&quot;. &#10;For combining tiles from your hand with tiles from the board, select all tiles which you want to be contained in the new combination and press &quot;Enter new Selection&quot;. This is only allowed if the remaining combinations on the board form valid combinations. &#10;For swapping a tile from the hand with a joker on the board, first click on the tile on your hand, then on the joker and then press &quot;Swap Joker&quot;. &#10;You can cancel your selected tiles on your hand as well as on your selection board by pressing &quot;Cancel Selection&quot;. &#10;If you wish to end your turn, press &quot;End Turn&quot;. &#10;If you draw a tile, your turn ends automatically. &#10;You may only end your turn if you played tiles or drew from the bag. &#10;You can also hover over a button to learn more about its function.&#10;To mute or unmute the music simply press on the speaker icon in the upper left corner." wrappingWidth="145.0">
                      <font>
                         <Font name="Franklin Gothic Medium" size="13.0" />
                      </font>
@@ -80,7 +80,7 @@
             </Label>
             <ScrollPane prefHeight="401.0" prefWidth="174.0">
                <content>
-                  <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The youngest player starts. Each player receives 14 random tiles by clicking on the bag. Each turn a player can choose to draw a tile or to place tiles on the board. &#10;Tiles may only be placed in certain combinations: &#10;1. Tiles with the same number (max. 4 tiles).&#10;2. tiles in acending order but in the same colour (starts again at 1 after 13), no max. limit. &#10;Each combination must consist of at least 3 tiles. At the first turn each player must place a combination worth at least 30 points. Each tile is worth its number. A joker has the worth of the number it should represent. &#10;At the end of the game the joker is worth 20 points. Tiles on the board may be rearranged. Players may add tiles to existing combinations on the board. At the end of a turn, only valid combinations of 3 tiles may lay on the board. &#10;The object of the game is to get rid of ones tiles as fast as possible. Once someone achieves that, the player can proclaim &quot;Rummykub&quot; and thus ends the game. The losers add up the value of their remaining tiles. The player with the highest score loses." wrappingWidth="145.0">
+                  <Text lineSpacing="1.0" strokeType="OUTSIDE" strokeWidth="0.0" text="The youngest player starts. &#10;Each player receives 14 random tiles by clicking on the bag. &#10;Each turn a player can choose to draw a tile or to place tiles on the board. &#10;Tiles may only be placed in certain combinations: &#10;1. Tiles with the same number (max. 4 tiles).&#10;2. Tiles in acending order but in the same colour (1 may be placed after 13), max limit of 13 tiles. &#10;Each combination must consist of at least 3 tiles. At the first turn each player must place a combination worth at least 30 points.&#10;Each tile is worth its number. &#10;A joker has the worth of the number it should represent. &#10;At the end of the game the joker is worth 20 points. &#10;Tiles on the board may be rearranged (only possible with &quot;Add to existing...&quot;. &#10;Players may add tiles to existing combinations on the board. &#10;At the end of a turn, only valid combinations of 3 tiles may lay on the board. &#10;The object of the game is to get rid of ones tiles before the other players. &#10;Once a player achieves that, the game ends and the host has the opportunity to start another game. &#10;The losers add up the value of their remaining tiles. &#10;The player with the highest score loses." wrappingWidth="145.0">
                      <font>
                         <Font name="Franklin Gothic Medium" size="13.0" />
                      </font>
@@ -107,7 +107,7 @@
         </Group>
         <Group fx:id="topBoard" layoutX="387.0" AnchorPane.leftAnchor="387.0" AnchorPane.rightAnchor="386.0" AnchorPane.topAnchor="0.0">
           <children>
-            <Rectangle accessibleRole="PARENT" arcHeight="10.0" arcWidth="10.0" height="84.0" stroke="WHITE" strokeType="INSIDE" width="285.0" />
+            <Rectangle accessibleRole="PARENT" arcHeight="10.0" arcWidth="10.0" height="84.0" stroke="#2e342e" strokeType="INSIDE" width="285.0" />
             <Label fx:id="playerTopName" alignment="CENTER" layoutX="95.0" layoutY="27.0" text="PLAYER 2" textAlignment="CENTER" textFill="WHITE">
               <font>
                 <Font name="Franklin Gothic Medium" size="22.0" />
@@ -117,7 +117,7 @@
         </Group>
       <Group fx:id="rightBoard" layoutX="871.0" layoutY="322.0" rotate="270.0" AnchorPane.bottomAnchor="221.5" AnchorPane.rightAnchor="-100.0" AnchorPane.topAnchor="322.0">
         <children>
-          <Rectangle accessibleRole="PARENT" arcHeight="10.0" arcWidth="10.0" height="84.0" stroke="WHITE" strokeType="INSIDE" width="285.0" />
+          <Rectangle accessibleRole="PARENT" arcHeight="10.0" arcWidth="10.0" height="84.0" stroke="#2e342e" strokeType="INSIDE" width="285.0" />
           <Label fx:id="playerRightName" layoutX="94.0" layoutY="30.0" text="PLAYER 3" textFill="WHITE">
             <font>
               <Font name="Franklin Gothic Medium" size="22.0" />
@@ -127,7 +127,7 @@
       </Group>
         <Group fx:id="leftBoard" layoutX="-93.0" layoutY="37.0" AnchorPane.bottomAnchor="221.5" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="221.5">
           <children>
-            <Rectangle accessibleRole="PARENT" arcHeight="10.0" arcWidth="10.0" height="84.0" layoutY="285.0" rotate="270.0" stroke="WHITE" strokeType="INSIDE" width="285.0" />
+            <Rectangle accessibleRole="PARENT" arcHeight="10.0" arcWidth="10.0" height="84.0" layoutY="285.0" rotate="270.0" stroke="#2e342e" strokeType="INSIDE" width="285.0" />
             <Label fx:id="playerLeftName" layoutX="104.0" layoutY="310.0" rotate="90.0" text="PLAYER 4" textAlignment="CENTER" textFill="WHITE">
               <font>
                 <Font name="Franklin Gothic Medium" size="22.0" />
@@ -135,7 +135,7 @@
             </Label>
           </children>
         </Group>
-          <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="231.0" style="-fx-background-color: white;">
+          <Pane styleClass="turnLabel" fx:id="turnLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="231.0" style="-fx-background-color: white; -fx-border-color: 4%;">
             <children>
               <Label fx:id="playerTurn" alignment="TOP_LEFT" layoutX="57.0" layoutY="14.0" text="Player 1's turn" textAlignment="CENTER">
                 <font>
@@ -156,19 +156,7 @@
                   </Tooltip>
                </tooltip>
           </Button>
-            <Button fx:id="endTurn" accessibleRole="PARENT" alignment="CENTER" layoutX="1.0" layoutY="659.0" mnemonicParsing="false" onMouseClicked="#handleEndTurn" prefHeight="136.0" prefWidth="89.0" styleClass="endTurnBtn" text="End Turn" AnchorPane.bottomAnchor="1.0">
-               <font>
-                  <Font name="Franklin Gothic Medium" size="16.0" />
-               </font>
-               <tooltip>
-                  <Tooltip prefHeight="70.0" prefWidth="100.0" text="Click here to end your turn." wrapText="true">
-                     <font>
-                        <Font name="Franklin Gothic Medium" size="13.0" />
-                     </font>
-                  </Tooltip>
-               </tooltip>
-            </Button>
-            <Button fx:id="cancelSelection" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="727.0" mnemonicParsing="false" onMouseClicked="#handleCancelSel" prefHeight="67.0" prefWidth="110.0" styleClass="cancelBtn" text="Cancel Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="2.0">
+            <Button fx:id="cancelSelection" accessibleRole="PARENT" alignment="CENTER" layoutX="1.0" layoutY="661.0" mnemonicParsing="false" onMouseClicked="#handleCancelSel" prefHeight="66.0" prefWidth="200.0" styleClass="cancelBtn" text="Cancel Selection" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="69.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>
@@ -210,7 +198,7 @@
                   </Tooltip>
                </tooltip>
             </Button>
-            <Button fx:id="swapJoker" accessibleRole="PARENT" alignment="CENTER" layoutX="91.0" layoutY="659.0" mnemonicParsing="false" onMouseClicked="#handleSwapJoker" prefHeight="65.0" prefWidth="110.0" styleClass="jokerBtn" text="Swap Joker" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="72.0">
+            <Button fx:id="swapJoker" accessibleRole="PARENT" alignment="CENTER" layoutX="1.0" layoutY="594.0" mnemonicParsing="false" onMouseClicked="#handleSwapJoker" prefHeight="66.0" prefWidth="200.0" styleClass="jokerBtn" text="Swap Joker" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="137.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>
@@ -227,6 +215,18 @@
                   <Image url="@images/unmute.png" />
                </image>
             </ImageView>
+            <Button fx:id="endTurn" accessibleRole="PARENT" alignment="CENTER" layoutX="1.0" layoutY="729.0" mnemonicParsing="false" onMouseClicked="#handleEndTurn" prefHeight="65.0" prefWidth="200.0" styleClass="endTurnBtn" text="End Turn">
+               <font>
+                  <Font name="Franklin Gothic Medium" size="16.0" />
+               </font>
+               <tooltip>
+                  <Tooltip prefHeight="70.0" prefWidth="100.0" text="Click here to end your turn." wrapText="true">
+                     <font>
+                        <Font name="Franklin Gothic Medium" size="13.0" />
+                     </font>
+                  </Tooltip>
+               </tooltip>
+            </Button>
          </children>
          <GridPane.margin>
             <Insets />
