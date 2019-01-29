@@ -249,6 +249,7 @@ public class ClientParser {
             e.printStackTrace();
           }
         });
+        break;
     }
   }
 
@@ -420,5 +421,6 @@ public class ClientParser {
 
     public void newGame(){
     Client.sendMessageToServer("newGame");
+    Client.sendMessageToServer("startGame");
     }
 }

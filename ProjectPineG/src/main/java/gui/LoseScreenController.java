@@ -49,9 +49,12 @@ public class LoseScreenController extends EndScreen {
     parser = new ClientParser(this);
   }
 
-  @FXML
-  private void initialize() {
-    if (playerID == 0) {
+  /**
+   * Sets "new game" button visible for host.
+   */
+  void setNewGameBtn(){
+    System.out.println(playerID + " this playerID");
+    if (playerID == 0){
       newGameL.setVisible(true);
     }
   }
@@ -61,6 +64,11 @@ public class LoseScreenController extends EndScreen {
     this.numberOfPlayers = numberOfPlayers;
   }
 
+  /**
+   * Gets called from GuiController to forward playerID.
+   *
+   * @param ID - this gui's client id.
+   */
   void setID(Integer ID) {
     this.playerID = ID;
   }
