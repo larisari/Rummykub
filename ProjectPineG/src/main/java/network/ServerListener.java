@@ -57,7 +57,7 @@ public class ServerListener extends Thread {
     clients.forEach(
         client -> {
           try {
-            client.s.close();
+            client.getS().close();
           } catch (IOException e) {
             e.printStackTrace();
           }

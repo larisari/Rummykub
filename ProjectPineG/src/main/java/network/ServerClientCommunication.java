@@ -13,8 +13,17 @@ public class ServerClientCommunication extends Thread {
   private static Logger log = Logger.getLogger(ServerClientCommunication.class.getName());
   private final DataInputStream in;
   private final DataOutputStream out;
-  public final Socket s;
+  private final Socket s;
   private final int clientID;
+
+  /**
+   * Getter for Socket.
+   * @return the socket.
+   */
+  public Socket getS() {
+    return s;
+  }
+
 
   /**
    * Thread object to a client.
