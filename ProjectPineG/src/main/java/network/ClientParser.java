@@ -19,6 +19,7 @@ public class ClientParser {
 
   // TODO CALL ALL METHODS OF CONTROLLER IN ITS THREAD (POSSIBLE MAIN)
 
+  private static boolean gameStarted;
   private static GuiController guiController;
   private static LoadingScreenController loadingScreenController;
   private static WinScreenController winScreenController;
@@ -61,10 +62,15 @@ public class ClientParser {
 
     switch (messageAsArray[0]) {
       case "Restart":
-        Platform.runLater(
-            () -> {
-              guiController.closeGame();
-            });
+        if(gameStarted) {
+          Platform.runLater(
+                  () -> {
+                    guiController.closeGame();
+                  });
+        } else {
+         // loadingScreenController.closeLoadingScreen();
+        }
+
         Platform.runLater(
             () -> {
               try {
@@ -76,6 +82,7 @@ public class ClientParser {
 
         break;
       case "responseStartGame":
+        gameStarted = true;
         Platform.runLater(
             () -> {
               try {
