@@ -305,14 +305,13 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   }
 
   @Override
-  public Optional<GITuple<Integer, List<List<GITile>>>> finishedTurnBy(Integer id) {
+  public Optional<Integer> finishedTurnBy(Integer id) {
     if (!gameFlow.isPlayerExistingBy(id)) {
       return Optional.empty();
     }
-
     if (gameFlow.isValidPlayerBy(id) && gameFlow.hasMadeMoveBy(id)) {
       gameFlow.nextPlayersTurn();
-      return Optional.of(new GITuple<>(id, board.getActiveCombos()));
+      return Optional.of(id);
     } else {
       // it is not the players turn.
       // return Optional.of(new GITuple<>(id, board.getActiveCombos()));
@@ -356,6 +355,11 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   @Override
   public Integer getStartingPlayerId() {
     return gameFlow.getStartingPlayerId();
+  }
+
+  @Override
+  public List<List<GITile>> getCurrentBoard() {
+    return board.getActiveCombos();
   }
 
   private GITile getTileFor(Integer id) {

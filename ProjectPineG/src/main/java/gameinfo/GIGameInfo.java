@@ -133,7 +133,7 @@ public interface GIGameInfo {
    * @return the id by for which the turn was ended and the whole board. If the player id is not
    *     registered in the model an Optional.empty() is returned.
    */
-  Optional<GITuple<Integer, List<List<GITile>>>> finishedTurnBy(Integer id);
+  Optional<Integer> finishedTurnBy(Integer id);
 
   /**
    * Use this method is check if its the first turn of a player.
@@ -173,4 +173,6 @@ public interface GIGameInfo {
    * @return id of the first player.
    */
   Integer getStartingPlayerId();
+
+  List<List<GITile>> getCurrentBoard();
 }
