@@ -49,7 +49,7 @@ class Board {
   }
 
   List<List<GITile>> getActiveCombos() {
-    return this.combos;
+    return combos;
   }
 
   void addCombo(List<GITile> combo) {
@@ -88,6 +88,9 @@ class Board {
 
     this.combos.clear();
     log.info("new board (should be empty): " + getActiveCombos());
+
+    combos = new ArrayList<>();
+
     bag.setTiles(boardTiles);
   }
 }
