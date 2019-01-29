@@ -67,18 +67,19 @@ public class ClientParser {
                   () -> {
                     guiController.closeGame();
                   });
+            Platform.runLater(
+                    () -> {
+                        try {
+                            guiController.openLobby();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
         } else {
           loadingScreenController.closeLoadingScreen();
         }
 
-        Platform.runLater(
-            () -> {
-              try {
-                guiController.openLobby();
-              } catch (IOException e) {
-                e.printStackTrace();
-              }
-            });
+
 
         break;
       case "responseStartGame":
