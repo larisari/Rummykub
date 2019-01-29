@@ -245,9 +245,9 @@ public class ServerParser {
   }
 
   /**
-   *
-   * @param s
-   * @return
+   *parses String to list of combinations.
+   * @param s received string.
+   * @return list of combinations.
    */
   static List<List<GITile>> parseStringToListListTileComb(String s) {
     List<List<GITile>> result = new ArrayList<>();
