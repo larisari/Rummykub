@@ -96,7 +96,7 @@ class CombRules {
         GITile current = combination.get(i);
 
         if (previous.getColor().equals(GIColor.JOKER) || current.getColor().equals(GIColor.JOKER)) {
-          break;
+          continue;
         }
 
         if (current.getColor().equals(previous.getColor())) {
@@ -120,7 +120,7 @@ class CombRules {
 
         if (previous.getNumber().equals(GINumber.JOKER)
                 || current.getNumber().equals(GINumber.JOKER)) {
-          break;
+          continue;
         }
 
         if (!(current.getNumber() == (previous.getNumber().next()))) {
