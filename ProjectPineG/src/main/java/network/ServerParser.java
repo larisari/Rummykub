@@ -1,7 +1,5 @@
 package network;
 
-//import com.sun.tools.javac.util.FatalError;
-
 import gameinfo.GIFactory;
 import gameinfo.util.GIColor;
 import gameinfo.util.GINumber;
@@ -14,18 +12,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+/** Decomposition and conversion of an input in a suitable for further processing format. */
 public class ServerParser {
 
   private static Logger log = Logger.getLogger(ServerParser.class.getName());
 
-  public ServerParser() {
-  }
-
-  // void parse()
-  // Zerlege String -> Modellfunktion
-  // Zerlege Result -> String
-  // sendReply to Client inkl. broadcast
-
+  /**
+   * Dissmantles String message from client and selects the right method from gameinfo to answer to
+   * clients requests.
+   *
+   * @param receivedMessageFromClient incoming message from client.
+   * @param id client ID.
+   */
   static void getStringIntoServerParser(String receivedMessageFromClient, int id) {
 
     String[] receivedMessage = receivedMessageFromClient.split("[|]");
@@ -37,19 +35,22 @@ public class ServerParser {
         List<List<GITile>> boardTiles = Server.gameInfo.getCurrentBoard();
         if (result.isPresent()) {
 
-          clients.get(id).sendMessageToClient(
-              "responseForDraw|" + parseTileToString(result.get().getSecond()));
+          clients
+              .get(id)
+              .sendMessageToClient(
+                  "responseForDraw|" + parseTileToString(result.get().getSecond()));
           Server.broadcastToAllClients(
               "responseForFinishedTurn|" + parseCombinationsToString(boardTiles));
-          clients.get(Server.gameInfo.getCurrentPlayerId())
-              .sendMessageToClient("itsYourTurn");
+          clients.get(Server.gameInfo.getCurrentPlayerId()).sendMessageToClient("itsYourTurn");
           Server.broadcastToAllClients(
               "UpdateCurrentPlayerTurn|" + Server.gameInfo.getCurrentPlayerId());
 
-          System.out.println("SERVER: pressed draw by " + id + " next player " + Server.gameInfo
-              .getCurrentPlayerId());
+          System.out.println(
+              "SERVER: pressed draw by "
+                  + id
+                  + " next player "
+                  + Server.gameInfo.getCurrentPlayerId());
         } else {
-          // id is not registered in model.
           log.info("There is no " + id + " registered in the model.");
         }
         break;
@@ -60,8 +61,7 @@ public class ServerParser {
 
         Server.broadcastToAllClients(
             "responseForFinishedTurn|" + parseCombinationsToString(resultOfTurn));
-        clients.get(Server.gameInfo.getCurrentPlayerId())
-            .sendMessageToClient("itsYourTurn");
+        clients.get(Server.gameInfo.getCurrentPlayerId()).sendMessageToClient("itsYourTurn");
         Server.broadcastToAllClients(
             "UpdateCurrentPlayerTurn|" + Server.gameInfo.getCurrentPlayerId());
 
@@ -86,8 +86,12 @@ public class ServerParser {
         break;
 
       case "play":
-        String answer = Server.gameInfo.play(parseStringToListListTileComb(receivedMessage[1]), id)
-            .get().getSecond().toString();
+        String answer =
+            Server.gameInfo
+                .play(parseStringToListListTileComb(receivedMessage[1]), id)
+                .get()
+                .getSecond()
+                .toString();
         clients.get(id).sendMessageToClient("responseForPlay|" + answer);
         break;
 
@@ -95,9 +99,12 @@ public class ServerParser {
         List<GITile> tileFromHandJ = parseStringToTile(receivedMessage[1]);
         List<List<GITile>> oldCombinationJ = parseStringToListListTileComb(receivedMessage[2]);
         List<List<GITile>> newCombinationJ = parseStringToListListTileComb(receivedMessage[3]);
-        String answer3 = Server.gameInfo
-            .manipulateBoardWith(tileFromHandJ, oldCombinationJ, newCombinationJ, id).get()
-            .getSecond().toString();
+        String answer3 =
+            Server.gameInfo
+                .manipulateBoardWith(tileFromHandJ, oldCombinationJ, newCombinationJ, id)
+                .get()
+                .getSecond()
+                .toString();
         clients.get(id).sendMessageToClient("responseForPlaySwapJoker|" + answer3);
         break;
 
@@ -105,9 +112,12 @@ public class ServerParser {
         List<GITile> tilesFromHandB = parseStringToTile(receivedMessage[1]);
         List<List<GITile>> oldCombinationsB = parseStringToListListTileComb(receivedMessage[2]);
         List<List<GITile>> newCombinationsB = parseStringToListListTileComb(receivedMessage[3]);
-        String answer5 = Server.gameInfo
-            .manipulateBoardWith(tilesFromHandB, oldCombinationsB, newCombinationsB, id).get()
-            .getSecond().toString();
+        String answer5 =
+            Server.gameInfo
+                .manipulateBoardWith(tilesFromHandB, oldCombinationsB, newCombinationsB, id)
+                .get()
+                .getSecond()
+                .toString();
         clients.get(id).sendMessageToClient("responseForPlayHandWithBoard|" + answer5);
         break;
 
@@ -116,9 +126,12 @@ public class ServerParser {
         List<GITile> tilesFromBoard2 = parseStringToTile(receivedMessage[2]);
         List<List<GITile>> CombinationsOnBoard = parseStringToListListTileComb(receivedMessage[3]);
 
-        String answer2 = Server.gameInfo
-            .play(tilesFromHand1, tilesFromBoard2, CombinationsOnBoard, id).get().getSecond()
-            .toString();
+        String answer2 =
+            Server.gameInfo
+                .play(tilesFromHand1, tilesFromBoard2, CombinationsOnBoard, id)
+                .get()
+                .getSecond()
+                .toString();
         clients.get(id).sendMessageToClient("responseForPlayWithBoardTilesL|" + answer2);
         break;
 
@@ -127,19 +140,21 @@ public class ServerParser {
         List<GITile> tilesFromBoard = parseStringToTile(receivedMessage[2]);
         List<List<GITile>> newCombinations = parseStringToListListTileComb(receivedMessage[3]);
 
-        String answer1 = Server.gameInfo.play(tilesFromHand, tilesFromBoard, newCombinations, id)
-            .get().getSecond().toString();
+        String answer1 =
+            Server.gameInfo
+                .play(tilesFromHand, tilesFromBoard, newCombinations, id)
+                .get()
+                .getSecond()
+                .toString();
         clients.get(id).sendMessageToClient("responseForPlayWithBoardTilesR|" + answer1);
         break;
 
-        /*
-      case "getPlayerID":
-        clients.get(id).sendMessageToClient("responseForGetPlayerID|" + id);
-        break;*/
-
       case "calculatePointsForRegisteredPlayers":
-        clients.get(id).sendMessageToClient("responseForGetPlayerPoints|" + parsePointsToString(
-            Server.gameInfo.calculatePointsForRegisteredPlayers()));
+        clients
+            .get(id)
+            .sendMessageToClient(
+                "responseForGetPlayerPoints|"
+                    + parsePointsToString(Server.gameInfo.calculatePointsForRegisteredPlayers()));
         break;
 
       case "numberOfPlayers":
@@ -155,8 +170,12 @@ public class ServerParser {
       case "notifyWin":
         for (int i = 0; i < clients.size(); i++) {
           if (i != id) {
-            clients.get(i).sendMessageToClient("responseToNotifyWin|" + parsePointsToString(
-                Server.gameInfo.calculatePointsForRegisteredPlayers()));
+            clients
+                .get(i)
+                .sendMessageToClient(
+                    "responseToNotifyWin|"
+                        + parsePointsToString(
+                            Server.gameInfo.calculatePointsForRegisteredPlayers()));
           }
         }
         break;
@@ -174,6 +193,11 @@ public class ServerParser {
     }
   }
 
+  /**
+   * Converts points of all clients to a String.
+   * @param list list-tupel with clientID and points.
+   * @return a representive String with points of all clients.
+   */
   static String parsePointsToString(Optional<List<GITuple<Integer, GIPoints>>> list) {
     String points = "";
     List<GITuple<Integer, GIPoints>> tempList = list.get();
@@ -188,6 +212,11 @@ public class ServerParser {
     return points;
   }
 
+  /**
+   * Converts a List of tiles to String.
+   * @param tiles list of tiles.
+   * @return a representive String with all tiles.
+   */
   static String parseTileToString(List<GITile> tiles) {
     String parsedTiles = "comb:";
 
@@ -200,6 +229,11 @@ public class ServerParser {
     return parsedTiles;
   }
 
+  /**
+   * converts a combination list to String.
+   * @param combs combination list with a list of tiles.
+   * @return a representive String of combination.
+   */
   static String parseCombinationsToString(List<List<GITile>> combs) {
     String parsedCombs = "list<";
 
@@ -211,13 +245,13 @@ public class ServerParser {
   }
 
   /**
-   * Parses a string to a list of lists of tiles.
-   * @param s - string to be parsed.
-   * @return a list of lists of tiles.
+   *parses String to list of combinations.
+   * @param s received string.
+   * @return list of combinations.
    */
   static List<List<GITile>> parseStringToListListTileComb(String s) {
     List<List<GITile>> result = new ArrayList<>();
-//    s = s.substring(0,s.length()-1);
+    //    s = s.substring(0,s.length()-1);
     String[] split1 = s.split("[<]");
     String[] split2 = split1[1].split("[;]");
 
@@ -227,7 +261,11 @@ public class ServerParser {
     return result;
   }
 
-  //ergebnis in liste packen -> List<List<GITile>>
+  /**
+   * converts a String to a list of tiles.
+   * @param tiles String of all tiles.
+   * @return a list of tiles.
+   */
   public static List<GITile> parseStringToTile(String tiles) {
     List<GITile> tileList = new ArrayList<>();
 
@@ -239,13 +277,13 @@ public class ServerParser {
 
     String[] comb = tiles.split("[:]");
     log.info("All combinations in tiles: " + comb.length);
-    for(String combTile : comb){
+    for (String combTile : comb) {
       log.info(combTile);
     }
 
     String[] tileS = comb[1].split("[,]");
     log.info("All tiles: " + tileS.length);
-    for(String tile : tileS){
+    for (String tile : tileS) {
       log.info(tile);
     }
     for (int i = 0; i < tileS.length; i++) {
@@ -277,7 +315,7 @@ public class ServerParser {
           tileColor = GIColor.JOKER;
           break;
         default:
-          //  throw new FatalError("SOMETHING WENT DEEPLY WRONG " + tileColor);
+
       }
 
       switch (number) {
@@ -335,6 +373,12 @@ public class ServerParser {
     return tileList;
   }
 
+  /**
+   * converts a color to String.
+   * @param color color.
+   * @param number if number equals 0 its a joker tile.
+   * @return a representive String of a color.
+   */
   private static String parseColorToString(GIColor color, int number) {
     StringBuilder builder = new StringBuilder();
     builder.append("tile.");
