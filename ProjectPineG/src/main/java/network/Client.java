@@ -6,15 +6,15 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.logging.Logger;
 
+/** Contains all relevant functions a client needs to communicate with a server. */
 public class Client extends Thread {
 
-  static DataInputStream in;
-  static DataOutputStream out;
+  private static DataInputStream in;
+  private static DataOutputStream out;
   private static Logger log = Logger.getLogger(Client.class.getName());
   private final int PORT = 48410;
-  Thread listeningThread;
-  Socket socket;
-  private String ip;
+  private Thread listeningThread;
+  private Socket socket;
 
   /**
    * Constructor to generate a Client, which connects to the Server.
@@ -34,10 +34,10 @@ public class Client extends Thread {
    *
    * @param message message to send to the server.
    */
-  public static void sendMessageToServer(String message) {
-    String messageToServer = message;
+  static void sendMessageToServer(String message) {
+
     try {
-      out.writeUTF(messageToServer);
+      out.writeUTF(message);
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -47,7 +47,7 @@ public class Client extends Thread {
    * Opens a Thread, which listens to incoming messages from the Server and hands over to the Client
    * Parser.
    */
-  public void startListening() {
+  private void startListening() {
     listeningThread =
         new Thread(
             new Runnable() {
@@ -70,21 +70,11 @@ public class Client extends Thread {
                       out.close();
                       running = false;
                       log.info("Thread running false gesetzt.");
-
                     }
                   } catch (IOException e) {
-
                     log.info("[Client] Habe Verbindung zum Server verloren....");
                     running = false;
-
-                 //   GuiController tmp = new GuiController();
-                 //   tmp.closeGame();
-             //       try {
-                 //   tmp.openLobby();
-                  //  } catch (IOException ex) {
-                  //    ex.printStackTrace();
-                  //  }
-                    System.exit(0); //-> falls Lobby nicht funktioniert.
+                    System.exit(0);
                   }
                 }
               }

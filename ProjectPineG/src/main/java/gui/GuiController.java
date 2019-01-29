@@ -214,7 +214,6 @@ public class GuiController {
           + "tiles on the board before drawing more tiles!", ButtonType.OK);
       alert.showAndWait();
 
-      bag.setDisable(true);
     } else {
       parser.draw();
     }
@@ -403,11 +402,6 @@ public class GuiController {
   public void placeTiles() {
     for (List<ImageView> combination : selectedCombinations) {
       moveTilesAux(combination);
-    }
-
-    if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
-      parser.getPlayerPoints();
-      parser.notifyWin();
     }
   }
 
@@ -726,7 +720,7 @@ public class GuiController {
     }
     if (board.intersects(
         board.sceneToLocal(selectionBoard.localToScene(selectionBoard.getBoundsInLocal())))) {
-      double reduce = 0.85;
+      double reduce = 0.9;
       tileHeight *= reduce;
       tileWidth *= reduce;
       for (int i = 0; i < board.getChildren().size(); i++) {
@@ -781,6 +775,7 @@ public class GuiController {
         imageView.setDisable(true);
       }
       board.getChildren().add(box);
+      updateBoard();
 
     }
   }
@@ -949,11 +944,10 @@ public class GuiController {
   public void closeGame() {
     this.stage.close();
     mediaPlayer.stop();
-    connectionLost();
   }
 
   /**
-   * Loads starting screen.
+   * Loads starting screen if another user has quit the game.
    *
    * @throws IOException if some error occurs while loading fxml file.
    */
@@ -972,16 +966,12 @@ public class GuiController {
     primaryStage.getScene().getWindow()
         .addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, ControllerUtil::closeWindowEvent);
     controller.setStage(primaryStage);
-  }
-
-  /**
-   * Alerts player if another player has quit the game.
-   */
-  private void connectionLost() {
     Alert alert = new Alert(AlertType.CONFIRMATION,
         "Another Player quit the game!", ButtonType.OK);
+    alert.initOwner(primaryStage);
     alert.showAndWait();
   }
+
 
   /**
    * Gets called if user has won, loads winnerScreen and closes game window.
@@ -998,8 +988,9 @@ public class GuiController {
     stage.setResizable(false);
     stage.show();
     WinScreenController winScreenController = loader.getController();
-    winScreenController.setID(playerID);
     winScreenController.setNumberOfPlayers(numberOfPlayers);
+    winScreenController.setNewGame(playerID);
+    winScreenController.setStage(stage);
     winScreenController.playMusic();
     winScreenController.setPlayerPoints(points);
     winScreenController.setPointsNamesVisible();
@@ -1023,6 +1014,8 @@ public class GuiController {
     LoseScreenController loController = loader.getController();
     loController.setID(playerID);
     loController.setNumberOfPlayers(numberOfPlayers);
+    loController.setStage(stage);
+    loController.setNewGameBtn();
     loController.playMusic();
     loController.setPlayerPoints(points);
     loController.setPointsNamesVisible();

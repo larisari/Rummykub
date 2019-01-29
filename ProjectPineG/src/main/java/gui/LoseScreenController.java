@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.stage.Stage;
 import network.ClientParser;
 
 /**
@@ -41,6 +42,7 @@ public class LoseScreenController extends EndScreen {
   private int playerID;
   private ClientParser parser;
   private MediaPlayer mediaPlayer;
+  private Stage stage;
 
   /**
    * Initialises ClientParser for communication between network and gui.
@@ -49,18 +51,29 @@ public class LoseScreenController extends EndScreen {
     parser = new ClientParser(this);
   }
 
-  @FXML
-  private void initialize() {
-    if (playerID == 0) {
+  /**
+   * Sets "new game" button visible for host.
+   */
+  void setNewGameBtn(){
+    System.out.println(playerID + " this playerID");
+    if (playerID == 0){
       newGameL.setVisible(true);
     }
   }
 
+  void setStage(Stage thisStage){
+    this.stage = thisStage;
+  }
 
   void setNumberOfPlayers(Integer numberOfPlayers) {
     this.numberOfPlayers = numberOfPlayers;
   }
 
+  /**
+   * Gets called from GuiController to forward playerID.
+   *
+   * @param ID - this gui's client id.
+   */
   void setID(Integer ID) {
     this.playerID = ID;
   }
