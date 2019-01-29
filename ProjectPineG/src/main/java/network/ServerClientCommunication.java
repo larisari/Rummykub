@@ -13,7 +13,7 @@ public class ServerClientCommunication extends Thread {
   private static Logger log = Logger.getLogger(ServerClientCommunication.class.getName());
   private final DataInputStream in;
   private final DataOutputStream out;
-  private final Socket s;
+  public final Socket s;
   private final int clientID;
 
   /**
@@ -59,7 +59,11 @@ public class ServerClientCommunication extends Thread {
       } catch (IOException e) {
         log.info("SEERVER CLIEEENT COMMUNICATIOOON ............");
 
-        // e.printStackTrace();
+        for (int i = 0; i < ServerListener.getClients().size(); i++) {
+          if (i != clientID) {
+            ServerListener.getClients().get(i).sendMessageToClient("Restart");
+          }
+        }
         log.info("[Server] Client " + clientID + " hat die Verbindung getrennt");
         disconnectClient();
         log.info("[Server] Habe Client disconnected.");
@@ -68,11 +72,7 @@ public class ServerClientCommunication extends Thread {
 
         log.info("[Server] an alle noch verbundenen Clients RESTART Programm gefordert...........");
 
-        for (int i = 0; i < ServerListener.getClients().size(); i++) {
-          if (i != clientID) {
-            ServerListener.getClients().get(i).sendMessageToClient("Restart");
-          }
-        }
+
       }
     }
   }

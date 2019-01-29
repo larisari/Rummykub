@@ -48,7 +48,6 @@ public class ClientParser {
     startingScreenController = controller;
   }
 
-
   // TODO add null checks
 
   /**
@@ -62,24 +61,25 @@ public class ClientParser {
 
     switch (messageAsArray[0]) {
       case "Restart":
-        if(gameStarted) {
+        if (gameStarted) {
           Platform.runLater(
-                  () -> {
-                    guiController.closeGame();
-                  });
-            Platform.runLater(
-                    () -> {
-                        try {
-                            guiController.openLobby();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    });
+              () -> {
+                guiController.closeGame();
+              });
+          Platform.runLater(
+              () -> {
+                try {
+                  guiController.openLobby();
+                } catch (IOException e) {
+                  e.printStackTrace();
+                }
+              });
         } else {
-          loadingScreenController.closeLoadingScreen();
+          Platform.runLater(
+              () -> {
+                loadingScreenController.closeLoadingScreen();
+              });
         }
-
-
 
         break;
       case "responseStartGame":
@@ -225,8 +225,7 @@ public class ClientParser {
             });
         break;
       case "closeGame":
-        Platform.runLater(
-            () -> guiController.closeGame());
+        Platform.runLater(() -> guiController.closeGame());
         break;
       case "openLobby":
         Platform.runLater(
@@ -373,7 +372,6 @@ public class ClientParser {
   public void getPlayerPoints() {
     Client.sendMessageToServer("calculatePointsForRegisteredPlayers");
   }
-
 
   public void notifyWin() {
     Client.sendMessageToServer("notifyWin");
