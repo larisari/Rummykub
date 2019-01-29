@@ -1,13 +1,15 @@
+/**
+ * This Class shows an exemplary implementation of the GIGameInfo interface. It
+ * serves as a central management class for the model.
+ */
 package gameinfo;
 
 import gameinfo.util.GIPoints;
 import gameinfo.util.GITile;
 import gameinfo.util.GITuple;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.OptionalInt;
 import java.util.logging.Logger;
 
 class GameInfoImpl extends Thread implements GIGameInfo {
@@ -36,6 +38,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     start();
   }
 
+
   @Override
   public void registerBy(Integer id) {
     if (canModifyRegisteredPlayers) {
@@ -43,9 +46,9 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       hasRegisteredPlayers = true;
     } else {
       log.info(
-              "Registration of Player "
-                      + id
-                      + " has failed. No more players can be registered in the model.");
+          "Registration of Player "
+              + id
+              + " has failed. No more players can be registered in the model.");
     }
   }
 
@@ -225,10 +228,10 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
   @Override
   public Optional<GITuple<Integer, Boolean>> play(
-          List<GITile> tilesFromHand,
-          List<GITile> tilesFromBoard,
-          List<List<GITile>> newCombinations,
-          Integer id) {
+      List<GITile> tilesFromHand,
+      List<GITile> tilesFromBoard,
+      List<List<GITile>> newCombinations,
+      Integer id) {
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (optionalPlayer.isPresent()) {
@@ -257,7 +260,11 @@ class GameInfoImpl extends Thread implements GIGameInfo {
   }
 
   @Override
-  public Optional<GITuple<Integer, Boolean>> manipulateBoardWith(List<GITile> tilesFromHand, List<List<GITile>> oldCombinations, List<List<GITile>> newCombinations, Integer id) {
+  public Optional<GITuple<Integer, Boolean>> manipulateBoardWith(
+      List<GITile> tilesFromHand,
+      List<List<GITile>> oldCombinations,
+      List<List<GITile>> newCombinations,
+      Integer id) {
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
 
     if (!optionalPlayer.isPresent()) {
@@ -294,7 +301,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     }
 
     GITuple<Integer, GIPoints> returnValue =
-            new GITuple<>(id, optionalPlayer.get().calculatePointsOfHand());
+        new GITuple<>(id, optionalPlayer.get().calculatePointsOfHand());
     return Optional.of(returnValue);
   }
 
@@ -361,6 +368,12 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     return board.getActiveCombos();
   }
 
+  /**
+   * Method to draw a random tile for a player.
+   *
+   * @param id of the player who gets a tile.
+   * @return the randomly pulled GITile object.
+   */
   private GITile getTileFor(Integer id) {
     // .get() is allowed here because it is always called after isPresent check !!!
     Player player = gameFlow.getPlayerBy(id).get();
@@ -371,14 +384,25 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     return tile;
   }
 
+  /**
+   * Method to place one or several valid combinations on the game board.
+   *
+   * @param combinations to be put on the board.
+   * @param player to demand the move.
+   */
   private void putComboOnBoard(List<List<GITile>> combinations, Player player) {
     combinations.forEach(
-            combination -> {
-              board.addCombo(combination);
-              player.remove(combination);
-            });
+        combination -> {
+          board.addCombo(combination);
+          player.remove(combination);
+        });
   }
 
+  /**
+   * Method to check whether the game board's bag is empty.
+   *
+   * @return true, in case the bag is empty and false otherwise.
+   */
   private boolean bagIsEmpty() {
     return board.bagIsEmpty();
   }
