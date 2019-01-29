@@ -208,7 +208,16 @@ public class ServerParser {
     log.info("All tiles that were passed " + tiles);
 
     String[] comb = tiles.split("[:]");
+    log.info("All combinations in tiles: " + comb.length);
+    for(String combTile : comb){
+      log.info(combTile);
+    }
+
     String[] tileS = comb[1].split("[,]");
+    log.info("All tiles: " + tileS.length);
+    for(String tile : tileS){
+      log.info(tile);
+    }
     for (int i = 0; i < tileS.length; i++) {
       String[] attributeswS = tileS[i].split("[.]");
       String[] attributes = attributeswS[1].split("[/]");
