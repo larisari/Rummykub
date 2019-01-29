@@ -103,11 +103,11 @@ public class ClientParser {
         break;
 
       case "responseForFinishedTurn":
-        if (!messageAsArray[1].equals("list<")) {
+//        if (!messageAsArray[1].equals("list<")) {
           Platform.runLater(
               () ->
                   guiController.reloadBoard(guiParser.parseStringToWholeBoard(messageAsArray[1])));
-        }
+//        }
         break;
 
       case "itsYourTurn":

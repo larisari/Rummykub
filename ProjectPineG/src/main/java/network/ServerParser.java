@@ -32,7 +32,8 @@ public class ServerParser {
     switch (receivedMessage[0]) {
       case "draw":
         Optional<GITuple<Integer, List<GITile>>> result = Server.gameInfo.drawBy(id);
-        List<List<GITile>>  boardTiles = Server.gameInfo.getCurrentBoard();
+        List<List<GITile>> boardTiles = Server.gameInfo.getCurrentBoard();
+
         if (result.isPresent()) {
 
           clients.get(id).sendMessageToClient("responseForDraw|" + parseTileToString(result.get().getSecond()));
