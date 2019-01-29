@@ -718,7 +718,7 @@ public class GuiController {
     }
     if (board.intersects(
         board.sceneToLocal(selectionBoard.localToScene(selectionBoard.getBoundsInLocal())))) {
-      double reduce = 0.9;
+      double reduce = 0.85;
       tileHeight *= reduce;
       tileWidth *= reduce;
       for (int i = 0; i < board.getChildren().size(); i++) {
