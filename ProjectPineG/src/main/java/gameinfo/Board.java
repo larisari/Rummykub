@@ -86,7 +86,8 @@ class Board {
         .flatMap(List::stream)
         .collect(Collectors.toList());
 
-    this.combos = new ArrayList<>();
+    this.combos.clear();
+    log.info("new board (should be empty): " + getActiveCombos());
     bag.setTiles(boardTiles);
   }
 }

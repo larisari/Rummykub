@@ -98,6 +98,8 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     if (bagIsEmpty()) {
       log.info("Bag is empty, a new bag is being generated.");
       board.generateNewBag();
+      log.info("new Board size (0): " + getCurrentBoard().size());
+      log.info("new bag empty (false): " + board.bagIsEmpty());
     }
 
     Optional<Player> optionalPlayer = gameFlow.getPlayerBy(id);
