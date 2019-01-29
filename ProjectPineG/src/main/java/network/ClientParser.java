@@ -111,7 +111,7 @@ public class ClientParser {
         break;
 
       case "itsYourTurn":
-        Platform.runLater(() -> guiController.enableControl());
+          Platform.runLater(() -> guiController.enableControl());
         break;
 
       case "UpdateCurrentPlayerTurn":
@@ -418,7 +418,7 @@ public class ClientParser {
       Integer.parseInt(age);
     Client.sendMessageToServer("setAge|" + age);}
 
-    public void clientExit(){
-    Client.sendMessageToServer("closeGame");
+    public void newGame(){
+    Client.sendMessageToServer("newGame");
     }
 }
