@@ -3,6 +3,7 @@ package gui;
 import java.net.URISyntaxException;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -27,13 +28,15 @@ public class WinScreenController extends EndScreen {
   private Label player3;
   @FXML
   private Label player4;
-
+@FXML
+private Button newGame;
   private int p1Points = 0;
   private int p2Points = 0;
   private int p3Points = 0;
   private int p4Points = 0;
   private ClientParser parser;
   private int numberOfPlayers;
+  private int playerID;
   private MediaPlayer mediaPlayer;
 
   /**
@@ -43,11 +46,20 @@ public class WinScreenController extends EndScreen {
     parser = new ClientParser(this);
   }
 
+  @FXML
+  private void initialize(){
+    if (playerID == 0){
+      newGame.setVisible(true);
+    }
+  }
 
   void setNumberOfPlayers(Integer numberOfPlayers) {
     this.numberOfPlayers = numberOfPlayers;
   }
 
+  void setID(Integer ID) {
+    this.playerID = ID;
+  }
 
   void setPlayerPoints(List<Integer> points) {
 
@@ -144,6 +156,11 @@ public class WinScreenController extends EndScreen {
       player4Points.setText(p3Points + " Points");
     }
 
+  }
+
+  @FXML
+  private void handleNewGameL(){
+    //TODO
   }
 
   void playMusic() {

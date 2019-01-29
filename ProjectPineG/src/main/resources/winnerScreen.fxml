@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -10,7 +11,7 @@
    <children>
       <ImageView fitHeight="715.0" fitWidth="965.0" layoutX="116.0" layoutY="35.0" opacity="0.71">
          <image>
-            <Image url="@../../../Downloads/a0a2a5a0e2fe3b453639738cea9ef0fd.png" />
+            <Image url="@images/firework.png" />
          </image>
       </ImageView>
       <Label layoutX="327.0" layoutY="79.0" text="You have won!" AnchorPane.leftAnchor="327.0" AnchorPane.rightAnchor="327.0">
@@ -53,5 +54,10 @@
             <Font name="Franklin Gothic Medium" size="23.0" />
          </font>
       </Label>
+      <Button fx:id="newGame" layoutX="552.0" layoutY="602.0" mnemonicParsing="false" onMouseClicked="#handleNewGame" opacity="0.0" text="New Game">
+         <font>
+            <Font name="Franklin Gothic Medium" size="22.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

@@ -984,6 +984,7 @@ public class GuiController {
     stage.setResizable(false);
     stage.show();
     WinScreenController winScreenController = loader.getController();
+    winScreenController.setID(playerID);
     winScreenController.setNumberOfPlayers(numberOfPlayers);
     winScreenController.playMusic();
     winScreenController.setPlayerPoints(points);

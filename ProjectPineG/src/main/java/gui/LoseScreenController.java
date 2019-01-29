@@ -3,6 +3,7 @@ package gui;
 import java.net.URISyntaxException;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -30,6 +31,8 @@ public class LoseScreenController extends EndScreen {
   private Label Loserp3Points;
   @FXML
   private Label Loserp4Points;
+  @FXML
+  private Button newGameL;
   private int p1Points = 0;
   private int p2Points = 0;
   private int p3Points = 0;
@@ -46,16 +49,18 @@ public class LoseScreenController extends EndScreen {
     parser = new ClientParser(this);
   }
 
+  @FXML
+  private void initialize() {
+    if (playerID == 0) {
+      newGameL.setVisible(true);
+    }
+  }
+
 
   void setNumberOfPlayers(Integer numberOfPlayers) {
     this.numberOfPlayers = numberOfPlayers;
   }
 
-  /**
-   * Gets called from GuiController to forward playerID.
-   *
-   * @param ID - this gui's client id.
-   */
   void setID(Integer ID) {
     this.playerID = ID;
   }
@@ -158,6 +163,12 @@ public class LoseScreenController extends EndScreen {
         player4LoserName.setText("You");
         break;
     }
+  }
+
+  @FXML
+  private void handleNewGameL(){
+//TODO
+
   }
 
 

@@ -15,6 +15,12 @@ abstract class EndScreen {
   abstract void setNumberOfPlayers(Integer numberOfPlayers);
 
   /**
+   * Gets called from GuiController to forward playerID.
+   *
+   * @param ID - this gui's client id.
+   */
+  abstract void setID(Integer ID);
+  /**
    * Sets points for each player.
    *
    * @param points - list of points of all players.
