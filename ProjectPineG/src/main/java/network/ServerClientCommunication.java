@@ -17,6 +17,15 @@ public class ServerClientCommunication extends Thread {
   private final int clientID;
 
   /**
+   * Getter for Socket.
+   * @return the socket.
+   */
+  public Socket getS() {
+    return s;
+  }
+
+
+  /**
    * Thread object to a client.
    *
    * @param s socket connection to one client.
@@ -59,7 +68,11 @@ public class ServerClientCommunication extends Thread {
       } catch (IOException e) {
         log.info("SEERVER CLIEEENT COMMUNICATIOOON ............");
 
-        // e.printStackTrace();
+        for (int i = 0; i < ServerListener.getClients().size(); i++) {
+          if (i != clientID) {
+            ServerListener.getClients().get(i).sendMessageToClient("Restart");
+          }
+        }
         log.info("[Server] Client " + clientID + " hat die Verbindung getrennt");
         disconnectClient();
         log.info("[Server] Habe Client disconnected.");
@@ -68,11 +81,7 @@ public class ServerClientCommunication extends Thread {
 
         log.info("[Server] an alle noch verbundenen Clients RESTART Programm gefordert...........");
 
-        for (int i = 0; i < ServerListener.getClients().size(); i++) {
-          if (i != clientID) {
-            ServerListener.getClients().get(i).sendMessageToClient("Restart");
-          }
-        }
+
       }
     }
   }

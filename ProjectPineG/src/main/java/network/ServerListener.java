@@ -39,17 +39,11 @@ public class ServerListener extends Thread {
     return clients;
   }
 
-  /**
-   * Interrupts the running Server Thread and closes the serverSocket.
-   */
+  /** Interrupts the running Server Thread and closes the serverSocket. */
   private static void killServer() {
     try {
-      log.info("[Server] Thread wird unterbrochen.");
-      currentThread().interrupt();
       log.info("[Server] Serversocket wird geschlossen.");
-      ss.setReuseAddress(true);
       ss.close();
-
       log.info("[Server] Server wurde geschlossen.");
     } catch (IOException e) {
       log.info("[Server] kann nicht geclosed werden.");
@@ -57,13 +51,19 @@ public class ServerListener extends Thread {
     }
   }
 
-  /**
-   * removes all clients and closes the server.
-   */
+  /** removes all clients and closes the server. */
   private static void restartListener() {
-    for (int i = clients.size() - 1; i >= 0; i--) {
-      clients.remove(i);
-    }
+
+    clients.forEach(
+        client -> {
+          try {
+            client.getS().close();
+          } catch (IOException e) {
+            e.printStackTrace();
+          }
+        });
+
+    clients.clear();
     killServer();
   }
 
