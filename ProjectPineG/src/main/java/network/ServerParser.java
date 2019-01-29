@@ -32,12 +32,13 @@ public class ServerParser {
     switch (receivedMessage[0]) {
       case "draw":
         Optional<GITuple<Integer, List<GITile>>> result = Server.gameInfo.drawBy(id);
-        Optional<GITuple<Integer, List<List<GITile>>>> boardTiles = Server.gameInfo.finishedTurnBy(id);
+  //      Optional<GITuple<Integer, List<List<GITile>>>> boardTiles = Server.gameInfo.finishedTurnBy(id);
         System.out.println(result.get());
-        if (result.isPresent() && boardTiles.isPresent()) {
+    //    System.out.println(boardTiles.get()); + isPresent abfrage
+        if (result.isPresent()) {
 
           clients.get(id).sendMessageToClient("responseForDraw|" + parseTileToString(result.get().getSecond()));
-          Server.broadcastToAllClients("responseForFinishedTurn|" + parseCombinationsToString(boardTiles.get().getSecond()));
+         // Server.broadcastToAllClients("responseForFinishedTurn|" + parseCombinationsToString(boardTiles.get().getSecond()));
           clients.get(Server.gameInfo.getCurrentPlayerId()).sendMessageToClient("itsYourTurn");
           Server.broadcastToAllClients("UpdateCurrentPlayerTurn|" + Server.gameInfo.getCurrentPlayerId());
 
