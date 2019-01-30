@@ -135,7 +135,7 @@
             </Label>
           </children>
         </Group>
-          <Pane styleClass="turnLabel" fx:id="turnLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="231.0" style="-fx-background-color: white; -fx-border-color: 4%;">
+          <Pane fx:id="turnLabel" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="50.0" prefWidth="231.0" style="-fx-background-color: white; -fx-border-color: 4%;" styleClass="turnLabel">
             <children>
               <Label fx:id="playerTurn" alignment="TOP_LEFT" layoutX="57.0" layoutY="14.0" text="Player 1's turn" textAlignment="CENTER">
                 <font>
@@ -215,7 +215,7 @@
                   <Image url="@images/unmute.png" />
                </image>
             </ImageView>
-            <Button fx:id="endTurn" accessibleRole="PARENT" alignment="CENTER" layoutX="1.0" layoutY="729.0" mnemonicParsing="false" onMouseClicked="#handleEndTurn" prefHeight="65.0" prefWidth="200.0" styleClass="endTurnBtn" text="End Turn">
+            <Button fx:id="endTurn" accessibleRole="PARENT" alignment="CENTER" layoutX="1.0" layoutY="729.0" mnemonicParsing="false" onMouseClicked="#handleEndTurn" prefHeight="65.0" prefWidth="200.0" styleClass="endTurnBtn" text="End Turn" AnchorPane.bottomAnchor="2.0">
                <font>
                   <Font name="Franklin Gothic Medium" size="16.0" />
                </font>

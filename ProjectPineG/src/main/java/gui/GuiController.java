@@ -421,9 +421,9 @@ public class GuiController {
     }
 
     board.getChildren().add(comb);
+    updateBoard();
     bag.setDisable(true);
     endTurn.setDisable(false);
-    updateBoard();
     disableTiles(combination); //löscht auch tiles aus selectedTiles
     enableTilesOnBoard();
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
@@ -511,6 +511,7 @@ public class GuiController {
         box.getChildren().add(0, front);
         box.getChildren().add(box.getChildren().size(), back);
       }
+      updateBoard();
     }
   }
 
@@ -718,17 +719,22 @@ public class GuiController {
         board.getChildren().remove(box);
       }
     }
+    System.out.println(board.getBoundsInParent());
+
     if (board.intersects(
         board.sceneToLocal(selectionBoard.localToScene(selectionBoard.getBoundsInLocal())))) {
+      System.out.println("INTERSECTS");
       double reduce = 0.9;
       tileHeight *= reduce;
       tileWidth *= reduce;
       for (int i = 0; i < board.getChildren().size(); i++) {
         HBox box = (HBox) board.getChildren().get(i);
         for (int j = 0; j < box.getChildren().size(); j++) {
-          ImageView tile = (ImageView) box.getChildren().get(j);
-          tile.setFitHeight(tileHeight);
-          tile.setFitWidth(tileWidth);
+          if (!(box.getChildren().get(j) instanceof Button)) {
+            ImageView tile = (ImageView) box.getChildren().get(j);
+            tile.setFitHeight(tileHeight);
+            tile.setFitWidth(tileWidth);
+          }
         }
       }
     }
