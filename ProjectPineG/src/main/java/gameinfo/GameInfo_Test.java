@@ -64,7 +64,31 @@ class GameInfo_Test {
     signInPlayers();
     setAge();
     start();
-    checkPlayerOrder();
+
+    assert gameInfo.getStartingPlayerId() == 4;
+    assert gameInfo.getCurrentPlayerId() == 4;
+    assert gameInfo.getNextPlayerId().get() == 3;
+  }
+
+  @Test
+  void invalidFirstMove() {
+    signInPlayers();
+    start();
+    draw();
+
+    List<GITile> playersGroup =
+        new ArrayList<>(
+            Arrays.asList(
+                gameInfo.getAllTilesBy(player_1_ID).get().getSecond().get(0),
+                gameInfo.getAllTilesBy(player_1_ID).get().getSecond().get(1),
+                gameInfo.getAllTilesBy(player_1_ID).get().getSecond().get(2)));
+
+    List<List<GITile>> combinations = new ArrayList<>();
+
+    combinations.add(playersGroup);
+
+    //Since the wished combination does not exceed the minimum of 30 points, the move is invalid.
+    assert !gameInfo.play(combinations, player_1_ID).get().getSecond();
   }
 
   void start() {
@@ -84,12 +108,6 @@ class GameInfo_Test {
     gameInfo.setAgeFor(player_2_ID, 3);
     gameInfo.setAgeFor(player_3_ID, 2);
     gameInfo.setAgeFor(player_4_ID, 1);
-  }
-
-  void checkPlayerOrder() {
-    assert gameInfo.getStartingPlayerId() == 4;
-    assert gameInfo.getCurrentPlayerId() == 4;
-    assert gameInfo.getNextPlayerId().get() == 3;
   }
 
   void draw() {
@@ -131,20 +149,6 @@ class GameInfo_Test {
     assert gameInfo.getStartingPlayerId().equals(player_4_ID);
     assert gameInfo.getCurrentPlayerId().equals(player_4_ID);
     assert gameInfo.getNextPlayerId().get().equals(player_3_ID);
-  }
-
-  void lessThanMinPoints() {
-    List<GITile> playersGroup =
-        new ArrayList<>(
-            Arrays.asList(
-                gameInfo.getAllTilesBy(player_1_ID).get().getSecond().get(0),
-                gameInfo.getAllTilesBy(player_1_ID).get().getSecond().get(1),
-                gameInfo.getAllTilesBy(player_1_ID).get().getSecond().get(2)));
-
-    List<List<GITile>> combinations = new ArrayList<>();
-    combinations.add(playersGroup);
-
-    assert !gameInfo.play(combinations, player_1_ID).get().getSecond();
   }
 
   void validCombo() {
