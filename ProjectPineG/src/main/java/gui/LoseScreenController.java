@@ -184,6 +184,7 @@ public class LoseScreenController extends EndScreen {
   @FXML
   private void handleNewGameL() {
     parser.newGame();
+    stage.close();
   }
 
 
