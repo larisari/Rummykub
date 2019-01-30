@@ -17,6 +17,15 @@ public class ServerClientCommunication extends Thread {
   private final int clientID;
 
   /**
+   * Getter for Socket.
+   * @return the socket.
+   */
+  public Socket getS() {
+    return s;
+  }
+
+
+  /**
    * Thread object to a client.
    *
    * @param s socket connection to one client.
@@ -29,15 +38,6 @@ public class ServerClientCommunication extends Thread {
     this.out = out;
     this.s = s;
     this.clientID = clientID;
-  }
-
-  /**
-   * Getter for Socket.
-   *
-   * @return the socket.
-   */
-  public Socket getS() {
-    return s;
   }
 
   /**
@@ -73,12 +73,15 @@ public class ServerClientCommunication extends Thread {
             ServerListener.getClients().get(i).sendMessageToClient("Restart");
           }
         }
-        log.info("[Server] an alle noch verbundenen Clients RESTART Programm gefordert.");
         log.info("[Server] Client " + clientID + " hat die Verbindung getrennt");
         disconnectClient();
         log.info("[Server] Habe Client disconnected.");
         Thread.currentThread().interrupt();
         log.info("Thread wurde gestoppt");
+
+        log.info("[Server] an alle noch verbundenen Clients RESTART Programm gefordert...........");
+
+
       }
     }
   }
@@ -89,10 +92,10 @@ public class ServerClientCommunication extends Thread {
    * @param message server-message to client.
    */
   void sendMessageToClient(String message) {
-
+    String messageToClient = message;
     if (s.isConnected()) {
       try {
-        out.writeUTF(message);
+        out.writeUTF(messageToClient);
         log.info("[Server] Nachricht an Client " + clientID + " geschickt.");
       } catch (SocketException e) {
         log.info(
@@ -106,7 +109,7 @@ public class ServerClientCommunication extends Thread {
   }
 
   /** Closes all streams and socket to a client. */
-  private void disconnectClient() {
+  void disconnectClient() {
     try {
       this.in.close();
       log.info("CLient in InputStream geschlossen");
