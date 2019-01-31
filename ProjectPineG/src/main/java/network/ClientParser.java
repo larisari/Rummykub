@@ -74,6 +74,7 @@ public class ClientParser {
                   e.printStackTrace();
                 }
               });
+          gameStarted = false;
         } else {
           Platform.runLater(
               () -> {
