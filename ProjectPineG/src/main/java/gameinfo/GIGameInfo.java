@@ -1,10 +1,3 @@
-/**
- * The GIGameInfo interface provides all necessary functions for a basic playing experience.
- * Implementing this interface, the user may obtain a central object for managing the whole model.
- * From initializing the players to manipulating the game's progress until creating a valid turn,
- * the GIGameInfo accompanies you through every changes you want to achieve in your model, with the
- * characteristic of keeping the model invisible.
- */
 package gameinfo;
 
 import gameinfo.util.GIPoints;
@@ -14,6 +7,13 @@ import gameinfo.util.GITuple;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The GIGameInfo interface provides all necessary functions for a basic playing experience.
+ * Implementing this interface, the user may obtain a central object for managing the whole model.
+ * From initializing the players to manipulating the game's progress until creating a valid turn,
+ * the GIGameInfo accompanies you through every changes you want to achieve in your model, with the
+ * characteristic of keeping the model invisible.
+ */
 public interface GIGameInfo {
 
   /**
