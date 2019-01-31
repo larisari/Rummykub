@@ -199,12 +199,14 @@ public class StartingScreenController {
    */
   private boolean validAge(String age) {
     try {
-      Integer.parseInt(age);
-      return true;
+      int ageP = Integer.parseInt(age);
+      if (ageP > 0) {
+        return true;
+      }
     } catch (NumberFormatException e) {
       return false;
     }
-
+    return false;
   }
 
 }
