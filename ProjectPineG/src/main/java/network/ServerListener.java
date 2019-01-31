@@ -55,7 +55,7 @@ public class ServerListener extends Thread {
 
   /** removes all clients and closes the server. */
   private static void restartListener() {
-
+    killServer();
     clients.forEach(
         client -> {
           try {
@@ -70,7 +70,6 @@ public class ServerListener extends Thread {
 
     clients.clear();
     log.info("[ServerListener] Starting Client ID after Restart..." + clientID);
-    killServer();
   }
 
   @Override
@@ -82,7 +81,7 @@ public class ServerListener extends Thread {
 
       log.info("[Server] wird initialisiert...");
 
-      while (true)  {
+      while (true) {
         try {
           if (clientID < 4) {
 
@@ -126,41 +125,35 @@ public class ServerListener extends Thread {
             }
 
             log.info("[Server] Verbindung zu Client " + clientID + " verloren...");
-//            getThreadGroup().destroy();
-            this.interrupt();
-            log.info("Alle Client Verbindungen wurden gekillt.");
+            getThreadGroup().destroy();
             restartListener();
             killAllSockets = false;
+            this.interrupt();
+            log.info("Alle Client Verbindungen wurden gekillt.");
           }
-
-
         }
       }
     } catch (IOException e) {
       log.info("[ServerListener] yes, hier fliegt auch die IO Exception.");
-      restartListener();
-
-      log.info("[ServerListener] restartListener hat funktioniert...");
-      log.info("[ServerListener] Anzahl aktueller Clients: " + clients.size());
       e.printStackTrace();
 
-//      synchronized (lock) {
-//        while (!killAllSockets) {
-//          try {
-//            log.info("[ServerListener] Warte bis ich Freigabe zum Restart erhalte...");
-//            lock.wait();
-//          } catch (InterruptedException ie) {
-//            ie.printStackTrace();
-//          }
-//        }
-//
-//        log.info("[Server] Verbindung zu Client " + clientID + " verloren...");
-////        getThreadGroup().destroy();
-//        this.interrupt();
-//        log.info("Alle Client Verbindungen wurden gekillt.");
-//        restartListener();
-//        killAllSockets = false;
-//      }
+      //      synchronized (lock) {
+      //        while (!killAllSockets) {
+      //          try {
+      //            log.info("[ServerListener] Warte bis ich Freigabe zum Restart erhalte...");
+      //            lock.wait();
+      //          } catch (InterruptedException ie) {
+      //            ie.printStackTrace();
+      //          }
+      //        }
+      //
+      //        log.info("[Server] Verbindung zu Client " + clientID + " verloren...");
+      ////        getThreadGroup().destroy();
+      //        this.interrupt();
+      //        log.info("Alle Client Verbindungen wurden gekillt.");
+      //        restartListener();
+      //        killAllSockets = false;
+      //      }
     }
   }
 }

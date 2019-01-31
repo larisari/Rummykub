@@ -57,21 +57,19 @@ public class Client extends Thread {
               public void run() {
                 while (running) {
                   try {
-                    if (socket.isConnected()) {
-                      DataInputStream in = new DataInputStream(socket.getInputStream());
-                      String msg = in.readUTF();
 
-                      log.info("[Client] Incoming message from Server: " + msg);
-                      ClientParser.parseForController(msg);
-                      if(msg.equals("Restart")) {
-                        currentThread().interrupt();
-                      }
+                    DataInputStream in = new DataInputStream(socket.getInputStream());
+                    String msg = in.readUTF();
 
-                    }
+                    log.info("[Client] Incoming message from Server: " + msg);
+                    ClientParser.parseForController(msg);
+
                   } catch (IOException e) {
                     log.info("[Client] Habe Verbindung zum Server verloren....");
                     running = false;
-                    System.exit(0);
+                    ClientParser.parseForController("Restart");
+
+                    // System.exit(0);
                   }
                 }
               }

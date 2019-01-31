@@ -45,10 +45,9 @@ public class ServerClientCommunication extends Thread {
    *
    * @return Inputstream.
    */
-  public DataInputStream getIn(){
+  public DataInputStream getIn() {
     return in;
   }
-
 
   /**
    * Getter for DataOutputStream.
@@ -85,7 +84,7 @@ public class ServerClientCommunication extends Thread {
 
       } catch (IOException e) {
 
-     synchronized (ServerListener.lock) {
+        synchronized (ServerListener.lock) {
           log.info("ServerClientCommunication Exception");
           for (int i = 0; i < ServerListener.getClients().size(); i++) {
             if (i != clientID) {
@@ -94,9 +93,11 @@ public class ServerClientCommunication extends Thread {
           }
           log.info("[Server] Client " + clientID + " hat die Verbindung getrennt");
           disconnectClient();
-         log.info("[Server] Habe Client disconnected.");
-          //Thread.currentThread().interrupt();
-          //log.info("Thread wurde gestoppt");
+
+          log.info("[Server] Habe Client disconnected.");
+
+          // Thread.currentThread().interrupt();
+          // log.info("Thread wurde gestoppt");
 
           ServerListener.killAllSockets = true;
           ServerListener.lock.notifyAll();
@@ -139,7 +140,6 @@ public class ServerClientCommunication extends Thread {
       this.s.close();
       log.info("is Client Socket closed?!?  " + s.isClosed());
       ServerListener.getClients().remove(clientID);
-
 
     } catch (IOException e) {
       e.printStackTrace();
