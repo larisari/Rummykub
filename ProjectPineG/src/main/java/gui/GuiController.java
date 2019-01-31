@@ -720,10 +720,11 @@ public class GuiController {
       }
     }
     System.out.println(board.getBoundsInParent());
+    System.out.println(selectionBoard.getBoundsInParent());
+    System.out.println(board.getBoundsInParent().getMaxY());
 
     if (board.intersects(
         board.sceneToLocal(selectionBoard.localToScene(selectionBoard.getBoundsInLocal())))) {
-      System.out.println("INTERSECTS");
       double reduce = 0.9;
       tileHeight *= reduce;
       tileWidth *= reduce;
