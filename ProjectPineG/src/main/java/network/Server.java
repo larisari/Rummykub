@@ -31,7 +31,6 @@ public class Server {
       ServerListener listener = new ServerListener(listOfClients);
       listener.start();
 
-
     } catch (Exception e) {
       e.printStackTrace();
     }

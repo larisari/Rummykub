@@ -63,13 +63,10 @@ public class Client extends Thread {
 
                       log.info("[Client] Incoming message from Server: " + msg);
                       ClientParser.parseForController(msg);
+                      if(msg.equals("Restart")) {
+                        currentThread().interrupt();
+                      }
 
-                    } else {
-                      socket.close();
-                      in.close();
-                      out.close();
-                      running = false;
-                      log.info("Thread running false gesetzt.");
                     }
                   } catch (IOException e) {
                     log.info("[Client] Habe Verbindung zum Server verloren....");

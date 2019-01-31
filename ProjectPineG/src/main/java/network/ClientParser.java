@@ -62,10 +62,12 @@ public class ClientParser {
     switch (messageAsArray[0]) {
       case "Restart":
         if (gameStarted) {
+          gameStarted = false;
           Platform.runLater(
               () -> {
                 guiController.closeGame();
               });
+
           Platform.runLater(
               () -> {
                 try {
@@ -74,7 +76,7 @@ public class ClientParser {
                   e.printStackTrace();
                 }
               });
-          gameStarted = false;
+
         } else {
           Platform.runLater(
               () -> {
