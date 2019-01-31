@@ -126,7 +126,7 @@ public class ServerListener extends Thread {
             }
 
             log.info("[Server] Verbindung zu Client " + clientID + " verloren...");
-            getThreadGroup().destroy();
+//            getThreadGroup().destroy();
             this.interrupt();
             log.info("Alle Client Verbindungen wurden gekillt.");
             restartListener();
