@@ -18,7 +18,6 @@ dependencies {
     compile "org.openjfx:javafx-graphics:11:win"
     compile "org.openjfx:javafx-graphics:11:linux"
     compile "org.openjfx:javafx-graphics:11:mac"
-
     compile 'org.openjfx:javafx-base'
     compile 'org.openjfx:javafx-controls'
     compile 'org.openjfx:javafx-fxml'
