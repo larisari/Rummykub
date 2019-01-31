@@ -24,19 +24,19 @@ public interface GIGameInfo {
   void registerBy(Integer id);
 
   /**
-   * Use this method, whenever you wish to sign out a player from the game.
-   *
-   * @param id of the player to be signed out.
-   */
-  void deregisterBy(Integer id);
-
-  /**
    * Use this method to assign a player with given id its age.
    *
    * @param id of the player whose age is being set.
    * @param age of the player to be set.
    */
   void setAgeFor(Integer id, int age);
+
+  /**
+   * Use this method, whenever you wish to sign out a player from the game.
+   *
+   * @param id of the player to be signed out.
+   */
+  void deregisterBy(Integer id);
 
   /**
    * Use this method to start the game. Keep in mind, that from now on no other player can join the
@@ -124,8 +124,7 @@ public interface GIGameInfo {
    * Use this method to validate a combination for a player by its id, where tiles from the players
    * hand are combined with tiles from the board. Only one new combination can be played with this
    * method. Also the whole Board has to be checked for validity, because other combinations on the
-   * board can be manipulated. If the player id is not registered in the model an Optional.empty()
-   * is returned.
+   * board can be manipulated.
    *
    * @param tilesFromHand the tiles that where played from the players hand.
    * @param tilesFromBoard the combination to which the tilesFromHand were added
@@ -140,7 +139,17 @@ public interface GIGameInfo {
       List<List<GITile>> newCombinations,
       Integer id);
 
-  // TODO IS NEW
+  /**
+   * Use this method to validate a combination for a player by its id, where tiles from the players
+   * hand and an old combination from the board are combined to a new combination.
+   *
+   * @param tilesFromHand tiles that were selected from the hand
+   * @param oldCombinations tiles from the old combination (in order).
+   * @param newCombinations tiles from the new combination (in order).
+   * @param id the id by which the move was made
+   * @return the id by which the combination was played, and whether the new combination was valid
+   *     or not. If the player id is not registered in the model an Optional.empty() is returned.
+   */
   Optional<GITuple<Integer, Boolean>> manipulateBoardWith(
       List<GITile> tilesFromHand,
       List<List<GITile>> oldCombinations,
@@ -182,13 +191,13 @@ public interface GIGameInfo {
    */
   Optional<List<GITuple<Integer, GIPoints>>> calculatePointsForRegisteredPlayers();
 
-  // TODO REMOVE -> testing purpose only
-  Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id, List<GITile> customTiles);
-
   /**
    * Use this method to obtain the up to date board.
    *
    * @return current board.
    */
   List<List<GITile>> getCurrentBoard();
+
+  // TODO REMOVE -> testing purpose only
+  Optional<GITuple<Integer, List<GITile>>> drawBy(Integer id, List<GITile> customTiles);
 }
