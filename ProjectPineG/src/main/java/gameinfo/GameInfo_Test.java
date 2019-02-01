@@ -71,6 +71,7 @@ class GameInfo_Test {
     play_lessThan30Points();
     assert gameInfo.getCurrentPlayerId().equals(player_2_ID);
     play_validGroups();
+
     assert gameInfo.getCurrentPlayerId().equals(player_1_ID);
     assert ! gameInfo.getCurrentBoard().isEmpty();
     play_streetOfFourteen();
@@ -116,8 +117,10 @@ class GameInfo_Test {
   }
 
   void draw() {
-    gameInfo.drawBy(player_1_ID, hand_player_1);
     gameInfo.drawBy(player_2_ID, hand_player_2);
+    gameInfo.finishedTurnBy(player_2_ID);
+    gameInfo.drawBy(player_1_ID, hand_player_1);
+    gameInfo.finishedTurnBy(player_1_ID);
   }
 
   void checkNumOfPlayers() {

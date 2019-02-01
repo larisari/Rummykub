@@ -293,7 +293,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     if (!gameFlow.isPlayerExistingBy(id)) {
       return Optional.empty();
     }
-    if (!id.equals(getCurrentPlayerId()) && gameFlow.hasMadeMoveBy(id)) {
+    if (id.equals(getCurrentPlayerId()) && gameFlow.hasMadeMoveBy(id)) {
       gameFlow.nextPlayersTurn();
       return Optional.of(id);
     } else {
