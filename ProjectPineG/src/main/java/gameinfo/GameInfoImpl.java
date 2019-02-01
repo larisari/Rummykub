@@ -102,8 +102,8 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       return Optional.empty();
     }
 
-    if (!gameFlow.isValidPlayerBy(id)) {
-      // it is not the players turn.
+    if (!id.equals(getCurrentPlayerId())) {
+      log.info("It is not the player's turn.");
       return Optional.of(new GITuple<>(id, new ArrayList<>()));
     }
 
@@ -140,7 +140,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       return Optional.empty();
     }
 
-    if (!gameFlow.isValidPlayerBy(id)) {
+    if (!id.equals(getCurrentPlayerId())) {
       // it is not the players turn.
       return Optional.of(new GITuple<>(id, new ArrayList<>()));
     }
@@ -216,7 +216,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
       Player player = optionalPlayer.get();
 
-      if (!gameFlow.isValidPlayerBy(id) || player.isFirstMove()) {
+      if (!id.equals(getCurrentPlayerId()) || player.isFirstMove()) {
         // it is not the players turn or it is his first move.
         return Optional.of(new GITuple<>(id, false));
       }
@@ -251,7 +251,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
 
     Player player = optionalPlayer.get();
 
-    if (!gameFlow.isValidPlayerBy(id) || player.isFirstMove()) {
+    if (!id.equals(getCurrentPlayerId()) || player.isFirstMove()) {
       // it is not the players turn or it is his first move.
       return Optional.of(new GITuple<>(id, false));
     }
@@ -293,7 +293,7 @@ class GameInfoImpl extends Thread implements GIGameInfo {
     if (!gameFlow.isPlayerExistingBy(id)) {
       return Optional.empty();
     }
-    if (gameFlow.isValidPlayerBy(id) && gameFlow.hasMadeMoveBy(id)) {
+    if (!id.equals(getCurrentPlayerId()) && gameFlow.hasMadeMoveBy(id)) {
       gameFlow.nextPlayersTurn();
       return Optional.of(id);
     } else {

@@ -6,14 +6,11 @@ import gameinfo.util.GITile;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 class GameInfo_Test {
 
-  private static GIGameInfo gameInfo = GIFactory.make();
+  private static GIGameInfo gameInfo = GIFactory.make(new HashMap<>());
 
   private static final Integer player_1_ID = 1;
   private static final Integer player_2_ID = 2;
