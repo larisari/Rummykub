@@ -4,7 +4,6 @@ import gameinfo.util.GIColor;
 import gameinfo.util.GINumber;
 import gameinfo.util.GITile;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -63,14 +62,37 @@ class GameInfo_Test {
     gameInfo.registerBy(player_2_ID);
   }
 
-  //TODO create a custom game run that covers as much as possible
+  // TODO create a custom game run that covers as much as possible
 
   @Test
   void orderedTestRun() {
     setAge();
     start();
     assert gameInfo.getStartingPlayerId().equals(player_2_ID);
+    checkNumOfPlayers();
+    assert gameInfo.getCurrentBoard().isEmpty();
     draw();
+    play_lessThan30Points();
+    play_validMove();
+    assert gameInfo.getCurrentPlayerId().equals(player_2_ID);
+    gameInfo.finishedTurnBy(player_2_ID);
+    assert gameInfo.getCurrentPlayerId().equals(player_1_ID);
+  }
+
+  /**
+   * This method checks whether a combination is valid or not.
+   *
+   * @param combinations wished by a player.
+   * @param id of the player to wish the combinations.
+   * @return true, is the combinations are valid and false otherwise.
+   */
+  private boolean validate(List<List<GITile>> combinations, Integer id) {
+    if (gameInfo.play(combinations,id).isPresent()) {
+      return gameInfo.play(combinations,id).get().getSecond();
+    }
+    else {
+      return false;
+    }
   }
 
   void start() {
@@ -85,6 +107,61 @@ class GameInfo_Test {
   void draw() {
     gameInfo.drawBy(player_1_ID, hand_player_1);
     gameInfo.drawBy(player_2_ID, hand_player_2);
+  }
+
+  void checkNumOfPlayers() {
+    if (gameInfo.getNumberOfPlayers().isPresent()) {
+      assert gameInfo.getNumberOfPlayers().get() == 2;
+    }
+    else {
+      assert false;
+    }
+  }
+
+  void play_lessThan30Points() {
+    List<List<GITile>> combinations = new ArrayList<>();
+    List<GITile> lessThanMinimumPoints = new ArrayList<>();
+    lessThanMinimumPoints.add(hand_player_2.get(11));
+    lessThanMinimumPoints.add(hand_player_2.get(12));
+    lessThanMinimumPoints.add(hand_player_2.get(13));
+    combinations.add(lessThanMinimumPoints);
+    assert ! validate(combinations,player_2_ID);
+  }
+
+  void play_validMove() {
+    List<List<GITile>> combinations = new ArrayList<>();
+    List<GITile> elevens = new ArrayList<>();
+    List<GITile> twelves= new ArrayList<>();
+    List<GITile> thirteens = new ArrayList<>();
+    elevens.add(hand_player_2.get(0));
+    elevens.add(hand_player_2.get(1));
+    elevens.add(hand_player_2.get(2));
+    elevens.add(hand_player_2.get(3));
+    twelves.add(hand_player_2.get(4));
+    twelves.add(hand_player_2.get(5));
+    twelves.add(hand_player_2.get(6));
+    twelves.add(hand_player_2.get(7));
+    thirteens.add(hand_player_2.get(8));
+    thirteens.add(hand_player_2.get(9));
+    thirteens.add(hand_player_2.get(10));
+    combinations.add(elevens);
+    combinations.add(twelves);
+    combinations.add(thirteens);
+    assert validate(combinations,player_2_ID);
+  }
+
+
+
+  void play_streetOfFourteen() {
+    List<List<GITile>> combinations = new ArrayList<>();
+    List<GITile> streetOfFourteen = hand_player_2;
+    combinations.add(streetOfFourteen);
+    if (gameInfo.play(combinations, player_2_ID).isPresent()) {
+    assert !gameInfo.play(combinations, player_2_ID).get().getSecond();
+    }
+    else {
+      assert false;
+    }
   }
 
 }
