@@ -262,8 +262,8 @@ public class ClientParser {
   }
 
   /**
-   * Sends a message to server with a combination, Client wants to play within a joker. //TODO
-   * javadoc
+   * Sends a message to server with a combination, Client wants to play within a joker.
+   *
    */
   public void playSwapJoker(
       List<ImageView> tilesFromHand, List<List<ImageView>> oldComb, List<List<ImageView>> newComb) {

@@ -15,23 +15,23 @@ repositories {
 
 dependencies {
     /* uncomment for cross-platform jar: */
-    compile 'org.openjfx:javafx-base:11:win'
-    compile 'org.openjfx:javafx-controls:11:win'
-    compile 'org.openjfx:javafx-fxml:11:win'
-    compile 'org.openjfx:javafx-media:11:win'
-    compile "org.openjfx:javafx-graphics:11:win"
-
-    compile 'org.openjfx:javafx-base:11:linux'
-    compile 'org.openjfx:javafx-controls:11:linux'
-    compile 'org.openjfx:javafx-fxml:11:linux'
-    compile 'org.openjfx:javafx-media:11:linux'
-    compile "org.openjfx:javafx-graphics:11:linux"
-
-    compile 'org.openjfx:javafx-base:11:mac'
-    compile 'org.openjfx:javafx-controls:11:mac'
-    compile 'org.openjfx:javafx-fxml:11:mac'
-    compile 'org.openjfx:javafx-media:11:mac'
-    compile "org.openjfx:javafx-graphics:11:mac"
+//    compile 'org.openjfx:javafx-base:11:win'
+//    compile 'org.openjfx:javafx-controls:11:win'
+//    compile 'org.openjfx:javafx-fxml:11:win'
+//    compile 'org.openjfx:javafx-media:11:win'
+//    compile "org.openjfx:javafx-graphics:11:win"
+//
+//    compile 'org.openjfx:javafx-base:11:linux'
+//    compile 'org.openjfx:javafx-controls:11:linux'
+//    compile 'org.openjfx:javafx-fxml:11:linux'
+//    compile 'org.openjfx:javafx-media:11:linux'
+//    compile "org.openjfx:javafx-graphics:11:linux"
+//
+//    compile 'org.openjfx:javafx-base:11:mac'
+//    compile 'org.openjfx:javafx-controls:11:mac'
+//    compile 'org.openjfx:javafx-fxml:11:mac'
+//    compile 'org.openjfx:javafx-media:11:mac'
+//    compile "org.openjfx:javafx-graphics:11:mac"
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'

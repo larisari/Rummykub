@@ -274,7 +274,7 @@ public class GuiController {
    */
   @FXML
   private void handleEnterComb() {
-
+    deleteAddToButtons();
     if (!selectedTiles.isEmpty()) {
       if (areOnlyTilesFromHand(selectedTiles)) {
         moveToSelectionBoard();
@@ -282,6 +282,15 @@ public class GuiController {
         placeHandAndBoardTiles();
       }
     }
+  }
+
+  /**
+   * Gets called if user releases "Enter new Selection" button. For updating the main board in case
+   * it intersects with selection board.
+   */
+  @FXML
+  private void handleEnterCombRel() {
+    updateBoard();
   }
 
   /**
@@ -341,6 +350,7 @@ public class GuiController {
     cancelSelEffect();
   }
 
+
   /**
    * Checks in which combinations on the board the selected tiles are contained in and requests
    * verification for alteration wishes of user.
@@ -389,10 +399,20 @@ public class GuiController {
    */
   @FXML
   private void handlePlaceOnBoard() {
+    deleteAddToButtons();
     if (!selectionBoard.getChildren().isEmpty()) {
       parser.play(selectedCombinations);
 
     }
+  }
+
+  /**
+   * Gets called when user releases "Place Selection" button. For updating board if main board
+   * intersects with selection board.
+   */
+  @FXML
+  private void handlePlaceOnBoardRel() {
+    updateBoard();
   }
 
   /**
@@ -421,11 +441,12 @@ public class GuiController {
     }
 
     board.getChildren().add(comb);
-    updateBoard();
+
     bag.setDisable(true);
     endTurn.setDisable(false);
-    disableTiles(combination); //löscht auch tiles aus selectedTiles
+    disableTiles(combination);
     enableTilesOnBoard();
+
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       parser.getPlayerPoints();
       parser.notifyWin();
@@ -505,14 +526,28 @@ public class GuiController {
           }
         }
         Button front = new Button("+");
+        box.getChildren().add(0, front);
         front.setOnMousePressed(event1 -> addToFront(box));
         Button back = new Button("+");
-        back.setOnMousePressed(event2 -> addToBack(box));
-        box.getChildren().add(0, front);
         box.getChildren().add(box.getChildren().size(), back);
+        back.setOnMousePressed(event2 -> addToBack(box));
+
+
       }
-      updateBoard();
+
+    } else {
+      deleteAddToButtons();
     }
+  }
+
+
+  /**
+   * Gets called if user releases "Add to..." button. For updating board if main board intersects
+   * with selection board.
+   */
+  @FXML
+  private void handleAddToRel() {
+    updateBoard();
   }
 
 
@@ -641,9 +676,13 @@ public class GuiController {
   private void deleteAddToButtons() {
     for (int i = 0; i < board.getChildren().size(); i++) {
       HBox box = (HBox) board.getChildren().get(i);
-      box.getChildren().remove(box.getChildren().get(box.getChildren().size() - 1));
-      box.getChildren().remove(box.getChildren().get(0));
+      if (box.getChildren().get(0) instanceof Button) {
+        box.getChildren().remove(box.getChildren().get(box.getChildren().size() - 1));
+        box.getChildren().remove(box.getChildren().get(0));
 
+      } else {
+        return;
+      }
     }
   }
 
@@ -713,19 +752,17 @@ public class GuiController {
    * it does the tiles on the main board are resized.
    */
   private void updateBoard() {
-    for (int i = 0; i < board.getChildren().size(); i++) {
+    for (int i = board.getChildren().size(); i >= 0; i--) {
       HBox box = (HBox) board.getChildren().get(i);
       if (box.getChildren().isEmpty()) {
         board.getChildren().remove(box);
       }
     }
-    System.out.println(board.getBoundsInParent());
-    System.out.println(selectionBoard.getBoundsInParent());
-    System.out.println(board.getBoundsInParent().getMaxY());
 
     if (board.intersects(
         board.sceneToLocal(selectionBoard.localToScene(selectionBoard.getBoundsInLocal())))) {
-      double reduce = 0.9;
+      System.out.println("INTERSECTS");
+      double reduce = 0.95;
       tileHeight *= reduce;
       tileWidth *= reduce;
       for (int i = 0; i < board.getChildren().size(); i++) {
@@ -782,7 +819,6 @@ public class GuiController {
         imageView.setDisable(true);
       }
       board.getChildren().add(box);
-      updateBoard();
 
     }
   }
@@ -848,7 +884,7 @@ public class GuiController {
    * notification sound.
    */
   public void enableControl() {
-
+    updateBoard();
     enter.setDisable(false);
     cancelSelection.setDisable(false);
     addToExisting.setDisable(false);
