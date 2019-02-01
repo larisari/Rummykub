@@ -1,25 +1,25 @@
 /**
- * This class defines the game's general rythm. It explains the player's turn
- * sequence, keeps track of all players as well as the game's progress and
- * current state.
+ * This class defines the game's general rythm. It explains the player's turn sequence, keeps track
+ * of all players as well as the game's progress and current state.
  */
+
 package gameinfo;
+
 import gameinfo.util.GIPoints;
 import gameinfo.util.GITuple;
 import java.util.*;
 
 class GameFlow {
-    private Map<Integer, Player> players;
-    private GameState state;
-    private int distributionCounter;
-    private List<Player> playerSequence;
-    private Integer currentPlayerIndex;
-    private PointsCalculator calculator;
+  private Map<Integer, Player> players;
+  private GameState state;
+  private int distributionCounter;
+  private List<Player> playerSequence;
+  private Integer currentPlayerIndex;
+  private PointsCalculator calculator;
 
   /**
-   * The one and only constructor of an GameFlow object only gets a
-   * PointsCalculator object as parameter, whereas all other attributes are
-   * not set manually by creating this object.
+   * The one and only constructor of an GameFlow object only gets a PointsCalculator object as
+   * parameter, whereas all other attributes are not set manually by creating this object.
    *
    * @param calculator to calculate possible points.
    */
@@ -37,10 +37,9 @@ class GameFlow {
   }
 
   /**
-   * Method for signing in players according to their age. Each player is
-   * assigned a unique ID, which is given as parameter to this method. On the
-   * basis of the ID, the player is put into a HashMap with his ID as
-   * key-value.
+   * Method for signing in players according to their age. Each player is assigned a unique ID,
+   * which is given as parameter to this method. On the basis of the ID, the player is put into a
+   * HashMap with his ID as key-value.
    *
    * @param id of the signed in player.
    */
@@ -50,8 +49,8 @@ class GameFlow {
   }
 
   /**
-   * Each time a player signs out, this method has to be called with the
-   * player's unique ID, to remove this player from the game.
+   * Each time a player signs out, this method has to be called with the player's unique ID, to
+   * remove this player from the game.
    *
    * @param id of the player that wants to sign out of the game.
    */
@@ -71,8 +70,8 @@ class GameFlow {
   }
 
   /**
-   * This method causes the game's state to change to "distributing". In this
-   * state, each player can draw stacks from the bag.
+   * This method causes the game's state to change to "distributing". In this state, each player can
+   * draw stacks from the bag.
    */
   void startGame() {
     Collections.sort(playerSequence);
@@ -80,8 +79,9 @@ class GameFlow {
   }
 
   /**
-   * Simple method to check whether a player with given id is valid, in other
-   *  words, whether the player with given id has the correct id.
+   * Simple method to check whether a player with given id is valid, in other words, whether the
+   * player with given id has the correct id.
+   *
    * @param id of the player that is being checked for validation.
    * @return true, if player is valid, and false otherwise.
    */
@@ -91,6 +91,7 @@ class GameFlow {
 
   /**
    * This method returns all players in the game.
+   *
    * @return all signed in players.
    */
   Map<Integer, Player> getPlayers() {
@@ -99,10 +100,10 @@ class GameFlow {
 
   /**
    * Accessing a Player object with given id is possible with this method.
+   *
    * @param id of the player.
-   * @return an Optional Player object, in case the given id matches a
-   * key-value in the HashMap with a valid value and an empty Optional if no
-   * player is found.
+   * @return an Optional Player object, in case the given id matches a key-value in the HashMap with
+   *     a valid value and an empty Optional if no player is found.
    */
   Optional<Player> getPlayerBy(Integer id) {
     if (players.containsKey(id)) {
@@ -114,6 +115,7 @@ class GameFlow {
 
   /**
    * This method is used to
+   *
    * @return the current player's id.
    */
   Integer getCurrentPlayerId() {
@@ -122,6 +124,7 @@ class GameFlow {
 
   /**
    * This method is used to
+   *
    * @return the next player's id.
    */
   Integer getNextPlayerID() {
@@ -132,9 +135,7 @@ class GameFlow {
     }
   }
 
-  /**
-   * This method causes the next player's turn.
-   */
+  /** This method causes the next player's turn. */
   void nextPlayersTurn() {
     if (currentPlayerIndex < playerSequence.size() - 1) {
       currentPlayerIndex++;
@@ -146,8 +147,9 @@ class GameFlow {
   }
 
   /**
-   * Simple method to check whether the current state of the game is
-   * "distributing", in other words, whether stacks are being distributed.
+   * Simple method to check whether the current state of the game is "distributing", in other words,
+   * whether stacks are being distributed.
+   *
    * @return true, if game is in distributing-state, and false otherwise.
    */
   boolean isDistributing() {
@@ -156,6 +158,7 @@ class GameFlow {
 
   /**
    * This method is used to
+   *
    * @return the number of players in the game.
    */
   int getNumberOfPlayers() {
@@ -163,8 +166,8 @@ class GameFlow {
   }
 
   /**
-   * Causing the distributionCounter of the class to increase. Reaching the
-   * number of players, the state will change from "distributing" to "running".
+   * Causing the distributionCounter of the class to increase. Reaching the number of players, the
+   * state will change from "distributing" to "running".
    */
   void addDistribution() {
     this.distributionCounter++;
@@ -175,6 +178,7 @@ class GameFlow {
 
   /**
    * Accessing the players' points is possible with this method.
+   *
    * @return each players hands and their points.
    */
   Optional<List<GITuple<Integer, GIPoints>>> getPlayerPoints() {
@@ -193,6 +197,7 @@ class GameFlow {
 
   /**
    * This method let's you know, whether a player has made a move.
+   *
    * @param id of the player that possibly made a move.
    * @return true, if player absolved a move successfully, and false otherwise.
    */

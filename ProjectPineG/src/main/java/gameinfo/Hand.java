@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+/** This class represents the hand of a player. It holds all the tiles the player drew. */
 class Hand {
 
   private List<GITile> tilesOnHand;
@@ -15,7 +16,7 @@ class Hand {
   private static Logger log = Logger.getLogger(Hand.class.getName());
 
   Hand(PointsCalculator calculator) {
-    tilesOnHand = new ArrayList<>();
+    this.tilesOnHand = new ArrayList<>();
     this.calculator = calculator;
   }
 
@@ -24,12 +25,12 @@ class Hand {
   }
 
   void put(GITile tile) {
-//    log.info("Added the tile " + tile + " to the players hand.");
+    log.info("Added the tile " + tile + " to the players hand.");
     tilesOnHand.add(tile);
   }
 
   void removeTile(GITile tile) {
-//    log.info("Removed the tile " + tile + " from the players hand.");
+    log.info("Removed the tile " + tile + " from the players hand.");
     tilesOnHand.removeIf(i -> i.isEquals(tile));
   }
 
@@ -41,10 +42,10 @@ class Hand {
   GIPoints calculatePoints() {
     Integer pointsAsInteger = calculator.calculatePointsForHand(tilesOnHand);
     Integer pointsAsNegative = 0 - pointsAsInteger;
-//    log.info(
-//            "Calculated the points of the players hand. The player has "
-//                    + pointsAsNegative
-//                    + " points on the hand.");
+    log.info(
+        "Calculated the points of the players hand. The player has "
+            + pointsAsNegative
+            + " points on the hand.");
     return new GIPoints(pointsAsNegative);
   }
 }

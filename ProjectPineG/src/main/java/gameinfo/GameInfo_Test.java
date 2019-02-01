@@ -1,143 +1,180 @@
 package gameinfo;
 
-
 import gameinfo.util.GIColor;
 import gameinfo.util.GINumber;
 import gameinfo.util.GITile;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 class GameInfo_Test {
 
-  //TODO create test folder ?
-
-  private static GIGameInfo gameInfo;
-
-  private static Player p1;
-  private static Player p2;
-  private static Player p3;
-  private static Player p4;
+  private static GIGameInfo gameInfo = GIFactory.make(new HashMap<>());
 
   private static final Integer player_1_ID = 1;
   private static final Integer player_2_ID = 2;
-  private static final Integer player_3_ID = 3;
-  private static final Integer player_4_ID = 4;
+
+  private static Player p1 = new Player(player_1_ID, new PointsCalculator());
+  private static Player p2 = new Player(player_2_ID, new PointsCalculator());
 
   private static List<GITile> hand_player_1 =
-      new ArrayList<>(Arrays.asList(new GITile(GINumber.THREE,GIColor.BLACK),
-       new GITile(GINumber.THREE,GIColor.BLUE), new GITile(GINumber.THREE,
-              GIColor.YELLOW), new GITile(GINumber.FOUR,GIColor.BLACK),
-          new GITile(GINumber.FOUR,GIColor.BLUE),
-          new GITile(GINumber.FOUR,GIColor.YELLOW), new GITile(GINumber.FIVE,
-              GIColor.BLACK),
-          new GITile(GINumber.FIVE,GIColor.BLUE), new GITile(GINumber.FIVE,
-              GIColor.YELLOW), new GITile(GINumber.ELEVEN,GIColor.BLACK),
-          new GITile(GINumber.ELEVEN,GIColor.BLUE),
-          new GITile(GINumber.ELEVEN,GIColor.YELLOW), new GITile(GINumber.JOKER,
-              GIColor.JOKER
-              ), new GITile(GINumber.JOKER,GIColor.JOKER)));
+      new ArrayList<>(
+          Arrays.asList(
+              new GITile(GINumber.ONE, GIColor.BLUE),
+              new GITile(GINumber.TWO, GIColor.BLUE),
+              new GITile(GINumber.THREE, GIColor.BLUE),
+              new GITile(GINumber.FOUR, GIColor.BLUE),
+              new GITile(GINumber.FIVE, GIColor.BLUE),
+              new GITile(GINumber.SIX, GIColor.BLUE),
+              new GITile(GINumber.SEVEN, GIColor.BLUE),
+              new GITile(GINumber.EIGHT, GIColor.BLUE),
+              new GITile(GINumber.NINE, GIColor.BLUE),
+              new GITile(GINumber.TEN, GIColor.BLUE),
+              new GITile(GINumber.ELEVEN, GIColor.BLUE),
+              new GITile(GINumber.TWELVE, GIColor.BLUE),
+              new GITile(GINumber.THIRTEEN, GIColor.BLUE),
+              new GITile(GINumber.JOKER, GIColor.JOKER)));
+
+  private static List<GITile> hand_player_2 =
+      new ArrayList<>(
+          Arrays.asList(
+              new GITile(GINumber.ELEVEN, GIColor.BLACK),
+              new GITile(GINumber.ELEVEN, GIColor.RED),
+              new GITile(GINumber.ELEVEN, GIColor.BLUE),
+              new GITile(GINumber.ELEVEN, GIColor.YELLOW),
+              new GITile(GINumber.TWELVE, GIColor.BLACK),
+              new GITile(GINumber.TWELVE, GIColor.RED),
+              new GITile(GINumber.TWELVE, GIColor.BLUE),
+              new GITile(GINumber.TWELVE, GIColor.YELLOW),
+              new GITile(GINumber.THIRTEEN, GIColor.BLUE),
+              new GITile(GINumber.THIRTEEN, GIColor.RED),
+              new GITile(GINumber.THIRTEEN, GIColor.YELLOW),
+              new GITile(GINumber.TWO, GIColor.BLUE),
+              new GITile(GINumber.THREE, GIColor.BLUE),
+              new GITile(GINumber.JOKER, GIColor.JOKER)));
 
   @BeforeAll
   static void setup() {
-    gameInfo = GIFactory.make();
-    p1 = new Player(player_1_ID,new PointsCalculator());
-    p2 = new Player(player_2_ID,new PointsCalculator());
-    p3 = new Player(player_3_ID,new PointsCalculator());
-    p4 = new Player(player_4_ID,new PointsCalculator());
-
+    gameInfo.registerBy(player_1_ID);
+    gameInfo.registerBy(player_2_ID);
   }
 
   @Test
-  void orderedTestCase() {
-    signInPlayers();
+  void orderedTestRun() {
+    setAge();
     start();
-    //draw();
-    //lessThanMinPoints();
-    //validCombo();
-    //showhands();
-    checkOrder();
-    //makeFirstMove();
+    assert gameInfo.getStartingPlayerId().equals(player_2_ID);
+    checkNumOfPlayers();
+    assert gameInfo.getCurrentBoard().isEmpty();
+    draw();
+    play_lessThan30Points();
+    assert gameInfo.getCurrentPlayerId().equals(player_2_ID);
+    play_validGroups();
+
+    assert gameInfo.getCurrentPlayerId().equals(player_1_ID);
+    assert ! gameInfo.getCurrentBoard().isEmpty();
+    play_streetOfFourteen();
+    play_wrongTurn();
+    play_streetOfThirteen();
+    play_wrongJokerPosition();
   }
 
+  /**
+   * This method checks whether a combination is valid or not.
+   *
+   * @param combinations wished by a player.
+   * @param id of the player to wish the combinations.
+   * @return true, is the combinations are valid and false otherwise.
+   */
+  private boolean validate(List<List<GITile>> combinations, Integer id) {
+    if (gameInfo.play(combinations,id).isPresent()) {
+      return gameInfo.play(combinations,id).get().getSecond();
+    }
+    else {
+      return false;
+    }
+  }
+
+  private List<List<GITile>> makeCombinationList(int fromHandPosition, int toHandPosition,
+                                                 List<GITile> hand) {
+
+    List<List<GITile>> combinationList = new ArrayList<>();
+    List<GITile> combination = new ArrayList<>();
+    for (int i = fromHandPosition; i < toHandPosition + 1; i++) {
+      combination.add(hand.get(i));
+    }
+    combinationList.add(combination);
+    return combinationList;
+  }
   void start() {
     gameInfo.startGame();
   }
 
-  void signInPlayers() {
-    gameInfo.registerBy(player_1_ID);
-    gameInfo.registerBy(player_2_ID);
-    gameInfo.registerBy(player_3_ID);
-    gameInfo.registerBy(player_4_ID);
-
-    gameInfo.setAgeFor(player_1_ID,4);
-    gameInfo.setAgeFor(player_2_ID,3);
-    gameInfo.setAgeFor(player_3_ID,2);
-    gameInfo.setAgeFor(player_4_ID,1);
+  void setAge() {
+    gameInfo.setAgeFor(player_1_ID, 22);
+    gameInfo.setAgeFor(player_2_ID, 19);
   }
 
   void draw() {
+    gameInfo.drawBy(player_2_ID, hand_player_2);
+    gameInfo.finishedTurnBy(player_2_ID);
     gameInfo.drawBy(player_1_ID, hand_player_1);
-    gameInfo.drawBy(player_2_ID);
-    gameInfo.drawBy(player_3_ID);
-    gameInfo.drawBy(player_4_ID);
+    gameInfo.finishedTurnBy(player_1_ID);
   }
 
-  void checkOrder() {
-    assert gameInfo.getStartingPlayerId().equals(player_4_ID);
-    assert gameInfo.getCurrentPlayerId().equals(player_4_ID);
-    assert gameInfo.getNextPlayerId().get().equals(player_3_ID);
+  void checkNumOfPlayers() {
+    if (gameInfo.getNumberOfPlayers().isPresent()) {
+      assert gameInfo.getNumberOfPlayers().get() == 2;
+      assert gameInfo.getNumberOfPlayers().get() == gameInfo.getAllPlayerIds().size();
+    }
+    else {
+      assert false;
+    }
   }
 
-  void lessThanMinPoints() {
-    List<GITile> playersGroup =
-        new ArrayList<>(Arrays.asList(gameInfo.getAllTilesBy(player_1_ID).get().getSecond().get(0),
-            gameInfo.getAllTilesBy(player_1_ID).get().getSecond().get(1),
-            gameInfo.getAllTilesBy(player_1_ID).get().getSecond().get(2)));
+  void play_lessThan30Points() {
+    List<List<GITile>> combinations = makeCombinationList(11,13,hand_player_2);
+    assert ! validate(combinations,player_2_ID);
+  }
 
+  void play_validGroups() {
+    //elevens
+    List<List<GITile>> combinations = makeCombinationList(0,3,hand_player_2);
+    //twelves
+    combinations.add(makeCombinationList(4,7,hand_player_2).get(0));
+    //thirteens
+    combinations.add(makeCombinationList(8,10,hand_player_2).get(0));
+    assert validate(combinations,player_2_ID);
+    gameInfo.finishedTurnBy(player_2_ID);
+  }
+
+  void play_streetOfFourteen() {
     List<List<GITile>> combinations = new ArrayList<>();
-    combinations.add(playersGroup);
-
-    assert !gameInfo.play(combinations,player_1_ID).get().getSecond();
+    List<GITile> streetOfFourteen = hand_player_1;
+    combinations.add(streetOfFourteen);
+    assert ! validate(combinations,player_1_ID);
   }
 
-  void validCombo() {
-    List<GITile> playersGroup =
-        new ArrayList<>(Arrays.asList(gameInfo.getAllTilesBy(player_1_ID).get()
-            .getSecond().get(9), gameInfo.getAllTilesBy(player_1_ID).get()
-            .getSecond().get(10), gameInfo.getAllTilesBy(player_1_ID).get()
-            .getSecond().get(11)));
+  void play_wrongTurn() {
+    List<List<GITile>> combinations = makeCombinationList(11,13,hand_player_2);
+    assert ! validate(combinations,player_2_ID);
+  }
 
+  void play_streetOfThirteen() {
+    List<List<GITile>> combinations =  makeCombinationList(0,12,hand_player_1);
+    assert validate(combinations,player_1_ID);
+    gameInfo.finishedTurnBy(player_1_ID);
+  }
+
+  void play_wrongJokerPosition() {
     List<List<GITile>> combinations = new ArrayList<>();
-    combinations.add(playersGroup);
-
-    assert gameInfo.play(combinations,player_1_ID).get().getSecond();
-
+    List<GITile> invalidCombination = new ArrayList<>();
+    invalidCombination.add(hand_player_2.get(12));
+    invalidCombination.add(hand_player_2.get(11));
+    invalidCombination.add(hand_player_2.get(13));
+    combinations.add(invalidCombination);
+    assert ! validate(combinations,player_2_ID);
   }
 
-  void getAllPlayersHands() {
-    System.out.println(gameInfo.calculatePointsForRegisteredPlayers());
-  }
-
-
-  void showhands() {
-    System.out.println(gameInfo.getAllTilesBy(player_1_ID).get());
-    System.out.println(gameInfo.getAllTilesBy(player_2_ID).get());
-    System.out.println(gameInfo.getAllTilesBy(player_3_ID).get());
-    System.out.println(gameInfo.getAllTilesBy(player_4_ID).get());
-
-    //player playes 3 tiles, so he should now have 11 left on his hand
-    assert gameInfo.getAllTilesBy(player_1_ID).get().getSecond().size() == 11;
-  }
-
-  void makeFirstMove() {
-    assert gameInfo.getNextPlayerId().get().equals(player_2_ID);
-    gameInfo.drawBy(player_1_ID);
-    assert gameInfo.getNextPlayerId().get().equals(player_3_ID);
-    assert gameInfo.getAllTilesBy(player_1_ID).get().getSecond().size() == 15;
-  }
 }

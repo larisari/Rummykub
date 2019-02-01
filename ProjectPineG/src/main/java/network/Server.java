@@ -3,6 +3,7 @@ package network;
 import gameinfo.GIFactory;
 import gameinfo.GIGameInfo;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -25,7 +26,7 @@ public class Server {
     try {
       List<ServerClientCommunication> listOfClients = new ArrayList<>();
 
-      gameInfo = GIFactory.make();
+      gameInfo = GIFactory.make(new HashMap<>());
       log.info("Spiel wird geladen....");
 
       ServerListener listener = new ServerListener(listOfClients);
