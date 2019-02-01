@@ -7,6 +7,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 class GameInfo_Test {
 
@@ -42,10 +43,9 @@ class GameInfo_Test {
               new GITile(GINumber.ONE, GIColor.BLACK),
               new GITile(GINumber.ONE, GIColor.RED),
               new GITile(GINumber.ONE, GIColor.YELLOW),
-              new GITile(GINumber.THREE, GIColor.BLACK),
-              new GITile(GINumber.THREE, GIColor.RED),
-              new GITile(GINumber.THREE, GIColor.YELLOW),
-              //----------------------------------------
+              new GITile(GINumber.TWELVE, GIColor.BLACK),
+              new GITile(GINumber.TWELVE, GIColor.RED),
+              new GITile(GINumber.TWELVE, GIColor.YELLOW),
               new GITile(GINumber.TWELVE, GIColor.BLUE),
               new GITile(GINumber.THIRTEEN, GIColor.BLACK),
               new GITile(GINumber.THIRTEEN, GIColor.BLUE),
@@ -82,8 +82,14 @@ class GameInfo_Test {
     // p2
     play_wrongJokerPosition();
     play_groupOfOnes();
-    //p1
+    // p1
     play_draw();
+    // p2
+    play_groupOfTwelves();
+    // p1
+    play_addJokerToExistingCombination();
+    //p2
+
   }
 
   /**
@@ -94,11 +100,7 @@ class GameInfo_Test {
    * @return true, is the combinations are valid and false otherwise.
    */
   private boolean validate(List<List<GITile>> combinations, Integer id) {
-    if (gameInfo.play(combinations, id).isPresent()) {
-      return gameInfo.play(combinations, id).get().getSecond();
-    } else {
-      return false;
-    }
+    return gameInfo.play(combinations,id).get().getSecond();
   }
 
   /**
@@ -187,8 +189,8 @@ class GameInfo_Test {
   }
 
   void play_groupOfOnes() {
-    List<List<GITile>> combinations = makeCombinationList(0,2,hand_player_2);
-    assert validate(combinations,player_2_ID);
+    List<List<GITile>> combinations = makeCombinationList(0, 2, hand_player_2);
+    assert validate(combinations, player_2_ID);
     gameInfo.finishedTurnBy(player_2_ID);
   }
 
@@ -197,10 +199,35 @@ class GameInfo_Test {
       int tilesOnHand = gameInfo.getAllTilesBy(player_1_ID).get().getSecond().size();
       gameInfo.drawBy(player_1_ID);
       assert gameInfo.getAllTilesBy(player_1_ID).get().getSecond().size() == tilesOnHand + 1;
-    }
-    else {
+    } else {
       assert false;
     }
     gameInfo.finishedTurnBy(player_1_ID);
   }
+
+  void play_groupOfTwelves() {
+    List<List<GITile>> combinations = makeCombinationList(3, 5, hand_player_2);
+    assert validate(combinations, player_2_ID);
+    gameInfo.finishedTurnBy(player_2_ID);
+  }
+
+    void play_addJokerToExistingCombination() {
+      List<GITile> tilesFromHand = new ArrayList<>();
+      tilesFromHand.add(hand_player_1.get(13));
+
+      List<List<GITile>> currentBoard = new ArrayList<>();
+      currentBoard.add(gameInfo.getCurrentBoard().get(3));
+
+      List<GITile> combinationWithJoker = new ArrayList<>(currentBoard.get(0));
+      combinationWithJoker.add(tilesFromHand.get(0));
+
+      System.out.println(combinationWithJoker);
+
+      List<List<GITile>> newBoard = new ArrayList<>();
+      newBoard.add(combinationWithJoker);
+
+      assert gameInfo.manipulateBoardWith(tilesFromHand,currentBoard,newBoard,
+          player_1_ID).get().getSecond();
+      gameInfo.finishedTurnBy(player_1_ID);
+    }
 }
