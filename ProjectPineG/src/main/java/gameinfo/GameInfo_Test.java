@@ -39,14 +39,15 @@ class GameInfo_Test {
   private static List<GITile> hand_player_2 =
       new ArrayList<>(
           Arrays.asList(
-              new GITile(GINumber.ELEVEN, GIColor.BLACK),
-              new GITile(GINumber.ELEVEN, GIColor.RED),
-              new GITile(GINumber.ELEVEN, GIColor.BLUE),
-              new GITile(GINumber.ELEVEN, GIColor.YELLOW),
-              new GITile(GINumber.TWELVE, GIColor.BLACK),
-              new GITile(GINumber.TWELVE, GIColor.RED),
+              new GITile(GINumber.ONE, GIColor.BLACK),
+              new GITile(GINumber.ONE, GIColor.RED),
+              new GITile(GINumber.ONE, GIColor.YELLOW),
+              new GITile(GINumber.THREE, GIColor.BLACK),
+              new GITile(GINumber.THREE, GIColor.RED),
+              new GITile(GINumber.THREE, GIColor.YELLOW),
+              //----------------------------------------
               new GITile(GINumber.TWELVE, GIColor.BLUE),
-              new GITile(GINumber.TWELVE, GIColor.YELLOW),
+              new GITile(GINumber.THIRTEEN, GIColor.BLACK),
               new GITile(GINumber.THIRTEEN, GIColor.BLUE),
               new GITile(GINumber.THIRTEEN, GIColor.RED),
               new GITile(GINumber.THIRTEEN, GIColor.YELLOW),
@@ -70,14 +71,19 @@ class GameInfo_Test {
     draw();
     play_lessThan30Points();
     assert gameInfo.getCurrentPlayerId().equals(player_2_ID);
-    play_validGroups();
-
+    // p2
+    play_groupOfThirteens();
+    // p1
     assert gameInfo.getCurrentPlayerId().equals(player_1_ID);
-    assert ! gameInfo.getCurrentBoard().isEmpty();
+    assert !gameInfo.getCurrentBoard().isEmpty();
     play_streetOfFourteen();
     play_wrongTurn();
     play_streetOfThirteen();
+    // p2
     play_wrongJokerPosition();
+    play_groupOfOnes();
+    //p1
+    play_draw();
   }
 
   /**
@@ -88,16 +94,23 @@ class GameInfo_Test {
    * @return true, is the combinations are valid and false otherwise.
    */
   private boolean validate(List<List<GITile>> combinations, Integer id) {
-    if (gameInfo.play(combinations,id).isPresent()) {
-      return gameInfo.play(combinations,id).get().getSecond();
-    }
-    else {
+    if (gameInfo.play(combinations, id).isPresent()) {
+      return gameInfo.play(combinations, id).get().getSecond();
+    } else {
       return false;
     }
   }
 
-  private List<List<GITile>> makeCombinationList(int fromHandPosition, int toHandPosition,
-                                                 List<GITile> hand) {
+  /**
+   * This method creates wished combinations from a given hand.
+   *
+   * @param fromHandPosition is the starting index of the given player's hand.
+   * @param toHandPosition is the ending index of the given player's hand.
+   * @param hand the List out of which the final List of Lists is created.
+   * @return List of Lists of one List to be passed as parameter for a play() method.
+   */
+  private List<List<GITile>> makeCombinationList(
+      int fromHandPosition, int toHandPosition, List<GITile> hand) {
 
     List<List<GITile>> combinationList = new ArrayList<>();
     List<GITile> combination = new ArrayList<>();
@@ -107,6 +120,7 @@ class GameInfo_Test {
     combinationList.add(combination);
     return combinationList;
   }
+
   void start() {
     gameInfo.startGame();
   }
@@ -127,25 +141,20 @@ class GameInfo_Test {
     if (gameInfo.getNumberOfPlayers().isPresent()) {
       assert gameInfo.getNumberOfPlayers().get() == 2;
       assert gameInfo.getNumberOfPlayers().get() == gameInfo.getAllPlayerIds().size();
-    }
-    else {
+    } else {
       assert false;
     }
   }
 
   void play_lessThan30Points() {
-    List<List<GITile>> combinations = makeCombinationList(11,13,hand_player_2);
-    assert ! validate(combinations,player_2_ID);
+    List<List<GITile>> combinations = makeCombinationList(11, 13, hand_player_2);
+    assert !validate(combinations, player_2_ID);
   }
 
-  void play_validGroups() {
-    //elevens
-    List<List<GITile>> combinations = makeCombinationList(0,3,hand_player_2);
-    //twelves
-    combinations.add(makeCombinationList(4,7,hand_player_2).get(0));
-    //thirteens
-    combinations.add(makeCombinationList(8,10,hand_player_2).get(0));
-    assert validate(combinations,player_2_ID);
+  void play_groupOfThirteens() {
+    // thirteens
+    List<List<GITile>> combinations = makeCombinationList(7, 10, hand_player_2);
+    assert validate(combinations, player_2_ID);
     gameInfo.finishedTurnBy(player_2_ID);
   }
 
@@ -153,17 +162,17 @@ class GameInfo_Test {
     List<List<GITile>> combinations = new ArrayList<>();
     List<GITile> streetOfFourteen = hand_player_1;
     combinations.add(streetOfFourteen);
-    assert ! validate(combinations,player_1_ID);
+    assert !validate(combinations, player_1_ID);
   }
 
   void play_wrongTurn() {
-    List<List<GITile>> combinations = makeCombinationList(11,13,hand_player_2);
-    assert ! validate(combinations,player_2_ID);
+    List<List<GITile>> combinations = makeCombinationList(11, 13, hand_player_2);
+    assert !validate(combinations, player_2_ID);
   }
 
   void play_streetOfThirteen() {
-    List<List<GITile>> combinations =  makeCombinationList(0,12,hand_player_1);
-    assert validate(combinations,player_1_ID);
+    List<List<GITile>> combinations = makeCombinationList(0, 12, hand_player_1);
+    assert validate(combinations, player_1_ID);
     gameInfo.finishedTurnBy(player_1_ID);
   }
 
@@ -174,7 +183,24 @@ class GameInfo_Test {
     invalidCombination.add(hand_player_2.get(11));
     invalidCombination.add(hand_player_2.get(13));
     combinations.add(invalidCombination);
-    assert ! validate(combinations,player_2_ID);
+    assert !validate(combinations, player_2_ID);
   }
 
+  void play_groupOfOnes() {
+    List<List<GITile>> combinations = makeCombinationList(0,2,hand_player_2);
+    assert validate(combinations,player_2_ID);
+    gameInfo.finishedTurnBy(player_2_ID);
+  }
+
+  void play_draw() {
+    if (gameInfo.getAllTilesBy(player_1_ID).isPresent()) {
+      int tilesOnHand = gameInfo.getAllTilesBy(player_1_ID).get().getSecond().size();
+      gameInfo.drawBy(player_1_ID);
+      assert gameInfo.getAllTilesBy(player_1_ID).get().getSecond().size() == tilesOnHand + 1;
+    }
+    else {
+      assert false;
+    }
+    gameInfo.finishedTurnBy(player_1_ID);
+  }
 }
