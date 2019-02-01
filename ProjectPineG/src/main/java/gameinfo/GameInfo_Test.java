@@ -72,13 +72,14 @@ class GameInfo_Test {
     assert gameInfo.getCurrentBoard().isEmpty();
     draw();
     play_lessThan30Points();
-    play_validMove();
     assert gameInfo.getCurrentPlayerId().equals(player_2_ID);
-    gameInfo.finishedTurnBy(player_2_ID);
+    play_validGroups();
     assert gameInfo.getCurrentPlayerId().equals(player_1_ID);
     assert ! gameInfo.getCurrentBoard().isEmpty();
     play_streetOfFourteen();
+    play_wrongTurn();
     play_streetOfThirteen();
+    play_wrongJokerPosition();
   }
 
   /**
@@ -137,7 +138,7 @@ class GameInfo_Test {
     assert ! validate(combinations,player_2_ID);
   }
 
-  void play_validMove() {
+  void play_validGroups() {
     //elevens
     List<List<GITile>> combinations = makeCombinationList(0,3,hand_player_2);
     //twelves
@@ -145,6 +146,7 @@ class GameInfo_Test {
     //thirteens
     combinations.add(makeCombinationList(8,10,hand_player_2).get(0));
     assert validate(combinations,player_2_ID);
+    gameInfo.finishedTurnBy(player_2_ID);
   }
 
   void play_streetOfFourteen() {
@@ -154,9 +156,25 @@ class GameInfo_Test {
     assert ! validate(combinations,player_1_ID);
   }
 
+  void play_wrongTurn() {
+    List<List<GITile>> combinations = makeCombinationList(11,13,hand_player_2);
+    assert ! validate(combinations,player_2_ID);
+  }
+
   void play_streetOfThirteen() {
     List<List<GITile>> combinations =  makeCombinationList(0,12,hand_player_1);
     assert validate(combinations,player_1_ID);
+    gameInfo.finishedTurnBy(player_1_ID);
+  }
+
+  void play_wrongJokerPosition() {
+    List<List<GITile>> combinations = new ArrayList<>();
+    List<GITile> invalidCombination = new ArrayList<>();
+    invalidCombination.add(hand_player_2.get(12));
+    invalidCombination.add(hand_player_2.get(11));
+    invalidCombination.add(hand_player_2.get(13));
+    combinations.add(invalidCombination);
+    assert ! validate(combinations,player_2_ID);
   }
 
 }
