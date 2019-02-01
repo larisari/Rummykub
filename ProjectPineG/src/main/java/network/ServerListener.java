@@ -12,11 +12,12 @@ import java.util.logging.Logger;
 /** Server Thread, which opens the Server and handles incoming client connections. */
 public class ServerListener extends Thread {
 
+  static final Object lock = new Object();
+  static boolean killAllSockets = false;
   private static List<ServerClientCommunication> clients;
   private static int clientID;
   private static Logger log = Logger.getLogger(ServerListener.class.getName());
   private static ServerSocket ss;
-  private boolean isRunning = true;
 
   /**
    * Constructor, which safes all clients and sets an ID according to the number of registered
@@ -44,6 +45,7 @@ public class ServerListener extends Thread {
     try {
       log.info("[Server] Serversocket wird geschlossen.");
       ss.close();
+      ss = null;
       log.info("[Server] Server wurde geschlossen.");
     } catch (IOException e) {
       log.info("[Server] kann nicht geclosed werden.");
@@ -53,18 +55,21 @@ public class ServerListener extends Thread {
 
   /** removes all clients and closes the server. */
   private static void restartListener() {
-
+    killServer();
     clients.forEach(
         client -> {
           try {
+
             client.getS().close();
+            client.getIn().close();
+            client.getOut().close();
           } catch (IOException e) {
             e.printStackTrace();
           }
         });
 
     clients.clear();
-    killServer();
+    log.info("[ServerListener] Starting Client ID after Restart..." + clientID);
   }
 
   @Override
@@ -76,7 +81,7 @@ public class ServerListener extends Thread {
 
       log.info("[Server] wird initialisiert...");
 
-      while (isRunning) {
+      while (true) {
         try {
           if (clientID < 4) {
 
@@ -84,7 +89,6 @@ public class ServerListener extends Thread {
             Socket s = ss.accept();
 
             log.info("[Server] neuer Client wurde aufgenommen " + s);
-            System.out.println("[Server] Connection aufgebaut  " + s.isConnected());
 
             DataInputStream in = new DataInputStream(s.getInputStream());
             DataOutputStream out =
@@ -108,16 +112,48 @@ public class ServerListener extends Thread {
             clientID++;
           }
         } catch (SocketException e) {
-          log.info("[Server] Verbindung zu Client " + clientID + " verloren...");
 
-          getThreadGroup().destroy();
-          this.interrupt();
-          log.info("Alle Client Verbindungen wurden gekillt.");
-          restartListener();
+          log.info("[ServerListener] yes, hier fliegt auch die Socket Exception.");
+          synchronized (lock) {
+            while (!killAllSockets) {
+              try {
+                log.info("[ServerListener] Warte bis ich Freigabe zum Restart erhalte...");
+                lock.wait();
+              } catch (InterruptedException ie) {
+                ie.printStackTrace();
+              }
+            }
+
+            log.info("[Server] Verbindung zu Client " + clientID + " verloren...");
+            getThreadGroup().destroy();
+            restartListener();
+            killAllSockets = false;
+            this.interrupt();
+            log.info("Alle Client Verbindungen wurden gekillt.");
+          }
         }
       }
     } catch (IOException e) {
+      log.info("[ServerListener] yes, hier fliegt auch die IO Exception.");
       e.printStackTrace();
+
+      //      synchronized (lock) {
+      //        while (!killAllSockets) {
+      //          try {
+      //            log.info("[ServerListener] Warte bis ich Freigabe zum Restart erhalte...");
+      //            lock.wait();
+      //          } catch (InterruptedException ie) {
+      //            ie.printStackTrace();
+      //          }
+      //        }
+      //
+      //        log.info("[Server] Verbindung zu Client " + clientID + " verloren...");
+      ////        getThreadGroup().destroy();
+      //        this.interrupt();
+      //        log.info("Alle Client Verbindungen wurden gekillt.");
+      //        restartListener();
+      //        killAllSockets = false;
+      //      }
     }
   }
 }

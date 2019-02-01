@@ -204,6 +204,9 @@ public class StartingScreenController {
         return true;
       }
     } catch (NumberFormatException e) {
+      Alert alert = new Alert(AlertType.CONFIRMATION,
+          "No host found! Need to create a new game first!", ButtonType.OK);
+      alert.showAndWait();
       return false;
     }
     return false;

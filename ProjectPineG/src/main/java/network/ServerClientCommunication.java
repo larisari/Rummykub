@@ -17,15 +17,6 @@ public class ServerClientCommunication extends Thread {
   private final int clientID;
 
   /**
-   * Getter for Socket.
-   * @return the socket.
-   */
-  public Socket getS() {
-    return s;
-  }
-
-
-  /**
    * Thread object to a client.
    *
    * @param s socket connection to one client.
@@ -40,6 +31,32 @@ public class ServerClientCommunication extends Thread {
     this.clientID = clientID;
   }
 
+  /**
+   * Getter for Socket.
+   *
+   * @return the socket.
+   */
+  public Socket getS() {
+    return s;
+  }
+
+  /**
+   * Getter for DatainputStream.
+   *
+   * @return Inputstream.
+   */
+  public DataInputStream getIn() {
+    return in;
+  }
+
+  /**
+   * Getter for DataOutputStream.
+   *
+   * @return Outputstream.
+   */
+  public DataOutputStream getOut() {
+    return out;
+  }
   /**
    * Getter of client ID.
    *
@@ -66,22 +83,28 @@ public class ServerClientCommunication extends Thread {
         log.info("[Server] Habe die Nachricht an den Serverparser übergeben....");
 
       } catch (IOException e) {
-        log.info("SEERVER CLIEEENT COMMUNICATIOOON ............");
 
-        for (int i = 0; i < ServerListener.getClients().size(); i++) {
-          if (i != clientID) {
-            ServerListener.getClients().get(i).sendMessageToClient("Restart");
+        synchronized (ServerListener.lock) {
+          log.info("ServerClientCommunication Exception");
+          for (int i = 0; i < ServerListener.getClients().size(); i++) {
+            if (i != clientID) {
+              ServerListener.getClients().get(i).sendMessageToClient("Restart");
+            }
           }
+          log.info("[Server] Client " + clientID + " hat die Verbindung getrennt");
+          disconnectClient();
+
+          log.info("[Server] Habe Client disconnected.");
+
+          // Thread.currentThread().interrupt();
+          // log.info("Thread wurde gestoppt");
+
+          ServerListener.killAllSockets = true;
+          ServerListener.lock.notifyAll();
+          log.info("[Server] Habe Listener benachrichtigt für restartListener...");
+
+          log.info("[Server] killAllSockets = true");
         }
-        log.info("[Server] Client " + clientID + " hat die Verbindung getrennt");
-        disconnectClient();
-        log.info("[Server] Habe Client disconnected.");
-        Thread.currentThread().interrupt();
-        log.info("Thread wurde gestoppt");
-
-        log.info("[Server] an alle noch verbundenen Clients RESTART Programm gefordert...........");
-
-
       }
     }
   }
@@ -92,11 +115,10 @@ public class ServerClientCommunication extends Thread {
    * @param message server-message to client.
    */
   void sendMessageToClient(String message) {
-    String messageToClient = message;
     if (s.isConnected()) {
       try {
-        out.writeUTF(messageToClient);
-        log.info("[Server] Nachricht an Client " + clientID + " geschickt.");
+        out.writeUTF(message);
+        log.info("[Server] Nachricht an Client " + clientID + " geschickt: " + message);
       } catch (SocketException e) {
         log.info(
             "[Server] Übermitteln der Nachricht an "
@@ -109,7 +131,7 @@ public class ServerClientCommunication extends Thread {
   }
 
   /** Closes all streams and socket to a client. */
-  void disconnectClient() {
+  private void disconnectClient() {
     try {
       this.in.close();
       log.info("CLient in InputStream geschlossen");
@@ -117,6 +139,7 @@ public class ServerClientCommunication extends Thread {
       log.info("CLient in OutputStream geschlossen");
       this.s.close();
       log.info("is Client Socket closed?!?  " + s.isClosed());
+      ServerListener.getClients().remove(clientID);
 
     } catch (IOException e) {
       e.printStackTrace();

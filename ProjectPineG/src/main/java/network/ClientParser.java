@@ -62,10 +62,12 @@ public class ClientParser {
     switch (messageAsArray[0]) {
       case "Restart":
         if (gameStarted) {
+          gameStarted = false;
           Platform.runLater(
               () -> {
                 guiController.closeGame();
               });
+
           Platform.runLater(
               () -> {
                 try {
@@ -74,6 +76,7 @@ public class ClientParser {
                   e.printStackTrace();
                 }
               });
+
         } else {
           Platform.runLater(
               () -> {
@@ -369,6 +372,9 @@ public class ClientParser {
     Client.sendMessageToServer("finishedTurn");
   }
 
+  /**
+   * Request to server for players points.
+   */
   public void getPlayerPoints() {
     Client.sendMessageToServer("calculatePointsForRegisteredPlayers");
   }
@@ -377,6 +383,10 @@ public class ClientParser {
     Client.sendMessageToServer("notifyWin");
   }
 
+  /**
+   * Sends age-information to server.
+   * @param age
+   */
   public void setAgeFor(String age) {
     Integer.parseInt(age);
     Client.sendMessageToServer("setAge|" + age);

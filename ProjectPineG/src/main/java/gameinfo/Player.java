@@ -5,6 +5,11 @@ import gameinfo.util.GITile;
 
 import java.util.List;
 
+/**
+ * This class represents a player. It holds the current hand, the id and an age. It also keeps track
+ * of some meta information, like if the player has already made its first move or if he did make a
+ * move at all.
+ */
 class Player implements Comparable<Player> {
 
   private Hand hand;
@@ -23,8 +28,6 @@ class Player implements Comparable<Player> {
   void setAge(int age) {
     this.age = age;
   }
-
-  int getAge() { return age; }
 
   boolean isFirstMove() {
     return isFirstMove;
@@ -74,6 +77,6 @@ class Player implements Comparable<Player> {
 
   @Override
   public int compareTo(Player player) {
-    return this.getAge() - player.getAge();
+    return age - player.age;
   }
 }
