@@ -206,7 +206,7 @@ public class StartingScreenController {
     } catch (NumberFormatException e) {
       Alert alert = new Alert(AlertType.CONFIRMATION,
           "No host found! Need to create a new game first!", ButtonType.OK);
-      alert.showAndWait();
+      alert.showAndWait(); //TODO funzt ned
       return false;
     }
     return false;
