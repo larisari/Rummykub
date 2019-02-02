@@ -8,6 +8,7 @@ import gameinfo.util.GITile;
 import gameinfo.util.GITuple;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -185,7 +186,7 @@ public class ServerParser {
         break;
 
       case "newGame":
-        Server.gameInfo = GIFactory.make();
+        Server.gameInfo = GIFactory.make(new HashMap<>());
         for (ServerClientCommunication client : clients) {
           Server.gameInfo.registerBy(client.getClientID());
         }

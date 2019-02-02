@@ -884,7 +884,6 @@ public class GuiController {
    * notification sound.
    */
   public void enableControl() {
-    updateBoard();
     enter.setDisable(false);
     cancelSelection.setDisable(false);
     addToExisting.setDisable(false);
@@ -894,6 +893,7 @@ public class GuiController {
     enableTilesOnHand();
     enableTilesOnBoard();
     playNotification();
+  //  updateBoard(); verursacht error
   }
 
   /**
