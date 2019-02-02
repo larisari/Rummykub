@@ -261,10 +261,7 @@ public class ClientParser {
     Client.sendMessageToServer(builder.toString());
   }
 
-  /**
-   * Sends a message to server with a combination, Client wants to play within a joker.
-   *
-   */
+  /** Sends a message to server with a combination, Client wants to play within a joker. */
   public void playSwapJoker(
       List<ImageView> tilesFromHand, List<List<ImageView>> oldComb, List<List<ImageView>> newComb) {
     StringBuilder builder = new StringBuilder();
@@ -372,9 +369,7 @@ public class ClientParser {
     Client.sendMessageToServer("finishedTurn");
   }
 
-  /**
-   * Request to server for players points.
-   */
+  /** Request to server for players points. */
   public void getPlayerPoints() {
     Client.sendMessageToServer("calculatePointsForRegisteredPlayers");
   }
@@ -385,6 +380,7 @@ public class ClientParser {
 
   /**
    * Sends age-information to server.
+   *
    * @param age
    */
   public void setAgeFor(String age) {

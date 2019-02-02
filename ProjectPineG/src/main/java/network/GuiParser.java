@@ -12,7 +12,7 @@ public class GuiParser {
   // parse format
   // list<comb:tile.color/number,tile.color/number;comb:tile.color/number;
 
-  public GuiParser() { }
+  public GuiParser() {}
 
   // TODO rename method
   public static String parseListToString(List<List<ImageView>> listOfTiles) {
@@ -24,19 +24,21 @@ public class GuiParser {
 
   public static String parseToString(List<ImageView> tiles) {
 
-    if (tiles.isEmpty()) { return "";}
+    if (tiles.isEmpty()) {
+      return "";
+    }
 
     String selectedT = "comb:";
     for (int i = 0; i < tiles.size(); i++) {
       ImageView iView = tiles.get(i);
       Image tile = (Image) iView.getImage();
-      String url = tile.getURL(); //kann url von joker nicht finden.
+      String url = tile.getURL(); // kann url von joker nicht finden.
       System.out.println(url);
       String[] urlArray = url.split("/");
       String color = urlArray[urlArray.length - 2];
       String[] numberArray = urlArray[urlArray.length - 1].split("[.]");
       String number = numberArray[0];
-      if (number.equals("joker")){
+      if (number.equals("joker")) {
         selectedT += "tile." + color + "/joker";
       } else {
         selectedT += "tile." + color + "/" + number;
@@ -48,10 +50,10 @@ public class GuiParser {
     return selectedT + ";";
   }
 
-  public static List<Integer> parseStringToIntegerList(String pointsFromServer){
+  public static List<Integer> parseStringToIntegerList(String pointsFromServer) {
     List<Integer> points = new ArrayList<>();
     String[] pointsString = pointsFromServer.split(",");
-    for (String point : pointsString){
+    for (String point : pointsString) {
       points.add(Integer.parseInt(point));
     }
     return points;
@@ -70,10 +72,7 @@ public class GuiParser {
     }
   }*/
 
-
-
-
-  List<List<Image>> parseStringToWholeBoard(String message){
+  List<List<Image>> parseStringToWholeBoard(String message) {
 
     if (message.equals("list<")) {
       return new ArrayList<>();
@@ -82,7 +81,7 @@ public class GuiParser {
 
       String[] tempS = message.split("<");
       String[] combs = tempS[1].split(";");
-      for (int i = 0; i < combs.length; i++){
+      for (int i = 0; i < combs.length; i++) {
         endList.add(parseStringToImgsForOneComb(combs[i]));
       }
       return endList;
@@ -91,7 +90,7 @@ public class GuiParser {
 
   List<Image> parseStringToImgsForOneComb(String hand) {
     List<Image> tilesImg = new ArrayList<>();
-    hand = hand.substring(0,hand.length()-1);
+    hand = hand.substring(0, hand.length() - 1);
     String[] block = hand.split(":");
     String[] tiles = block[1].split(",");
     for (int i = 0; i < tiles.length; i++) {
