@@ -13,7 +13,8 @@ import java.util.logging.Logger;
 public class ServerListener extends Thread {
 
   static final Object lock = new Object();
-  static boolean killAllSockets = false;
+  static boolean killAllSockets;
+  static boolean isRunning;
   private static List<ServerClientCommunication> clients;
   private static int clientID;
   private static Logger log = Logger.getLogger(ServerListener.class.getName());
@@ -29,6 +30,9 @@ public class ServerListener extends Thread {
     clients = listOfClients;
     clientID = clients.size();
     log.info("Listener Start...");
+
+    killAllSockets = false;
+    isRunning = true;
   }
 
   /**
@@ -81,7 +85,7 @@ public class ServerListener extends Thread {
 
       log.info("[Server] wird initialisiert...");
 
-      while (true) {
+      while (isRunning) {
         try {
           if (clientID < 4) {
 
@@ -133,6 +137,11 @@ public class ServerListener extends Thread {
           }
         }
       }
+
+      // happens as soon as ServerListener is not running.
+      restartListener();
+      interrupt();
+
     } catch (IOException e) {
       log.info("[ServerListener] yes, hier fliegt auch die IO Exception.");
       e.printStackTrace();

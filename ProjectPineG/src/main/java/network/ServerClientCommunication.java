@@ -141,6 +141,8 @@ public class ServerClientCommunication extends Thread {
       log.info("is Client Socket closed?!?  " + s.isClosed());
       ServerListener.getClients().remove(clientID);
 
+      ServerListener.isRunning = false;
+
     } catch (IOException e) {
       e.printStackTrace();
     }
