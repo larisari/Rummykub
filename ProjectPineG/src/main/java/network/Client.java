@@ -68,8 +68,6 @@ public class Client extends Thread {
                     log.info("[Client] Habe Verbindung zum Server verloren....");
                     running = false;
                     ClientParser.parseForController("Restart");
-
-                    // System.exit(0);
                   }
                 }
               }

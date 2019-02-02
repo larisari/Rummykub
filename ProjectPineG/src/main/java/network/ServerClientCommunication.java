@@ -84,27 +84,10 @@ public class ServerClientCommunication extends Thread {
 
       } catch (IOException e) {
 
-        synchronized (ServerListener.lock) {
-          log.info("ServerClientCommunication Exception");
-          for (int i = 0; i < ServerListener.getClients().size(); i++) {
-            if (i != clientID) {
-              ServerListener.getClients().get(i).sendMessageToClient("Restart");
-            }
-          }
-          log.info("[Server] Client " + clientID + " hat die Verbindung getrennt");
-          disconnectClient();
-
-          log.info("[Server] Habe Client disconnected.");
-
-          // Thread.currentThread().interrupt();
-          // log.info("Thread wurde gestoppt");
-
-          ServerListener.killAllSockets = true;
-          ServerListener.lock.notifyAll();
-          log.info("[Server] Habe Listener benachrichtigt für restartListener...");
-
-          log.info("[Server] killAllSockets = true");
-        }
+        log.info("ServerClientCommunication Exception");
+        log.info("[Server] Client " + clientID + " hat die Verbindung getrennt");
+        disconnectClient();
+        log.info("[Server] Habe Client disconnected.");
       }
     }
   }
@@ -139,7 +122,6 @@ public class ServerClientCommunication extends Thread {
       log.info("CLient in OutputStream geschlossen");
       this.s.close();
       log.info("is Client Socket closed?!?  " + s.isClosed());
-      ServerListener.getClients().remove(clientID);
 
       ServerListener.isRunning = false;
 

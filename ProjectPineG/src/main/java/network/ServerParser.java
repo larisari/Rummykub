@@ -196,6 +196,7 @@ public class ServerParser {
 
   /**
    * Converts points of all clients to a String.
+   *
    * @param list list-tupel with clientID and points.
    * @return a representive String with points of all clients.
    */
@@ -215,6 +216,7 @@ public class ServerParser {
 
   /**
    * Converts a List of tiles to String.
+   *
    * @param tiles list of tiles.
    * @return a representive String with all tiles.
    */
@@ -232,6 +234,7 @@ public class ServerParser {
 
   /**
    * converts a combination list to String.
+   *
    * @param combs combination list with a list of tiles.
    * @return a representive String of combination.
    */
@@ -246,7 +249,8 @@ public class ServerParser {
   }
 
   /**
-   *parses String to list of combinations.
+   * parses String to list of combinations.
+   *
    * @param s received string.
    * @return list of combinations.
    */
@@ -264,6 +268,7 @@ public class ServerParser {
 
   /**
    * converts a String to a list of tiles.
+   *
    * @param tiles String of all tiles.
    * @return a list of tiles.
    */
@@ -316,7 +321,6 @@ public class ServerParser {
           tileColor = GIColor.JOKER;
           break;
         default:
-
       }
 
       switch (number) {
@@ -376,6 +380,7 @@ public class ServerParser {
 
   /**
    * converts a color to String.
+   *
    * @param color color.
    * @param number if number equals 0 its a joker tile.
    * @return a representive String of a color.

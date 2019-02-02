@@ -12,8 +12,6 @@ import java.util.logging.Logger;
 /** Server Thread, which opens the Server and handles incoming client connections. */
 public class ServerListener extends Thread {
 
-  static final Object lock = new Object();
-  static boolean killAllSockets;
   static boolean isRunning;
   private static List<ServerClientCommunication> clients;
   private static int clientID;
@@ -30,8 +28,6 @@ public class ServerListener extends Thread {
     clients = listOfClients;
     clientID = clients.size();
     log.info("Listener Start...");
-
-    killAllSockets = false;
     isRunning = true;
   }
 
@@ -49,7 +45,6 @@ public class ServerListener extends Thread {
     try {
       log.info("[Server] Serversocket wird geschlossen.");
       ss.close();
-      ss = null;
       log.info("[Server] Server wurde geschlossen.");
     } catch (IOException e) {
       log.info("[Server] kann nicht geclosed werden.");
@@ -59,11 +54,10 @@ public class ServerListener extends Thread {
 
   /** removes all clients and closes the server. */
   private static void restartListener() {
-    killServer();
+
     clients.forEach(
         client -> {
           try {
-
             client.getS().close();
             client.getIn().close();
             client.getOut().close();
@@ -72,6 +66,7 @@ public class ServerListener extends Thread {
           }
         });
 
+    killServer();
     clients.clear();
     log.info("[ServerListener] Starting Client ID after Restart..." + clientID);
   }
@@ -115,26 +110,8 @@ public class ServerListener extends Thread {
             Server.broadcastToAllClients("addJoined|" + clientID);
             clientID++;
           }
-        } catch (SocketException e) {
-
-          log.info("[ServerListener] yes, hier fliegt auch die Socket Exception.");
-          synchronized (lock) {
-            while (!killAllSockets) {
-              try {
-                log.info("[ServerListener] Warte bis ich Freigabe zum Restart erhalte...");
-                lock.wait();
-              } catch (InterruptedException ie) {
-                ie.printStackTrace();
-              }
-            }
-
-            log.info("[Server] Verbindung zu Client " + clientID + " verloren...");
-            getThreadGroup().destroy();
-            restartListener();
-            killAllSockets = false;
-            this.interrupt();
-            log.info("Alle Client Verbindungen wurden gekillt.");
-          }
+        } catch (Exception e) {
+          e.printStackTrace();
         }
       }
 
@@ -145,24 +122,6 @@ public class ServerListener extends Thread {
     } catch (IOException e) {
       log.info("[ServerListener] yes, hier fliegt auch die IO Exception.");
       e.printStackTrace();
-
-      //      synchronized (lock) {
-      //        while (!killAllSockets) {
-      //          try {
-      //            log.info("[ServerListener] Warte bis ich Freigabe zum Restart erhalte...");
-      //            lock.wait();
-      //          } catch (InterruptedException ie) {
-      //            ie.printStackTrace();
-      //          }
-      //        }
-      //
-      //        log.info("[Server] Verbindung zu Client " + clientID + " verloren...");
-      ////        getThreadGroup().destroy();
-      //        this.interrupt();
-      //        log.info("Alle Client Verbindungen wurden gekillt.");
-      //        restartListener();
-      //        killAllSockets = false;
-      //      }
     }
   }
 }
