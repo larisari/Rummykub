@@ -650,10 +650,11 @@ public class GuiController {
       boardComb.getChildren().add(boardComb.getChildren().size(), tile);
     }
 
-    cancelSelEffect();
-    updateBoard();
     endTurn.setDisable(false);
     bag.setDisable(true);
+    cancelSelEffect();
+    updateBoard();
+
 
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       parser.getPlayerPoints();
@@ -752,7 +753,7 @@ public class GuiController {
    * it does the tiles on the main board are resized.
    */
   private void updateBoard() {
-    for (int i = board.getChildren().size(); i >= 0; i--) {
+    for (int i = board.getChildren().size()-1; i >= 0; i--) {
       HBox box = (HBox) board.getChildren().get(i);
       if (box.getChildren().isEmpty()) {
         board.getChildren().remove(box);
@@ -893,7 +894,7 @@ public class GuiController {
     enableTilesOnHand();
     enableTilesOnBoard();
     playNotification();
-  //  updateBoard(); verursacht error
+    updateBoard();
   }
 
   /**
