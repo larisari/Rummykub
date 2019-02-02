@@ -53,7 +53,6 @@ public class WinScreenController extends EndScreen {
    * @param playerID of this gui's player.
    */
   void setNewGame(int playerID) {
-    System.out.println(playerID + " this playerID");
     if (playerID == 0) {
       newGame.setVisible(true);
     }

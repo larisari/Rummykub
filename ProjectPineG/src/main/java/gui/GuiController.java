@@ -655,7 +655,6 @@ public class GuiController {
     cancelSelEffect();
     updateBoard();
 
-
     if (topHand.getChildren().isEmpty() && bottomHand.getChildren().isEmpty()) {
       parser.getPlayerPoints();
       parser.notifyWin();
@@ -753,7 +752,7 @@ public class GuiController {
    * it does the tiles on the main board are resized.
    */
   private void updateBoard() {
-    for (int i = board.getChildren().size()-1; i >= 0; i--) {
+    for (int i = board.getChildren().size() - 1; i >= 0; i--) {
       HBox box = (HBox) board.getChildren().get(i);
       if (box.getChildren().isEmpty()) {
         board.getChildren().remove(box);
@@ -762,7 +761,6 @@ public class GuiController {
 
     if (board.intersects(
         board.sceneToLocal(selectionBoard.localToScene(selectionBoard.getBoundsInLocal())))) {
-      System.out.println("INTERSECTS");
       double reduce = 0.95;
       tileHeight *= reduce;
       tileWidth *= reduce;
@@ -808,7 +806,7 @@ public class GuiController {
    */
   public void reloadBoard(List<List<Image>> boardTiles) {
     board.getChildren().clear();
-    if (boardTiles.isEmpty()){
+    if (boardTiles.isEmpty()) {
       tileWidth = DRAW_WIDTH;
       tileHeight = DRAW_HEIGHT;
     }

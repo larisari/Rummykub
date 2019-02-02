@@ -161,9 +161,10 @@ public class LoadingScreenController {
 
 
   }
+
   /**
-   * Opens confirmation alert if user tries to exit application by pressing "x".
-   * If user confirms exit, the application is closed.
+   * Opens confirmation alert if user tries to exit application by pressing "x". If user confirms
+   * exit, the application is closed.
    *
    * @param event - WindowEvent if user presses "x" icon.
    */
@@ -186,11 +187,11 @@ public class LoadingScreenController {
   /**
    * Closes the loading screen if another player has quit the application.
    */
-  public void closeLoadingScreen(){
+  public void closeLoadingScreen() {
     loadingScreen.getScene().getWindow().hide();
-  Alert alert = new Alert(AlertType.CONFIRMATION, "Another Player quit the game!", ButtonType.OK);
-  alert.initOwner(loadingScreen.getScene().getWindow());
-  alert.showAndWait();
+    Alert alert = new Alert(AlertType.CONFIRMATION, "Another Player quit the game!", ButtonType.OK);
+    alert.initOwner(loadingScreen.getScene().getWindow());
+    alert.showAndWait();
   }
 
 }
