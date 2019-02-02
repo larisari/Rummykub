@@ -88,8 +88,8 @@ class GameInfo_Test {
     play_groupOfTwelves();
     // p1
     play_addJokerToExistingCombination();
-    //p2
-
+    // p2
+    play_swapJoker();
   }
 
   /**
@@ -100,7 +100,7 @@ class GameInfo_Test {
    * @return true, is the combinations are valid and false otherwise.
    */
   private boolean validate(List<List<GITile>> combinations, Integer id) {
-    return gameInfo.play(combinations,id).get().getSecond();
+    return gameInfo.play(combinations, id).get().getSecond();
   }
 
   /**
@@ -211,23 +211,58 @@ class GameInfo_Test {
     gameInfo.finishedTurnBy(player_2_ID);
   }
 
-    void play_addJokerToExistingCombination() {
-      List<GITile> tilesFromHand = new ArrayList<>();
-      tilesFromHand.add(hand_player_1.get(13));
+  void play_addJokerToExistingCombination() {
+    List<GITile> tilesFromHand = new ArrayList<>();
+    tilesFromHand.add(hand_player_1.get(13));
 
-      List<List<GITile>> currentBoard = new ArrayList<>();
-      currentBoard.add(gameInfo.getCurrentBoard().get(3));
+    List<List<GITile>> currentBoard = new ArrayList<>();
+    currentBoard.add(gameInfo.getCurrentBoard().get(3));
 
-      List<GITile> combinationWithJoker = new ArrayList<>(currentBoard.get(0));
-      combinationWithJoker.add(tilesFromHand.get(0));
+    List<GITile> combinationWithJoker = new ArrayList<>(currentBoard.get(0));
+    combinationWithJoker.add(tilesFromHand.get(0));
 
-      System.out.println(combinationWithJoker);
+    System.out.println(combinationWithJoker);
 
-      List<List<GITile>> newBoard = new ArrayList<>();
-      newBoard.add(combinationWithJoker);
+    List<List<GITile>> newBoard = new ArrayList<>();
+    newBoard.add(combinationWithJoker);
 
-      assert gameInfo.manipulateBoardWith(tilesFromHand,currentBoard,newBoard,
-          player_1_ID).get().getSecond();
-      gameInfo.finishedTurnBy(player_1_ID);
-    }
+    assert gameInfo
+        .manipulateBoardWith(tilesFromHand, currentBoard, newBoard, player_1_ID)
+        .get()
+        .getSecond();
+    gameInfo.finishedTurnBy(player_1_ID);
+  }
+
+  void play_swapJoker() {
+    List<GITile> blueTwelveFromHand = new ArrayList<>();
+    blueTwelveFromHand.add(gameInfo.getAllTilesBy(player_2_ID).get().getSecond().get(0));
+
+    System.out.println("12 blue: " + blueTwelveFromHand);
+
+    List<List<GITile>> twelvesWithJoker = new ArrayList<>();
+    twelvesWithJoker.add(gameInfo.getCurrentBoard().get(gameInfo.getCurrentBoard().size() - 1));
+
+    System.out.println("12 with joker: " + twelvesWithJoker);
+
+    List<GITile> fourTwelves = new ArrayList<>(twelvesWithJoker.get(0));
+    fourTwelves.removeIf(tile -> tile.isEquals(new GITile(GINumber.JOKER, GIColor.JOKER)));
+    fourTwelves.add(blueTwelveFromHand.get(0));
+
+    System.out.println("4x12: " + fourTwelves);
+
+    List<List<GITile>> twelvesWithoutJoker = new ArrayList<>();
+    twelvesWithoutJoker.add(fourTwelves);
+
+    System.out.println("12 without joker: " + twelvesWithoutJoker);
+
+    assert gameInfo
+        .manipulateBoardWith(blueTwelveFromHand, twelvesWithJoker, twelvesWithoutJoker, player_2_ID)
+        .get()
+        .getSecond();
+    gameInfo.finishedTurnBy(player_2_ID);
+    System.out.println(gameInfo.getAllTilesBy(player_2_ID).get().getSecond());
+  }
+
+
+
 }
