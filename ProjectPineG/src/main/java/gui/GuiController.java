@@ -808,6 +808,10 @@ public class GuiController {
    */
   public void reloadBoard(List<List<Image>> boardTiles) {
     board.getChildren().clear();
+    if (boardTiles.isEmpty()){
+      tileWidth = DRAW_WIDTH;
+      tileHeight = DRAW_HEIGHT;
+    }
     for (List<Image> tiles : boardTiles) {
       HBox box = new HBox();
       for (Image image : tiles) {
