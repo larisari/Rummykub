@@ -55,7 +55,6 @@ public class LoseScreenController extends EndScreen {
    * Sets "new game" button visible for host.
    */
   void setNewGameBtn() {
-    System.out.println(playerID + " this playerID");
     if (playerID == 0) {
       newGameL.setVisible(true);
     }
