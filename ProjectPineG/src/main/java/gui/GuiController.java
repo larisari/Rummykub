@@ -559,7 +559,7 @@ public class GuiController {
    * @param comb - combination on the main board where tiles should be added.
    */
   private void addToFront(HBox comb) {
-    if (!selectedTiles.isEmpty()) {
+    if (!selectedTiles.isEmpty() && areOnlyTilesFromHand(selectedTiles)) {
       boardComb = comb;
       List<ImageView> boardTiles = new ArrayList<>();
       for (int i = 1; i < comb.getChildren().size() - 1; i++) {
@@ -615,7 +615,7 @@ public class GuiController {
    * @param comb - combination on the main board where tiles should be added.
    */
   private void addToBack(HBox comb) {
-    if (!selectedTiles.isEmpty()) {
+    if (!selectedTiles.isEmpty() && areOnlyTilesFromHand(selectedTiles)) {
       boardComb = comb;
       List<ImageView> boardTiles = new ArrayList<>();
       for (int i = 1; i < comb.getChildren().size() - 1; i++) {
@@ -833,6 +833,7 @@ public class GuiController {
    * disabled.
    */
   private void disableControl() {
+    deleteAddToButtons();
     enter.setDisable(true);
     endTurn.setDisable(true);
     cancelSelection.setDisable(true);
