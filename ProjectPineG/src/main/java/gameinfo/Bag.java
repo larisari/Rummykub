@@ -73,8 +73,7 @@ class Bag {
 
     if (customStack.size() != numberOfTiles) {
       throw new IllegalArgumentException(
-          "number of tiles are not equivalent " +
-              "in custom drawRandomStackWith method()");
+          "number of tiles are not equivalent " + "in custom drawRandomStackWith method()");
     }
 
     List<GITile> stack = new ArrayList<>();

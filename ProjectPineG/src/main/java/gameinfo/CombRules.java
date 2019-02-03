@@ -1,8 +1,3 @@
-/**
- * This Class serves as a validator for combinations a player wants to put on the board. It is a
- * pure calculating class that mainly checks whether a move makes sense according to the game's
- * rules or not.
- */
 package gameinfo;
 
 import gameinfo.util.GIColor;
@@ -12,6 +7,11 @@ import gameinfo.util.GITile;
 import java.util.List;
 import java.util.logging.Logger;
 
+/**
+ * This Class serves as a validator for combinations a player wants to put on the board. It is a
+ * pure calculating class that mainly checks whether a move makes sense according to the game's
+ * rules or not.
+ */
 class CombRules {
 
   private PointsCalculator calculator;
@@ -169,7 +169,8 @@ class CombRules {
   private boolean haveSameNumber(List<GITile> combination) {
     GINumber number = calculateFirstRealNumberOf(combination);
 
-    return combination.stream()
+    return combination
+        .stream()
         .allMatch(
             tile -> tile.getNumber().equals(number) || tile.getNumber().equals(GINumber.JOKER));
   }
@@ -190,7 +191,8 @@ class CombRules {
 
     GIColor color = tempColor;
 
-    return combination.stream()
+    return combination
+        .stream()
         .allMatch(tile -> tile.getColor().equals(color) || tile.getColor().equals(GIColor.JOKER));
   }
 

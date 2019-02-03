@@ -82,9 +82,7 @@ class Board {
   }
 
   void generateNewBag() {
-    List<GITile> boardTiles = combos.stream()
-        .flatMap(List::stream)
-        .collect(Collectors.toList());
+    List<GITile> boardTiles = combos.stream().flatMap(List::stream).collect(Collectors.toList());
 
     this.combos.clear();
     combos = new ArrayList<>();
