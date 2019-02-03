@@ -4,6 +4,7 @@ Nähere Information zum Spiel und den Spielregeln finden sie hier:
 https://de.wikipedia.org/wiki/Rummikub
 https://www.rummikub-klub.de/rummikub/rules/page1.jsp
 
+Eventuell muss die Schrift Franklin Gothic Medium, die für das Spiel verwendet wurde installiert werden (befindet sich im finalen Abgaben Ordner).
 
 Hier eine Kurzanleitung um das Programm zu bedienen:
 
