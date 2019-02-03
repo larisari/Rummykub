@@ -90,6 +90,10 @@ class GameInfo_Test {
     play_addJokerToExistingCombination();
     // p2
     play_swapJoker();
+    //p1
+    play_draw();
+    // p2
+    play_finishingMove();
   }
 
   /**
@@ -97,7 +101,7 @@ class GameInfo_Test {
    *
    * @param combinations wished by a player.
    * @param id of the player to wish the combinations.
-   * @return true, is the combinations are valid and false otherwise.
+   * @return true, if the combinations are valid and false otherwise.
    */
   private boolean validate(List<List<GITile>> combinations, Integer id) {
     return gameInfo.play(combinations, id).get().getSecond();
@@ -123,6 +127,18 @@ class GameInfo_Test {
     return combinationList;
   }
 
+  /**
+   * This method checks whether a manipulation is valid or not.
+   * @param tilesFromHand the player wants to put on the board.
+   * @param boardCombs the player wants to engage with.
+   * @param addedCombs are the resulting combinations.
+   * @param id of the player that makes the move.
+   * @return true, if the manipulation is valid and false otherwise.
+   */
+  private boolean validate(List<GITile> tilesFromHand, List<List<GITile>> boardCombs,
+                           List<List<GITile>> addedCombs, Integer id) {
+    return gameInfo.manipulateBoardWith(tilesFromHand,boardCombs,addedCombs,id).get().getSecond();
+  }
   void start() {
     gameInfo.startGame();
   }
@@ -224,10 +240,8 @@ class GameInfo_Test {
     List<List<GITile>> newBoard = new ArrayList<>();
     newBoard.add(combinationWithJoker);
 
-    assert gameInfo
-        .manipulateBoardWith(tilesFromHand, currentBoard, newBoard, player_1_ID)
-        .get()
-        .getSecond();
+    assert validate(tilesFromHand,currentBoard,newBoard,player_1_ID);
+
     gameInfo.finishedTurnBy(player_1_ID);
   }
 
@@ -254,10 +268,7 @@ class GameInfo_Test {
     List<List<GITile>> twelvesWithoutJoker = new ArrayList<>();
     twelvesWithoutJoker.add(fourTwelves);
 
-    assert gameInfo
-        .manipulateBoardWith(blueTwelveFromHand, twelvesWithJoker, twelvesWithoutJoker, player_2_ID)
-        .get()
-        .getSecond();
+    assert validate(blueTwelveFromHand,twelvesWithJoker,twelvesWithoutJoker,player_2_ID);
 
     gameInfo.finishedTurnBy(player_2_ID);
 
@@ -270,4 +281,12 @@ class GameInfo_Test {
             .count()
         == jokersInHand + 1;
   }
+
+  void play_finishingMove() {
+
+  }
+
+  //calculatePoints etc..
+
+
 }
