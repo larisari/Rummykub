@@ -4,4 +4,5 @@ Model: Für das Model wurden Unit Tests mit Hilfe von jUnit5 geschrieben. Ein Sp
 
 Netzwerk: In den ersten Testphasen wurden vom Spiel unabhängige Server-Client Programme geschrieben, welche mittels System.outs getestet wurden.
 Im weiteren Entwicklungsverlauf wurde das Netzwerk mithilfe von Loggern in der Konsole getestet und das Verhalten von Client/Server stetig überwacht. 
+Testdateien liegen dem Abgaben-Ordner bei (FinalLoggerTests.txt, BasisServerFunctionTest.txt).
 
