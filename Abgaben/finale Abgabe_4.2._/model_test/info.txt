@@ -1,0 +1,3 @@
+In this directory, the test coverage report is located. The file 'index.html' in the folder 'final_report' shows the percentage of classes, methods and lines covered in the unit test. To view the branch coverage, see the 'branch_coverage' snippet.
+
+Basically, the unit test class 'GameInfo_Test' covers a test run by only communicating via the GIGameInfo interface. A big part of the model could be tested this way.

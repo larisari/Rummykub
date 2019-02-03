@@ -1,0 +1,250 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GIGameInfo</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">gameinfo</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GIGameInfo (gameinfo)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">GIGameInfo</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package gameinfo;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import gameinfo.util.GIPoints;
+<i>4</i>&nbsp;import gameinfo.util.GITile;
+<i>5</i>&nbsp;import gameinfo.util.GITuple;
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;import java.util.List;
+<i>8</i>&nbsp;import java.util.Optional;
+<i>9</i>&nbsp;
+<i>10</i>&nbsp;/**
+<i>11</i>&nbsp; * The GIGameInfo interface provides all necessary functions for a basic playing experience.
+<i>12</i>&nbsp; * Implementing this interface, the user may obtain a central object for managing the whole model.
+<i>13</i>&nbsp; * From initializing the players to manipulating the game&#39;s progress until creating a valid turn,
+<i>14</i>&nbsp; * the GIGameInfo accompanies you through every changes you want to achieve in your model, with the
+<i>15</i>&nbsp; * characteristic of keeping the model invisible.
+<i>16</i>&nbsp; */
+<i>17</i>&nbsp;public interface GIGameInfo {
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;  /**
+<i>20</i>&nbsp;   * Use this method whenever you wish to sign in a player to the game.
+<i>21</i>&nbsp;   *
+<i>22</i>&nbsp;   * @param id of the player to be signed in.
+<i>23</i>&nbsp;   */
+<i>24</i>&nbsp;  void registerBy(Integer id);
+<i>25</i>&nbsp;
+<i>26</i>&nbsp;  /**
+<i>27</i>&nbsp;   * Use this method to assign a player with given id its age.
+<i>28</i>&nbsp;   *
+<i>29</i>&nbsp;   * @param id of the player whose age is being set.
+<i>30</i>&nbsp;   * @param age of the player to be set.
+<i>31</i>&nbsp;   */
+<i>32</i>&nbsp;  void setAgeFor(Integer id, int age);
+<i>33</i>&nbsp;
+<i>34</i>&nbsp;  /**
+<i>35</i>&nbsp;   * Use this method, whenever you wish to sign out a player from the game.
+<i>36</i>&nbsp;   *
+<i>37</i>&nbsp;   * @param id of the player to be signed out.
+<i>38</i>&nbsp;   */
+<i>39</i>&nbsp;  void deregisterBy(Integer id);
+<i>40</i>&nbsp;
+<i>41</i>&nbsp;  /**
+<i>42</i>&nbsp;   * Use this method to start the game. Keep in mind, that from now on no other player can join the
+<i>43</i>&nbsp;   * game and sign in.
+<i>44</i>&nbsp;   */
+<i>45</i>&nbsp;  void startGame();
+<i>46</i>&nbsp;
+<i>47</i>&nbsp;  /**
+<i>48</i>&nbsp;   * Use this method to get the number of Players registered in the Model.
+<i>49</i>&nbsp;   *
+<i>50</i>&nbsp;   * @return number of registered Players.
+<i>51</i>&nbsp;   */
+<i>52</i>&nbsp;  Optional&lt;Integer&gt; getNumberOfPlayers();
+<i>53</i>&nbsp;
+<i>54</i>&nbsp;  /**
+<i>55</i>&nbsp;   * Use this method to get all the ids registered in the Model.
+<i>56</i>&nbsp;   *
+<i>57</i>&nbsp;   * @return all Player ids.
+<i>58</i>&nbsp;   */
+<i>59</i>&nbsp;  List&lt;Integer&gt; getAllPlayerIds();
+<i>60</i>&nbsp;
+<i>61</i>&nbsp;  /**
+<i>62</i>&nbsp;   * Use this method to identify the starting player&#39;s id.
+<i>63</i>&nbsp;   *
+<i>64</i>&nbsp;   * @return id of the first player.
+<i>65</i>&nbsp;   */
+<i>66</i>&nbsp;  Integer getStartingPlayerId();
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;  /**
+<i>69</i>&nbsp;   * Use this method to obtain the id of the player whose turn it is.
+<i>70</i>&nbsp;   *
+<i>71</i>&nbsp;   * @return the current player&#39;s id.
+<i>72</i>&nbsp;   */
+<i>73</i>&nbsp;  Integer getCurrentPlayerId();
+<i>74</i>&nbsp;
+<i>75</i>&nbsp;  /**
+<i>76</i>&nbsp;   * Use this method to get the Player id of the next valid Player.
+<i>77</i>&nbsp;   *
+<i>78</i>&nbsp;   * @return the id of the next valid Player as an Optional.
+<i>79</i>&nbsp;   */
+<i>80</i>&nbsp;  Optional&lt;Integer&gt; getNextPlayerId();
+<i>81</i>&nbsp;
+<i>82</i>&nbsp;  /**
+<i>83</i>&nbsp;   * Use this method to check whether the passed id matches the current player&#39;s id.
+<i>84</i>&nbsp;   *
+<i>85</i>&nbsp;   * @param id to be checked.
+<i>86</i>&nbsp;   * @return a GITuple&lt;id,true&gt; if the player is valid, a GITuple&lt;id,false&gt; if the id does not match
+<i>87</i>&nbsp;   *     and an Optional.empty otherwise.
+<i>88</i>&nbsp;   */
+<i>89</i>&nbsp;  Optional&lt;GITuple&lt;Integer, Boolean&gt;&gt; isValidPlayerBy(Integer id);
+<i>90</i>&nbsp;
+<i>91</i>&nbsp;  /**
+<i>92</i>&nbsp;   * Use this method is check if it&#39;s the first turn of a player.
+<i>93</i>&nbsp;   *
+<i>94</i>&nbsp;   * @param id of the player to be checked for first turn.
+<i>95</i>&nbsp;   * @return the parameter id if it&#39;s the first turn of the player. If the player&#39;s id is not
+<i>96</i>&nbsp;   *     registered in the model an Optional.empty() is returned.
+<i>97</i>&nbsp;   */
+<i>98</i>&nbsp;  Optional&lt;GITuple&lt;Integer, Boolean&gt;&gt; isFirstTurnBy(Integer id);
+<i>99</i>&nbsp;
+<i>100</i>&nbsp;  /**
+<i>101</i>&nbsp;   * Use this method to draw a stack (containing 14 Tiles) for a Player id if it&#39;s the players first
+<i>102</i>&nbsp;   * draw or else a single tile. It also automatically ends and calculates the next player&#39;s turn.
+<i>103</i>&nbsp;   *
+<i>104</i>&nbsp;   * @param id for which the Stack/Tile is drawn for.
+<i>105</i>&nbsp;   * @return the id for which the stack/tile was drawn fro and the tiles as a list. If an
+<i>106</i>&nbsp;   *     Optional.empty() is returned the id is not registered in the model.
+<i>107</i>&nbsp;   */
+<i>108</i>&nbsp;  Optional&lt;GITuple&lt;Integer, List&lt;GITile&gt;&gt;&gt; drawBy(Integer id);
+<i>109</i>&nbsp;
+<i>110</i>&nbsp;  /**
+<i>111</i>&nbsp;   * Use this method to validate a combination for a player by its id. If the combination is valid
+<i>112</i>&nbsp;   * it is saved in the model and put on the board. If it is not valid nothing happens in the model
+<i>113</i>&nbsp;   * but false is returned. More than just one combination can be played with this method. If one of
+<i>114</i>&nbsp;   * these combinations is invalid it will change nothing in the model and return false.
+<i>115</i>&nbsp;   *
+<i>116</i>&nbsp;   * @param combinations to be checked for validity.
+<i>117</i>&nbsp;   * @param id of the player to play the combination.
+<i>118</i>&nbsp;   * @return the id by which the combinations were played, and whether the combinations were valid
+<i>119</i>&nbsp;   *     or not. If the player id is not registered in the model an Optional .empty() is returned.
+<i>120</i>&nbsp;   */
+<i>121</i>&nbsp;  Optional&lt;GITuple&lt;Integer, Boolean&gt;&gt; play(List&lt;List&lt;GITile&gt;&gt; combinations, Integer id);
+<i>122</i>&nbsp;
+<i>123</i>&nbsp;  /**
+<i>124</i>&nbsp;   * Use this method to validate a combination for a player by its id, where tiles from the players
+<i>125</i>&nbsp;   * hand are combined with tiles from the board. Only one new combination can be played with this
+<i>126</i>&nbsp;   * method. Also the whole Board has to be checked for validity, because other combinations on the
+<i>127</i>&nbsp;   * board can be manipulated.
+<i>128</i>&nbsp;   *
+<i>129</i>&nbsp;   * @param tilesFromHand the tiles that where played from the players hand.
+<i>130</i>&nbsp;   * @param tilesFromBoard the combination to which the tilesFromHand were added
+<i>131</i>&nbsp;   * @param newCombinations all the combinations that are currently on the board.
+<i>132</i>&nbsp;   * @param id by which the combination is played.
+<i>133</i>&nbsp;   * @return the id by which the combination was played, and whether the combination was valid or
+<i>134</i>&nbsp;   *     not. If the player id is not registered in the model an Optional.empty() is returned.
+<i>135</i>&nbsp;   */
+<i>136</i>&nbsp;  Optional&lt;GITuple&lt;Integer, Boolean&gt;&gt; play(
+<i>137</i>&nbsp;      List&lt;GITile&gt; tilesFromHand,
+<i>138</i>&nbsp;      List&lt;GITile&gt; tilesFromBoard,
+<i>139</i>&nbsp;      List&lt;List&lt;GITile&gt;&gt; newCombinations,
+<i>140</i>&nbsp;      Integer id);
+<i>141</i>&nbsp;
+<i>142</i>&nbsp;  /**
+<i>143</i>&nbsp;   * Use this method to validate a combination for a player by its id, where tiles from the players
+<i>144</i>&nbsp;   * hand and an old combination from the board are combined to a new combination.
+<i>145</i>&nbsp;   *
+<i>146</i>&nbsp;   * @param tilesFromHand tiles that were selected from the hand
+<i>147</i>&nbsp;   * @param oldCombinations tiles from the old combination (in order).
+<i>148</i>&nbsp;   * @param newCombinations tiles from the new combination (in order).
+<i>149</i>&nbsp;   * @param id the id by which the move was made
+<i>150</i>&nbsp;   * @return the id by which the combination was played, and whether the new combination was valid
+<i>151</i>&nbsp;   *     or not. If the player id is not registered in the model an Optional.empty() is returned.
+<i>152</i>&nbsp;   */
+<i>153</i>&nbsp;  Optional&lt;GITuple&lt;Integer, Boolean&gt;&gt; manipulateBoardWith(
+<i>154</i>&nbsp;      List&lt;GITile&gt; tilesFromHand,
+<i>155</i>&nbsp;      List&lt;List&lt;GITile&gt;&gt; oldCombinations,
+<i>156</i>&nbsp;      List&lt;List&lt;GITile&gt;&gt; newCombinations,
+<i>157</i>&nbsp;      Integer id);
+<i>158</i>&nbsp;
+<i>159</i>&nbsp;  /**
+<i>160</i>&nbsp;   * Use this method to signal the end of a players turn by its id.
+<i>161</i>&nbsp;   *
+<i>162</i>&nbsp;   * @param id the id for which the end of he turn is signaled.
+<i>163</i>&nbsp;   * @return the id by for which the turn was ended and the whole board. If the player id is not
+<i>164</i>&nbsp;   *     registered in the model an Optional.empty() is returned.
+<i>165</i>&nbsp;   */
+<i>166</i>&nbsp;  Optional&lt;Integer&gt; finishedTurnBy(Integer id);
+<i>167</i>&nbsp;
+<i>168</i>&nbsp;  /**
+<i>169</i>&nbsp;   * Use this method to get all the tiles on the hand by an id.
+<i>170</i>&nbsp;   *
+<i>171</i>&nbsp;   * @param id for which the hand is requested.
+<i>172</i>&nbsp;   * @return the id by which the hand was requested and all the tiles of the id. If the player id is
+<i>173</i>&nbsp;   *     not registered in the model an Optional.empty() is returned.
+<i>174</i>&nbsp;   */
+<i>175</i>&nbsp;  Optional&lt;GITuple&lt;Integer, List&lt;GITile&gt;&gt;&gt; getAllTilesBy(Integer id);
+<i>176</i>&nbsp;
+<i>177</i>&nbsp;  /**
+<i>178</i>&nbsp;   * Use this method to calculate the points for a player by its id. The winner has 0 points, thus
+<i>179</i>&nbsp;   * all other points are negative integer.
+<i>180</i>&nbsp;   *
+<i>181</i>&nbsp;   * @param id of the player whose points are wished.
+<i>182</i>&nbsp;   * @return the id for which the points of the hand were requested and the points as negative
+<i>183</i>&nbsp;   *     GIPoints. If the player id is not registered in the model an Optional.empty() is returned.
+<i>184</i>&nbsp;   */
+<i>185</i>&nbsp;  Optional&lt;GITuple&lt;Integer, GIPoints&gt;&gt; calculatePointsBy(Integer id);
+<i>186</i>&nbsp;
+<i>187</i>&nbsp;  /**
+<i>188</i>&nbsp;   * Use this method to calculate the points of all players&#39; hands.
+<i>189</i>&nbsp;   *
+<i>190</i>&nbsp;   * @return a list of tuples which consist of an id and corresponding points.
+<i>191</i>&nbsp;   */
+<i>192</i>&nbsp;  Optional&lt;List&lt;GITuple&lt;Integer, GIPoints&gt;&gt;&gt; calculatePointsForRegisteredPlayers();
+<i>193</i>&nbsp;
+<i>194</i>&nbsp;  /**
+<i>195</i>&nbsp;   * Use this method to obtain the up to date board.
+<i>196</i>&nbsp;   *
+<i>197</i>&nbsp;   * @return current board.
+<i>198</i>&nbsp;   */
+<i>199</i>&nbsp;  List&lt;List&lt;GITile&gt;&gt; getCurrentBoard();
+<i>200</i>&nbsp;
+<i>201</i>&nbsp;  // TODO REMOVE -&gt; testing purpose only
+<i>202</i>&nbsp;  Optional&lt;GITuple&lt;Integer, List&lt;GITile&gt;&gt;&gt; drawBy(Integer id, List&lt;GITile&gt; customTiles);
+<i>203</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-02-03 21:12</div>
+</div>
+</body>
+</html>

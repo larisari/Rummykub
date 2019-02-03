@@ -1,0 +1,673 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: GameInfoImpl</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">gameinfo</a> ]
+</div>
+
+<h1>Coverage Summary for Class: GameInfoImpl (gameinfo)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GameInfoImpl</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86,7%
+  </span>
+  <span class="absValue">
+    (26/ 30)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    69,6%
+  </span>
+  <span class="absValue">
+    (119/ 171)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package gameinfo;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import gameinfo.util.*;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.ArrayList;
+<i>6</i>&nbsp;import java.util.List;
+<i>7</i>&nbsp;import java.util.Optional;
+<i>8</i>&nbsp;import java.util.logging.Logger;
+<i>9</i>&nbsp;/**
+<i>10</i>&nbsp; * This Class shows an exemplary implementation of the GIGameInfo interface. It serves as a central
+<i>11</i>&nbsp; * management class for the model.
+<i>12</i>&nbsp; */
+<i>13</i>&nbsp;class GameInfoImpl extends Thread implements GIGameInfo {
+<i>14</i>&nbsp;
+<b class="fc"><i>15</i>&nbsp;  private static Logger log = Logger.getLogger(GameInfoImpl.class.getName());</b>
+<i>16</i>&nbsp;
+<b class="fc"><i>17</i>&nbsp;  private static int MINIMUM_POINTS_ON_FIRST_MOVE = 30;</b>
+<b class="fc"><i>18</i>&nbsp;  private static int NUMBER_OF_TILES_IN_STACK = 14;</b>
+<i>19</i>&nbsp;
+<i>20</i>&nbsp;  private Board board;
+<i>21</i>&nbsp;  private PointsCalculator calculator;
+<i>22</i>&nbsp;  private GameFlow gameFlow;
+<i>23</i>&nbsp;  private CombRules combRules;
+<i>24</i>&nbsp;
+<i>25</i>&nbsp;  private boolean hasRegisteredPlayers;
+<i>26</i>&nbsp;  private boolean canModifyRegisteredPlayers;
+<i>27</i>&nbsp;
+<b class="fc"><i>28</i>&nbsp;  GameInfoImpl() {</b>
+<b class="fc"><i>29</i>&nbsp;    board = new Board();</b>
+<b class="fc"><i>30</i>&nbsp;    calculator = new PointsCalculator();</b>
+<b class="fc"><i>31</i>&nbsp;    gameFlow = new GameFlow(calculator);</b>
+<b class="fc"><i>32</i>&nbsp;    combRules = new CombRules(calculator);</b>
+<i>33</i>&nbsp;
+<b class="fc"><i>34</i>&nbsp;    hasRegisteredPlayers = false;</b>
+<b class="fc"><i>35</i>&nbsp;    canModifyRegisteredPlayers = true;</b>
+<b class="fc"><i>36</i>&nbsp;    start();</b>
+<i>37</i>&nbsp;  }
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;  /**
+<i>40</i>&nbsp;   * Use this method whenever you wish to sign in a player to the game.
+<i>41</i>&nbsp;   *
+<i>42</i>&nbsp;   * @param id of the player to be signed in.
+<i>43</i>&nbsp;   */
+<i>44</i>&nbsp;  @Override
+<i>45</i>&nbsp;  public void registerBy(Integer id) {
+<b class="pc"><i>46</i>&nbsp;    if (canModifyRegisteredPlayers) {</b>
+<b class="fc"><i>47</i>&nbsp;      gameFlow.registerBy(id);</b>
+<b class="fc"><i>48</i>&nbsp;      hasRegisteredPlayers = true;</b>
+<i>49</i>&nbsp;    } else {
+<b class="nc"><i>50</i>&nbsp;      log.info(</b>
+<i>51</i>&nbsp;          &quot;Registration of Player &quot;
+<i>52</i>&nbsp;              + id
+<i>53</i>&nbsp;              + &quot; has failed. No more players can be registered in the model.&quot;);
+<i>54</i>&nbsp;    }
+<i>55</i>&nbsp;  }
+<i>56</i>&nbsp;
+<i>57</i>&nbsp;  /**
+<i>58</i>&nbsp;   * Use this method to assign a player with given id its age.
+<i>59</i>&nbsp;   *
+<i>60</i>&nbsp;   * @param id of the player whose age is being set.
+<i>61</i>&nbsp;   * @param age of the player to be set.
+<i>62</i>&nbsp;   */
+<i>63</i>&nbsp;  @Override
+<i>64</i>&nbsp;  public void setAgeFor(Integer id, int age) {
+<b class="pc"><i>65</i>&nbsp;    if (gameFlow.getPlayerBy(id).isPresent()) {</b>
+<b class="fc"><i>66</i>&nbsp;      gameFlow.getPlayerBy(id).get().setAge(age);</b>
+<i>67</i>&nbsp;    }
+<i>68</i>&nbsp;  }
+<i>69</i>&nbsp;
+<i>70</i>&nbsp;  /**
+<i>71</i>&nbsp;   * Use this method, whenever you wish to sign out a player from the game.
+<i>72</i>&nbsp;   *
+<i>73</i>&nbsp;   * @param id of the player to be signed out.
+<i>74</i>&nbsp;   */
+<i>75</i>&nbsp;  @Override
+<i>76</i>&nbsp;  public void deregisterBy(Integer id) {
+<b class="nc"><i>77</i>&nbsp;    gameFlow.deregisterBy(id);</b>
+<i>78</i>&nbsp;
+<b class="nc"><i>79</i>&nbsp;    if (gameFlow.getPlayers().isEmpty()) {</b>
+<b class="nc"><i>80</i>&nbsp;      hasRegisteredPlayers = false;</b>
+<i>81</i>&nbsp;    }
+<i>82</i>&nbsp;  }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;  /**
+<i>85</i>&nbsp;   * Use this method to start the game. Keep in mind, that from now on no other player can join the
+<i>86</i>&nbsp;   * game and sign in.
+<i>87</i>&nbsp;   */
+<i>88</i>&nbsp;  @Override
+<i>89</i>&nbsp;  public void startGame() {
+<b class="fc"><i>90</i>&nbsp;    gameFlow.startGame();</b>
+<b class="fc"><i>91</i>&nbsp;    canModifyRegisteredPlayers = false;</b>
+<b class="fc"><i>92</i>&nbsp;    log.info(&quot;Game started.&quot;);</b>
+<i>93</i>&nbsp;  }
+<i>94</i>&nbsp;
+<i>95</i>&nbsp;  /**
+<i>96</i>&nbsp;   * Use this method to get the number of Players registered in the Model.
+<i>97</i>&nbsp;   *
+<i>98</i>&nbsp;   * @return number of registered Players.
+<i>99</i>&nbsp;   */
+<i>100</i>&nbsp;  @Override
+<i>101</i>&nbsp;  public Optional&lt;Integer&gt; getNumberOfPlayers() {
+<b class="fc"><i>102</i>&nbsp;    return Optional.of(gameFlow.getNumberOfPlayers());</b>
+<i>103</i>&nbsp;  }
+<i>104</i>&nbsp;
+<i>105</i>&nbsp;  /**
+<i>106</i>&nbsp;   * Use this method to get all the ids registered in the Model.
+<i>107</i>&nbsp;   *
+<i>108</i>&nbsp;   * @return all Player ids.
+<i>109</i>&nbsp;   */
+<i>110</i>&nbsp;  @Override
+<i>111</i>&nbsp;  public List&lt;Integer&gt; getAllPlayerIds() {
+<b class="fc"><i>112</i>&nbsp;    return new ArrayList&lt;&gt;(gameFlow.getPlayers().keySet());</b>
+<i>113</i>&nbsp;  }
+<i>114</i>&nbsp;
+<i>115</i>&nbsp;  /**
+<i>116</i>&nbsp;   * Use this method to identify the starting player&#39;s id.
+<i>117</i>&nbsp;   *
+<i>118</i>&nbsp;   * @return id of the first player.
+<i>119</i>&nbsp;   */
+<i>120</i>&nbsp;  @Override
+<i>121</i>&nbsp;  public Integer getStartingPlayerId() {
+<b class="fc"><i>122</i>&nbsp;    return gameFlow.getStartingPlayerId();</b>
+<i>123</i>&nbsp;  }
+<i>124</i>&nbsp;
+<i>125</i>&nbsp;  /**
+<i>126</i>&nbsp;   * Use this method to obtain the id of the player whose turn it is.
+<i>127</i>&nbsp;   *
+<i>128</i>&nbsp;   * @return the current player&#39;s id.
+<i>129</i>&nbsp;   */
+<i>130</i>&nbsp;  @Override
+<i>131</i>&nbsp;  public Integer getCurrentPlayerId() {
+<b class="fc"><i>132</i>&nbsp;    return gameFlow.getCurrentPlayerId();</b>
+<i>133</i>&nbsp;  }
+<i>134</i>&nbsp;
+<i>135</i>&nbsp;  /**
+<i>136</i>&nbsp;   * Use this method to get the Player id of the next valid Player.
+<i>137</i>&nbsp;   *
+<i>138</i>&nbsp;   * @return the id of the next valid Player as an Optional.
+<i>139</i>&nbsp;   */
+<i>140</i>&nbsp;  @Override
+<i>141</i>&nbsp;  public Optional&lt;Integer&gt; getNextPlayerId() {
+<b class="pc"><i>142</i>&nbsp;    if (hasRegisteredPlayers) {</b>
+<b class="fc"><i>143</i>&nbsp;      return Optional.of(gameFlow.getNextPlayerID());</b>
+<i>144</i>&nbsp;    } else {
+<b class="nc"><i>145</i>&nbsp;      return Optional.empty();</b>
+<i>146</i>&nbsp;    }
+<i>147</i>&nbsp;  }
+<i>148</i>&nbsp;
+<i>149</i>&nbsp;  /**
+<i>150</i>&nbsp;   * Use this method to check whether the passed id matches the current player&#39;s id.
+<i>151</i>&nbsp;   *
+<i>152</i>&nbsp;   * @param id to be checked.
+<i>153</i>&nbsp;   * @return a GITuple&lt;id,true&gt; if the player is valid, a GITuple&lt;id,false&gt; if the id does not match
+<i>154</i>&nbsp;   *     and an Optional.empty otherwise.
+<i>155</i>&nbsp;   */
+<i>156</i>&nbsp;  @Override
+<i>157</i>&nbsp;  public Optional&lt;GITuple&lt;Integer, Boolean&gt;&gt; isValidPlayerBy(Integer id) {
+<b class="fc"><i>158</i>&nbsp;    Boolean isValidPlayer = gameFlow.isValidPlayerBy(id);</b>
+<b class="fc"><i>159</i>&nbsp;    GITuple&lt;Integer, Boolean&gt; returnValue = new GITuple&lt;&gt;(id, isValidPlayer);</b>
+<b class="fc"><i>160</i>&nbsp;    return Optional.of(returnValue);</b>
+<i>161</i>&nbsp;  }
+<i>162</i>&nbsp;
+<i>163</i>&nbsp;  /**
+<i>164</i>&nbsp;   * Use this method is check if it&#39;s the first turn of a player.
+<i>165</i>&nbsp;   *
+<i>166</i>&nbsp;   * @param id of the player to be checked for first turn.
+<i>167</i>&nbsp;   * @return the parameter id if it&#39;s the first turn of the player. If the player&#39;s id is not
+<i>168</i>&nbsp;   *     registered in the model an Optional.empty() is returned.
+<i>169</i>&nbsp;   */
+<i>170</i>&nbsp;  @Override
+<i>171</i>&nbsp;  public Optional&lt;GITuple&lt;Integer, Boolean&gt;&gt; isFirstTurnBy(Integer id) {
+<b class="fc"><i>172</i>&nbsp;    Optional&lt;Player&gt; optionalPlayer = gameFlow.getPlayerBy(id);</b>
+<i>173</i>&nbsp;
+<b class="pc"><i>174</i>&nbsp;    if (optionalPlayer.isPresent()) {</b>
+<b class="fc"><i>175</i>&nbsp;      return Optional.of(new GITuple&lt;&gt;(id, optionalPlayer.get().isFirstMove()));</b>
+<i>176</i>&nbsp;    } else {
+<b class="nc"><i>177</i>&nbsp;      return Optional.empty();</b>
+<i>178</i>&nbsp;    }
+<i>179</i>&nbsp;  }
+<i>180</i>&nbsp;
+<i>181</i>&nbsp;  /**
+<i>182</i>&nbsp;   * Use this method to draw a stack (containing 14 Tiles) for a Player id if it&#39;s the players first
+<i>183</i>&nbsp;   * draw or else a single tile. It also automatically ends and calculates the next player&#39;s turn.
+<i>184</i>&nbsp;   *
+<i>185</i>&nbsp;   * @param id for which the Stack/Tile is drawn for.
+<i>186</i>&nbsp;   * @return the id for which the stack/tile was drawn fro and the tiles as a list. If an
+<i>187</i>&nbsp;   *     Optional.empty() is returned the id is not registered in the model.
+<i>188</i>&nbsp;   */
+<i>189</i>&nbsp;  @Override
+<i>190</i>&nbsp;  public Optional&lt;GITuple&lt;Integer, List&lt;GITile&gt;&gt;&gt; drawBy(Integer id) {
+<b class="fc"><i>191</i>&nbsp;    Optional&lt;Player&gt; optionalPlayer = gameFlow.getPlayerBy(id);</b>
+<i>192</i>&nbsp;
+<b class="pc"><i>193</i>&nbsp;    if (!optionalPlayer.isPresent()) {</b>
+<b class="nc"><i>194</i>&nbsp;      return Optional.empty();</b>
+<i>195</i>&nbsp;    }
+<i>196</i>&nbsp;
+<b class="pc"><i>197</i>&nbsp;    if (!id.equals(getCurrentPlayerId())) {</b>
+<i>198</i>&nbsp;      // it is not the players turn.
+<b class="nc"><i>199</i>&nbsp;      return Optional.of(new GITuple&lt;&gt;(id, new ArrayList&lt;&gt;()));</b>
+<i>200</i>&nbsp;    }
+<i>201</i>&nbsp;
+<b class="pc"><i>202</i>&nbsp;    if (bagIsEmpty()) {</b>
+<b class="nc"><i>203</i>&nbsp;      log.info(&quot;Bag is empty, a new bag is being generated.&quot;);</b>
+<b class="nc"><i>204</i>&nbsp;      board.generateNewBag();</b>
+<i>205</i>&nbsp;    }
+<i>206</i>&nbsp;
+<i>207</i>&nbsp;    GITuple&lt;Integer, List&lt;GITile&gt;&gt; returnValue;
+<i>208</i>&nbsp;
+<b class="pc"><i>209</i>&nbsp;    if (gameFlow.isDistributing()) {</b>
+<b class="nc"><i>210</i>&nbsp;      gameFlow.addDistribution();</b>
+<b class="nc"><i>211</i>&nbsp;      gameFlow.nextPlayersTurn();</b>
+<b class="nc"><i>212</i>&nbsp;      returnValue = new GITuple&lt;&gt;(id, getStackFor(id));</b>
+<b class="nc"><i>213</i>&nbsp;      return Optional.of(returnValue);</b>
+<i>214</i>&nbsp;    } else {
+<b class="fc"><i>215</i>&nbsp;      GITile tile = getTileFor(id);</b>
+<b class="fc"><i>216</i>&nbsp;      List&lt;GITile&gt; tiles = new ArrayList&lt;&gt;();</b>
+<b class="fc"><i>217</i>&nbsp;      tiles.add(tile);</b>
+<b class="fc"><i>218</i>&nbsp;      gameFlow.nextPlayersTurn();</b>
+<b class="fc"><i>219</i>&nbsp;      returnValue = new GITuple&lt;&gt;(id, tiles);</b>
+<b class="fc"><i>220</i>&nbsp;      return Optional.of(returnValue);</b>
+<i>221</i>&nbsp;    }
+<i>222</i>&nbsp;  }
+<i>223</i>&nbsp;
+<i>224</i>&nbsp;  /**
+<i>225</i>&nbsp;   * Use this method to validate a combination for a player by its id. If the combination is valid
+<i>226</i>&nbsp;   * it is saved in the model and put on the board. If it is not valid nothing happens in the model
+<i>227</i>&nbsp;   * but false is returned. More than just one combination can be played with this method. If one of
+<i>228</i>&nbsp;   * these combinations is invalid it will change nothing in the model and return false.
+<i>229</i>&nbsp;   *
+<i>230</i>&nbsp;   * @param combinations to be checked for validity.
+<i>231</i>&nbsp;   * @param id of the player to play the combination.
+<i>232</i>&nbsp;   * @return the id by which the combinations were played, and whether the combinations were valid
+<i>233</i>&nbsp;   *     or not. If the player id is not registered in the model an Optional .empty() is returned.
+<i>234</i>&nbsp;   */
+<i>235</i>&nbsp;  @Override
+<i>236</i>&nbsp;  public Optional&lt;GITuple&lt;Integer, Boolean&gt;&gt; play(List&lt;List&lt;GITile&gt;&gt; combinations, Integer id) {
+<b class="fc"><i>237</i>&nbsp;    Optional&lt;Player&gt; optionalPlayer = gameFlow.getPlayerBy(id);</b>
+<i>238</i>&nbsp;
+<b class="pc"><i>239</i>&nbsp;    if (optionalPlayer.isPresent()) {</b>
+<b class="fc"><i>240</i>&nbsp;      Player player = optionalPlayer.get();</b>
+<i>241</i>&nbsp;
+<b class="fc"><i>242</i>&nbsp;      if (!id.equals(getCurrentPlayerId())) {</b>
+<i>243</i>&nbsp;        // it is not the players turn.
+<b class="fc"><i>244</i>&nbsp;        return Optional.of(new GITuple&lt;&gt;(id, false));</b>
+<i>245</i>&nbsp;      }
+<i>246</i>&nbsp;
+<b class="fc"><i>247</i>&nbsp;      if (player.isFirstMove() &amp;&amp; combRules.isValid(combinations, MINIMUM_POINTS_ON_FIRST_MOVE)) {</b>
+<b class="fc"><i>248</i>&nbsp;        putComboOnBoard(combinations, player);</b>
+<b class="fc"><i>249</i>&nbsp;        player.madeMove();</b>
+<b class="fc"><i>250</i>&nbsp;        return Optional.of(new GITuple&lt;&gt;(id, true));</b>
+<b class="fc"><i>251</i>&nbsp;      } else if (!player.isFirstMove() &amp;&amp; combRules.isValid(combinations)) {</b>
+<b class="fc"><i>252</i>&nbsp;        putComboOnBoard(combinations, player);</b>
+<b class="fc"><i>253</i>&nbsp;        player.madeMove();</b>
+<b class="fc"><i>254</i>&nbsp;        return Optional.of(new GITuple&lt;&gt;(id, true));</b>
+<i>255</i>&nbsp;      } else {
+<i>256</i>&nbsp;        // not a valid combination.
+<b class="fc"><i>257</i>&nbsp;        return Optional.of(new GITuple&lt;&gt;(id, false));</b>
+<i>258</i>&nbsp;      }
+<i>259</i>&nbsp;    } else {
+<b class="nc"><i>260</i>&nbsp;      return Optional.empty();</b>
+<i>261</i>&nbsp;    }
+<i>262</i>&nbsp;  }
+<i>263</i>&nbsp;
+<i>264</i>&nbsp;  /**
+<i>265</i>&nbsp;   * Use this method to validate a combination for a player by its id, where tiles from the players
+<i>266</i>&nbsp;   * hand are combined with tiles from the board. Only one new combination can be played with this
+<i>267</i>&nbsp;   * method. Also the whole Board has to be checked for validity, because other combinations on the
+<i>268</i>&nbsp;   * board can be manipulated.
+<i>269</i>&nbsp;   *
+<i>270</i>&nbsp;   * @param tilesFromHand the tiles that where played from the players hand.
+<i>271</i>&nbsp;   * @param tilesFromBoard the combination to which the tilesFromHand were added
+<i>272</i>&nbsp;   * @param newCombinations all the combinations that are currently on the board.
+<i>273</i>&nbsp;   * @param id by which the combination is played.
+<i>274</i>&nbsp;   * @return the id by which the combination was played, and whether the combination was valid or
+<i>275</i>&nbsp;   *     not. If the player id is not registered in the model an Optional.empty() is returned.
+<i>276</i>&nbsp;   */
+<i>277</i>&nbsp;  @Override
+<i>278</i>&nbsp;  public Optional&lt;GITuple&lt;Integer, Boolean&gt;&gt; play(
+<i>279</i>&nbsp;      List&lt;GITile&gt; tilesFromHand,
+<i>280</i>&nbsp;      List&lt;GITile&gt; tilesFromBoard,
+<i>281</i>&nbsp;      List&lt;List&lt;GITile&gt;&gt; newCombinations,
+<i>282</i>&nbsp;      Integer id) {
+<b class="nc"><i>283</i>&nbsp;    Optional&lt;Player&gt; optionalPlayer = gameFlow.getPlayerBy(id);</b>
+<i>284</i>&nbsp;
+<b class="nc"><i>285</i>&nbsp;    if (optionalPlayer.isPresent()) {</b>
+<i>286</i>&nbsp;
+<b class="nc"><i>287</i>&nbsp;      Player player = optionalPlayer.get();</b>
+<i>288</i>&nbsp;
+<b class="nc"><i>289</i>&nbsp;      if (!id.equals(getCurrentPlayerId()) || player.isFirstMove()) {</b>
+<i>290</i>&nbsp;        // it is not the players turn or it is his first move.
+<b class="nc"><i>291</i>&nbsp;        return Optional.of(new GITuple&lt;&gt;(id, false));</b>
+<i>292</i>&nbsp;      }
+<i>293</i>&nbsp;
+<b class="nc"><i>294</i>&nbsp;      boolean allValid = combRules.isValid(newCombinations);</b>
+<i>295</i>&nbsp;
+<b class="nc"><i>296</i>&nbsp;      if (allValid) {</b>
+<b class="nc"><i>297</i>&nbsp;        player.remove(tilesFromHand);</b>
+<b class="nc"><i>298</i>&nbsp;        player.madeMove();</b>
+<b class="nc"><i>299</i>&nbsp;        board.remove(tilesFromBoard);</b>
+<b class="nc"><i>300</i>&nbsp;        newCombinations.forEach(combination -&gt; board.addCombo(combination));</b>
+<b class="nc"><i>301</i>&nbsp;        return Optional.of(new GITuple&lt;&gt;(id, true));</b>
+<i>302</i>&nbsp;      } else {
+<b class="nc"><i>303</i>&nbsp;        return Optional.of(new GITuple&lt;&gt;(id, false));</b>
+<i>304</i>&nbsp;      }
+<i>305</i>&nbsp;    } else {
+<b class="nc"><i>306</i>&nbsp;      return Optional.empty();</b>
+<i>307</i>&nbsp;    }
+<i>308</i>&nbsp;  }
+<i>309</i>&nbsp;
+<i>310</i>&nbsp;  /**
+<i>311</i>&nbsp;   * Use this method to validate a combination for a player by its id, where tiles from the players
+<i>312</i>&nbsp;   * hand and an old combination from the board are combined to a new combination.
+<i>313</i>&nbsp;   *
+<i>314</i>&nbsp;   * @param tilesFromHand tiles that were selected from the hand
+<i>315</i>&nbsp;   * @param oldCombinations tiles from the old combination (in order).
+<i>316</i>&nbsp;   * @param newCombinations tiles from the new combination (in order).
+<i>317</i>&nbsp;   * @param id the id by which the move was made
+<i>318</i>&nbsp;   * @return the id by which the combination was played, and whether the new combination was valid
+<i>319</i>&nbsp;   *     or not. If the player id is not registered in the model an Optional.empty() is returned.
+<i>320</i>&nbsp;   */
+<i>321</i>&nbsp;  @Override
+<i>322</i>&nbsp;  public Optional&lt;GITuple&lt;Integer, Boolean&gt;&gt; manipulateBoardWith(
+<i>323</i>&nbsp;      List&lt;GITile&gt; tilesFromHand,
+<i>324</i>&nbsp;      List&lt;List&lt;GITile&gt;&gt; oldCombinations,
+<i>325</i>&nbsp;      List&lt;List&lt;GITile&gt;&gt; newCombinations,
+<i>326</i>&nbsp;      Integer id) {
+<b class="fc"><i>327</i>&nbsp;    Optional&lt;Player&gt; optionalPlayer = gameFlow.getPlayerBy(id);</b>
+<i>328</i>&nbsp;
+<b class="pc"><i>329</i>&nbsp;    if (!optionalPlayer.isPresent()) {</b>
+<b class="nc"><i>330</i>&nbsp;      return Optional.empty();</b>
+<i>331</i>&nbsp;    }
+<i>332</i>&nbsp;
+<b class="fc"><i>333</i>&nbsp;    Player player = optionalPlayer.get();</b>
+<i>334</i>&nbsp;
+<b class="pc"><i>335</i>&nbsp;    if (!id.equals(getCurrentPlayerId()) || player.isFirstMove()) {</b>
+<i>336</i>&nbsp;      // it is not the players turn or it is his first move.
+<b class="nc"><i>337</i>&nbsp;      return Optional.of(new GITuple&lt;&gt;(id, false));</b>
+<i>338</i>&nbsp;    }
+<i>339</i>&nbsp;
+<b class="fc"><i>340</i>&nbsp;    final GITile JOKER = new GITile(GINumber.JOKER, GIColor.JOKER);</b>
+<i>341</i>&nbsp;
+<b class="fc"><i>342</i>&nbsp;    boolean allValid = combRules.isValid(newCombinations);</b>
+<i>343</i>&nbsp;
+<b class="fc"><i>344</i>&nbsp;    if (allValid) {</b>
+<b class="fc"><i>345</i>&nbsp;      log.info(&quot;all valid.&quot;);</b>
+<i>346</i>&nbsp;
+<b class="fc"><i>347</i>&nbsp;      long jokersInOld =</b>
+<i>348</i>&nbsp;          oldCombinations
+<b class="fc"><i>349</i>&nbsp;              .stream()</b>
+<b class="fc"><i>350</i>&nbsp;              .flatMap(List::stream)</b>
+<b class="fc"><i>351</i>&nbsp;              .filter(tile -&gt; tile.isEquals(JOKER))</b>
+<b class="fc"><i>352</i>&nbsp;              .count();</b>
+<i>353</i>&nbsp;
+<b class="fc"><i>354</i>&nbsp;      long jokersInNew =</b>
+<i>355</i>&nbsp;          newCombinations
+<b class="fc"><i>356</i>&nbsp;              .stream()</b>
+<b class="fc"><i>357</i>&nbsp;              .flatMap(List::stream)</b>
+<b class="fc"><i>358</i>&nbsp;              .filter(tile -&gt; tile.isEquals(JOKER))</b>
+<b class="fc"><i>359</i>&nbsp;              .count();</b>
+<i>360</i>&nbsp;
+<b class="fc"><i>361</i>&nbsp;      if (jokersInNew == jokersInOld - 1) {</b>
+<i>362</i>&nbsp;        // joker got deleted from board
+<b class="fc"><i>363</i>&nbsp;        player.put(JOKER);</b>
+<i>364</i>&nbsp;      }
+<i>365</i>&nbsp;
+<b class="fc"><i>366</i>&nbsp;      player.madeMove();</b>
+<b class="fc"><i>367</i>&nbsp;      player.remove(tilesFromHand);</b>
+<b class="fc"><i>368</i>&nbsp;      board.removeMultiple(oldCombinations);</b>
+<b class="fc"><i>369</i>&nbsp;      newCombinations.forEach(combination -&gt; board.addCombo(combination));</b>
+<b class="fc"><i>370</i>&nbsp;      return Optional.of(new GITuple&lt;&gt;(id, true));</b>
+<i>371</i>&nbsp;    } else {
+<b class="fc"><i>372</i>&nbsp;      return Optional.of(new GITuple&lt;&gt;(id, false));</b>
+<i>373</i>&nbsp;    }
+<i>374</i>&nbsp;  }
+<i>375</i>&nbsp;
+<i>376</i>&nbsp;  /**
+<i>377</i>&nbsp;   * Use this method to signal the end of a players turn by its id.
+<i>378</i>&nbsp;   *
+<i>379</i>&nbsp;   * @param id the id for which the end of he turn is signaled.
+<i>380</i>&nbsp;   * @return the id by for which the turn was ended and the whole board. If the player id is not
+<i>381</i>&nbsp;   *     registered in the model an Optional.empty() is returned.
+<i>382</i>&nbsp;   */
+<i>383</i>&nbsp;  @Override
+<i>384</i>&nbsp;  public Optional&lt;Integer&gt; finishedTurnBy(Integer id) {
+<b class="pc"><i>385</i>&nbsp;    if (!gameFlow.isPlayerExistingBy(id)) {</b>
+<b class="nc"><i>386</i>&nbsp;      return Optional.empty();</b>
+<i>387</i>&nbsp;    }
+<b class="pc"><i>388</i>&nbsp;    if (gameFlow.isValidPlayerBy(id) &amp;&amp; gameFlow.hasMadeMoveBy(id)) {</b>
+<b class="fc"><i>389</i>&nbsp;      gameFlow.nextPlayersTurn();</b>
+<b class="fc"><i>390</i>&nbsp;      return Optional.of(id);</b>
+<i>391</i>&nbsp;    } else {
+<b class="fc"><i>392</i>&nbsp;      return Optional.empty();</b>
+<i>393</i>&nbsp;    }
+<i>394</i>&nbsp;  }
+<i>395</i>&nbsp;
+<i>396</i>&nbsp;  /**
+<i>397</i>&nbsp;   * Use this method to get all the tiles on the hand by an id.
+<i>398</i>&nbsp;   *
+<i>399</i>&nbsp;   * @param id for which the hand is requested.
+<i>400</i>&nbsp;   * @return the id by which the hand was requested and all the tiles of the id. If the player id is
+<i>401</i>&nbsp;   *     not registered in the model an Optional.empty() is returned.
+<i>402</i>&nbsp;   */
+<i>403</i>&nbsp;  @Override
+<i>404</i>&nbsp;  public Optional&lt;GITuple&lt;Integer, List&lt;GITile&gt;&gt;&gt; getAllTilesBy(Integer id) {
+<b class="fc"><i>405</i>&nbsp;    Optional&lt;Player&gt; optionalPlayer = gameFlow.getPlayerBy(id);</b>
+<i>406</i>&nbsp;
+<b class="pc"><i>407</i>&nbsp;    if (optionalPlayer.isPresent()) {</b>
+<b class="fc"><i>408</i>&nbsp;      Player player = optionalPlayer.get();</b>
+<b class="fc"><i>409</i>&nbsp;      GITuple&lt;Integer, List&lt;GITile&gt;&gt; returnValue = new GITuple&lt;&gt;(id, player.getTilesOnHand());</b>
+<b class="fc"><i>410</i>&nbsp;      return Optional.of(returnValue);</b>
+<i>411</i>&nbsp;    } else {
+<b class="nc"><i>412</i>&nbsp;      return Optional.empty();</b>
+<i>413</i>&nbsp;    }
+<i>414</i>&nbsp;  }
+<i>415</i>&nbsp;
+<i>416</i>&nbsp;  /**
+<i>417</i>&nbsp;   * Use this method to calculate the points for a player by its id. The winner has 0 points, thus
+<i>418</i>&nbsp;   * all other points are negative integer.
+<i>419</i>&nbsp;   *
+<i>420</i>&nbsp;   * @param id of the player whose points are wished.
+<i>421</i>&nbsp;   * @return the id for which the points of the hand were requested and the points as negative
+<i>422</i>&nbsp;   *     GIPoints. If the player id is not registered in the model an Optional.empty() is returned.
+<i>423</i>&nbsp;   */
+<i>424</i>&nbsp;  @Override
+<i>425</i>&nbsp;  public Optional&lt;GITuple&lt;Integer, GIPoints&gt;&gt; calculatePointsBy(Integer id) {
+<i>426</i>&nbsp;
+<b class="fc"><i>427</i>&nbsp;    Optional&lt;Player&gt; optionalPlayer = gameFlow.getPlayerBy(id);</b>
+<i>428</i>&nbsp;
+<b class="pc"><i>429</i>&nbsp;    if (!optionalPlayer.isPresent()) {</b>
+<b class="nc"><i>430</i>&nbsp;      return Optional.empty();</b>
+<i>431</i>&nbsp;    }
+<i>432</i>&nbsp;
+<b class="fc"><i>433</i>&nbsp;    GITuple&lt;Integer, GIPoints&gt; returnValue =</b>
+<b class="fc"><i>434</i>&nbsp;        new GITuple&lt;&gt;(id, optionalPlayer.get().calculatePointsOfHand());</b>
+<b class="fc"><i>435</i>&nbsp;    return Optional.of(returnValue);</b>
+<i>436</i>&nbsp;  }
+<i>437</i>&nbsp;
+<i>438</i>&nbsp;  /**
+<i>439</i>&nbsp;   * Use this method to calculate the points of all players&#39; hands.
+<i>440</i>&nbsp;   *
+<i>441</i>&nbsp;   * @return a list of tuples which consist of an id and corresponding points.
+<i>442</i>&nbsp;   */
+<i>443</i>&nbsp;  @Override
+<i>444</i>&nbsp;  public Optional&lt;List&lt;GITuple&lt;Integer, GIPoints&gt;&gt;&gt; calculatePointsForRegisteredPlayers() {
+<b class="fc"><i>445</i>&nbsp;    return gameFlow.getPlayerPoints();</b>
+<i>446</i>&nbsp;  }
+<i>447</i>&nbsp;
+<i>448</i>&nbsp;  /**
+<i>449</i>&nbsp;   * Use this method to obtain the up to date board.
+<i>450</i>&nbsp;   *
+<i>451</i>&nbsp;   * @return current board.
+<i>452</i>&nbsp;   */
+<i>453</i>&nbsp;  @Override
+<i>454</i>&nbsp;  public List&lt;List&lt;GITile&gt;&gt; getCurrentBoard() {
+<b class="fc"><i>455</i>&nbsp;    return board.getActiveCombos();</b>
+<i>456</i>&nbsp;  }
+<i>457</i>&nbsp;
+<i>458</i>&nbsp;  // vvv Auxiliary methods vvv
+<i>459</i>&nbsp;
+<i>460</i>&nbsp;  /**
+<i>461</i>&nbsp;   * Auxiliary method to draw a random tile for a player.
+<i>462</i>&nbsp;   *
+<i>463</i>&nbsp;   * @param id of the player who gets a tile.
+<i>464</i>&nbsp;   * @return the randomly pulled GITile object.
+<i>465</i>&nbsp;   */
+<i>466</i>&nbsp;  private GITile getTileFor(Integer id) {
+<i>467</i>&nbsp;    // .get() is allowed here because it is always called after isPresent check !!!
+<b class="fc"><i>468</i>&nbsp;    Player player = gameFlow.getPlayerBy(id).get();</b>
+<i>469</i>&nbsp;
+<b class="fc"><i>470</i>&nbsp;    GITile tile = board.drawRandomTile();</b>
+<b class="fc"><i>471</i>&nbsp;    player.put(tile);</b>
+<i>472</i>&nbsp;
+<b class="fc"><i>473</i>&nbsp;    return tile;</b>
+<i>474</i>&nbsp;  }
+<i>475</i>&nbsp;
+<i>476</i>&nbsp;  /**
+<i>477</i>&nbsp;   * Auxiliary method to distribute a random stack to the player whose given id matches.
+<i>478</i>&nbsp;   *
+<i>479</i>&nbsp;   * @param id of the player to get a stack.
+<i>480</i>&nbsp;   * @return List of tiles to be distributed.
+<i>481</i>&nbsp;   */
+<i>482</i>&nbsp;  private List&lt;GITile&gt; getStackFor(Integer id) {
+<i>483</i>&nbsp;    // .get() is allowed here because it is always called after isPresent check !!!
+<b class="nc"><i>484</i>&nbsp;    Player player = gameFlow.getPlayerBy(id).get();</b>
+<i>485</i>&nbsp;
+<b class="nc"><i>486</i>&nbsp;    List&lt;GITile&gt; stack = board.drawRandomStackWith(NUMBER_OF_TILES_IN_STACK);</b>
+<b class="nc"><i>487</i>&nbsp;    player.put(stack);</b>
+<b class="nc"><i>488</i>&nbsp;    return stack;</b>
+<i>489</i>&nbsp;  }
+<i>490</i>&nbsp;
+<i>491</i>&nbsp;  /**
+<i>492</i>&nbsp;   * Auxiliary method to place one or several valid combinations on the game board.
+<i>493</i>&nbsp;   *
+<i>494</i>&nbsp;   * @param combinations to be put on the board.
+<i>495</i>&nbsp;   * @param player to demand the move.
+<i>496</i>&nbsp;   */
+<i>497</i>&nbsp;  private void putComboOnBoard(List&lt;List&lt;GITile&gt;&gt; combinations, Player player) {
+<b class="fc"><i>498</i>&nbsp;    combinations.forEach(</b>
+<i>499</i>&nbsp;        combination -&gt; {
+<b class="fc"><i>500</i>&nbsp;          board.addCombo(combination);</b>
+<b class="fc"><i>501</i>&nbsp;          player.remove(combination);</b>
+<i>502</i>&nbsp;        });
+<i>503</i>&nbsp;  }
+<i>504</i>&nbsp;
+<i>505</i>&nbsp;  /**
+<i>506</i>&nbsp;   * Auxiliary method to check whether the game board&#39;s bag is empty.
+<i>507</i>&nbsp;   *
+<i>508</i>&nbsp;   * @return true, in case the bag is empty and false otherwise.
+<i>509</i>&nbsp;   */
+<i>510</i>&nbsp;  private boolean bagIsEmpty() {
+<b class="fc"><i>511</i>&nbsp;    return board.bagIsEmpty();</b>
+<i>512</i>&nbsp;  }
+<i>513</i>&nbsp;
+<i>514</i>&nbsp;  // vvv TESTING PURPOSE ONLY vvv
+<i>515</i>&nbsp;
+<i>516</i>&nbsp;  /**
+<i>517</i>&nbsp;   * A method for testing purpose only. It distributes a number of determined tiles for the player
+<i>518</i>&nbsp;   * whose id matches with the passed one.
+<i>519</i>&nbsp;   *
+<i>520</i>&nbsp;   * @param id of the player to get a custom tile.
+<i>521</i>&nbsp;   * @param customTiles GITiles to be distributed to the player.
+<i>522</i>&nbsp;   * @return GITiles that are distributed to the player.
+<i>523</i>&nbsp;   */
+<i>524</i>&nbsp;  @Override
+<i>525</i>&nbsp;  public Optional&lt;GITuple&lt;Integer, List&lt;GITile&gt;&gt;&gt; drawBy(Integer id, List&lt;GITile&gt; customTiles) {
+<b class="fc"><i>526</i>&nbsp;    Optional&lt;Player&gt; optionalPlayer = gameFlow.getPlayerBy(id);</b>
+<i>527</i>&nbsp;
+<b class="pc"><i>528</i>&nbsp;    if (!optionalPlayer.isPresent()) {</b>
+<b class="nc"><i>529</i>&nbsp;      return Optional.empty();</b>
+<i>530</i>&nbsp;    }
+<i>531</i>&nbsp;
+<b class="pc"><i>532</i>&nbsp;    if (!id.equals(getCurrentPlayerId())) {</b>
+<i>533</i>&nbsp;      // it is not the players turn.
+<b class="nc"><i>534</i>&nbsp;      return Optional.of(new GITuple&lt;&gt;(id, new ArrayList&lt;&gt;()));</b>
+<i>535</i>&nbsp;    }
+<i>536</i>&nbsp;
+<i>537</i>&nbsp;    GITuple&lt;Integer, List&lt;GITile&gt;&gt; returnValue;
+<i>538</i>&nbsp;
+<b class="pc"><i>539</i>&nbsp;    if (gameFlow.isDistributing()) {</b>
+<b class="fc"><i>540</i>&nbsp;      gameFlow.addDistribution();</b>
+<b class="fc"><i>541</i>&nbsp;      gameFlow.nextPlayersTurn();</b>
+<b class="fc"><i>542</i>&nbsp;      returnValue = new GITuple&lt;&gt;(id, getStackFor(id, customTiles));</b>
+<b class="fc"><i>543</i>&nbsp;      return Optional.of(returnValue);</b>
+<i>544</i>&nbsp;    } else {
+<b class="nc"><i>545</i>&nbsp;      GITile tile = getTileFor(id, customTiles.get(0));</b>
+<b class="nc"><i>546</i>&nbsp;      List&lt;GITile&gt; tiles = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>547</i>&nbsp;      tiles.add(tile);</b>
+<b class="nc"><i>548</i>&nbsp;      gameFlow.nextPlayersTurn();</b>
+<b class="nc"><i>549</i>&nbsp;      returnValue = new GITuple&lt;&gt;(id, tiles);</b>
+<b class="nc"><i>550</i>&nbsp;      return Optional.of(returnValue);</b>
+<i>551</i>&nbsp;    }
+<i>552</i>&nbsp;  }
+<i>553</i>&nbsp;
+<i>554</i>&nbsp;  /**
+<i>555</i>&nbsp;   * A method for testing purpose only. It distributes a determined tile for the player whose id
+<i>556</i>&nbsp;   * matches with the passed one.
+<i>557</i>&nbsp;   *
+<i>558</i>&nbsp;   * @param id of the player to get a custom tile.
+<i>559</i>&nbsp;   * @param customTile GITile to be distributed to the player.
+<i>560</i>&nbsp;   * @return GITile that is distributed to the player.
+<i>561</i>&nbsp;   */
+<i>562</i>&nbsp;  private GITile getTileFor(Integer id, GITile customTile) {
+<i>563</i>&nbsp;    // .get() is allowed here because it is always called after isPresent check !!!
+<b class="nc"><i>564</i>&nbsp;    Player player = gameFlow.getPlayerBy(id).get();</b>
+<i>565</i>&nbsp;
+<b class="nc"><i>566</i>&nbsp;    if (board.getTileFromBag(customTile).isPresent()) {</b>
+<b class="nc"><i>567</i>&nbsp;      GITile tile = board.getTileFromBag(customTile).get();</b>
+<b class="nc"><i>568</i>&nbsp;      player.put(tile);</b>
+<b class="nc"><i>569</i>&nbsp;      return tile;</b>
+<i>570</i>&nbsp;    } else {
+<b class="nc"><i>571</i>&nbsp;      throw new IllegalArgumentException(&quot;Tile is not in stack anymore.&quot;);</b>
+<i>572</i>&nbsp;    }
+<i>573</i>&nbsp;  }
+<i>574</i>&nbsp;
+<i>575</i>&nbsp;  /**
+<i>576</i>&nbsp;   * A method for testing purposes only. It helps obtaining a custom stack in form of a List of
+<i>577</i>&nbsp;   * GITiles.
+<i>578</i>&nbsp;   *
+<i>579</i>&nbsp;   * @param id of the player to get a stack.
+<i>580</i>&nbsp;   * @param customTiles to be passed to the player.
+<i>581</i>&nbsp;   * @return List of tiles for the player.
+<i>582</i>&nbsp;   */
+<i>583</i>&nbsp;  private List&lt;GITile&gt; getStackFor(Integer id, List&lt;GITile&gt; customTiles) {
+<i>584</i>&nbsp;    // .get() is allowed here because it is always called after isPresent check !!!
+<b class="fc"><i>585</i>&nbsp;    Player player = gameFlow.getPlayerBy(id).get();</b>
+<b class="fc"><i>586</i>&nbsp;    List&lt;GITile&gt; stack = board.getStackFromBag(NUMBER_OF_TILES_IN_STACK, customTiles);</b>
+<b class="fc"><i>587</i>&nbsp;    player.put(stack);</b>
+<b class="fc"><i>588</i>&nbsp;    return stack;</b>
+<i>589</i>&nbsp;  }
+<i>590</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-02-03 21:12</div>
+</div>
+</body>
+</html>

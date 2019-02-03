@@ -1,0 +1,174 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: Board</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">gameinfo</a> ]
+</div>
+
+<h1>Coverage Summary for Class: Board (gameinfo)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Board</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    76,9%
+  </span>
+  <span class="absValue">
+    (10/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75,8%
+  </span>
+  <span class="absValue">
+    (25/ 33)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package gameinfo;
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import gameinfo.util.GITile;
+<i>4</i>&nbsp;
+<i>5</i>&nbsp;import java.util.ArrayList;
+<i>6</i>&nbsp;import java.util.List;
+<i>7</i>&nbsp;import java.util.Optional;
+<i>8</i>&nbsp;import java.util.logging.Logger;
+<i>9</i>&nbsp;import java.util.stream.Collectors;
+<i>10</i>&nbsp;
+<i>11</i>&nbsp;class Board {
+<i>12</i>&nbsp;  private Bag bag;
+<i>13</i>&nbsp;  private List&lt;List&lt;GITile&gt;&gt; combos;
+<i>14</i>&nbsp;
+<b class="fc"><i>15</i>&nbsp;  private static Logger log = Logger.getLogger(Board.class.getName());</b>
+<i>16</i>&nbsp;
+<b class="fc"><i>17</i>&nbsp;  Board() {</b>
+<b class="fc"><i>18</i>&nbsp;    this.bag = new Bag();</b>
+<b class="fc"><i>19</i>&nbsp;    this.combos = new ArrayList&lt;&gt;();</b>
+<i>20</i>&nbsp;  }
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;  void removeMultiple(List&lt;List&lt;GITile&gt;&gt; combinations) {
+<b class="fc"><i>23</i>&nbsp;    for (List&lt;GITile&gt; combination : combinations) {</b>
+<b class="fc"><i>24</i>&nbsp;      remove(combination);</b>
+<b class="fc"><i>25</i>&nbsp;    }</b>
+<i>26</i>&nbsp;  }
+<i>27</i>&nbsp;
+<i>28</i>&nbsp;  void remove(List&lt;GITile&gt; combo) {
+<b class="fc"><i>29</i>&nbsp;    log.info(&quot;Remove the combination &quot; + combo + &quot;from the board.&quot;);</b>
+<b class="pc"><i>30</i>&nbsp;    for (List&lt;GITile&gt; combination : combos) {</b>
+<b class="fc"><i>31</i>&nbsp;      if (combination.size() == combo.size()) {</b>
+<b class="fc"><i>32</i>&nbsp;        log.info(&quot;Combinations have the same size.&quot;);</b>
+<b class="fc"><i>33</i>&nbsp;        if (containSameElements(combo, combination)) {</b>
+<b class="fc"><i>34</i>&nbsp;          log.info(&quot;Combinations contains the same elements.&quot;);</b>
+<b class="fc"><i>35</i>&nbsp;          combos.remove(combination);</b>
+<i>36</i>&nbsp;          return;
+<i>37</i>&nbsp;        }
+<i>38</i>&nbsp;      }
+<b class="fc"><i>39</i>&nbsp;    }</b>
+<i>40</i>&nbsp;  }
+<i>41</i>&nbsp;
+<i>42</i>&nbsp;  private boolean containSameElements(List&lt;GITile&gt; lhs, List&lt;GITile&gt; rhs) {
+<b class="fc"><i>43</i>&nbsp;    for (int i = 0; i &lt; lhs.size(); i++) {</b>
+<b class="fc"><i>44</i>&nbsp;      if (!lhs.get(i).toString().equals(rhs.get(i).toString())) {</b>
+<b class="fc"><i>45</i>&nbsp;        return false;</b>
+<i>46</i>&nbsp;      }
+<i>47</i>&nbsp;    }
+<b class="fc"><i>48</i>&nbsp;    return true;</b>
+<i>49</i>&nbsp;  }
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;  List&lt;List&lt;GITile&gt;&gt; getActiveCombos() {
+<b class="fc"><i>52</i>&nbsp;    return combos;</b>
+<i>53</i>&nbsp;  }
+<i>54</i>&nbsp;
+<i>55</i>&nbsp;  void addCombo(List&lt;GITile&gt; combo) {
+<b class="fc"><i>56</i>&nbsp;    this.combos.add(combo);</b>
+<b class="fc"><i>57</i>&nbsp;    log.info(&quot;Added combination: &quot; + combo + &quot; to the board.&quot;);</b>
+<i>58</i>&nbsp;  }
+<i>59</i>&nbsp;
+<i>60</i>&nbsp;  GITile drawRandomTile() {
+<b class="fc"><i>61</i>&nbsp;    return bag.drawRandomTile();</b>
+<i>62</i>&nbsp;  }
+<i>63</i>&nbsp;
+<i>64</i>&nbsp;  List&lt;GITile&gt; drawRandomStackWith(int numberOfTiles) {
+<b class="nc"><i>65</i>&nbsp;    return this.bag.drawRandomStackWith(numberOfTiles);</b>
+<i>66</i>&nbsp;  }
+<i>67</i>&nbsp;
+<i>68</i>&nbsp;  Optional&lt;GITile&gt; getTileFromBag(GITile tile) {
+<b class="nc"><i>69</i>&nbsp;    if (bag.takeTile(tile).isPresent()) {</b>
+<b class="nc"><i>70</i>&nbsp;      return Optional.of(bag.takeTile(tile).get());</b>
+<i>71</i>&nbsp;    } else {
+<b class="nc"><i>72</i>&nbsp;      return Optional.empty();</b>
+<i>73</i>&nbsp;    }
+<i>74</i>&nbsp;  }
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;  List&lt;GITile&gt; getStackFromBag(int numberOfTiles, List&lt;GITile&gt; customStack) {
+<b class="fc"><i>77</i>&nbsp;    return this.bag.takeStack(numberOfTiles, customStack);</b>
+<i>78</i>&nbsp;  }
+<i>79</i>&nbsp;
+<i>80</i>&nbsp;  boolean bagIsEmpty() {
+<b class="fc"><i>81</i>&nbsp;    return bag.isEmpty();</b>
+<i>82</i>&nbsp;  }
+<i>83</i>&nbsp;
+<i>84</i>&nbsp;  void generateNewBag() {
+<b class="nc"><i>85</i>&nbsp;    List&lt;GITile&gt; boardTiles = combos.stream().flatMap(List::stream).collect(Collectors.toList());</b>
+<i>86</i>&nbsp;
+<b class="nc"><i>87</i>&nbsp;    this.combos.clear();</b>
+<b class="nc"><i>88</i>&nbsp;    combos = new ArrayList&lt;&gt;();</b>
+<b class="nc"><i>89</i>&nbsp;    bag.setTiles(boardTiles);</b>
+<i>90</i>&nbsp;  }
+<i>91</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2019-02-03 21:12</div>
+</div>
+</body>
+</html>
