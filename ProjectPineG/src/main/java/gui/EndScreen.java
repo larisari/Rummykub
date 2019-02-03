@@ -9,20 +9,21 @@ import javafx.stage.Stage;
 abstract class EndScreen {
 
   /**
-   * Gets called from GuiController to forward numberOfPlayers.
+   * For receiving the number of players from the controller of the previous stage.
    *
    * @param numberOfPlayers - number of players.
    */
   abstract void setNumberOfPlayers(Integer numberOfPlayers);
 
   /**
-   * For forwarding stage to its controller.
+   * For receiving the stage of this controller from the controller of the previous stage.
+   *
    * @param stage - to be forwarded.
    */
   abstract void setStage(Stage stage);
 
   /**
-   * Sets points for each player.
+   * For receiving the points of all players from the controller of the previous stage.
    *
    * @param points - list of points of all players.
    */

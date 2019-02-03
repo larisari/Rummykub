@@ -58,14 +58,29 @@ public class WinScreenController extends EndScreen {
     }
   }
 
+  /**
+   * For receiving the stage of this controller from the controller of the previous stage.
+   *
+   * @param thisStage - this controller's stage.
+   */
   void setStage(Stage thisStage) {
     this.stage = thisStage;
   }
 
+  /**
+   * For receiving the number of players from the controller of the previous stage.
+   *
+   * @param numberOfPlayers - number of players.
+   */
   void setNumberOfPlayers(Integer numberOfPlayers) {
     this.numberOfPlayers = numberOfPlayers;
   }
 
+  /**
+   * For receiving the points of all players from the controller of the previous stage.
+   *
+   * @param points - list of points of all players.
+   */
   void setPlayerPoints(List<Integer> points) {
 
     switch (points.size()) {
@@ -88,6 +103,9 @@ public class WinScreenController extends EndScreen {
     }
   }
 
+  /**
+   * Sets points and names visible according to the number of players.
+   */
   public void setPointsNamesVisible() {
     switch (numberOfPlayers) {
       case 2:
@@ -109,6 +127,9 @@ public class WinScreenController extends EndScreen {
 
   }
 
+  /**
+   * Sets the points for two players and sets the name of this gui's client to "You".
+   */
   void setPoints2Players() {
     if (p2Points > p1Points) {
       player2.setText("Player 1");
@@ -118,6 +139,9 @@ public class WinScreenController extends EndScreen {
     }
   }
 
+  /**
+   * Sets the points for three players and sets the name of this gui's client to "You".
+   */
   void setPoints3Players() {
     if (p3Points == 0) {
       player2.setText("Player 1");
@@ -136,6 +160,9 @@ public class WinScreenController extends EndScreen {
     }
   }
 
+  /**
+   * Sets the points for four players and sets the name of this gui's client to "You".
+   */
   void setPoints4Players() {
     if (p4Points == 0) {
       player2Points.setText(p2Points + " Points");
@@ -173,6 +200,9 @@ public class WinScreenController extends EndScreen {
 
   }
 
+  /**
+   * Loads music and plays it once.
+   */
   void playMusic() {
     Media media = null;
     try {

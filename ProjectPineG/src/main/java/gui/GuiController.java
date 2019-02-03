@@ -32,7 +32,7 @@ import javafx.util.Duration;
 import network.ClientParser;
 
 /**
- * Controller for game view, handles mouse events and other user input for clientgui.fxml file.
+ * Controller for game window, handles mouse events and other user input for clientgui.fxml file.
  * Communicates with network via ClientParser.
  */
 public class GuiController {
@@ -99,16 +99,16 @@ public class GuiController {
   }
 
   /**
-   * Sets forwarded number of players.
+   * For receiving the number of players from controller of previous stage.
    *
-   * @param numberPlayers - number of players.
+   * @param numberPlayers - number of current players.
    */
   public void setNumberOfPlayers(int numberPlayers) {
     this.numberOfPlayers = numberPlayers;
   }
 
   /**
-   * Sets forwarded playerID.
+   * For receiving a player id from controller of previous stage.
    *
    * @param playerID - this gui's client id.
    */
@@ -117,7 +117,8 @@ public class GuiController {
   }
 
   /**
-   * Sets forwarded stage.
+   * For receiving the stage of this controller from the controller of the previous
+   * stage.
    *
    * @param stage - this fxml file's stage.
    */
@@ -135,7 +136,7 @@ public class GuiController {
   }
 
   /**
-   * Sets player boards invisible according to number of players.
+   * Sets player boards invisible according to the number of players.
    */
   void setPlayerBoards() {
     switch (numberOfPlayers) {
@@ -203,8 +204,8 @@ public class GuiController {
 
 
   /**
-   * Handles user clicking on the bag. Requests tiles to be drawn from the bag. Alerts user if hand
-   * is full.
+   * Handles user clicking on the bag. Requests tiles to be drawn from the bag. Alerts user if his
+   * hand is full.
    */
   @FXML
   private void handleDrawTile() {
@@ -221,7 +222,7 @@ public class GuiController {
 
 
   /**
-   * For loading tiles. Gets called if user may draw from the bag. Disables the bag.
+   * For loading tiles. Gets called if user may draw from the bag. Disables control for the user.
    *
    * @param tiles to be loaded.
    */
@@ -249,7 +250,7 @@ public class GuiController {
   }
 
   /**
-   * Initialises selection effect for a tile.
+   * Sets onMouseClicked function for a tile. Initialises selection effect for a tile.
    *
    * @param tile for which mouse event should be set.
    */
@@ -309,8 +310,8 @@ public class GuiController {
   }
 
   /**
-   * Moves tiles from player's hand to the selection board. If the selection board is full, the
-   * tiles are moved back to the player's hand.
+   * Moves tiles from player's hand to the selection board. If the selection board is full, the last
+   * combination of tiles is moved back to the player's hand.
    */
   private void moveToSelectionBoard() {
     int boxSpacing = 8;
@@ -394,8 +395,8 @@ public class GuiController {
   }
 
   /**
-   * Handles user pressing "Place Selection" button. Checks if tile combinations on the selection
-   * board are valid.
+   * Handles user pressing "Place Selection" button. Requests verification of tile combinations on
+   * the selection board.
    */
   @FXML
   private void handlePlaceOnBoard() {
@@ -416,8 +417,8 @@ public class GuiController {
   }
 
   /**
-   * Gets called if combinations on the selection board are valid. For placing tiles combination on
-   * the main board. Checks if the player's hand is now empty.
+   * Gets called if combinations on the selection board are valid. For placing tile combinations on
+   * the main board.
    */
   public void placeTiles() {
     for (List<ImageView> combination : selectedCombinations) {
@@ -426,7 +427,7 @@ public class GuiController {
   }
 
   /**
-   * Places tiles on the main board. Checks if player's hand is now empty.
+   * Places given combination on the main board. Checks if player's hand is now empty.
    *
    * @param combination which should be placed on the main board.
    */
@@ -463,8 +464,8 @@ public class GuiController {
   }
 
   /**
-   * Returns all combinations on the selection board back to the player's hand and deselects tiles
-   * on hand.
+   * Returns all tile combinations on the selection board back to the player's hand and deselects
+   * tiles on hand.
    */
   private void cancelSelection() {
     if (!selectionBoard.getChildren().isEmpty()) {
@@ -778,7 +779,8 @@ public class GuiController {
   }
 
   /**
-   * Handles user pressing "End Turn" button. Notifies model and disables control for this user.
+   * Handles user pressing "End Turn" button. Notifies model via network and disables control for
+   * this user.
    */
   @FXML
   private void handleEndTurn() {
@@ -802,7 +804,7 @@ public class GuiController {
   }
 
   /**
-   * Gets called when turn is finished, reloads board for all players
+   * Gets called when turn is finished, received updated board and loads it.
    */
   public void reloadBoard(List<List<Image>> boardTiles) {
     board.getChildren().clear();
@@ -852,9 +854,9 @@ public class GuiController {
   }
 
   /**
-   * Returns all tiles from the players hand.
+   * Returns all tiles from the player's hand.
    *
-   * @return all tiles from the players hand.
+   * @return all tiles from the player's hand.
    */
   private List<ImageView> getTilesFromHand() {
     List<ImageView> handTiles = new ArrayList<>();
@@ -883,7 +885,7 @@ public class GuiController {
   }
 
   /**
-   * Gets called if it's this players turn, enables button and tile control. Plays short
+   * Gets called if it's this player's turn, enables button and tile control. Plays short
    * notification sound.
    */
   public void enableControl() {
@@ -913,7 +915,7 @@ public class GuiController {
   }
 
   /**
-   * Enables all tiles on the players hand.
+   * Enables all tiles on the player's hand.
    */
   private void enableTilesOnHand() {
     for (int i = 0; i < topHand.getChildren().size(); i++) {
@@ -944,7 +946,7 @@ public class GuiController {
   }
 
   /**
-   * Plays notification sound if it's this players turn.
+   * Plays notification sound if it's this player's turn.
    */
   private void playNotification() {
     AudioClip notification = null;
@@ -960,7 +962,7 @@ public class GuiController {
   }
 
   /**
-   * Handle user pressing mute or unmute icon. If music is playing, by clicking the icon music is
+   * Handle user pressing mute or unmute icon. If music is playing, by clicking the icon, music is
    * muted and vice versa.
    */
   @FXML
@@ -985,7 +987,8 @@ public class GuiController {
 
 
   /**
-   * Gets called if connection of another client has been lost. Closes game window and stops music.
+   * Gets called if server has lost connection to another client. Closes game window and stops
+   * music.
    */
   public void closeGame() {
     this.stage.close();
@@ -993,7 +996,7 @@ public class GuiController {
   }
 
   /**
-   * Loads starting screen if another user has quit the game.
+   * Loads starting screen if another user has quit the game and displays a an alert.
    *
    * @throws IOException if some error occurs while loading fxml file.
    */
@@ -1044,7 +1047,7 @@ public class GuiController {
   }
 
   /**
-   * Gets called if user has lost, loads loserScreen and closes game window.
+   * Gets called if another user has won, loads loserScreen and closes game window.
    *
    * @throws IOException if some error occurs while loading fxml file.
    */

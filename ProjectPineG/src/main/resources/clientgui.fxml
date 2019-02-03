@@ -149,7 +149,7 @@
               <Font name="Franklin Gothic Medium" size="16.0" />
             </font>
                <tooltip>
-                  <Tooltip prefHeight="120.0" prefWidth="130.0" text="Click here to place a combination on the selection board, from where you can place tiles on the board." wrapText="true">
+                  <Tooltip prefHeight="140.0" prefWidth="140.0" text="Click here to place a combination on the selection board or to place a combination of tiles from your hand and tiles from the board on the main board." wrapText="true">
                      <font>
                         <Font name="Franklin Gothic Medium" size="13.0" />
                      </font>

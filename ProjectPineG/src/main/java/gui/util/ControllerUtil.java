@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.WindowEvent;
 
 /**
- * Helper class for controllers, mostly GuiController.
+ * Helper class for GuiController, contains all methods that could be outsourced.
  */
 public class ControllerUtil {
 

@@ -60,16 +60,26 @@ public class LoseScreenController extends EndScreen {
     }
   }
 
+  /**
+   * For receiving the stage of this controller from the controller of the previous stage.
+   *
+   * @param thisStage - this controller's stage.
+   */
   void setStage(Stage thisStage) {
     this.stage = thisStage;
   }
 
+  /**
+   * For receiving the number of players from the controller of the previous stage.
+   *
+   * @param numberOfPlayers - number of players.
+   */
   void setNumberOfPlayers(Integer numberOfPlayers) {
     this.numberOfPlayers = numberOfPlayers;
   }
 
   /**
-   * Gets called from GuiController to forward playerID.
+   * For receiving player id from the controller of the previous stage.
    *
    * @param ID - this gui's client id.
    */
@@ -77,7 +87,11 @@ public class LoseScreenController extends EndScreen {
     this.playerID = ID;
   }
 
-
+  /**
+   * For receiving the points of all players from the controller of the previous stage.
+   *
+   * @param points - list of points of all players.
+   */
   void setPlayerPoints(List<Integer> points) {
 
     switch (points.size()) {
@@ -100,7 +114,9 @@ public class LoseScreenController extends EndScreen {
     }
   }
 
-
+  /**
+   * Sets points and names visible according to the number of players.
+   */
   void setPointsNamesVisible() {
 
     switch (numberOfPlayers) {
@@ -123,7 +139,9 @@ public class LoseScreenController extends EndScreen {
 
   }
 
-
+  /**
+   * Sets the points for two players and sets the name of this gui's client to "You".
+   */
   void setPoints2Players() {
     Loserp1Points.setText(p1Points + " Points");
     Loserp2Points.setText(p2Points + " Points");
@@ -137,7 +155,9 @@ public class LoseScreenController extends EndScreen {
     }
   }
 
-
+  /**
+   * Sets the points for three players and sets the name of this gui's client to "You".
+   */
   void setPoints3Players() {
     Loserp1Points.setText(p1Points + " Points");
     Loserp2Points.setText(p2Points + " Points");
@@ -155,7 +175,9 @@ public class LoseScreenController extends EndScreen {
     }
   }
 
-
+  /**
+   * Sets the points for four players and sets the name of this gui's client to "You".
+   */
   void setPoints4Players() {
     Loserp1Points.setText(p1Points + " Points");
     Loserp2Points.setText(p2Points + " Points");
@@ -186,7 +208,9 @@ public class LoseScreenController extends EndScreen {
     stage.close();
   }
 
-
+  /**
+   * Loads music and plays it once.
+   */
   void playMusic() {
     Media media = null;
     try {

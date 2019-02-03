@@ -45,7 +45,7 @@ public class StartingScreenController {
   }
 
   /**
-   * For forwarding starting screen stage to loading screen.
+   * For passing starting screen stage to loading screen.
    *
    * @param stage of starting screen.
    */
@@ -205,8 +205,8 @@ public class StartingScreenController {
       }
     } catch (NumberFormatException e) {
       Alert alert = new Alert(AlertType.CONFIRMATION,
-          "No host found! Need to create a new game first!", ButtonType.OK);
-      alert.showAndWait(); //TODO funzt ned
+          "No valid number!", ButtonType.OK);
+      alert.showAndWait();
       return false;
     }
     return false;
