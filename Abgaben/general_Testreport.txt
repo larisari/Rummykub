@@ -1,0 +1,1 @@
+View/Controller: wurden manuell von allen Teammitgliedern und unabhängigen Personen getestet.
