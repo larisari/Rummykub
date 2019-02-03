@@ -1,0 +1,63 @@
+Basic Servertest:
+Simple multithreaded server test for a client that can ask for a „Date“ or „Time“ and gets the answer from the server. 
+This test was written before we connected the server/client architecture with the code of the model and view. 
+It was written only to test the  rudimentary function of the clients connecting to the server and exchange of information in between. 
+With the knowledge of this function working, we could go on and implement the parsers, etc. and finish the code to the final state you see now. 
+Output terminal server – every 5sec it prints out „5 sec“ and which threads are connected:
+Game Start
+Game running...
+Listener Start
+5 Sec
+A new client is connected : Socket[addr=/127.0.0.1,port=52953,localport=5056]
+Assigning new thread for this client
+5 Sec
+Thread[Thread-2,5,main]
+A new client is connected : Socket[addr=/127.0.0.1,port=52959,localport=5056]
+Assigning new thread for this client
+5 Sec
+Thread[Thread-2,5,main]
+Thread[Thread-3,5,main]
+A new client is connected : Socket[addr=/127.0.0.1,port=52965,localport=5056]
+Assigning new thread for this client
+5 Sec
+Thread[Thread-2,5,main]
+Thread[Thread-3,5,main]
+Thread[Thread-4,5,main]
+5 Sec
+Thread[Thread-2,5,main]
+Thread[Thread-3,5,main]
+Thread[Thread-4,5,main]
+
+
+
+Output Terminal Client 1:
+What do you want?[Date | Time]..
+Type Exit to terminate connection.
+Date
+2019/02/03
+What do you want?[Date | Time]..
+Type Exit to terminate connection.
+Time
+04:23:25
+What do you want?[Date | Time]..
+Type Exit to terminate connection.
+
+Output Terminal Client 2:
+What do you want?[Date | Time]..
+Type Exit to terminate connection.
+Date
+2019/02/03
+What do you want?[Date | Time]..
+Type Exit to terminate connection.
+
+Output Terminal Client 3:
+What do you want?[Date | Time]..
+Type Exit to terminate connection.
+Date
+2019/02/03
+What do you want?[Date | Time]..
+Type Exit to terminate connection.
+Time
+04:23:31
+What do you want?[Date | Time]..
+Type Exit to terminate connection.
