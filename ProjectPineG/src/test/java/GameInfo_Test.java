@@ -1,8 +1,9 @@
-package gameinfo;
-
+import gameinfo.GIFactory;
+import gameinfo.GIGameInfo;
 import gameinfo.util.GIColor;
 import gameinfo.util.GINumber;
 import gameinfo.util.GITile;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -15,9 +16,6 @@ class GameInfo_Test {
 
   private static final Integer player_1_ID = 1;
   private static final Integer player_2_ID = 2;
-
-  private static Player p1 = new Player(player_1_ID, new PointsCalculator());
-  private static Player p2 = new Player(player_2_ID, new PointsCalculator());
 
   private static List<GITile> hand_player_1 =
       new ArrayList<>(
@@ -67,10 +65,12 @@ class GameInfo_Test {
     start();
     assert gameInfo.getStartingPlayerId().equals(player_2_ID);
     checkNumOfPlayers();
+    checkPlayersValidation();
     assert gameInfo.getCurrentBoard().isEmpty();
     draw();
     play_lessThan30Points();
     assert gameInfo.getCurrentPlayerId().equals(player_2_ID);
+    assert gameInfo.getNextPlayerId().get().equals(player_1_ID);
     // p2
     play_groupOfThirteens();
     // p1
@@ -90,6 +90,11 @@ class GameInfo_Test {
     play_addJokerToExistingCombination();
     // p2
     play_swapJoker();
+    // p1
+    play_draw();
+    // p2
+    play_impossibleStreet();
+    play_finishingMove();
   }
 
   /**
@@ -97,7 +102,7 @@ class GameInfo_Test {
    *
    * @param combinations wished by a player.
    * @param id of the player to wish the combinations.
-   * @return true, is the combinations are valid and false otherwise.
+   * @return true, if the combinations are valid and false otherwise.
    */
   private boolean validate(List<List<GITile>> combinations, Integer id) {
     return gameInfo.play(combinations, id).get().getSecond();
@@ -121,6 +126,26 @@ class GameInfo_Test {
     }
     combinationList.add(combination);
     return combinationList;
+  }
+
+  /**
+   * This method checks whether a manipulation is valid or not.
+   *
+   * @param tilesFromHand the player wants to put on the board.
+   * @param boardCombs the player wants to engage with.
+   * @param addedCombs are the resulting combinations.
+   * @param id of the player that makes the move.
+   * @return true, if the manipulation is valid and false otherwise.
+   */
+  private boolean validate(
+      List<GITile> tilesFromHand,
+      List<List<GITile>> boardCombs,
+      List<List<GITile>> addedCombs,
+      Integer id) {
+    return gameInfo
+        .manipulateBoardWith(tilesFromHand, boardCombs, addedCombs, id)
+        .get()
+        .getSecond();
   }
 
   void start() {
@@ -148,7 +173,13 @@ class GameInfo_Test {
     }
   }
 
+  void checkPlayersValidation() {
+    assert gameInfo.isValidPlayerBy(player_1_ID).get().getSecond();
+    assert gameInfo.isValidPlayerBy(player_2_ID).get().getSecond();
+  }
+
   void play_lessThan30Points() {
+    assert gameInfo.isFirstTurnBy(player_2_ID).get().getSecond();
     List<List<GITile>> combinations = makeCombinationList(11, 13, hand_player_2);
     assert !validate(combinations, player_2_ID);
   }
@@ -221,15 +252,11 @@ class GameInfo_Test {
     List<GITile> combinationWithJoker = new ArrayList<>(currentBoard.get(0));
     combinationWithJoker.add(tilesFromHand.get(0));
 
-    System.out.println(combinationWithJoker);
-
     List<List<GITile>> newBoard = new ArrayList<>();
     newBoard.add(combinationWithJoker);
 
-    assert gameInfo
-        .manipulateBoardWith(tilesFromHand, currentBoard, newBoard, player_1_ID)
-        .get()
-        .getSecond();
+    assert validate(tilesFromHand, currentBoard, newBoard, player_1_ID);
+
     gameInfo.finishedTurnBy(player_1_ID);
   }
 
@@ -246,28 +273,18 @@ class GameInfo_Test {
     List<GITile> blueTwelveFromHand = new ArrayList<>();
     blueTwelveFromHand.add(gameInfo.getAllTilesBy(player_2_ID).get().getSecond().get(0));
 
-    System.out.println("12 blue: " + blueTwelveFromHand);
-
     List<List<GITile>> twelvesWithJoker = new ArrayList<>();
     twelvesWithJoker.add(gameInfo.getCurrentBoard().get(gameInfo.getCurrentBoard().size() - 1));
-
-    System.out.println("12 with joker: " + twelvesWithJoker);
 
     List<GITile> fourTwelves = new ArrayList<>(twelvesWithJoker.get(0));
     fourTwelves.removeIf(tile -> tile.isEquals(new GITile(GINumber.JOKER, GIColor.JOKER)));
     fourTwelves.add(blueTwelveFromHand.get(0));
 
-    System.out.println("4x12: " + fourTwelves);
-
     List<List<GITile>> twelvesWithoutJoker = new ArrayList<>();
     twelvesWithoutJoker.add(fourTwelves);
 
-    System.out.println("12 without joker: " + twelvesWithoutJoker);
+    assert validate(blueTwelveFromHand, twelvesWithJoker, twelvesWithoutJoker, player_2_ID);
 
-    assert gameInfo
-        .manipulateBoardWith(blueTwelveFromHand, twelvesWithJoker, twelvesWithoutJoker, player_2_ID)
-        .get()
-        .getSecond();
     gameInfo.finishedTurnBy(player_2_ID);
 
     assert gameInfo
@@ -279,4 +296,75 @@ class GameInfo_Test {
             .count()
         == jokersInHand + 1;
   }
+
+  void play_impossibleStreet() {
+    // {2,BLUE},{3,BLUE}
+    List<GITile> tilesFromHand = new ArrayList<>();
+    tilesFromHand.add(hand_player_2.get(11));
+    tilesFromHand.add(hand_player_2.get(12));
+
+    // {1,YELLOW},{1,RED},{1,BLACK}
+    List<GITile> threeOnes = new ArrayList<>(gameInfo.getCurrentBoard().get(2));
+    List<List<GITile>> boardBefore = new ArrayList<>();
+    boardBefore.add(threeOnes);
+
+    // {1,NOT_BLUE},{2,BLUE},{3,BLUE}
+    List<GITile> wishedStreet = new ArrayList<>();
+    wishedStreet.add(threeOnes.get(0));
+    List<GITile> twoOnes = new ArrayList<>(threeOnes);
+    twoOnes.remove(0);
+    wishedStreet.addAll(tilesFromHand);
+
+    List<List<GITile>> addedCombs = new ArrayList<>();
+    addedCombs.add(wishedStreet);
+    addedCombs.add(twoOnes);
+
+    assert !validate(tilesFromHand, boardBefore, addedCombs, player_2_ID);
+  }
+
+  void play_finishingMove() {
+    List<GITile> tilesFromHand =
+        new ArrayList<>();
+    //to make sure it is sorted like: <joker,1,2,joker>
+    tilesFromHand.add(gameInfo.getAllTilesBy(player_2_ID).get().getSecond().get(3));
+    tilesFromHand.addAll(gameInfo.getAllTilesBy(player_2_ID).get().getSecond().subList(0,3));
+
+    List<List<GITile>> combinationsBefore = new ArrayList<>();
+    List<GITile> thirteens = new ArrayList<>(gameInfo.getCurrentBoard().get(0));
+    List<GITile> twelves = new ArrayList<>(gameInfo.getCurrentBoard().get(3));
+    combinationsBefore.add(twelves);
+    combinationsBefore.add(thirteens);
+
+    List<GITile> wishedStreet =
+        twelves
+            .stream()
+            .filter(tile -> tile.getColor().equals(GIColor.BLUE))
+            .collect(Collectors.toList());
+
+    thirteens
+        .stream()
+        .filter(tile -> tile.getColor().equals(GIColor.BLUE))
+        .sequential()
+        .collect(Collectors.toCollection(() -> wishedStreet));
+
+    wishedStreet.addAll(tilesFromHand);
+
+    List<GITile> threeTwelves = new ArrayList<>(twelves);
+    List<GITile> threeThirteens = new ArrayList<>(thirteens);
+    threeTwelves.removeIf(tile -> tile.getColor().equals(GIColor.BLUE));
+    threeThirteens.removeIf(tile -> tile.getColor().equals(GIColor.BLUE));
+
+    List<List<GITile>> combinationsAfter = new ArrayList<>();
+    combinationsAfter.add(threeTwelves);
+    combinationsAfter.add(threeThirteens);
+    combinationsAfter.add(wishedStreet);
+
+    assert validate(tilesFromHand,combinationsBefore,combinationsAfter,player_2_ID);
+
+    gameInfo.finishedTurnBy(player_2_ID);
+
+    assert gameInfo.calculatePointsForRegisteredPlayers().get().get(0).getSecond().value() != 0;
+    assert gameInfo.calculatePointsBy(player_2_ID).get().getSecond().value() == 0;
+  }
+
 }
