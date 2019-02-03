@@ -4,9 +4,7 @@
  */
 package gameinfo;
 
-import gameinfo.util.GIPoints;
-import gameinfo.util.GITile;
-import gameinfo.util.GITuple;
+import gameinfo.util.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -340,9 +338,24 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       return Optional.of(new GITuple<>(id, false));
     }
 
+    final GITile JOKER = new GITile(GINumber.JOKER, GIColor.JOKER);
+
     boolean allValid = combRules.isValid(newCombinations);
 
     if (allValid) {
+      log.info("all valid.");
+
+      long jokersInOld =
+          oldCombinations.stream().flatMap(List::stream).filter(tile -> tile.isEquals(JOKER)).count();
+
+      long jokersInNew =
+          newCombinations.stream().flatMap(List::stream).filter(tile -> tile.isEquals(JOKER)).count();
+
+      if (jokersInNew == jokersInOld - 1) {
+        //joker got deleted from board
+        player.put(JOKER);
+      }
+
       player.madeMove();
       player.remove(tilesFromHand);
       board.removeMultiple(oldCombinations);
