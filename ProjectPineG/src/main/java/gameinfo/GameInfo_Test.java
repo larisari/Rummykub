@@ -3,11 +3,11 @@ package gameinfo;
 import gameinfo.util.GIColor;
 import gameinfo.util.GINumber;
 import gameinfo.util.GITile;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 class GameInfo_Test {
 
@@ -93,6 +93,7 @@ class GameInfo_Test {
     //p1
     play_draw();
     // p2
+    play_impossibleStreet();
     play_finishingMove();
   }
 
@@ -282,8 +283,34 @@ class GameInfo_Test {
         == jokersInHand + 1;
   }
 
-  void play_finishingMove() {
+  void play_impossibleStreet() {
+    //{2,BLUE},{3,BLUE}
+    List<GITile> tilesFromHand = new ArrayList<>();
+    tilesFromHand.add(hand_player_2.get(11));
+    tilesFromHand.add(hand_player_2.get(12));
 
+    //{1,YELLOW},{1,RED},{1,BLACK}
+    List<GITile> threeOnes = new ArrayList<>(gameInfo.getCurrentBoard().get(2));
+    List<List<GITile>> boardBefore = new ArrayList<>();
+    boardBefore.add(threeOnes);
+
+    //{1,NOT_BLUE},{2,BLUE},{3,BLUE}
+    List<GITile> wishedStreet = new ArrayList<>();
+    wishedStreet.add(threeOnes.get(0));
+    List<GITile> twoOnes = new ArrayList<>(threeOnes);
+    twoOnes.remove(0);
+    wishedStreet.addAll(tilesFromHand);
+
+    List<List<GITile>> addedCombs = new ArrayList<>();
+    addedCombs.add(wishedStreet);
+    addedCombs.add(twoOnes);
+
+    assert ! validate(tilesFromHand,boardBefore,addedCombs,player_2_ID);
+
+  }
+
+  void play_finishingMove() {
+    List<GITile> tilesFromHand = new ArrayList<>(hand_player_2);
   }
 
   //calculatePoints etc..
