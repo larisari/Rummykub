@@ -346,13 +346,21 @@ class GameInfoImpl extends Thread implements GIGameInfo {
       log.info("all valid.");
 
       long jokersInOld =
-          oldCombinations.stream().flatMap(List::stream).filter(tile -> tile.isEquals(JOKER)).count();
+          oldCombinations
+              .stream()
+              .flatMap(List::stream)
+              .filter(tile -> tile.isEquals(JOKER))
+              .count();
 
       long jokersInNew =
-          newCombinations.stream().flatMap(List::stream).filter(tile -> tile.isEquals(JOKER)).count();
+          newCombinations
+              .stream()
+              .flatMap(List::stream)
+              .filter(tile -> tile.isEquals(JOKER))
+              .count();
 
       if (jokersInNew == jokersInOld - 1) {
-        //joker got deleted from board
+        // joker got deleted from board
         player.put(JOKER);
       }
 

@@ -169,7 +169,8 @@ class CombRules {
   private boolean haveSameNumber(List<GITile> combination) {
     GINumber number = calculateFirstRealNumberOf(combination);
 
-    return combination.stream()
+    return combination
+        .stream()
         .allMatch(
             tile -> tile.getNumber().equals(number) || tile.getNumber().equals(GINumber.JOKER));
   }
@@ -190,7 +191,8 @@ class CombRules {
 
     GIColor color = tempColor;
 
-    return combination.stream()
+    return combination
+        .stream()
         .allMatch(tile -> tile.getColor().equals(color) || tile.getColor().equals(GIColor.JOKER));
   }
 
