@@ -1,6 +1,6 @@
-View/Controller: wurde manuell von allen Teammitgliedern und unabhängigen Personen mehrfach getestet.
+﻿View/Controller: wurde manuell von allen Teammitgliedern und unabhängigen Personen mehrfach getestet.
 
-Model:
+Model: Für das Model wurden Unit Tests mit Hilfe von jUnit5 geschrieben. Ein Spieldurchlauf mit vielen möglichen Szenarien wurde inszeniert. Im Tracing-Modus von IntelliJ kann branch-coverage angezeigt werden, leider wird dieser nicht mit in den Report exportiert, weshalb ein snippet beiliegt.
 
 Netzwerk:
 
