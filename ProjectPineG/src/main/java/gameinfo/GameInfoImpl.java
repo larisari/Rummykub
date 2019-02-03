@@ -1,7 +1,3 @@
-/**
- * This Class shows an exemplary implementation of the GIGameInfo interface. It serves as a central
- * management class for the model.
- */
 package gameinfo;
 
 import gameinfo.util.*;
@@ -10,7 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
-
+/**
+ * This Class shows an exemplary implementation of the GIGameInfo interface. It serves as a central
+ * management class for the model.
+ */
 class GameInfoImpl extends Thread implements GIGameInfo {
 
   private static Logger log = Logger.getLogger(GameInfoImpl.class.getName());

@@ -1,13 +1,12 @@
-/**
- * This class defines the game's general rythm. It explains the player's turn sequence, keeps track
- * of all players as well as the game's progress and current state.
- */
 package gameinfo;
 
 import gameinfo.util.GIPoints;
 import gameinfo.util.GITuple;
 import java.util.*;
-
+/**
+ * This class defines the game's general rythm. It explains the player's turn sequence, keeps track
+ * of all players as well as the game's progress and current state.
+ */
 class GameFlow {
   private Map<Integer, Player> players;
   private GameState state;
