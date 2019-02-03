@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 class GameInfo_Test {
@@ -362,10 +361,6 @@ class GameInfo_Test {
     combinationsAfter.add(threeTwelves);
     combinationsAfter.add(threeThirteens);
     combinationsAfter.add(wishedStreet);
-
-    System.out.println(tilesFromHand);
-    System.out.println(combinationsBefore);
-    System.out.println(combinationsAfter);
 
     assert validate(tilesFromHand,combinationsBefore,combinationsAfter,player_2_ID);
 
