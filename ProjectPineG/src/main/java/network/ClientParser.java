@@ -17,8 +17,6 @@ import javafx.scene.image.ImageView;
  */
 public class ClientParser {
 
-  // TODO CALL ALL METHODS OF CONTROLLER IN ITS THREAD (POSSIBLE MAIN)
-
   private static boolean gameStarted;
   private static GuiController guiController;
   private static LoadingScreenController loadingScreenController;
@@ -47,8 +45,6 @@ public class ClientParser {
   public ClientParser(StartingScreenController controller) {
     startingScreenController = controller;
   }
-
-  // TODO add null checks
 
   /**
    * Parses and incoming String from the server and initialize controllers reaction.

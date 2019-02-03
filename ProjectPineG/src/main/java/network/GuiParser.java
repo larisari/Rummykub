@@ -7,14 +7,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/** This class parses beetween view and network. */
 public class GuiParser {
-
-  // parse format
-  // list<comb:tile.color/number,tile.color/number;comb:tile.color/number;
 
   public GuiParser() {}
 
-  // TODO rename method
   public static String parseListToString(List<List<ImageView>> listOfTiles) {
     StringBuilder builder = new StringBuilder();
     builder.append("list<");
@@ -22,6 +19,12 @@ public class GuiParser {
     return builder.toString();
   }
 
+  /**
+   * Converts a list of tiles in a representive String.
+   *
+   * @param tiles list of tiles.
+   * @return representive String of list of tiles.
+   */
   public static String parseToString(List<ImageView> tiles) {
 
     if (tiles.isEmpty()) {
@@ -50,6 +53,12 @@ public class GuiParser {
     return selectedT + ";";
   }
 
+  /**
+   * Parses String to Integer list.
+   *
+   * @param pointsFromServer gets the points from the Server as a String.
+   * @return a list of Integer.
+   */
   public static List<Integer> parseStringToIntegerList(String pointsFromServer) {
     List<Integer> points = new ArrayList<>();
     String[] pointsString = pointsFromServer.split(",");
@@ -59,19 +68,12 @@ public class GuiParser {
     return points;
   }
 
-  /*
-  public static void response(String antwort) {
-    if (antwort.equals("true")) {
-      try {
-        guiController.placeTiles();
-      } catch (IOException e) {
-        e.printStackTrace();
-      }
-    } else if (antwort.equals("false")) {
-      guiController.cancelSelEffect();
-    }
-  }*/
-
+  /**
+   * parses a String message to a list of list of images.
+   *
+   * @param message representive string of list of list of images.
+   * @return a list of list of images.
+   */
   List<List<Image>> parseStringToWholeBoard(String message) {
 
     if (message.equals("list<")) {
@@ -88,6 +90,12 @@ public class GuiParser {
     }
   }
 
+  /**
+   * parses a string to a list of images.
+   *
+   * @param hand representive String of the hand.
+   * @return a list of images.
+   */
   List<Image> parseStringToImgsForOneComb(String hand) {
     List<Image> tilesImg = new ArrayList<>();
     hand = hand.substring(0, hand.length() - 1);
