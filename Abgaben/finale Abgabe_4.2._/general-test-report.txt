@@ -1,0 +1,6 @@
+View/Controller: wurde manuell von allen Teammitgliedern und unabhängigen Personen mehrfach getestet.
+
+Model:
+
+Netzwerk:
+
