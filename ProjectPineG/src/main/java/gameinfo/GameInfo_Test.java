@@ -234,6 +234,15 @@ class GameInfo_Test {
   }
 
   void play_swapJoker() {
+    final GITile JOKER = new GITile(GINumber.JOKER, GIColor.JOKER);
+    long jokersInHand =
+        gameInfo
+            .getAllTilesBy(player_2_ID)
+            .get()
+            .getSecond()
+            .stream()
+            .filter(tile -> tile.isEquals(JOKER))
+            .count();
     List<GITile> blueTwelveFromHand = new ArrayList<>();
     blueTwelveFromHand.add(gameInfo.getAllTilesBy(player_2_ID).get().getSecond().get(0));
 
@@ -260,9 +269,14 @@ class GameInfo_Test {
         .get()
         .getSecond();
     gameInfo.finishedTurnBy(player_2_ID);
-    System.out.println(gameInfo.getAllTilesBy(player_2_ID).get().getSecond());
+
+    assert gameInfo
+            .getAllTilesBy(player_2_ID)
+            .get()
+            .getSecond()
+            .stream()
+            .filter(tile -> tile.isEquals(JOKER))
+            .count()
+        == jokersInHand + 1;
   }
-
-
-
 }
