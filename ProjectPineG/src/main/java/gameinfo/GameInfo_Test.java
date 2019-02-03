@@ -221,8 +221,6 @@ class GameInfo_Test {
     List<GITile> combinationWithJoker = new ArrayList<>(currentBoard.get(0));
     combinationWithJoker.add(tilesFromHand.get(0));
 
-    System.out.println(combinationWithJoker);
-
     List<List<GITile>> newBoard = new ArrayList<>();
     newBoard.add(combinationWithJoker);
 
@@ -246,28 +244,21 @@ class GameInfo_Test {
     List<GITile> blueTwelveFromHand = new ArrayList<>();
     blueTwelveFromHand.add(gameInfo.getAllTilesBy(player_2_ID).get().getSecond().get(0));
 
-    System.out.println("12 blue: " + blueTwelveFromHand);
-
     List<List<GITile>> twelvesWithJoker = new ArrayList<>();
     twelvesWithJoker.add(gameInfo.getCurrentBoard().get(gameInfo.getCurrentBoard().size() - 1));
-
-    System.out.println("12 with joker: " + twelvesWithJoker);
 
     List<GITile> fourTwelves = new ArrayList<>(twelvesWithJoker.get(0));
     fourTwelves.removeIf(tile -> tile.isEquals(new GITile(GINumber.JOKER, GIColor.JOKER)));
     fourTwelves.add(blueTwelveFromHand.get(0));
 
-    System.out.println("4x12: " + fourTwelves);
-
     List<List<GITile>> twelvesWithoutJoker = new ArrayList<>();
     twelvesWithoutJoker.add(fourTwelves);
-
-    System.out.println("12 without joker: " + twelvesWithoutJoker);
 
     assert gameInfo
         .manipulateBoardWith(blueTwelveFromHand, twelvesWithJoker, twelvesWithoutJoker, player_2_ID)
         .get()
         .getSecond();
+
     gameInfo.finishedTurnBy(player_2_ID);
 
     assert gameInfo
