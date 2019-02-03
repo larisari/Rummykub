@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 class GameInfo_Test {
 
@@ -90,7 +92,7 @@ class GameInfo_Test {
     play_addJokerToExistingCombination();
     // p2
     play_swapJoker();
-    //p1
+    // p1
     play_draw();
     // p2
     play_impossibleStreet();
@@ -130,16 +132,24 @@ class GameInfo_Test {
 
   /**
    * This method checks whether a manipulation is valid or not.
+   *
    * @param tilesFromHand the player wants to put on the board.
    * @param boardCombs the player wants to engage with.
    * @param addedCombs are the resulting combinations.
    * @param id of the player that makes the move.
    * @return true, if the manipulation is valid and false otherwise.
    */
-  private boolean validate(List<GITile> tilesFromHand, List<List<GITile>> boardCombs,
-                           List<List<GITile>> addedCombs, Integer id) {
-    return gameInfo.manipulateBoardWith(tilesFromHand,boardCombs,addedCombs,id).get().getSecond();
+  private boolean validate(
+      List<GITile> tilesFromHand,
+      List<List<GITile>> boardCombs,
+      List<List<GITile>> addedCombs,
+      Integer id) {
+    return gameInfo
+        .manipulateBoardWith(tilesFromHand, boardCombs, addedCombs, id)
+        .get()
+        .getSecond();
   }
+
   void start() {
     gameInfo.startGame();
   }
@@ -241,7 +251,7 @@ class GameInfo_Test {
     List<List<GITile>> newBoard = new ArrayList<>();
     newBoard.add(combinationWithJoker);
 
-    assert validate(tilesFromHand,currentBoard,newBoard,player_1_ID);
+    assert validate(tilesFromHand, currentBoard, newBoard, player_1_ID);
 
     gameInfo.finishedTurnBy(player_1_ID);
   }
@@ -269,7 +279,7 @@ class GameInfo_Test {
     List<List<GITile>> twelvesWithoutJoker = new ArrayList<>();
     twelvesWithoutJoker.add(fourTwelves);
 
-    assert validate(blueTwelveFromHand,twelvesWithJoker,twelvesWithoutJoker,player_2_ID);
+    assert validate(blueTwelveFromHand, twelvesWithJoker, twelvesWithoutJoker, player_2_ID);
 
     gameInfo.finishedTurnBy(player_2_ID);
 
@@ -284,17 +294,17 @@ class GameInfo_Test {
   }
 
   void play_impossibleStreet() {
-    //{2,BLUE},{3,BLUE}
+    // {2,BLUE},{3,BLUE}
     List<GITile> tilesFromHand = new ArrayList<>();
     tilesFromHand.add(hand_player_2.get(11));
     tilesFromHand.add(hand_player_2.get(12));
 
-    //{1,YELLOW},{1,RED},{1,BLACK}
+    // {1,YELLOW},{1,RED},{1,BLACK}
     List<GITile> threeOnes = new ArrayList<>(gameInfo.getCurrentBoard().get(2));
     List<List<GITile>> boardBefore = new ArrayList<>();
     boardBefore.add(threeOnes);
 
-    //{1,NOT_BLUE},{2,BLUE},{3,BLUE}
+    // {1,NOT_BLUE},{2,BLUE},{3,BLUE}
     List<GITile> wishedStreet = new ArrayList<>();
     wishedStreet.add(threeOnes.get(0));
     List<GITile> twoOnes = new ArrayList<>(threeOnes);
@@ -305,15 +315,53 @@ class GameInfo_Test {
     addedCombs.add(wishedStreet);
     addedCombs.add(twoOnes);
 
-    assert ! validate(tilesFromHand,boardBefore,addedCombs,player_2_ID);
-
+    assert !validate(tilesFromHand, boardBefore, addedCombs, player_2_ID);
   }
 
   void play_finishingMove() {
-    List<GITile> tilesFromHand = new ArrayList<>(hand_player_2);
+    List<GITile> tilesFromHand =
+        new ArrayList<>();
+    //to make sure it is sorted like: <joker,1,2,joker>
+    tilesFromHand.add(gameInfo.getAllTilesBy(player_2_ID).get().getSecond().get(3));
+    tilesFromHand.addAll(gameInfo.getAllTilesBy(player_2_ID).get().getSecond().subList(0,3));
+
+    List<List<GITile>> combinationsBefore = new ArrayList<>();
+    List<GITile> thirteens = new ArrayList<>(gameInfo.getCurrentBoard().get(0));
+    List<GITile> twelves = new ArrayList<>(gameInfo.getCurrentBoard().get(3));
+    combinationsBefore.add(twelves);
+    combinationsBefore.add(thirteens);
+
+    List<GITile> wishedStreet =
+        twelves
+            .stream()
+            .filter(tile -> tile.getColor().equals(GIColor.BLUE))
+            .collect(Collectors.toList());
+
+    thirteens
+        .stream()
+        .filter(tile -> tile.getColor().equals(GIColor.BLUE))
+        .sequential()
+        .collect(Collectors.toCollection(() -> wishedStreet));
+
+    wishedStreet.addAll(tilesFromHand);
+
+    List<GITile> threeTwelves = new ArrayList<>(twelves);
+    List<GITile> threeThirteens = new ArrayList<>(thirteens);
+    threeTwelves.removeIf(tile -> tile.getColor().equals(GIColor.BLUE));
+    threeThirteens.removeIf(tile -> tile.getColor().equals(GIColor.BLUE));
+
+    List<List<GITile>> combinationsAfter = new ArrayList<>();
+    combinationsAfter.add(threeTwelves);
+    combinationsAfter.add(threeThirteens);
+    combinationsAfter.add(wishedStreet);
+
+    System.out.println(tilesFromHand);
+    System.out.println(combinationsBefore);
+    System.out.println(combinationsAfter);
+
+    assert validate(tilesFromHand,combinationsBefore,combinationsAfter,player_2_ID);
   }
 
-  //calculatePoints etc..
-
+  // calculatePoints etc..
 
 }
