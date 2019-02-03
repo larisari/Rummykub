@@ -1,5 +1,5 @@
-package gameinfo;
-
+import gameinfo.GIFactory;
+import gameinfo.GIGameInfo;
 import gameinfo.util.GIColor;
 import gameinfo.util.GINumber;
 import gameinfo.util.GITile;
@@ -16,9 +16,6 @@ class GameInfo_Test {
 
   private static final Integer player_1_ID = 1;
   private static final Integer player_2_ID = 2;
-
-  private static Player p1 = new Player(player_1_ID, new PointsCalculator());
-  private static Player p2 = new Player(player_2_ID, new PointsCalculator());
 
   private static List<GITile> hand_player_1 =
       new ArrayList<>(
