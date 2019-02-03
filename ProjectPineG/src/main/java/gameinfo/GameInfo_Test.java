@@ -69,10 +69,12 @@ class GameInfo_Test {
     start();
     assert gameInfo.getStartingPlayerId().equals(player_2_ID);
     checkNumOfPlayers();
+    checkPlayersValidation();
     assert gameInfo.getCurrentBoard().isEmpty();
     draw();
     play_lessThan30Points();
     assert gameInfo.getCurrentPlayerId().equals(player_2_ID);
+    assert gameInfo.getNextPlayerId().get().equals(player_1_ID);
     // p2
     play_groupOfThirteens();
     // p1
@@ -175,7 +177,13 @@ class GameInfo_Test {
     }
   }
 
+  void checkPlayersValidation() {
+    assert gameInfo.isValidPlayerBy(player_1_ID).get().getSecond();
+    assert gameInfo.isValidPlayerBy(player_2_ID).get().getSecond();
+  }
+
   void play_lessThan30Points() {
+    assert gameInfo.isFirstTurnBy(player_2_ID).get().getSecond();
     List<List<GITile>> combinations = makeCombinationList(11, 13, hand_player_2);
     assert !validate(combinations, player_2_ID);
   }
@@ -360,8 +368,11 @@ class GameInfo_Test {
     System.out.println(combinationsAfter);
 
     assert validate(tilesFromHand,combinationsBefore,combinationsAfter,player_2_ID);
-  }
 
-  // calculatePoints etc..
+    gameInfo.finishedTurnBy(player_2_ID);
+
+    assert gameInfo.calculatePointsForRegisteredPlayers().get().get(0).getSecond().value() != 0;
+    assert gameInfo.calculatePointsBy(player_2_ID).get().getSecond().value() == 0;
+  }
 
 }
