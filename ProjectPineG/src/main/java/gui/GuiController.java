@@ -117,8 +117,7 @@ public class GuiController {
   }
 
   /**
-   * For receiving the stage of this controller from the controller of the previous
-   * stage.
+   * For receiving the stage of this controller from the controller of the previous stage.
    *
    * @param stage - this fxml file's stage.
    */
@@ -222,7 +221,7 @@ public class GuiController {
 
 
   /**
-   * For loading tiles. Gets called if user may draw from the bag. Disables control for the user.
+   * For drawing tiles. Gets called if user may draw from the bag. Disables control for the user.
    *
    * @param tiles to be loaded.
    */
@@ -239,7 +238,7 @@ public class GuiController {
   }
 
   /**
-   * Adds a tile to the player's hand.
+   * Adds tiles to one of the Hboxes that make up the player's hand.
    *
    * @param tile to be added to the player's hand.
    */
@@ -295,7 +294,7 @@ public class GuiController {
   }
 
   /**
-   * Checks if combination contains only tiles from the player's hand.
+   * Checks if a given combination contains only tiles from the player's hand.
    *
    * @param tiles - a tile combination.
    * @return true if given tile combination is only contained in the player's hand.
@@ -353,8 +352,9 @@ public class GuiController {
 
 
   /**
-   * Checks in which combinations on the board the selected tiles are contained in and requests
-   * verification for alteration wishes of user.
+   * For combining tiles from the hand with tiles from the main board. Checks in which combinations
+   * on the board the selected tiles are contained in and requests verification for alteration
+   * wishes of user.
    */
   private void placeHandAndBoardTiles() {
     List<List<ImageView>> newBoardCombs = new ArrayList<>();
@@ -417,8 +417,8 @@ public class GuiController {
   }
 
   /**
-   * Gets called if combinations on the selection board are valid. For placing tile combinations on
-   * the main board.
+   * Gets called if combinations on the selection board are valid. For moving tile combinations from
+   * the selection board to the main board.
    */
   public void placeTiles() {
     for (List<ImageView> combination : selectedCombinations) {
@@ -427,7 +427,8 @@ public class GuiController {
   }
 
   /**
-   * Places given combination on the main board. Checks if player's hand is now empty.
+   * Places given combination on the main board. Checks if player's hand is now empty and if it is,
+   * requests all player points and notifies model via network.
    *
    * @param combination which should be placed on the main board.
    */
@@ -543,7 +544,7 @@ public class GuiController {
 
 
   /**
-   * Gets called if user releases "Add to..." button. For updating board if main board intersects
+   * Gets called if user releases "Add to.." button. For updating board if main board intersects
    * with selection board.
    */
   @FXML
@@ -554,7 +555,8 @@ public class GuiController {
 
   /**
    * For placing tiles to the front of existing combinations on main board. Checks if selected tiles
-   * may be added to existing combination.
+   * contain only tiles from the hand and if they may be added to an existing combination on the
+   * main board.
    *
    * @param comb - combination on the main board where tiles should be added.
    */
@@ -578,9 +580,9 @@ public class GuiController {
   }
 
   /**
-   * Adds selected tiles to the front of a combination on the main board. Exits method, if selected
-   * tiles should be added to the same combination they are already contained in. Deletes "+"
-   * buttons. Checks if player's hand is now empty.
+   * Adds selected tiles to the front of a combination on the main board. Adjusts height and width
+   * of tiles. Exits method, if selected tiles should be added to the same combination they are
+   * already contained in. Deletes "+" buttons. Checks if player's hand is now empty.
    */
   public void allowAddFront() {
     deleteAddToButtons();
@@ -610,7 +612,8 @@ public class GuiController {
 
   /**
    * For placing tiles to the back of existing combinations on main board. Checks if selected tiles
-   * may be added to the back of a combination on the main board.
+   * contain only tiles from the hand and if they may be added to the back of a combination on the
+   * main board.
    *
    * @param comb - combination on the main board where tiles should be added.
    */
@@ -634,9 +637,9 @@ public class GuiController {
   }
 
   /**
-   * Adds selected tiles to the front of combination on the main board. Exits method if selected
-   * tiles should be added to the same combination they are already contained in. Deletes "+"
-   * buttons. Checks if player's hand is now empty.
+   * Adds selected tiles to the front of combination on the main board. Adjusts height and width of
+   * tiles. Exits method if selected tiles should be added to the same combination they are already
+   * contained in. Deletes "+" buttons. Checks if player's hand is now empty.
    */
   public void allowAddBack() {
     deleteAddToButtons();
@@ -672,7 +675,8 @@ public class GuiController {
   }
 
   /**
-   * Deletes all "+" buttons on the main board.
+   * For deleting all "+" buttons on the main board. Checks if first element in an HBox is a button,
+   * if it is, the first and the last child(buttons) are removed.
    */
   private void deleteAddToButtons() {
     for (int i = 0; i < board.getChildren().size(); i++) {
@@ -689,7 +693,9 @@ public class GuiController {
 
   /**
    * Handles user pressing "Swap Joker" button. Checks if selected tile may be swapped with a joker
-   * tile.
+   * tile. Only two tiles may be selected where the first must be the tile to be played and the
+   * second the joker tile. Identifies joker by id and checks if the tile to be played is contained
+   * in the player's hand.
    */
   @FXML
   private void handleSwapJoker() {
@@ -726,8 +732,9 @@ public class GuiController {
 
 
   /**
-   * Gets called if tile may be swapped with joker. Swaps a tile from the hand with a joker on the
-   * main board.
+   * Gets called if tile may be swapped with joker. Adds the joker tile to the player's hand and
+   * places the played tile on the main board at the position where the joker was. Adjusts tile
+   * height and width.
    */
   public void swapWithJoker() {
     HBox box = (HBox) joker.getParent();
@@ -750,7 +757,8 @@ public class GuiController {
 
   /**
    * Deletes unused Hboxes on the main board. Checks if main board intersects with player hand, if
-   * it does the tiles on the main board are resized.
+   * it does the tiles on the main board are resized. Skips "+" buttons while resizing if they are
+   * present.
    */
   private void updateBoard() {
     for (int i = board.getChildren().size() - 1; i >= 0; i--) {
@@ -790,7 +798,8 @@ public class GuiController {
   }
 
   /**
-   * Updates the text of the next player label.
+   * Updates the text of the next player label. Checks if it's this gui's player's next turn, if it
+   * is "Your turn" is shown, else the player's "name" whose turn it is is displayed.
    *
    * @param ID of the next player.
    */
@@ -804,7 +813,8 @@ public class GuiController {
   }
 
   /**
-   * Gets called when turn is finished, received updated board and loads it.
+   * Gets called when turn is finished, received updated board and loads it's content. If the reload
+   * happens after the board has been emptied, the tiles are reset to their original size.
    */
   public void reloadBoard(List<List<Image>> boardTiles) {
     board.getChildren().clear();
@@ -830,7 +840,7 @@ public class GuiController {
 
   /**
    * Disables control for the user. The bag and all buttons and tiles from the hand are set to
-   * disabled.
+   * disabled. Remaining "+" buttons are deleted.
    */
   private void disableControl() {
     deleteAddToButtons();
@@ -947,7 +957,7 @@ public class GuiController {
   }
 
   /**
-   * Plays notification sound if it's this player's turn.
+   * Plays notification sound.
    */
   private void playNotification() {
     AudioClip notification = null;
@@ -964,7 +974,8 @@ public class GuiController {
 
   /**
    * Handle user pressing mute or unmute icon. If music is playing, by clicking the icon, music is
-   * muted and vice versa.
+   * muted and the icon is replaced by the "mute" icon. If music is muted, by clicking the music is
+   * unmuted and the icon is replaced by the "unmute" icon.
    */
   @FXML
   private void handleMute(MouseEvent event) {
@@ -997,7 +1008,7 @@ public class GuiController {
   }
 
   /**
-   * Loads starting screen if another user has quit the game and displays a an alert.
+   * Loads starting screen if another user has quit the game, displays a an alert.
    *
    * @throws IOException if some error occurs while loading fxml file.
    */
