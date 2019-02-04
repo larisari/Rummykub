@@ -1,0 +1,4 @@
+Fertiges Projekt ist ProjectPineG im master branch.
+
+Die branches view, server und development(model) auf denen anfänglich gearbeitet wurde, wurden nicht zum master branch gemerged sondern als neues Projekt hochgeladen.
+Für commits aus der Anfangsphase siehe jeweiliger branch.
